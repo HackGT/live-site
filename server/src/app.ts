@@ -8,7 +8,7 @@ import session from "express-session"
 import express_graphql from "express-graphql"
 import cors from "cors"
 import dotenv from "dotenv"
-// import { buildSchema } from "graphql"
+import { buildSchema } from "graphql"
 import { GroundTruthStrategy } from "./routes/strategies"
 import { IUser, User} from "./schema";
 import { userRoutes } from "./routes/user";
@@ -16,7 +16,7 @@ import { userRoutes } from "./routes/user";
 dotenv.config();
 
 const PORT = 3000;
-// const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
+const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 //const VERSION_HASH = require("git-rev-sync").short();
 
@@ -76,10 +76,10 @@ apiRouter.use("/user", userRoutes);
 
 app.use("/api", apiRouter);
 
-// app.use('/graphql', express_graphql({
-//     schema: buildSchema(typeDefs),
-//     graphiql: true
-// }));
+app.use('/graphql', express_graphql({
+    schema: buildSchema(typeDefs),
+    graphiql: true
+}));
 
 app.use(express.static(path.join(__dirname, "../../client")));
 app.get("*", (request, response) => {

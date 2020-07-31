@@ -1,0 +1,37 @@
+schema {
+   	query: Query
+   	mutation: Mutation
+}
+
+type Mutation {
+ 	modifyUser(input: UserInput!): User
+}
+
+type Query {
+            user(id: ID!): User
+}
+
+type User {
+ 	id: ID!
+ 	name: String!
+            email:String!
+            email_verified: Boolean!
+            applied: Boolean!
+            accepted: Boolean!
+            accepted_and_notified: Boolean!
+            confirmed: Boolean!
+           team: Team
+ 	points: Int!
+ 	events: [Event]
+}
+
+type Event {
+ 	name: String!
+	length: Int!
+ 	points: Int!
+}
+
+input UserInput {
+ 	name: String!
+	points: Int!
+}
