@@ -5,7 +5,7 @@ import compression from "compression";
 import morgan from "morgan";
 import passport from "passport";
 import session from "express-session"
-import express_graphql from "express-graphql"
+
 import cors from "cors"
 import dotenv from "dotenv"
 import { buildSchema } from "graphql"
@@ -19,6 +19,7 @@ const PORT = 3000;
 const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 //const VERSION_HASH = require("git-rev-sync").short();
+const express_graphql = require("express-graphql")
 
 export let app = express();
 
