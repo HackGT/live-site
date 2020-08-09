@@ -8,18 +8,18 @@ type Mutation {
 }
 
 type Query {
-            user(id: ID!): User
+   user(id: ID!): User
 }
 
 type User {
  	id: ID!
  	name: String!
-            email:String!
-            email_verified: Boolean!
-            applied: Boolean!
-            accepted: Boolean!
-            accepted_and_notified: Boolean!
-            confirmed: Boolean!
+   email:String!
+   # email_verified: Boolean!
+   # applied: Boolean!
+   # accepted: Boolean!
+   # accepted_and_notified: Boolean!
+   # confirmed: Boolean!
  	points: Int!
  	events: [Event]
 }

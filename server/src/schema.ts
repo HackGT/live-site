@@ -21,9 +21,12 @@ export interface IUser extends RootDocument {
     uuid: string;
     email: string;
     name: string;
-    token: string | null;
+    token?: string | null;
     admin?: boolean;
     visible?: number;
+    points?: number;
+    events?: IEvent[];
+
 }
 
 export type IUserMongoose = IUser & mongoose.Document;
@@ -48,7 +51,36 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         auth_keys: [String],
         admin: Boolean,
         visible: Number,
+        points: {
+            type: Number,
+            required: true
+        },
+        events: [Event]
     },
     {
         usePushEach: true
     }));
+
+export interface IEvent extends RootDocument {
+    name: string;
+    length: number;
+    points?: number;
+}
+
+export type IEventMongoose = IEvent & mongoose.Document;
+
+export const Event = mongoose.model<IEventMongoose>("Event", new mongoose.Schema({
+
+     name: {
+            type: String,
+            required: false
+      },
+    length: Number;
+    points: {
+            type: Number,
+            required: true
+     }
+}))
+
+
+
