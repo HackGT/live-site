@@ -1,36 +1,46 @@
 schema {
-   	query: Query
-   	mutation: Mutation
+      query: Query
+      mutation: Mutation
 }
 
+# type Mutation {
+#     modifyUser(input: UserInput!): User
+# }
+
+
 type Mutation {
- 	modifyUser(input: UserInput!): User
+   modifyUser(name: String!, points: Int!): User
 }
 
 type Query {
-   user(id: ID!): User
+   user(user_id: String): User
+}
+
+type Event {
+   name: String!
+   length: Int!
+   points: Int!
 }
 
 type User {
- 	id: ID!
- 	name: String!
+   id: ID!
+   name: String!
    email:String!
+   token:String!
+   admin: Boolean!
+   visible: Float!
    # email_verified: Boolean!
    # applied: Boolean!
    # accepted: Boolean!
    # accepted_and_notified: Boolean!
    # confirmed: Boolean!
- 	points: Int!
- 	events: [Event]
+   points: Int!
+   events: [Event]
 }
 
-type Event {
- 	name: String!
-	length: Int!
- 	points: Int!
-}
 
-input UserInput {
- 	name: String!
-	points: Int!
-}
+
+# input UserInput {
+#    name: String!
+#    points: Int!
+# }

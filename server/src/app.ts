@@ -12,14 +12,17 @@ import { buildSchema } from "graphql"
 import { GroundTruthStrategy } from "./routes/strategies"
 import { IUser, User} from "./schema";
 import { userRoutes } from "./routes/user";
-
+const { ApolloServer, gql } = require('apollo-server-express');
+const express_graphql = require("express-graphql")
 dotenv.config();
 
 const PORT = 3000;
+//const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
+
 const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 //const VERSION_HASH = require("git-rev-sync").short();
-const express_graphql = require("express-graphql")
+
 
 export let app = express();
 

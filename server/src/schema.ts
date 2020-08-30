@@ -1,10 +1,18 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 dotenv.config()
 
+// const MONGO_URL = String(process.env.MONGO_URL);
+// mongoose.connect(MONGO_URL).catch((err:any) => {
+//     throw err;
+// });
+// export {mongoose};
+
 const MONGO_URL = String(process.env.MONGO_URL);
-mongoose.connect(MONGO_URL).catch((err:any) => {
+mongoose.connect(MONGO_URL, {
+    useMongoClient: false
+}).catch(err => {
     throw err;
 });
 export {mongoose};
@@ -29,7 +37,26 @@ export interface IUser extends RootDocument {
 
 }
 
+export interface IEvent extends RootDocument {
+    name: string;
+    length: number;
+    points?: number;
+}
+
 export type IUserMongoose = IUser & mongoose.Document;
+export type IEventMongoose = IEvent & mongoose.Document;
+export const Event = mongoose.model<IEventMongoose>("Event", new mongoose.Schema({
+
+    name: {
+            type: String,
+            required: false
+     },
+    length: Number,
+    points: {
+            type: Number,
+            required: true
+     }
+}));
 
 export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         uuid: {
@@ -48,39 +75,30 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
             required: false
         },
         token: String,
-        auth_keys: [String],
+        // auth_keys: [String],
         admin: Boolean,
         visible: Number,
         points: {
             type: Number,
             required: true
         },
-        events: [Event]
+        events: {
+            type: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Event"
+            }]
+        }
+
     },
     {
         usePushEach: true
-    }));
+    }
+));
 
-export interface IEvent extends RootDocument {
-    name: string;
-    length: number;
-    points?: number;
-}
 
-export type IEventMongoose = IEvent & mongoose.Document;
 
-export const Event = mongoose.model<IEventMongoose>("Event", new mongoose.Schema({
 
-     name: {
-            type: String,
-            required: false
-      },
-    length: Number;
-    points: {
-            type: Number,
-            required: true
-     }
-}))
+
 
 
 
