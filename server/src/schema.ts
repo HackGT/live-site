@@ -41,6 +41,7 @@ export interface IEvent extends RootDocument {
     name: string;
     length: number;
     points?: number;
+    url: string;
 }
 
 export type IUserMongoose = IUser & mongoose.Document;
@@ -49,12 +50,16 @@ export const Event = mongoose.model<IEventMongoose>("Event", new mongoose.Schema
 
     name: {
             type: String,
-            required: false
+            required: true
      },
     length: Number,
     points: {
             type: Number,
             required: true
+     }, 
+     url: {
+         type: String, 
+         required: true
      }
 }));
 
