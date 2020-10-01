@@ -10,9 +10,7 @@ dotenv.config()
 // export {mongoose};
 
 const MONGO_URL = String(process.env.MONGO_URL);
-mongoose.connect(MONGO_URL, {
-    useMongoClient: false
-}).catch(err => {
+mongoose.connect(MONGO_URL).catch(err => {
     throw err;
 });
 export {mongoose};

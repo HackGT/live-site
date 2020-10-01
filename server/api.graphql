@@ -10,16 +10,21 @@ schema {
 
 type Mutation {
    modifyUser(name: String!, points: Int!): User
+   addUrl(event:String!):String!
+
 }
 
 type Query {
    user(user_id: String): User
+   event(event_id: String): Event
+   
 }
 
 type Event {
    name: String!
    length: Int!
    points: Int!
+   url: String!
 }
 
 type User {
