@@ -1,13 +1,13 @@
 {
-  "name": "server",
+  "name": "virtual-checkin-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mohan Dodda",
   "license": "ISC",
   "devDependencies": {
     "@types/compression": "^1.7.0",
@@ -26,13 +26,16 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "apollo-server": "^2.17.0",
+    "apollo-server-express": "^2.17.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-graphql": "^0.11.0",
+    "express-graphql": "^0.7.1",
     "express-session": "^1.17.1",
     "fs": "0.0.1-security",
+    "graphql": "^14.1.1",
     "mongoose": "^5.9.22",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",

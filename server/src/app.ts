@@ -5,20 +5,24 @@ import compression from "compression";
 import morgan from "morgan";
 import passport from "passport";
 import session from "express-session"
-import express_graphql from "express-graphql"
+
 import cors from "cors"
 import dotenv from "dotenv"
-// import { buildSchema } from "graphql"
+import { buildSchema } from "graphql"
 import { GroundTruthStrategy } from "./routes/strategies"
-import { IUser, User} from "./schema";
+import { IUser, User, Event} from "./schema";
 import { userRoutes } from "./routes/user";
-
+const { ApolloServer, gql } = require('apollo-server-express');
+const express_graphql = require("express-graphql")
 dotenv.config();
 
 const PORT = 3000;
-// const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
+//const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
+
+const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 //const VERSION_HASH = require("git-rev-sync").short();
+
 
 export let app = express();
 
@@ -72,10 +76,51 @@ passport.deserializeUser<IUser, string>((id, done) => {
 
 let apiRouter = express.Router();
 
+let getUser = async function(parent, args, context, info) {
+    // if (!context._id) {
+    //     throw new Error('User not logged in')
+    // }
+    let user = await User.findById(context._id)
+    if (!user) {
+        throw new Error('User not found')
+    }
+    return user
+}
+
+let getEvent = async function(parent, args, context, info) {
+    // if (!context._id) {
+    //     throw new Error('User not logged in')
+    // }
+    let event = await Event.findById(context._id)
+    if (!event) {
+        throw new Error('Event not found')
+    }
+    return event
+}
+
+const resolvers = {
+    Query: {
+        user: getUser,
+        event: getEvent
+    }
+}
+
 apiRouter.use("/user", userRoutes);
 
 app.use("/api", apiRouter);
 
+const server = new ApolloServer({
+    typeDefs, resolvers, 
+    // context: ({ req }) => {
+    //     return req.user
+    // }, playground: {
+    //     settings: {
+    //         'editor.theme': 'dark',
+    //         'request.credentials': 'include'
+    //     },
+    // }
+});
+server.applyMiddleware({ app });
 // app.use('/graphql', express_graphql({
 //     schema: buildSchema(typeDefs),
 //     graphiql: true
