@@ -33,6 +33,7 @@ else {
 	console.warn("OAuth callback(s) running in development mode");
 }
 
+
 app.use(morgan("dev"));
 app.use(compression());
 app.use(cors());
@@ -87,27 +88,75 @@ let getUser = async function(parent, args, context, info) {
     return user
 }
 
-let getEvent = async function(parent, args, context, info) {
-    // if (!context._id) {
-    //     throw new Error('User not logged in')
-    // }
-    let event = await Event.findById(context._id)
-    if (!event) {
-        throw new Error('Event not found')
-    }
-    return event
-}
+// let getEvent = async function(parent, args, context, info) {
+//     // if (!context._id) {
+//     //     throw new Error('User not logged in')
+//     // }
+//     let event = await Event.findById(context._id)
+//     if (!event) {
+//         throw new Error('Event not found')
+//     }
+//     return event
+// }
+// const resolvers = {
+//   Query: {
+//     info: () => `This is the API of a Hackernews Clone`,
+//     feed: () => links,
+//   },
+//   Mutation: {
+//     // 2
+//     post: (parent, args) => {
+//        const link = {
+//         id: `link-${idCount++}`,
+//         description: args.description,
+//         url: args.url,
+//       }
+//       links.push(link)
+//       return link
+//     }
+//   },
+// }
+
+
 
 const resolvers = {
     Query: {
         user: getUser,
-        event: getEvent
+        // event: getEvent
+    },
+    Mutation: (parent, args) =>{
+        if(!(args.event in s)) {
+
+        }
+
     }
 }
 
 apiRouter.use("/user", userRoutes);
 
+
+// apiRouter.get("/", function(req, res, next) {
+    
+//     res.render('index', {title: 'cool huh'})
+// });
+
+let s = {} //hardcode put the bluejeans links there!
+let c = 0
+apiRouter.get("/bluejeans/:event", function(req, res, next) {
+    console.log('hidhfiodhf')
+    console.log(req.params.event)
+    s[req.params.event] = c
+    c = c+1
+    console.log(s)
+    res.send({output: req.params.event})
+});
+
+
 app.use("/api", apiRouter);
+
+
+
+
 
 const server = new ApolloServer({
     typeDefs, resolvers, 
