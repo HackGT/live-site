@@ -109,8 +109,8 @@ define([
 	};
 
 	function setMuteButton(muted){
-		var updatedText = muted ? "Show Video" : "Mute Video";
-		$("#toggleVideoMute").html(updatedText);	
+		// var updatedText = muted ? "Show Video" : "Mute Video";
+		// $("#toggleVideoMute").html(updatedText);	
 	};
 	
 	function cbContentShareStateChange(isShare){
@@ -226,16 +226,30 @@ define([
 		// Mute UI handlers
 		$("#toggleAudioMute").click(function() {
 			var muted = RTCClient.toggleAudioMute();
-			var updatedText = muted ? "Unmute Audio" : "Mute Audio";
-			$("#toggleAudioMute").html(updatedText);
+			// var updatedText = muted ? "Unmute Audio" : "Mute Audio";
+			// $("#toggleAudioMute").html(updatedText);
+			var elem = document.getElementById("audio-mute-id");
+			if (muted) {
+				elem.classList.remove('unmuted');
+				elem.classList.add('muted');
+			} else {
+				elem.classList.remove('muted');
+				elem.classList.add('unmuted');
+			}
 			console.log(muted ? "Audio is Muted now" : "Audio is Unmuted now");	
 		});
 
 		$("#toggleVideoMute").click(function() {
-			// console.log("The party count is: " + RTCRoster.getPartyCount());
 			var muted = RTCClient.toggleVideoMute();
-			if(muted)
-				setMuteButton(muted);
+			var elem = document.getElementById("video-mute-id");
+			if(muted) {
+				// setMuteButton(muted);								
+				elem.classList.remove('unmuted');
+				elem.classList.add('muted');
+			} else {				
+				elem.classList.remove('muted');
+				elem.classList.add('unmuted');
+			}
 		});
 
 

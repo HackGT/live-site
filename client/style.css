@@ -78,7 +78,7 @@ body {
 	padding-top: 2%;
 	height: 50%;
 	justify-content: center;	
-	gap: 10%;
+	gap: 5%;
 }
 
 .body .workshop {	
@@ -108,9 +108,78 @@ body {
 	background-color: white;
 }
 
-.body .video #localVideo {
+.body .video .video-body {
+	height: 100%;
 	width: 100%;
-	height: 90%;
+	position: relative;	
+}
+
+.body .video .video-body #localVideo {
+	width: 100%;
+	height: 100%;
+	background-color: blue;
+}
+
+.body .video .video-body .audio-mute {
+	position: absolute;	
+	right: 30%;
+	bottom: 10%;
+	background-color: grey;
+	opacity: 0.5;
+	border-radius: 3rem;
+	width: 5vw;
+	height: 5vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.body .video .video-body .video-mute {
+	position: absolute;	
+	left: 30%;
+	bottom: 10%;
+	background-color: grey;
+	border-radius: 3rem;
+	width: 5vw;
+	height: 5vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.body .video .video-body .muted {
+	opacity: 1;
+}
+
+.body .video .video-body .unmuted {
+	opacity: 0.5;
+}
+
+#toggleVideoMute {
+	background-image: url("assets/video.png");	
+	height: 3vw;
+	width: 3vw;
+	margin-bottom: 2px;
+}
+
+#toggleAudioMute {
+	background-image: url("assets/microphone.png");
+	height: 3vw;
+	width: 3vw;
+}
+
+.join-event {
+	background-color: white;
+	color: #658aae;	
+	text-align: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-radius: 5rem;	
+	margin-top: 4vw;
+	margin-left: auto;
+	margin-right: auto;			
+	height: 2vw;
+	width: 9vw;
 }
 
 .bottom-design {
@@ -123,7 +192,7 @@ body {
 	bottom: 2vw;	
 }
 
-
+/*
 section {
 	padding: 30px 0;
 }
@@ -384,7 +453,7 @@ video {
 }
 
 legend {
-	background-color: #1478C7; /* #204E74; */
+	background-color: #1478C7; 
 	color: white;
 	font-family: ProximaNova_Bold;
 	font-size: 13px;
@@ -432,12 +501,12 @@ input:focus {
     outline: 0;
 }
 input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
-input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+input:focus:-moz-placeholder { color:transparent; } 
+input:focus::-moz-placeholder { color:transparent; } 
 input:focus:-ms-input-placeholder { color:transparent; }
 .mtginputs {
 	border: none;
-	border-bottom: 1px solid #9CACC3; /* #DDE4EE; */
+	border-bottom: 1px solid #9CACC3; 
 	padding: 2px;
 	font-size: 1em;
 	width: 90%;
@@ -561,3 +630,4 @@ button.hidden {
 		padding: 30px;
 	}
 }
+*/
