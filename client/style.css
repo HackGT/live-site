@@ -36,13 +36,14 @@ body {
     color: var(--primary-color-2);
 	background: linear-gradient(180deg, #658aae 0%, #8bc2b9 100%);
 	background-repeat: no-repeat;
-	height: 100vh;
-	position: relative;
+	height: 60vw;
+	position: relative;	
 }
 
 .container {
-	height: 50vw;
+	height: 100%;
 	width: 100vw;
+	position: relative;
 }
 
 .nav {
@@ -66,19 +67,71 @@ body {
 	width: 50%;
 }
 
-.nav .points {
-	text-align: center;
+.nav .points {		
+	width: 40%;
+	height: 100%;
+	display: flex;
+	gap: 5%;
+	align-items: center;
+	justify-content: center;
+}
+
+.nav .points .points-text {
 	font-size: 20px;
-	width: 30%;
-	padding-right: 5%;
+}
+
+.nav .points .points-number {
+	border: 1px solid white;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 12.5px;
+	height: 100%;
+	width: 25%;
+}
+
+.container .workshops {
+	background-color: white;
+	border-radius: 1rem;
+	position: absolute;
+	margin-top: 1rem;
+	right: 7.5%;
+	z-index: 100;
+	height: 25%;
+	width: 25%;	
+	overflow-y: auto;
+	padding: 1rem;
+}
+
+.container .workshops .workshop-elem {
+	height: 20%;		
+	width: 100%;
+	margin: auto;
+	color: #658aae;
+	display: flex;
+	cursor: pointer;	
+}
+
+.workshop-elem:hover {
+	background-color: lightblue;
+}
+
+.workshop-name {	
+	text-align: left;
+	width: 50%;
+}
+
+.workshop-points {
+	text-align: right;
+	width: 50%;
 }
 
 .body {
 	display: flex;
 	padding-top: 2%;
-	height: 50%;
+	height: 40%;
 	justify-content: center;	
 	gap: 5%;
+	margin-top: 5vw;
 }
 
 .body .workshop {	
@@ -101,10 +154,10 @@ body {
 }
 
 .body .video .title {
-	height: 10%;	
-	padding-left: 1rem;		
-	padding-top: 0.5rem;	
+	height: 10%;
 	color: #658aae;	
+	padding-left: 1rem;
+	padding-top: 0.5rem;
 	background-color: white;
 }
 
@@ -168,14 +221,20 @@ body {
 	width: 3vw;
 }
 
+.join-container {
+	display: flex;
+	align-items: center;
+}
+
 .join-event {
+	border: none;
 	background-color: white;
 	color: #658aae;	
 	text-align: center;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	border-radius: 5rem;	
-	margin-top: 4vw;
+	margin-top: 6vw;
 	margin-left: auto;
 	margin-right: auto;			
 	height: 2vw;
@@ -184,12 +243,15 @@ body {
 
 .bottom-design {
 	background-image: url("assets/about-long-glow.png");
-	background-size: 70%;
-	background-repeat: repeat-x;
+	background-size: 70%;	
 	height: 20%;	
 	width: 100%;
 	position: absolute;
-	bottom: 2vw;	
+	bottom: 0;
+}
+
+.points-number {
+	cursor: pointer;
 }
 
 /*

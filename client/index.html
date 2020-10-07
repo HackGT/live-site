@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>WebRTC SDK Sample App</title>
+	<title>HackGT Check-In</title>
 	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 	</link>
@@ -20,9 +20,16 @@
 				HACKGT7: REIMAGINE REALITY
 			</div>
 			<div class="points">
-				My Points
-
+				<div class="points-text">
+					My Points
+				</div>
+				<div id="open-workshops" class="points-number">
+					400 Points
+				</div>
 			</div>
+		</div>
+
+		<div id="workshops-list" class="workshops">
 		</div>
 
 		<div class="body">
@@ -33,7 +40,7 @@
 			</div>
 			<div class="video">
 				<div class="title">
-					Video
+					Title
 				</div>
 				<div class="video-body">
 					<video id="localVideo"></video>
@@ -42,15 +49,19 @@
 					</div>
 					<div class="audio-mute unmuted" id="audio-mute-id">
 						<div id="toggleAudioMute"></div>
-					</div>									
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="join-event">
-			Join Event
+		<div class="join-container">
+			<button id="joinMeeting" class="join-event">
+				Join Event
+			</button>
 		</div>
-
+		<input placeholder="Enter Meeting ID" type="text" class="mtginputs" id="id" name="Meeting id">
+		<input type="text" placeholder="Enter PassCode" class="mtginputs" id="passCode" name="PassCode">
+		<input placeholder="Enter your name" type="text" class="mtginputs" id="yourName" name="yourName"
+			value="WebRTC User">
 		<div class="bottom-design">
 		</div>
 	</div>
