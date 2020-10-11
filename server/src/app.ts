@@ -17,7 +17,7 @@ const express_graphql = require("express-graphql")
 dotenv.config();
 
 const PORT = 3000;
-const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
+// const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
 
 const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
@@ -78,16 +78,24 @@ passport.deserializeUser<IUser, string>((id, done) => {
 let apiRouter = express.Router();
 
 let getUser = async function(parent, args, context, info) {
-    if (!context._id) {
-        throw new Error('User not logged in')
-    }
-    let user = await User.findById(context._id)
+    // if (!context._id) {
+    //     throw new Error('User not logged in')
+    // }
+//     const getUser = async function (args, req) {
+//     var user = await User.find({ uuid: args.uuid });
+//     return user[0];
+// }
+    // let user = await User.findById(args.user_id);
+    var user = await User.find({ uuid: args.uuid });
+    console.log(user)
     if (!user) {
-        throw new Error('User not found')
+        throw new Error("User not found");
     }
-    return user
+    return user[0];
+    // return user;
+    // return user
 }
-
+console.log('reached')
 let getEvent = async function(parent, args, context, info) {
     if (!context._id) {
         throw new Error('User not logged in')
