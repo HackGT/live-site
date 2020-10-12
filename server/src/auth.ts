@@ -16,7 +16,7 @@ const session_secret = process.env.SECRET;
 if (!session_secret) {
     throw new Error("Secret not specified");
 }
-console.log(app)
+// console.log(app)
 app.use(session({
     secret: session_secret,
     saveUninitialized: false,
@@ -29,9 +29,12 @@ app.use(passport.session());
 export function isAuthenticated(request: express.Request, response: express.Response, next: express.NextFunction): void {
     response.setHeader("Cache-Control", "private");
     if (!request.isAuthenticated() || !request.user) {
+        console.log(request.isAuthenticated(), request.user)
         if (request.session) {
+            console.log(request.session.returnTo, request.originalUrl)
             request.session.returnTo = request.originalUrl;
         }
+        // console.log('here a lot boi!')
         response.redirect("/auth/login");
     } else {
         next();
@@ -39,7 +42,7 @@ export function isAuthenticated(request: express.Request, response: express.Resp
 }
 
 const groundTruthStrategy = new GroundTruthStrategy(String(process.env.GROUNDTRUTHURL));
-
+console.log(groundTruthStrategy.url)
 passport.use(groundTruthStrategy);
 passport.serializeUser<IUser, string>((user, done) => {
     done(null, user.uuid);

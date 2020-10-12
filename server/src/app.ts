@@ -18,6 +18,7 @@ const express_graphql = require("express-graphql")
 import { IUser, User, Event} from "./schema";
 import { userRoutes } from "./routes/user";
 import { isAuthenticated } from "./auth";
+import { authRoutes } from "./routes/auth";
 
 
 dotenv.config();
@@ -162,7 +163,7 @@ const resolvers = {
 }
 
 apiRouter.use("/user", userRoutes);
-
+app.use("/auth", authRoutes);
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
@@ -221,11 +222,25 @@ app.use(
     isAuthenticated,
     express.static(path.join(__dirname, "../../client")));
 app.get("/", isAuthenticated, (request, response) => {
-    response.sendFile(path.join(__dirname, "../../client/", "index.html"));
+    response.sendFile(path.join(__dirname, "../../client", "index.html"));
 });
 app.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "../../client", "index.html"));
 });
+
+
+app.get("/*", function (req, res) {
+    res.sendFile(
+        path.join(__dirname, "../../client", "index.html"),
+        function (err) {
+            if (err) {
+                res.status(500).send(err);
+            }
+        }
+    );
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);

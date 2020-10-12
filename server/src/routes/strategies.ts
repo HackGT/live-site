@@ -42,6 +42,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
         if (!secret || !id) {
             throw new Error(`Client ID or secret not configured in environment variables for Ground Truth`);
         }
+        console.log('GroundTruthStrategy')
         let options: IOAuthStrategyOptions = {
             authorizationURL: new URL("/oauth/authorize", url).toString(),
             tokenURL: new URL("/oauth/token", url).toString(),
@@ -76,58 +77,68 @@ export class GroundTruthStrategy extends OAuthStrategy {
         let user = await User.findOne({ uuid: profile.uuid });
 
         const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql'
+        console.log(user)
+        console.log('----------------------------------------------------------------')
 
+        // if (!user) {
+        //     let confirmed = false;
+        //     const query = `
+        //     query($search: String!) {
+        //         search_user(search: $search, offset: 0, n: 1) {
+        //             users {
+        //                 confirmed
+        //             }
+        //         }
+        //     }`;
+        //     const variables = {
+        //         search: profile.email
+        //     };
+        //     const options = { method: 'POST',
+        //         url: GRAPHQLURL,
+        //         headers:
+        //         {
+        //             Authorization: 'Bearer ' + process.env.GRAPHQLAUTH,
+        //             'Content-Type': "application/json"
+        //         },
+        //         body: JSON.stringify({
+        //             query,
+        //             variables
+        //         })
+        //     };
+
+        //     await request(options, async (err:any, res:any, body:any) => {
+        //         if (err) { return console.log(err); }
+        //         // if (JSON.parse(body).data.search_user.users.length > 0) {
+        //         //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+        //         // }
+        //         confirmed = true;
+        //         if (!process.env.ISPRODUCTION || confirmed) {
+        //             console.log("here")
+        //             user = createNew<IUser>(User, {
+        //                 ...profile,
+        //                 visible: 1
+        //             });
+        //             await user.save();
+        //             done(null, user);
+        //         } else {
+        //             done(null, undefined);
+        //         }
+        //     });
+
+        // } else {
+        //     user.token = accessToken;
+        //     user.admin = false;
+        //     await user.save();
+        //     done(null, user);
+        // }
         if (!user) {
-            let confirmed = false;
-            const query = `
-            query($search: String!) {
-                search_user(search: $search, offset: 0, n: 1) {
-                    users {
-                        confirmed
-                    }
-                }
-            }`;
-            const variables = {
-                search: profile.email
-            };
-            const options = { method: 'POST',
-                url: GRAPHQLURL,
-                headers:
-                {
-                    Authorization: 'Bearer ' + process.env.GRAPHQLAUTH,
-                    'Content-Type': "application/json"
-                },
-                body: JSON.stringify({
-                    query,
-                    variables
-                })
-            };
-
-            await request(options, async (err:any, res:any, body:any) => {
-                if (err) { return console.log(err); }
-                // if (JSON.parse(body).data.search_user.users.length > 0) {
-                //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
-                // }
-                confirmed = true;
-                if (!process.env.ISPRODUCTION || confirmed) {
-                    console.log("here")
-                    user = createNew<IUser>(User, {
-                        ...profile,
-                        visible: 1
-                    });
-                    await user.save();
-                    done(null, user);
-                } else {
-                    done(null, undefined);
-                }
-            });
-
+            user = createNew<IUser>(User, { ...profile });
         } else {
             user.token = accessToken;
-            user.admin = false;
-            await user.save();
-            done(null, user);
         }
+        await user.save();
+        done(null, user);
+
 
     }
 }
