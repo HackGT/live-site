@@ -54,57 +54,19 @@
 				</div>
 			</div>
 		</div>
+		<input placeholder="Enter Meeting ID" type="text" class="mtginputs" id="id" name="Meeting id">
+		<input type="text" placeholder="Enter PassCode" class="mtginputs" id="passCode" name="PassCode">
+		<input placeholder="Enter your name" type="text" class="mtginputs" id="yourName" name="yourName"
+			value="WebRTC User">
 		<div class="join-container">
 			<button id="joinMeeting" class="join-event">
 				Join Event
 			</button>
 		</div>
-		<input placeholder="Enter Meeting ID" type="text" class="mtginputs" id="id" name="Meeting id">
-		<input type="text" placeholder="Enter PassCode" class="mtginputs" id="passCode" name="PassCode">
-		<input placeholder="Enter your name" type="text" class="mtginputs" id="yourName" name="yourName"
-			value="HackGT User">
-		<video id="contentVideo"></video>
-		<select id="videoBw">
-			<option value="4096">HD (4096 Kbps)</option>
-			<option value="2048">Very Hi (2048 Kbps)</option>
-			<option value="1500">Hi (1500 Kbps)</option>
-			<option value="1024">Mid (1024 Kbps)</option>
-			<option value="512" selected>Eco (512 Kbps)</option>
-			<option value="100">Low (100 Kbps)</option>
-		</select>
-		<table id="parties"></table>
-		<div id="wait4agent">
-			<img id="waitimg" src="./media/circle.svg" />
-			<p id="waittext">Please Wait for <i>Someone</i> to Join</p>
-		</div>
-		<div id="plist">
-			<table id="parties">
-			</table>
-		</div>
-		<div id="media"></div>
-		<select id="videoIn">
-		</select>
-		<select id="audioIn"></select>
-		<select id="audioOut"></select>
-		<button id="leaveMeeting">End Meeting</button>
-		<img id="noContent" class="offair" src="media/BlueJeans_Mark.png" />
+		<div class="bottom-design">
 
-		<div class="bottom-design">		
 		</div>
 	</div>
-	
-	<footer>
-		<div class="copyright">
-			<p>SDK Version: <span id="sdkversion"></span> </p>
-		</div>
-		<div class="container">
-			<p class="banner-link"><a href="https://github.com/bluejeans" target="_blank">BlueJeans on GitHub</a>
-				<span>&nbsp; | &nbsp;</span> <a href="https://www.bluejeans.com" target="_blank">BlueJeans.com</a></p>
-		</div>
-		<div class="copyright">
-			<p>© <span id="curr_year"></span> Copyright BlueJeans Network. All Rights Reserved.</p>
-		</div>
-	</footer>
 	<script src="external/jquery.min.js"></script>
 	<script data-main="requirejs-config.js" src="external/require.js"></script>
 	<script type="text/javascript">
