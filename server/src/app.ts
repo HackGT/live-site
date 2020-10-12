@@ -9,11 +9,17 @@ import session from "express-session"
 import cors from "cors"
 import dotenv from "dotenv"
 import { buildSchema } from "graphql"
-import { GroundTruthStrategy } from "./routes/strategies"
-import { IUser, User, Event} from "./schema";
-import { userRoutes } from "./routes/user";
+export let app = express();
 const { ApolloServer, gql } = require('apollo-server-express');
 const express_graphql = require("express-graphql")
+
+
+// import { GroundTruthStrategy } from "./routes/strategies"
+import { IUser, User, Event} from "./schema";
+import { userRoutes } from "./routes/user";
+import { isAuthenticated } from "./auth";
+
+
 dotenv.config();
 
 const PORT = 3000;
@@ -24,7 +30,7 @@ const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../pa
 //const VERSION_HASH = require("git-rev-sync").short();
 
 
-export let app = express();
+
 
 if (process.env.ISPRODUCTION === 'true') {
 	app.enable("trust proxy");
@@ -50,30 +56,33 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-export function loggedInErr(req:any, res:any, next:any) {
-    if (req.user) {
-        res.status(200).json({
-            success: true
-        });
-        next();
-    }
-    else {
-        res.status(401).json({ "error": "User not logged in", success: false });
-        return;
-    }
-}
+// export function loggedInErr(req:any, res:any, next:any) {
+//     if (req.user) {
+//         res.status(200).json({
+//             success: true
+//         });
+//         next();
+//     }
+//     else {
+//         res.status(401).json({ "error": "User not logged in", success: false });
+//         return;
+//     }
+// }
 
-const gturl = String(process.env.GROUNDTRUTHURL || "login.hack.gt");
-const groundTruthStrategy = new GroundTruthStrategy(gturl);
-passport.use(groundTruthStrategy);
-passport.serializeUser<IUser, string>((user, done) => {
-    done(null, user.uuid);
-});
-passport.deserializeUser<IUser, string>((id, done) => {
-    User.findOne({ uuid: id }, (err:any, user:any) => {
-        done(err, user!);
-    });
-});
+// const gturl = String(process.env.GROUNDTRUTHURL || "login.hack.gt");
+// const groundTruthStrategy = new GroundTruthStrategy(gturl);
+// passport.use(groundTruthStrategy);
+// passport.serializeUser<IUser, string>((user, done) => {
+//     done(null, user.uuid);
+// });
+// passport.deserializeUser<IUser, string>((id, done) => {
+//     User.findOne({ uuid: id }, (err:any, user:any) => {
+//         done(err, user!);
+//     });
+// });
+
+
+
 
 let apiRouter = express.Router();
 
@@ -95,6 +104,7 @@ let getUser = async function(parent, args, context, info) {
     // return user;
     // return user
 }
+
 console.log('reached')
 let getEvent = async function(parent, args, context, info) {
     if (!context._id) {
@@ -153,6 +163,19 @@ const resolvers = {
 
 apiRouter.use("/user", userRoutes);
 
+app.post('/clicked', (req, res) => {
+  const click = {clickTime: new Date()};
+  console.log(click);
+  // console.log(db);
+
+  // db.collection('clicks').save(click, (err, result) => {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log('click added to db');
+  //   res.sendStatus(201);
+  // });
+});
 
 // apiRouter.get("/", function(req, res, next) {
     
@@ -170,7 +193,7 @@ apiRouter.use("/user", userRoutes);
 //     res.send({output: req.params.event})
 // });
 
-
+// app.use("/auth", authRoutes)
 app.use("/api", apiRouter);
 
 
@@ -194,7 +217,12 @@ server.applyMiddleware({ app });
 //     graphiql: true
 // }));
 
-app.use(express.static(path.join(__dirname, "../../client")));
+app.use(
+    isAuthenticated,
+    express.static(path.join(__dirname, "../../client")));
+app.get("/", isAuthenticated, (request, response) => {
+    response.sendFile(path.join(__dirname, "../../client/", "index.html"));
+});
 app.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "../../client", "index.html"));
 });
