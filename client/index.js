@@ -294,15 +294,21 @@ workshops = [
 	},
 	{
 		Name: "Get to Know NCR",
-		Points: 400
+		Points: 400,
+		ID: 8196619102,
+		Pass: 4282
 	},
 	{
 		Name: "Yoga with Microsoft",
-		Points: 300
+		Points: 300,
+		ID: 8196619118,
+		Pass: 4112
 	},
 	{
 		Name: "Bob Ross Painting",
-		Points: 400
+		Points: 400,
+		ID: 8196619126,
+		Pass: 2314
 	}
 ]
 

@@ -36,7 +36,7 @@ body {
     color: var(--primary-color-2);
 	background: linear-gradient(180deg, #658aae 0%, #8bc2b9 100%);
 	background-repeat: no-repeat;
-	height: 60vw;
+	height: 100vw;
 	position: relative;	
 }
 
@@ -219,6 +219,12 @@ body {
 	background-image: url("assets/microphone.png");
 	height: 3vw;
 	width: 3vw;
+}
+
+#remoteVideo {
+	height: 100%;
+	width: 100%;
+	z-index: 100;
 }
 
 .join-container {
