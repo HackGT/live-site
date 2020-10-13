@@ -83,7 +83,7 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         visible: Number,
         points: {
             type: Number,
-            required: true
+            required: false
         },
         events: {
             type: [{

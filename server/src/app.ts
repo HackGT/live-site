@@ -167,6 +167,8 @@ app.use("/auth", authRoutes);
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
+  console.log(req);  
+  res.sendStatus(201);
   // console.log(db);
 
   // db.collection('clicks').save(click, (err, result) => {
