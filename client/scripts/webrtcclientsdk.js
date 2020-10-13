@@ -254,6 +254,7 @@ define(function (require) {
       }
       document.getElementById("count").value = participants.length;
       document.getElementById("roster").value = participants.length;
+      document.getElementById("button-chris").click();
     }
 
     /*

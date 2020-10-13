@@ -15,7 +15,7 @@ const express_graphql = require("express-graphql")
 
 
 // import { GroundTruthStrategy } from "./routes/strategies"
-import { IUser, User, Event} from "./schema";
+import { IUser, User, Event } from "./schema";
 import { userRoutes } from "./routes/user";
 import { isAuthenticated } from "./auth";
 import { authRoutes } from "./routes/auth";
@@ -34,10 +34,10 @@ const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../pa
 
 
 if (process.env.ISPRODUCTION === 'true') {
-	app.enable("trust proxy");
+    app.enable("trust proxy");
 }
 else {
-	console.warn("OAuth callback(s) running in development mode");
+    console.warn("OAuth callback(s) running in development mode");
 }
 
 
@@ -49,7 +49,7 @@ if (!session_secret) {
     throw new Error("Secret not specified");
 }
 app.use(session({
-    secret:session_secret,
+    secret: session_secret,
     saveUninitialized: false,
     resave: true
 }));
@@ -87,14 +87,14 @@ app.use(passport.session());
 
 let apiRouter = express.Router();
 
-let getUser = async function(parent, args, context, info) {
+let getUser = async function (parent, args, context, info) {
     // if (!context._id) {
     //     throw new Error('User not logged in')
     // }
-//     const getUser = async function (args, req) {
-//     var user = await User.find({ uuid: args.uuid });
-//     return user[0];
-// }
+    //     const getUser = async function (args, req) {
+    //     var user = await User.find({ uuid: args.uuid });
+    //     return user[0];
+    // }
     // let user = await User.findById(args.user_id);
     var user = await User.find({ uuid: args.uuid });
     console.log(user)
@@ -107,7 +107,7 @@ let getUser = async function(parent, args, context, info) {
 }
 
 console.log('reached')
-let getEvent = async function(parent, args, context, info) {
+let getEvent = async function (parent, args, context, info) {
     if (!context._id) {
         throw new Error('User not logged in')
     }
@@ -167,13 +167,17 @@ app.use(express.urlencoded({
 
 apiRouter.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+app.get("/clicked", (req, res) => {
+    res.sendFile("index.html");
+});
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
   console.log(req.body); 
   // console.log(req)
   // console.log(res) 
-  res.sendStatus(201);
+  
+
   // console.log(db);
 
   // db.collection('clicks').save(click, (err, result) => {
@@ -186,7 +190,7 @@ app.post('/clicked', (req, res) => {
 });
 
 // apiRouter.get("/", function(req, res, next) {
-    
+
 //     res.render('index', {title: 'cool huh'})
 // });
 
