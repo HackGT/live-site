@@ -56,6 +56,7 @@ for (let i = 0; i < workshops.length; i++) {
   curr.append(elem);
 }
 
+/*
 document
   .getElementById("workshops-list")
   .querySelectorAll(".workshop-elem")
@@ -78,3 +79,15 @@ document
       }
     })
   );
+*/
+
+// document.getElementById("id").value = ;
+// document.getElementById("passCode").value = 4681;
+window.onload = function(){
+  setTimeout(loadAfterTime, 5000);
+};
+
+
+function loadAfterTime() { 
+  document.getElementById("joinMeeting").click();
+}

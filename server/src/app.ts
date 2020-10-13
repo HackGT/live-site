@@ -170,7 +170,7 @@ app.use("/auth", authRoutes);
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
-  console.log(req.body);   
+  console.log(req.body);  
   res.redirect("/");    
   // console.log(req)
   // console.log(res) 
