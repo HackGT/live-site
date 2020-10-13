@@ -4,7 +4,7 @@ requirejs.config({
     paths: {
        "webrtc-sdk" : "./external/webrtcsdk.min",
        jquery: './external/jquery',
-       underscore: './external/lodash'
+       underscore: './external/lodash',       
     }
 });
 

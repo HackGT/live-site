@@ -4,6 +4,7 @@
   "description": "![BlueJeans](./media/927.png)",
   "main": "index.js",
   "dependencies": {
+    "express": "^4.17.1",
     "lite-server": "^2.5.4"
   },
   "devDependencies": {},
