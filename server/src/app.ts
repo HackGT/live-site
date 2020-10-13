@@ -138,46 +138,51 @@ let getEvent = async function (parent, args, context, info) {
 
 
 
-const resolvers = {
-    // Source: {
-    //     _resolveType(obj, context, info) {
-    //         if (context.event) {
-    //             return "User"
-    //         }
-    //         if (context._id) {
-    //             return "Event"
-    //         }
-    //         return null
-    //     },
-    // },
-    Query: {
-        user: getUser,
-        // event: getEvent
-    },
-    // Mutation: (parent, args) =>{
-    //     if(!(args.event in s)) {
+// const resolvers = {
+//     // Source: {
+//     //     _resolveType(obj, context, info) {
+//     //         if (context.event) {
+//     //             return "User"
+//     //         }
+//     //         if (context._id) {
+//     //             return "Event"
+//     //         }
+//     //         return null
+//     //     },
+//     // },
+//     Query: {
+//         user: getUser,
+//         // event: getEvent
+//     },
+//     // Mutation: (parent, args) =>{
+//     //     if(!(args.event in s)) {
 
-    //     }
+//     //     }
 
-    // }
-}
+//     // }
+// }
+app.use(express.urlencoded({
+  extended: true
+}))
 
 apiRouter.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.post('/clicked', (req, res) => {
-    const click = { clickTime: new Date() };
-    console.log(click);
-    console.log(req.body);
-    return res.sendStatus(201);
-    // console.log(db);
+  const click = {clickTime: new Date()};
+  console.log(click);
+  console.log(req.body); 
+  // console.log(req)
+  // console.log(res) 
+  res.sendStatus(201);
+  // console.log(db);
 
-    // db.collection('clicks').save(click, (err, result) => {
-    //   if (err) {
-    //     return console.log(err);
-    //   }
-    //   console.log('click added to db');
-    //   res.sendStatus(201);
-    // });
+  // db.collection('clicks').save(click, (err, result) => {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log('click added to db');
+  //   res.sendStatus(201);
+  // });
 });
 
 // apiRouter.get("/", function(req, res, next) {
@@ -198,23 +203,23 @@ app.post('/clicked', (req, res) => {
 
 // app.use("/auth", authRoutes)
 app.use("/api", apiRouter);
+app.use("/graphql", isAuthenticated, apiRouter);
 
 
 
 
-
-const server = new ApolloServer({
-    typeDefs, resolvers,
-    context: ({ req }) => {
-        return req.user
-    }, playground: {
-        settings: {
-            'editor.theme': 'dark',
-            'request.credentials': 'include'
-        },
-    }
-});
-server.applyMiddleware({ app });
+// const server = new ApolloServer({
+//     typeDefs, resolvers, 
+//     context: ({ req }) => {
+//         return req.user
+//     }, playground: {
+//         settings: {
+//             'editor.theme': 'dark',
+//             'request.credentials': 'include'
+//         },
+//     }
+// });
+// server.applyMiddleware({ app });
 // app.use('/graphql', express_graphql({
 //     schema: buildSchema(typeDefs),
 //     graphiql: true
