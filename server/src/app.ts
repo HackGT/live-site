@@ -167,13 +167,17 @@ app.use(express.urlencoded({
 
 apiRouter.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+app.get("/clicked", (req, res) => {
+    res.sendFile("index.html");
+});
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
   console.log(req.body); 
   // console.log(req)
   // console.log(res) 
-  res.sendStatus(201);
+  
+
   // console.log(db);
 
   // db.collection('clicks').save(click, (err, result) => {
