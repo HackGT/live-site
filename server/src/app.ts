@@ -170,14 +170,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // apiRouter.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+// <<<<<<< HEAD
 
-app.get("/clicked", (req, res) => {
-    res.sendFile("index.html");
-});
+// app.get("/clicked", (req, res) => {
+//     res.sendFile("index.html");
+// });
+// =======
+// >>>>>>> 3d228b5455d5907ee011d075082474c376742516
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
-  console.log(req.body); 
+  console.log(req.body);   
+  res.redirect("/");    
   // console.log(req)
   // console.log(res) 
   
