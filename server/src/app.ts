@@ -171,7 +171,7 @@ app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
   console.log(req.body);  
-  res.redirect("/");    
+  res.redirect("/");
   // console.log(req)
   // console.log(res) 
   
