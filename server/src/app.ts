@@ -202,7 +202,23 @@ app.post('/clicked', (req, res) => {
 // });
 
 // app.use("/auth", authRoutes)
-app.use("/api", apiRouter);
+// app.use("/api", apiRouter);
+
+const root = {
+    user: getUser,
+    // completed: getCompleted,
+    // update_user_to_admin: updateToAdmin,
+    // check_user_solved: checkUserSolved,
+    // add_completed: addCompleted
+};
+
+apiRouter.use('/', express_graphql({
+    schema: buildSchema(typeDefs),
+    rootValue: root,
+    graphiql:process.env.ISPRODUCTION !== 'true'
+}))
+
+
 app.use("/graphql", isAuthenticated, apiRouter);
 
 
