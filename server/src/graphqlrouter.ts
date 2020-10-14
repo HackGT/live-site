@@ -16,11 +16,21 @@ let getUser = async function (parent, args, context, info) {
     //     return user[0];
     // }
     // let user = await User.findById(args.user_id);
-    var user = await User.find({ uuid: args.uuid });
+    let query_str = args.body.query;
+    let starting_idx = query_str.indexOf("user_id");
+    let ending_idx = query_str.indexOf(")");
+    
+    let info1 = query_str.substring(starting_idx, ending_idx);
+    console.log(info1);
+    let start2 = info1.indexOf(":");
+    info1 = info1.substring(start2 + 2, info1.length - 1);
+    console.log(info1);
+
+    var user = await User.find({ uuid: info1 });
     console.log(user)
     if (!user) {
         throw new Error("User not found");
-    }
+    }        
     return user[0];
     // return user;
     // return user
