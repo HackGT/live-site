@@ -145,32 +145,6 @@ app.post('/clicked', (req, res) => {
     console.log(req.body);  
 
 
-    // var dice = 3;
-    // var sides = 6;
-    // var uuid = "ea655e36-97b8-429b-ba0f-d87b78bef33e"
-    // var query = `query($uuid: String!) {
-    //     user(uuid: $uuid) {
-    //         name,
-    //         points,
-    //         id
-    //     }
-    // }`
-
-
-    // const response =  fetch(`http://localhost:3000/graphql`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     query,
-    //     variables: { uuid },
-    //   })
-    // })
-    //   .then(r => r.json())
-    //   .then(data => console.log('data returned:', data));
-    //  console.log('reached here boiboiboiboiboi')
     const variables = {
         uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
     }
@@ -186,45 +160,13 @@ app.post('/clicked', (req, res) => {
         })
      };
     request(options, (err, res, body) => {
-        // if (err) { return console.log(err); }
-        // if (JSON.parse(body).data.search_user.users.length > 0) {
-        //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
-        // }
-        // if (!process.env.ISPRODUCTION || confirmed) {
-        //     console.log("here")
-        //     user = createNew<IUser>(User, {
-        //         ...profile,
-        //         visible: 1
-        //     });
-        //     await user.save();
-        //     done(null, user);
-        // } else {
-        //     done(null, undefined);
-        // }
+  
         if (err) {return console.log(err)};
         console.log(body)
     });
 
-
-
-
-
-
-
-    // res.redirect("/");
-  // console.log(req)
-  // console.log(res) 
-  
-
-  // console.log(db);
-
-  // db.collection('clicks').save(click, (err, result) => {
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-  //   console.log('click added to db');
-  //   res.sendStatus(201);
-  // });
+    res.redirect("/");
+ 
 });
 
 // apiRouter.get("/", function(req, res, next) {
@@ -263,7 +205,7 @@ app.post('/clicked', (req, res) => {
 
 // app.use("/graphql", isAuthenticated, apiRouter);
 var apigraphql = require('./graphqlrouter')
-app.use('/graphql', isAuthenticated, apigraphql)
+app.use('/graphql', apigraphql)
 
 
 
