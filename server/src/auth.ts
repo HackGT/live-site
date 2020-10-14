@@ -31,7 +31,7 @@ export function isAuthenticated(request: express.Request, response: express.Resp
     if (!request.isAuthenticated() || !request.user) {
         console.log(request.isAuthenticated(), request.user)
         if (request.session) {
-            console.log(request.session.returnTo, request.originalUrl)
+            // console.log(request.session.returnTo, request.originalUrl)
             request.session.returnTo = request.originalUrl;
         }
         // console.log('here a lot boi!')

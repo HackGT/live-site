@@ -80,20 +80,62 @@ var query = `query($uuid: String!) {
     }
 }`
 
-const response =  fetch(`http://localhost:3000/graphql`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  },
-  body: JSON.stringify({
-    query,
-    variables: { uuid },
-  })
-})
-  .then(r => r.json())
-  .then(data => console.log('data returned:', data));
+// const response =  fetch(`/graphql`, {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Accept': 'application/json',
+//   },
+//   body: JSON.stringify({
+//     query,
+//     variables: { uuid },
+//   })
+// })
+//   .then(r => r.json())
+//   .then(data => console.log('data returned:', data));
  // console.log('reached here boiboiboiboiboi')
+
+
+
+
+// const variables = {
+//     uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+// }
+// const options = { method: 'POST',
+//     url: 'http://localhost:3000/graphql',
+//     headers:
+//     {
+//         'Content-Type': "application/json"
+//     },
+//     body: JSON.stringify({
+//         query,
+//         variables
+//     })
+//  };
+// request(options,  (err, res, body) => {
+//     // if (err) { return console.log(err); }
+//     // if (JSON.parse(body).data.search_user.users.length > 0) {
+//     //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+//     // }
+//     // if (!process.env.ISPRODUCTION || confirmed) {
+//     //     console.log("here")
+//     //     user = createNew<IUser>(User, {
+//     //         ...profile,
+//     //         visible: 1
+//     //     });
+//     //     await user.save();
+//     //     done(null, user);
+//     // } else {
+//     //     done(null, undefined);
+//     // }
+//     console.log('boiboiboiboi')
+//     if (err) {return console.log(err)};
+//     console.log(body)
+// });
+
+
+
+
 
 
 
@@ -129,39 +171,39 @@ app.post('/clicked', (req, res) => {
     //   .then(r => r.json())
     //   .then(data => console.log('data returned:', data));
     //  console.log('reached here boiboiboiboiboi')
-    // const variables = {
-    //     uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
-    // }
-    // const options = { method: 'POST',
-    //     url: 'localhost:3000/graphql',
-    //     headers:
-    //     {
-    //         'Content-Type': "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         query,
-    //         variables
-    //     })
-    //  };
-    // await request(options, async (err, res, body) => {
-    //     // if (err) { return console.log(err); }
-    //     // if (JSON.parse(body).data.search_user.users.length > 0) {
-    //     //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
-    //     // }
-    //     // if (!process.env.ISPRODUCTION || confirmed) {
-    //     //     console.log("here")
-    //     //     user = createNew<IUser>(User, {
-    //     //         ...profile,
-    //     //         visible: 1
-    //     //     });
-    //     //     await user.save();
-    //     //     done(null, user);
-    //     // } else {
-    //     //     done(null, undefined);
-    //     // }
-    //     if (err) {return console.log(err)};
-    //     console.log(body)
-    // });
+    const variables = {
+        uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+    }
+    const options = { method: 'POST',
+        url: 'http://localhost:3000/graphql',
+        headers:
+        {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+            query,
+            variables
+        })
+     };
+    request(options, (err, res, body) => {
+        // if (err) { return console.log(err); }
+        // if (JSON.parse(body).data.search_user.users.length > 0) {
+        //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+        // }
+        // if (!process.env.ISPRODUCTION || confirmed) {
+        //     console.log("here")
+        //     user = createNew<IUser>(User, {
+        //         ...profile,
+        //         visible: 1
+        //     });
+        //     await user.save();
+        //     done(null, user);
+        // } else {
+        //     done(null, undefined);
+        // }
+        if (err) {return console.log(err)};
+        console.log(body)
+    });
 
 
 
@@ -169,7 +211,7 @@ app.post('/clicked', (req, res) => {
 
 
 
-  res.redirect("/");
+    // res.redirect("/");
   // console.log(req)
   // console.log(res) 
   
