@@ -133,6 +133,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
         // }
         if (!user) {
             user = createNew<IUser>(User, { ...profile });
+            user.points = 0;
         } else {
             user.token = accessToken;
         }

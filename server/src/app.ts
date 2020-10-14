@@ -12,6 +12,7 @@ import { buildSchema } from "graphql"
 export let app = express();
 const { ApolloServer, gql } = require('apollo-server-express');
 const express_graphql = require("express-graphql")
+const bodyParser = require('body-parser')
 
 
 // import { GroundTruthStrategy } from "./routes/strategies"
@@ -85,7 +86,7 @@ app.use(passport.session());
 
 
 
-let apiRouter = express.Router();
+
 
 let getUser = async function (parent, args, context, info) {
     // if (!context._id) {
@@ -161,12 +162,21 @@ let getEvent = async function (parent, args, context, info) {
 
 //     // }
 // }
-app.use(express.urlencoded({
-  extended: true
-}))
+// app.use(express.urlencoded({
+//   extended: true
+// }))
 
-apiRouter.use("/user", userRoutes);
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// apiRouter.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+// <<<<<<< HEAD
+
+// app.get("/clicked", (req, res) => {
+//     res.sendFile("index.html");
+// });
+// =======
+// >>>>>>> 3d228b5455d5907ee011d075082474c376742516
 app.post('/clicked', (req, res) => {
   const click = {clickTime: new Date()};
   console.log(click);
@@ -204,8 +214,26 @@ app.post('/clicked', (req, res) => {
 // });
 
 // app.use("/auth", authRoutes)
-app.use("/api", apiRouter);
-app.use("/graphql", isAuthenticated, apiRouter);
+// app.use("/api", apiRouter);
+// let apiRouter = express.Router();
+// apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
+// const root = {
+//     user: getUser,
+//     // completed: getCompleted,
+//     // update_user_to_admin: updateToAdmin,
+//     // check_user_solved: checkUserSolved,
+//     // add_completed: addCompleted
+// };
+
+// apiRouter.use('/', express_graphql({
+//     schema: buildSchema(typeDefs),
+//     rootValue: root,
+//     graphiql:process.env.ISPRODUCTION !== 'true'
+// }))
+
+// app.use("/graphql", isAuthenticated, apiRouter);
+var apigraphql = require('./graphqlrouter')
+app.use('/graphql', apigraphql)
 
 
 
