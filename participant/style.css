@@ -1,0 +1,290 @@
+@font-face {
+    font-family: "Bavro-Regular";
+    src: url("./assets/fonts/Bavro-Regular.eot");
+    src: url("./assets/fonts/Bavro-Regular.eot?#iefix")
+            format("embedded-opentype"),
+        url("./assets/fonts/Bavro-Regular.svg#Bavro-Regular") format("svg"),
+        url("./assets/fonts/Bavro-Regular.ttf") format("truetype"),
+        url("./assets/fonts/Bavro-Regular.woff") format("woff"),
+        url("./assets/fonts/Bavro-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --primary-color-1: white;
+    --primary-color-2: white;
+    --primary-font: "Bavro-Regular", "sans-serif";
+    --secondary-font: "Quicksand", "sans-serif";
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+.clear {
+	clear: both;
+}	
+
+.link {
+	position: relative;
+	z-index: 100;	
+	height: 10vw;
+	width: 100%;
+}
+
+#joinLink {
+	position: relative;
+	font-size: 10px;	
+	height: 100%;
+	width: 100%;
+	z-index: 100;
+	color: black;
+}
+
+body {
+	font-family: var(--secondary-font);	
+	font-size: 16px;
+    line-height: 1.5;
+    color: var(--primary-color-2);
+	background: linear-gradient(180deg, #658aae 0%, #8bc2b9 100%);
+	background-repeat: no-repeat;
+	height: 75vw;
+	position: relative;	
+}
+
+.container {
+	height: 100%;
+	width: 100vw;
+	position: relative;
+}
+
+.nav {
+	padding-top: 3rem;
+	display: flex;
+	width: 100%;	
+	align-items: center;	
+}
+
+.nav .back-button {
+	text-align: center;
+	font-size: 20px;
+	width: 30%;
+	padding-left: 5%;
+}
+
+.nav .title {
+	font-family: var(--primary-font);
+	font-size: 24px;
+	text-align: center;
+	width: 50%;
+}
+
+.nav .points {		
+	width: 40%;
+	height: 100%;
+	display: flex;
+	gap: 5%;
+	align-items: center;
+	justify-content: center;
+}
+
+.nav .points .points-text {
+	font-size: 20px;
+}
+
+.nav .points .points-number {
+	border: 1px solid white;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 12.5px;
+	height: 100%;
+	width: 25%;
+}
+
+.container .workshops {
+	background-color: white;
+	border-radius: 1rem;
+	position: absolute;
+	margin-top: 1rem;
+	right: 7.5%;
+	z-index: 100;
+	height: 25%;
+	width: 25%;	
+	overflow-y: auto;
+	padding: 1rem;
+}
+
+.container .workshops .workshop-elem {
+	height: 20%;		
+	width: 100%;
+	margin: auto;
+	color: #658aae;
+	display: flex;
+	cursor: pointer;	
+}
+
+.workshop-elem:hover {
+	background-color: lightblue;
+}
+
+.workshop-name {	
+	text-align: left;
+	width: 80%;
+}
+
+.workshop-points {
+	text-align: right;
+	width: 20%;
+}
+
+.body {
+	display: flex;
+	padding-top: 2%;
+	height: 40%;
+	justify-content: center;	
+	gap: 5%;
+	margin-top: 5vw;
+}
+
+.body .workshop {	
+	background-color: white;
+	width: 40%;
+	height: 100%;
+}
+
+.body .workshop .title {
+	height: 10%;
+	color: #658aae;
+	padding-left: 1rem;	
+	padding-top: 0.5rem;
+	background-color: white;	
+}
+
+.body .workshop #description {
+	color: #658aae;
+	height: 90%;
+	padding-left: 1rem;
+	padding-top: 0.5rem;
+}
+
+.body .video {	
+	width: 40%;
+	height: 100%;
+}
+
+.body .video .title {
+	height: 10%;
+	color: #658aae;	
+	padding-left: 1rem;
+	padding-top: 0.5rem;
+	background-color: white;
+}
+
+.body .video .video-body {
+	height: 100%;
+	width: 100%;
+	position: relative;	
+}
+
+.body .video .video-body #localVideo {
+	width: 100%;
+	height: 100%;
+}
+
+.body .video .video-body .audio-mute {
+	position: absolute;	
+	right: 30%;
+	bottom: 10%;
+	background-color: grey;
+	opacity: 0.5;
+	border-radius: 3rem;
+	width: 5vw;
+	height: 5vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.body .video .video-body .video-mute {
+	position: absolute;	
+	left: 30%;
+	bottom: 10%;
+	background-color: grey;
+	border-radius: 3rem;
+	width: 5vw;
+	height: 5vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.body .video .video-body .muted {
+	opacity: 1;
+}
+
+.body .video .video-body .unmuted {
+	opacity: 0.5;
+}
+
+#toggleVideoMute {
+	background-image: url("assets/video.png");	
+	height: 3vw;
+	width: 3vw;
+	margin-bottom: 2px;
+}
+
+#toggleAudioMute {
+	background-image: url("assets/microphone.png");
+	height: 3vw;
+	width: 3vw;
+}
+
+#remoteVideo {
+	height: 100%;
+	width: 100%;
+	z-index: 100;
+}
+
+.join-container {
+	display: flex;
+	align-items: center;
+}
+
+.join-event {
+	border: none;
+	background-color: white;
+	color: #658aae;	
+	text-align: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-radius: 5rem;	
+	margin-top: 6vw;
+	margin-left: auto;
+	margin-right: auto;			
+	height: 2vw;
+	width: 9vw;
+}
+
+.bottom-design {
+	background-image: url("assets/about-long-glow.png");
+	background-size: 70%;	
+	height: 20%;	
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+.points-number {
+	cursor: pointer;
+}
+
+#form-chris {
+	position: relative;
+	z-index:100;
+}
+
+.link {
+	display: none;
+}

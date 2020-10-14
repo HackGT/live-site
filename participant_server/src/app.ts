@@ -229,18 +229,18 @@ app.use('/graphql', apigraphql)
 
 app.use(
     isAuthenticated,
-    express.static(path.join(__dirname, "../../client")));
+    express.static(path.join(__dirname, "../../participant")));
 app.get("/", isAuthenticated, (request, response) => {
-    response.sendFile(path.join(__dirname, "../../client", "index.html"));
+    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
 });
 
 app.get("*", (request, response) => {
-    response.sendFile(path.join(__dirname, "../../client", "index.html"));
+    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
 });
 
 app.get("/*", function (req, res) {
     res.sendFile(
-        path.join(__dirname, "../../client", "index.html"),
+        path.join(__dirname, "../../participant", "index.html"),
         function (err) {
             if (err) {
                 res.status(500).send(err);
