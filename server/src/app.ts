@@ -1,10 +1,12 @@
 import fs from "fs";
 import path from "path";
 import express from "express";
+import fetch from "node-fetch";
 import compression from "compression";
 import morgan from "morgan";
 import passport from "passport";
 import session from "express-session"
+import request from "request"
 
 import cors from "cors"
 import dotenv from "dotenv"
@@ -58,129 +60,115 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// export function loggedInErr(req:any, res:any, next:any) {
-//     if (req.user) {
-//         res.status(200).json({
-//             success: true
-//         });
-//         next();
-//     }
-//     else {
-//         res.status(401).json({ "error": "User not logged in", success: false });
-//         return;
-//     }
-// }
 
-// const gturl = String(process.env.GROUNDTRUTHURL || "login.hack.gt");
-// const groundTruthStrategy = new GroundTruthStrategy(gturl);
-// passport.use(groundTruthStrategy);
-// passport.serializeUser<IUser, string>((user, done) => {
-//     done(null, user.uuid);
-// });
-// passport.deserializeUser<IUser, string>((id, done) => {
-//     User.findOne({ uuid: id }, (err:any, user:any) => {
-//         done(err, user!);
-//     });
-// });
-
-
-
-
-
-
-let getUser = async function (parent, args, context, info) {
-    // if (!context._id) {
-    //     throw new Error('User not logged in')
-    // }
-    //     const getUser = async function (args, req) {
-    //     var user = await User.find({ uuid: args.uuid });
-    //     return user[0];
-    // }
-    // let user = await User.findById(args.user_id);
-    var user = await User.find({ uuid: args.uuid });
-    console.log(user)
-    if (!user) {
-        throw new Error("User not found");
-    }
-    return user[0];
-    // return user;
-    // return user
-}
-
-console.log('reached')
-let getEvent = async function (parent, args, context, info) {
-    if (!context._id) {
-        throw new Error('User not logged in')
-    }
-    let event = await Event.findById(context._id)
-    if (!event) {
-        throw new Error('Event not found')
-    }
-    return event
-}
-// const resolvers = {
-//   Query: {
-//     info: () => `This is the API of a Hackernews Clone`,
-//     feed: () => links,
-//   },
-//   Mutation: {
-//     // 2
-//     post: (parent, args) => {
-//        const link = {
-//         id: `link-${idCount++}`,
-//         description: args.description,
-//         url: args.url,
-//       }
-//       links.push(link)
-//       return link
-//     }
-//   },
-// }
-
-
-
-// const resolvers = {
-//     // Source: {
-//     //     _resolveType(obj, context, info) {
-//     //         if (context.event) {
-//     //             return "User"
-//     //         }
-//     //         if (context._id) {
-//     //             return "Event"
-//     //         }
-//     //         return null
-//     //     },
-//     // },
-//     Query: {
-//         user: getUser,
-//         // event: getEvent
-//     },
-//     // Mutation: (parent, args) =>{
-//     //     if(!(args.event in s)) {
-
-//     //     }
-
-//     // }
-// }
-// app.use(express.urlencoded({
-//   extended: true
-// }))
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
+// app.use(/\/((?!graphql).)*/, bodyParser.json());
 // apiRouter.use("/user", userRoutes);
 app.use("/auth", authRoutes);
-// <<<<<<< HEAD
 
-// app.get("/clicked", (req, res) => {
-//     res.sendFile("index.html");
-// });
-// =======
-// >>>>>>> 3d228b5455d5907ee011d075082474c376742516
+
+
+
+
+var uuid = "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+var query = `query($uuid: String!) {
+    user(uuid: $uuid) {
+        name,
+        points,
+        id
+    }
+}`
+
+const response =  fetch(`http://localhost:3000/graphql`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  body: JSON.stringify({
+    query,
+    variables: { uuid },
+  })
+})
+  .then(r => r.json())
+  .then(data => console.log('data returned:', data));
+ // console.log('reached here boiboiboiboiboi')
+
+
+
 app.post('/clicked', (req, res) => {
-  const click = {clickTime: new Date()};
-  console.log(click);
-  console.log(req.body);  
+    const click = {clickTime: new Date()};
+    console.log(click);
+    console.log(req.body);  
+
+
+    // var dice = 3;
+    // var sides = 6;
+    // var uuid = "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+    // var query = `query($uuid: String!) {
+    //     user(uuid: $uuid) {
+    //         name,
+    //         points,
+    //         id
+    //     }
+    // }`
+
+
+    // const response =  fetch(`http://localhost:3000/graphql`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     query,
+    //     variables: { uuid },
+    //   })
+    // })
+    //   .then(r => r.json())
+    //   .then(data => console.log('data returned:', data));
+    //  console.log('reached here boiboiboiboiboi')
+    // const variables = {
+    //     uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+    // }
+    // const options = { method: 'POST',
+    //     url: 'localhost:3000/graphql',
+    //     headers:
+    //     {
+    //         'Content-Type': "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         query,
+    //         variables
+    //     })
+    //  };
+    // await request(options, async (err, res, body) => {
+    //     // if (err) { return console.log(err); }
+    //     // if (JSON.parse(body).data.search_user.users.length > 0) {
+    //     //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+    //     // }
+    //     // if (!process.env.ISPRODUCTION || confirmed) {
+    //     //     console.log("here")
+    //     //     user = createNew<IUser>(User, {
+    //     //         ...profile,
+    //     //         visible: 1
+    //     //     });
+    //     //     await user.save();
+    //     //     done(null, user);
+    //     // } else {
+    //     //     done(null, undefined);
+    //     // }
+    //     if (err) {return console.log(err)};
+    //     console.log(body)
+    // });
+
+
+
+
+
+
+
   res.redirect("/");
   // console.log(req)
   // console.log(res) 
@@ -233,7 +221,7 @@ app.post('/clicked', (req, res) => {
 
 // app.use("/graphql", isAuthenticated, apiRouter);
 var apigraphql = require('./graphqlrouter')
-app.use('/graphql', apigraphql)
+app.use('/graphql', isAuthenticated, apigraphql)
 
 
 

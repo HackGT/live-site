@@ -9,13 +9,13 @@ schema {
 
 
 type Mutation {
-   modifyUser(name: String!, points: Int!): User
+   modify_user(uuid: String!, points: Int!): User
    addUrl(event:String!):String!
 
 }
 
 type Query {
-   user(user_id: String): User
+   user(uuid: String): User
    event(event_id: String): Event
    
 }
