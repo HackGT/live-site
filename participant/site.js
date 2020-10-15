@@ -108,8 +108,9 @@ button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
   // var submit = document.getElementById("submit");
-  fetchMoviesJSON();
-  document.getElementById("joinLink").click();
+  fetchMoviesJSON()
+    .then(data => {console.log(data)});
+  // document.getElementById("joinLink").click();
   // submit.click();
 });
 
@@ -122,5 +123,5 @@ async function fetchMoviesJSON() {
     },
     body: JSON.stringify({data: selected})
   });
-  console.log(response);
+  return response.json();
 }

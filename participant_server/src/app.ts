@@ -138,7 +138,7 @@ app.post('/clicked', (req, res) => {
     const click = {clickTime: new Date()};
     console.log(click);        
     console.log(req.body);
-    res.send("data");
+    res.send({data: "data"});
 
     /*
     const variables = {
