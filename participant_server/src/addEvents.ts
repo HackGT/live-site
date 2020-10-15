@@ -124,7 +124,102 @@ let events: IEvent[] = [
         points: 5,
         url: "https://bluejeans.com/825086141"
     },
-    
+    {
+        name: "Web Dev 1 Workshop / OFfice Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 20:00:00"),
+        endtime: new Date("October 16, 22:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/693811111"
+    },
+    {
+        name: "Web Dev 2 Workshop",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 22:00:00"),
+        endtime: new Date("October 16, 23:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/613306731"
+    },
+    {
+        name: "Prototype Workshop",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 23:00:00"),
+        endtime: new Date("October 17, 12:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/683549242"
+    },
+    {
+        name: "App Dev Workshop 1 / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 20:00:00"),
+        endtime: new Date("October 16, 22:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/492994741"
+    },
+    {
+        name: "App Dev Workshop 2 / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 22:00:00"),
+        endtime: new Date("October 17, 00:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/894804876"
+    },
+    {
+        name: "Data Science Workshop 1 / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 20:00:00"),
+        endtime: new Date("October 16, 22:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/136170629"
+    },
+    {
+        name: "Data Science Workshop 2 / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 22:00:00"),
+        endtime: new Date("October 17, 00:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/847022760"
+    },
+    {
+        name: "Gaming and Graphics Workshop 1 / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 16, 2020 20:00:00"),
+        endtime: new Date("October 16, 22:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/978047451"
+    },
+    {
+        name: "Gaming and Graphics Workshop 2 / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 17, 2020 10:00:00"),
+        endtime: new Date("October 17, 12:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/489296217"
+    },
+    {
+        name: "Web Dev 3 Workshop / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 17, 2020 10:00:00"),
+        endtime: new Date("October 17, 12:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/919084003"
+    },
+    {
+        name: "App Dev 3 Workshop / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 17, 2020 10:00:00"),
+        endtime: new Date("October 17, 12:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/545457659"
+    },
+    {
+        name: "Data Science 3 Workshop / Office Hours",
+        type: "Emerging Workshop",
+        starttime: new Date("October 17, 2020 10:00:00"),
+        endtime: new Date("October 17, 12:00:00"),
+        points: 15,
+        url: "https://bluejeans.com/823880646"
+    },
 ]
 Event.insertMany(events) 
 
