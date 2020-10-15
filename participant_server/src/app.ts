@@ -81,66 +81,36 @@ var query = `query($uuid: String!) {
     }
 }`
 
-// const response =  fetch(`/graphql`, {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'Accept': 'application/json',
-//   },
-//   body: JSON.stringify({
-//     query,
-//     variables: { uuid },
-//   })
-// })
-//   .then(r => r.json())
-//   .then(data => console.log('data returned:', data));
- // console.log('reached here boiboiboiboiboi')
-
-
-
-
-// const variables = {
-//     uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
-// }
-// const options = { method: 'POST',
-//     url: 'http://localhost:3000/graphql',
-//     headers:
-//     {
-//         'Content-Type': "application/json"
-//     },
-//     body: JSON.stringify({
-//         query,
-//         variables
-//     })
-//  };
-// request(options,  (err, res, body) => {
-//     // if (err) { return console.log(err); }
-//     // if (JSON.parse(body).data.search_user.users.length > 0) {
-//     //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
-//     // }
-//     // if (!process.env.ISPRODUCTION || confirmed) {
-//     //     console.log("here")
-//     //     user = createNew<IUser>(User, {
-//     //         ...profile,
-//     //         visible: 1
-//     //     });
-//     //     await user.save();
-//     //     done(null, user);
-//     // } else {
-//     //     done(null, undefined);
-//     // }
-//     console.log('boiboiboiboi')
-//     if (err) {return console.log(err)};
-//     console.log(body)
-// });
 
 app.post('/clicked', (req, res) => {
     const click = {clickTime: new Date()};
     console.log(click);        
     console.log(req.body);
-    res.send({data: "data"});
+    // res.send({data: "data"});
 
-    /*
+    
+    const variables = {
+        uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+    }
+    const options = { method: 'POST',
+        url: 'http://localhost:3000/graphql',
+        headers:
+        {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+            query,
+            variables
+        })
+     };
+    request(options, (err, res, body) => {
+        if (err) {return console.log(err)};
+        console.log(body)
+    }); 
+    // res.redirect("/");
+});
+
+app.get('/dashboard,', (req, res)=> {
     const variables = {
         uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
     }
@@ -159,12 +129,8 @@ app.post('/clicked', (req, res) => {
   
         if (err) {return console.log(err)};
         console.log(body)
-    });    
-
-    */
-
-    // res.redirect("/");
-});
+    }); 
+})
 
 // apiRouter.get("/", function(req, res, next) {
 
