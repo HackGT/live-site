@@ -109,6 +109,14 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/626750528"
     },
     {
+        name: "GM Mini Challenge",
+        type: "Mini Challenge",
+        starttime: new Date("October 17, 2020 13:00:00 EDT"),
+        endtime: new Date("October 17, 14:00:00 EDT"),
+        points: 5,
+        url: "https://bluejeans.com/996851227"
+    },
+    {
         name: "NCR Mini Challenge",
         type: "Mini Challenge",
         starttime: new Date("October 17, 2020 15:30:00 EDT"),
