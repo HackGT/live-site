@@ -31,34 +31,32 @@ export interface IUser extends RootDocument {
     admin?: boolean;
     visible?: number;
     points?: number;
-    events?: IEvent[];
+
+
 
 }
 
 export interface IEvent extends RootDocument {
     name: string;
-    length: number;
-    points?: number;
-    url: string;
+    type: string;
+    startime:Date;
+    endtime:Date;
+    points: number;
+    meetingId:number;
+    passcode:number
 }
 
 export type IUserMongoose = IUser & mongoose.Document;
 export type IEventMongoose = IEvent & mongoose.Document;
 export const Event = mongoose.model<IEventMongoose>("Event", new mongoose.Schema({
+    name: String,
+    type: String,
+    starttime:  Date,
+    endtime: Date,
+    points: Number, 
+    meetingId: Number,
+    passcode: Number
 
-    name: {
-            type: String,
-            required: true
-     },
-    length: Number,
-    points: {
-            type: Number,
-            required: true
-     }, 
-     url: {
-         type: String, 
-         required: true
-     }
 }));
 
 export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
@@ -81,17 +79,16 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         // auth_keys: [String],
         admin: Boolean,
         visible: Number,
-        points: {
-            type: Number,
-            required: true
-        },
-        events: {
-            type: [{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Event"
-            }]
-        }
-
+        // points: {
+        //     type: Number,
+        //     required: true
+        // },
+        // events: {
+        //     type: [{
+        //         type: mongoose.Schema.Types.ObjectId,
+        //         ref: "Event"
+        //     }]
+        // }
     },
     {
         usePushEach: true
