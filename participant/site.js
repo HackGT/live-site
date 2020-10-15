@@ -129,12 +129,13 @@ button.addEventListener("click", function () {
   })
     .then(r => r.json())
     .then(data => console.log(data));
-
-  */
+  
+    /*
   fetchMoviesJSON().then((data) => {
     console.log("FETCH MOVIES: ");
     console.log(data);
   });
+  */
   // document.getElementById("joinLink").click();
   // submit.click();
 });
@@ -149,20 +150,8 @@ var query = `query($uuid: String!) {
 }`;
 console.log(query);
 
-/*
-async function getUserData() {
-  const response = await fetch("http://localhost:3000/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ query, variables: { uuid } }),
-  });
-}
-*/
-
 console.log(JSON.stringify(selected));
+/*
 async function fetchMoviesJSON() {
   const response = await fetch("http://localhost:3000/clicked", {
     method: "POST",
@@ -173,3 +162,4 @@ async function fetchMoviesJSON() {
   });
   return response.json();
 }
+*/
