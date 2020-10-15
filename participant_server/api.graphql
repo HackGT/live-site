@@ -7,6 +7,7 @@ schema {
 #     modifyUser(input: UserInput!): User
 # }
 
+# scalar Date
 
 type Mutation {
    modify_user(uuid: String!, points: Int!): User
@@ -16,15 +17,17 @@ type Mutation {
 
 type Query {
    user(uuid: String): User
-   event(event_id: String): Event
+   event(event_name: String): Event
    
 }
 
 type Event {
    name: String!
-   length: Int!
+   starttime: String!,
+   endtime: String!,
    points: Int!
-   url: String!
+   meetingId: Int!,
+   passcode: Int!
 }
 
 type User {

@@ -26,7 +26,7 @@ import { authRoutes } from "./routes/auth";
 
 dotenv.config();
 
-const PORT = 3000;
+const PORT = 4000;
 // const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
 
 const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");

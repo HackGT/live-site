@@ -31,12 +31,13 @@ export interface IUser extends RootDocument {
     admin?: boolean;
     visible?: number;
     points?: number;
+    events?: IEvent[];
 
 
 
 }
 
-export interface IEvent extends RootDocument {
+export interface IEvent{
     name: string;
     type: string;
     startime:Date;
@@ -79,16 +80,16 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         // auth_keys: [String],
         admin: Boolean,
         visible: Number,
-        // points: {
-        //     type: Number,
-        //     required: true
-        // },
-        // events: {
-        //     type: [{
-        //         type: mongoose.Schema.Types.ObjectId,
-        //         ref: "Event"
-        //     }]
-        // }
+        points: {
+            type: Number,
+            required: true
+        },
+        events: {
+            type: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Event"
+            }]
+        }
     },
     {
         usePushEach: true
