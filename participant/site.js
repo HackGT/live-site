@@ -114,23 +114,32 @@ document
     })
   );
 
+var uuid = "";
+var query = `query($uuid: String!) {
+    user(uuid: $uuid) {
+      name,
+      points,      
+    }
+  }`;
+
+fetch("http://localhost:3000/graphql", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({ query, variables: { uuid } }),
+})
+  .then((r) => r.json())
+  .then((data) => console.log(data));
+
 let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
   // var submit = document.getElementById("submit");
-  fetch("http://localhost:3000/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ query, variables: { uuid } }),
-  })
-    .then(r => r.json())
-    .then(data => console.log(data));
-  
-    /*
+
+  /*
   fetchMoviesJSON().then((data) => {
     console.log("FETCH MOVIES: ");
     console.log(data);
@@ -139,16 +148,6 @@ button.addEventListener("click", function () {
   // document.getElementById("joinLink").click();
   // submit.click();
 });
-
-var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
-var query = `query($uuid: String!) {
-  user(uuid: $uuid) {
-    name,
-    points,
-    id
-  }
-}`;
-console.log(query);
 
 console.log(JSON.stringify(selected));
 /*
