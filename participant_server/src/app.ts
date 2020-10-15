@@ -26,7 +26,7 @@ import { authRoutes } from "./routes/auth";
 
 dotenv.config();
 
-const PORT = 4000;
+const PORT = 3000;
 // const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
 
 const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
@@ -142,9 +142,10 @@ var query = `query($uuid: String!) {
 app.post('/clicked', (req, res) => {
     const click = {clickTime: new Date()};
     console.log(click);
-    console.log(req.body);  
+    console.log(req.body);    
+    res.redirect("/");  
 
-
+    /*
     const variables = {
         uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
     }
@@ -163,10 +164,9 @@ app.post('/clicked', (req, res) => {
   
         if (err) {return console.log(err)};
         console.log(body)
-    });
+    });    
 
-    res.redirect("/");
- 
+    */
 });
 
 // apiRouter.get("/", function(req, res, next) {

@@ -71,12 +71,19 @@ if (navigator.mediaDevices.getUserMedia) {
     });
 }
 
+var workshop_values = Object.values(workshops);
+var selected = workshop_values[0][1]["Name"];
+let workshop_desc_init = document.getElementById("description");
+workshop_desc_init.innerHTML = selected;
+document.getElementById("joinLink").href = workshop_values[0][1]["Link"];
+
 document
   .getElementById("workshops-list")
   .querySelectorAll(".workshop-elem")
   .forEach((item) =>
     item.addEventListener("click", function (event) {
       let flag = false;
+      selected = event.target.textContent;
       for (workshop_type in workshops) {
         let workshop_data = workshops[workshop_type];
         for (let j = 1; j < workshop_data.length; j++) {
@@ -97,6 +104,10 @@ document
   );
 
 let button = document.getElementById("joinMeeting");
-button.addEventListener("click", function() {
-  document.getElementById("joinLink").click();
+button.addEventListener("click", function () {
+  var event_name = document.getElementById("event_name");
+  event_name.value = selected;    
+  var submit = document.getElementById("submit");  
+  // document.getElementById("joinLink").click();
+  // submit.click();
 });
