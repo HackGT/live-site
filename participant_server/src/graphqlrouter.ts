@@ -56,15 +56,14 @@ let modifyUser = async function (args, req) {
     // var user2 = await User.findByIdAndUpdate({ _id: req.user._id },
     // { points: oldPoints+args.points })
     return user2
-
 }
 
 
 
 // let getUser async function
 // apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
-apiRouter.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
-apiRouter.use(/\/((?!graphql).)*/, bodyParser.json());
+// apiRouter.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
+// apiRouter.use(/\/((?!graphql).)*/, bodyParser.json());
 const root = {
     user: getUser,
     modify_user: modifyUser,
