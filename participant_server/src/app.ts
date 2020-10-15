@@ -62,9 +62,10 @@ app.use(passport.session());
 
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(/\/((?!graphql).)*/, bodyParser.json());
 // apiRouter.use("/user", userRoutes);
+app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 
 
@@ -137,7 +138,7 @@ app.post('/clicked', (req, res) => {
     const click = {clickTime: new Date()};
     console.log(click);        
     console.log(req.body);
-    res.redirect("/");
+    res.send("data");
 
     /*
     const variables = {

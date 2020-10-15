@@ -288,3 +288,7 @@ body {
 .link {
 	display: none;
 }
+
+.container #form {
+	display: none;
+}

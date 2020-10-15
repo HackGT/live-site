@@ -107,7 +107,20 @@ let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
-  var submit = document.getElementById("submit");
+  // var submit = document.getElementById("submit");
+  fetchMoviesJSON();
   document.getElementById("joinLink").click();
-  submit.click();
+  // submit.click();
 });
+
+console.log(JSON.stringify(selected));
+async function fetchMoviesJSON() {
+  const response = await fetch("http://localhost:3000/clicked", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({data: selected})
+  });
+  console.log(response);
+}
