@@ -133,17 +133,11 @@ var query = `query($uuid: String!) {
 //     console.log(body)
 // });
 
-
-
-
-
-
-
 app.post('/clicked', (req, res) => {
     const click = {clickTime: new Date()};
-    console.log(click);
-    console.log(req.body);    
-    res.redirect("/");  
+    console.log(click);        
+    console.log(req.body);
+    res.redirect("/");
 
     /*
     const variables = {
@@ -167,6 +161,8 @@ app.post('/clicked', (req, res) => {
     });    
 
     */
+
+    // res.redirect("/");
 });
 
 // apiRouter.get("/", function(req, res, next) {

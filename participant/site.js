@@ -106,8 +106,8 @@ document
 let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
-  event_name.value = selected;    
-  var submit = document.getElementById("submit");  
+  event_name.value = selected;
+  var submit = document.getElementById("submit");
   document.getElementById("joinLink").click();
   submit.click();
 });
