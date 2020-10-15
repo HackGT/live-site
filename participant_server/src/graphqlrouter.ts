@@ -26,11 +26,12 @@ let getUser = async function (args, req) {
     // info1 = info1.substring(start2 + 2, info1.length - 1);
     // console.log(info1);
     // console.log(args)
-    // let info1 = args.uuid
+    let info1 = args.uuid
+    console.log(args.uuid);
     // console.log(args.uuid)
     // console.log(req);
     // var user = await User.findById(req.user._id);
-    // var user = await User.find({ uuid: info1 });
+    var user = await User.find({ uuid: info1 });
     // console.log(user);
     // console.log(user)
     /*
@@ -38,7 +39,8 @@ let getUser = async function (args, req) {
         throw new Error("User not found");
     } 
     */       
-    return "hello";
+   console.log(user);
+    return user[0];
     // return user;
     // return user
 }

@@ -170,7 +170,7 @@ app.get('/dashboard', (req, res) => {
 // }))
 
 var apigraphql = require('./graphqlrouter')
-app.use('/graphql', apigraphql)
+app.use('/graphql', isAuthenticated, apigraphql)
 
 
 
@@ -199,7 +199,7 @@ app.get("/", isAuthenticated, (request, response) => {
     response.sendFile(path.join(__dirname, "../../participant", "index.html"));
 });
 
-/*
+
 app.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "../../participant", "index.html"));
 });
@@ -214,7 +214,7 @@ app.get("/*", function (req, res) {
         }
     );
 });
-*/
+
 
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);

@@ -104,10 +104,10 @@ document
   .forEach((item) =>
     item.addEventListener("click", function (event) {
       selected = event.target.textContent;
-      for (let j = 0; j < workshops.length; j++) {        
-        if (workshops[j]["name"] == event.target.textContent) {          
+      for (let j = 0; j < workshops.length; j++) {
+        if (workshops[j]["name"] == event.target.textContent) {
           let workshop_desc = document.getElementById("description");
-          workshop_desc.innerHTML = workshops[j]["name"];          
+          workshop_desc.innerHTML = workshops[j]["name"];
           break;
         }
       }
@@ -119,28 +119,48 @@ button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
   // var submit = document.getElementById("submit");
-  getUserData().then((data) => {
-    console.log("GET USER DATA: ");
-    console.log(data);
+  fetch("http://localhost:3000/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ query, variables: { uuid } }),
   })
-  /*
+    .then(r => r.json())
+    .then(data => console.log(data));
+
+  */
   fetchMoviesJSON().then((data) => {
     console.log("FETCH MOVIES: ");
     console.log(data);
   });
-  */
   // document.getElementById("joinLink").click();
   // submit.click();
 });
 
+var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
+var query = `query($uuid: String!) {
+  user(uuid: $uuid) {
+    name,
+    points,
+    id
+  }
+}`;
+console.log(query);
+
+/*
 async function getUserData() {
-  const response = await fetch("http://localhost:3000/dashboard", {
-    method: "GET",
+  const response = await fetch("http://localhost:3000/graphql", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
-    },    
-  })
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ query, variables: { uuid } }),
+  });
 }
+*/
 
 console.log(JSON.stringify(selected));
 async function fetchMoviesJSON() {
