@@ -8,54 +8,77 @@ openWorkshops.addEventListener("click", function () {
   }
 });
 
-workshops = {
-  Emerging_Workshops: [
-    15,
-    {
-      Name: "Web Dev 1 Workshop / OH",
-      Link: "https://bluejeans.com/693811111",
-    },
-  ],
-  Mini_Challenges: [
-    20,
-    {
-      Name: "Blackrock",
-      Link: "https://bluejeans.com/568823688",
-    },
-  ],
-  Tech_Talks: [
-    10,
-    {
-      Name: "NCR Sponsor Challenge",
-      Link: "https://bluejeans.com/891100086",
-    },
-  ],
-};
+workshops = [
+  { name: "NCR Design Workshop", points: "10" },
+  { name: "Wayfair Tech Talk", points: "10" },
+  { name: "IBM Tech Talk", points: "10" },
+  { name: "NCR Sponsor Challenge", points: "10" },
+  { name: "GM Tech Talk", points: "10" },
+  { name: "Anthem Tech Talk", points: "10" },
+  { name: "NSIN Tech Talk", points: "10" },
+  { name: "Microsoft Tech Talk", points: "10" },
+  { name: "Blackrock Tech Talk", points: "10" },
 
-let wti = 0;
-for (workshop_type in workshops) {
-  let workshop_data = workshops[workshop_type];
-  for (let j = 1; j < workshop_data.length; j++) {
-    let workshop = workshop_data[j];
-    var elem = document.createElement("div");
+  { name: "Blackrock Mini Challenge", points: "5" },
 
-    var elemName = document.createElement("div");
-    elemName.classList.add("workshop-name");
+  { name: "NCR Mini Challenge", points: "5" },
+  { name: "NSIN Mini Challenge", points: "5" },
+  { name: "Anthem Mini Challenge", points: "5" },
+  { name: "Web Dev 1 Workshop / OFfice Hours", points: "15" },
+  { name: "Prototype Workshop", points: "15" },
+  { name: "App Dev Workshop 1 / Office Hours", points: "15" },
+  { name: "App Dev Workshop 2 / Office Hours", points: "15" },
+  { name: "Data Science Workshop 1 / Office Hours", points: "15" },
+  { name: "Data Science Workshop 2 / Office Hours", points: "15" },
+  { name: "Gaming and Graphics Workshop 1 / Office Hours", points: "15" },
+  { name: "Gaming and Graphics Workshop 2 / Office Hours", points: "15" },
 
-    var elemPoints = document.createElement("div");
-    elemPoints.classList.add("workshop-points");
-    elemName.innerHTML = workshop["Name"];
-    elemPoints.innerHTML = workshop_data[0];
+  { name: "Web Dev 3 Workshop / Office Hours", points: "15" },
+  { name: "App Dev 3 Workshop / Office Hours", points: "15" },
+  { name: "Data Science 3 Workshop / Office Hours", points: "15" },
+  { name: "NCR - Pillow Fort", points: "20" },
+  { name: "Anthem - Community Hangout", points: "20" },
+  { name: "Wayfair - Scavenger Hunt", points: "20" },
+  { name: "GM - Typing Speed Racer", points: "20" },
+  { name: "IBM - Among Us Personalization", points: "20" },
+  { name: "BlackRock - The Wiki Game", points: "20" },
+  { name: "Microsoft - Yoga", points: "20" },
+  { name: "NSIN - Codenames", points: "20" },
+  { name: "MLH - Werewolf", points: "20" },
+  { name: "MLH - CTF", points: "20" },
+  { name: "Opening Ceremonies", points: "20" },
+  { name: "Web Dev 2 Workshop", points: "15" },
+  { name: "HackGT Organizer Panel", points: "20" },
+  { name: "Rangr Hour", points: "20" },
+  { name: "Nicholas Walsh", points: "20" },
+  { name: "Mr. Gary Brantley; CIO of Atlanta", points: "20" },
+  { name: "Joy Harris", points: "20" },
+  { name: "Adam Phillippy", points: "20" },
 
-    var idName = "workshop-" + wti + j;
+  { name: "Tim Aveni", points: "20" },
+  { name: "Stone Librande", points: "20" },
+  { name: "Closing Ceremonies", points: "20" },
+];
 
-    elem.classList.add("workshop-elem");
-    elem.id = idName;
-    elem.append(elemName);
-    elem.append(elemPoints);
-    curr.append(elem);
-  }
-  wti++;
+for (let j = 0; j < workshops.length; j++) {
+  let workshop = workshops[j];
+  var elem = document.createElement("div");
+
+  var elemName = document.createElement("div");
+  elemName.classList.add("workshop-name");
+
+  var elemPoints = document.createElement("div");
+  elemPoints.classList.add("workshop-points");
+  elemName.innerHTML = workshop["name"];
+  elemPoints.innerHTML = workshop["points"];
+
+  var idName = "workshop-" + j;
+
+  elem.classList.add("workshop-elem");
+  elem.id = idName;
+  elem.append(elemName);
+  elem.append(elemPoints);
+  curr.append(elem);
 }
 
 var video = document.querySelector("#localVideo");
@@ -71,32 +94,20 @@ if (navigator.mediaDevices.getUserMedia) {
     });
 }
 
-var workshop_values = Object.values(workshops);
-var selected = workshop_values[0][1]["Name"];
-let workshop_desc_init = document.getElementById("description");
-workshop_desc_init.innerHTML = selected;
-document.getElementById("joinLink").href = workshop_values[0][1]["Link"];
+var selected = workshops[0]["name"];
+let workshop_desc = document.getElementById("description");
+workshop_desc.innerHTML = selected;
 
 document
   .getElementById("workshops-list")
   .querySelectorAll(".workshop-elem")
   .forEach((item) =>
     item.addEventListener("click", function (event) {
-      let flag = false;
       selected = event.target.textContent;
-      for (workshop_type in workshops) {
-        let workshop_data = workshops[workshop_type];
-        for (let j = 1; j < workshop_data.length; j++) {
-          let workshop = workshop_data[j];
-          if (workshop["Name"] == event.target.textContent) {
-            document.getElementById("joinLink").href = workshop["Link"];
-            let workshop_desc = document.getElementById("description");
-            workshop_desc.innerHTML = workshop["Name"];
-            flag = true;
-            break;
-          }
-        }
-        if (flag) {
+      for (let j = 0; j < workshops.length; j++) {        
+        if (workshops[j]["name"] == event.target.textContent) {          
+          let workshop_desc = document.getElementById("description");
+          workshop_desc.innerHTML = workshops[j]["name"];          
           break;
         }
       }
@@ -108,11 +119,28 @@ button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
   // var submit = document.getElementById("submit");
-  fetchMoviesJSON()
-    .then(data => {console.log(data)});
+  getUserData().then((data) => {
+    console.log("GET USER DATA: ");
+    console.log(data);
+  })
+  /*
+  fetchMoviesJSON().then((data) => {
+    console.log("FETCH MOVIES: ");
+    console.log(data);
+  });
+  */
   // document.getElementById("joinLink").click();
   // submit.click();
 });
+
+async function getUserData() {
+  const response = await fetch("http://localhost:3000/dashboard", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },    
+  })
+}
 
 console.log(JSON.stringify(selected));
 async function fetchMoviesJSON() {
@@ -121,7 +149,7 @@ async function fetchMoviesJSON() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({data: selected})
+    body: JSON.stringify({ data: selected }),
   });
   return response.json();
 }

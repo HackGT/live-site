@@ -110,11 +110,14 @@ app.post('/clicked', (req, res) => {
     // res.redirect("/");
 });
 
-app.get('/dashboard,', (req, res)=> {
+app.get('/dashboard', (req, res) => {
+    // Get the user's points
+    // Get the user's email        
     const variables = {
-        uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+        //uuid: "ea655e36-97b8-429b-ba0f-d87b78bef33e"
+        uuid: "hello"
     }
-    const options = { method: 'POST',
+    const options = { method: 'GET',
         url: 'http://localhost:3000/graphql',
         headers:
         {
@@ -166,7 +169,6 @@ app.get('/dashboard,', (req, res)=> {
 //     graphiql:process.env.ISPRODUCTION !== 'true'
 // }))
 
-// app.use("/graphql", isAuthenticated, apiRouter);
 var apigraphql = require('./graphqlrouter')
 app.use('/graphql', apigraphql)
 
@@ -197,6 +199,7 @@ app.get("/", isAuthenticated, (request, response) => {
     response.sendFile(path.join(__dirname, "../../participant", "index.html"));
 });
 
+/*
 app.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "../../participant", "index.html"));
 });
@@ -211,6 +214,7 @@ app.get("/*", function (req, res) {
         }
     );
 });
+*/
 
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);

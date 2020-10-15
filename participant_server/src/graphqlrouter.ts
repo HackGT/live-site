@@ -25,15 +25,20 @@ let getUser = async function (args, req) {
     // let start2 = info1.indexOf(":");
     // info1 = info1.substring(start2 + 2, info1.length - 1);
     // console.log(info1);
-    console.log(args)
-    let info1 = args.uuid
+    // console.log(args)
+    // let info1 = args.uuid
     // console.log(args.uuid)
-    var user = await User.find({ uuid: info1 });
+    // console.log(req);
+    // var user = await User.findById(req.user._id);
+    // var user = await User.find({ uuid: info1 });
+    // console.log(user);
     // console.log(user)
+    /*
     if (!user || user.length ==0) {
         throw new Error("User not found");
-    }        
-    return user[0];
+    } 
+    */       
+    return "hello";
     // return user;
     // return user
 }
