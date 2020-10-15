@@ -91,7 +91,40 @@ let events: IEvent[] = [
         endtime: new Date("October 17, 2020 18:00:00"),
         points: 10,
         url: "https://bluejeans.com/797564259"
-    }
+    },
+    {
+        name: "Blackrock Mini Challenge",
+        type: "Mini Challenge",
+        starttime: new Date("October 16, 2020 22:00:00"),
+        endtime: new Date("October 16, 23:00:00"),
+        points: 5,
+        url: "https://bluejeans.com/568823688"
+    },
+    {
+        name: "Anthem Mini Challenge",
+        type: "Mini Challenge",
+        starttime: new Date("October 17, 2020 11:30:00"),
+        endtime: new Date("October 17, 12:30:00"),
+        points: 5,
+        url: "https://bluejeans.com/626750528"
+    },
+    {
+        name: "NCR Mini Challenge",
+        type: "Mini Challenge",
+        starttime: new Date("October 17, 2020 15:30:00"),
+        endtime: new Date("October 17, 16:30:00"),
+        points: 5,
+        url: "https://bluejeans.com/732170726"
+    },
+    {
+        name: "NSIN Mini Challenge",
+        type: "Mini Challenge",
+        starttime: new Date("October 17, 2020 16:30:00"),
+        endtime: new Date("October 17, 17:30:00"),
+        points: 5,
+        url: "https://bluejeans.com/825086141"
+    },
+    
 ]
 Event.insertMany(events) 
 
