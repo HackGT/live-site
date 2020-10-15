@@ -40,11 +40,10 @@ export interface IUser extends RootDocument {
 export interface IEvent{
     name: string;
     type: string;
-    startime:Date;
+    starttime:Date;
     endtime:Date;
     points: number;
-    meetingId:number;
-    passcode:number
+    url:string;
 }
 
 export type IUserMongoose = IUser & mongoose.Document;
@@ -55,8 +54,7 @@ export const Event = mongoose.model<IEventMongoose>("Event", new mongoose.Schema
     starttime:  Date,
     endtime: Date,
     points: Number, 
-    meetingId: Number,
-    passcode: Number
+    url: String,
 
 }));
 
