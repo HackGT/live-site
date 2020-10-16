@@ -269,7 +269,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/670093698"
     },
     {
-        name: "BlackRock - The Wiki Game",
+        name: "BlackRock Series",
         type: "Mini Event",
         starttime: new Date("October 17, 2020 16:00:00 EDT"),
         endtime: new Date("October 17, 2020 16:30:00 EDT"),
@@ -349,7 +349,7 @@ let events: IEvent[] = [
         url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
-        name: "Mr. Gary Brantley; CIO of Atlanta",
+        name: "Gary Brantley, City of Atlanta CIO",
         type: "Speakers",
         starttime: new Date("October 17, 2020 11:00:00 EDT"),
         endtime: new Date("October 17, 2020 12:00:00 EDT"),
