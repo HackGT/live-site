@@ -36,11 +36,11 @@ let getUser = async function (args, req) {
     // var user = await User.find({ uuid: info1 });
     // console.log(user);
     // console.log(user)
-    /*
-    if (!user || user.length ==0) {
+    
+    if (!user) {
         throw new Error("User not found");
     } 
-    */          
+              
     //return user[0];
     // return user;
      return user;
@@ -73,11 +73,11 @@ let modifyUser = async function (args, req) {
 let getEvent = async function(args, req) {
     var event = await Event.find({name:args.event_name});
     if (!event || event.length ==0) {
-        throw new Error("User not found");
+        throw new Error("Event not found");
     }
     return event[0]
 }
-/*
+
 let modifyUserEvent = async function (args, req) {
 
     var user = await User.findById(req.user._id)
@@ -111,48 +111,47 @@ let modifyUserEvent = async function (args, req) {
     let inBounds = true
 
     let maxpoints = event[0].points
-    let start = event[0].starttime
-    let end = event[0].endtime
+    let start = event[0].starttime.getTime()
+    let end = event[0].endtime.getTime()
     let type = event[0].type
-    let now = Date.now()    
+    let now = Date.now()
     let half = (end - start) / 2 + start
     let quarter = end - (end - start)/4
-    let fifteen_before = Date.now() - 15*60000
-    if (event.type!=="Emerging Workshop") {
-        if (Date.now() < start - 30*60000) {
+    let fifteen_before = new Date(now - 15*60000)
+    if (event[0].type!=="Emerging Workshop") {
+        if (now < start - 30*60000) {
             inBounds = false
-        } else if (Date.now() > end + 30 * 60000){
+        } else if (now > end + 30 * 60000){
             inBounds = false
         }
         if (!inBounds) {
-            console('not in bounds!')
+            console.log('not in bounds!')
             throw new Error("Event not in bounds")
             return null
         }
     }
     
-    if (Date.now() > end + 5*60000) {
+    if (now > end + 5*60000) {
         maxpoints = 0
-    }
-    if (Date.now()>quarter) {
+    } else if (now>quarter) {
        maxpoints = maxpoints/4
-    } else if (Date.now()> half) {
+    } else if (now> half) {
         maxpoints = maxpoints/2
     } 
     const userevent = {
-        event: event[0].name
+        event: event[0].name,
         points: maxpoints
     }
-    var user2 = await User.findByIdAndUpdate(req.user._id, {
-        "$push": {
-            userevents: userevent
-        }
-    })
-
-    }
-    return user
+    // var user2 = await User.findByIdAndUpdate(req.user._id, {
+    //     "$push": {
+    //         userevents: userevent
+    //     }
+    // })
+    return user[0]
 }
-*/
+    
+
+
 
 // let getUser async function
 // apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
@@ -162,7 +161,7 @@ const root = {
     user: getUser,
     modify_user: modifyUser,
     event: getEvent,
-    // modify_user_event: modifyUserEvent
+    modify_user_event: modifyUserEvent
     // update_user_to_admin: updateToAdmin,
     // check_user_solved: checkUserSolved,
     // add_completed: addCompleted
