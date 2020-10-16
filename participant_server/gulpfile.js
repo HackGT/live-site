@@ -8,7 +8,7 @@ const path = require("path");
 const tsProject = ts.createProject("./tsconfig.json");
 
 gulp.task("watch", (done) => {
-    gulp.watch("src/**/*", gulp.series("lint", "build:server"));
+    gulp.watch("src/**/*", gulp.series("lint", "build"));
 });
 
 gulp.task("lint", () => {

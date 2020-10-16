@@ -1,0 +1,23 @@
+{
+  "name": "virtual-checkin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "gulp postinstall",
+    "start": "gulp",
+    "install-dependencies": "gulp dependencies",
+    "serve": "node ./participant_server/build/app.js",
+    "build": "gulp build"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-install": "^1.1.0",
+    "gulp-shell": "^0.8.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.3"
+  },
+  "devDependencies": {
+    "gulp-tslint": "^8.1.4"
+  }
+}
