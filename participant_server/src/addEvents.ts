@@ -21,7 +21,7 @@ import { createNew, IEvent, Event, IEventMongoose} from "./schema";
 let events: IEvent[] = [
     {
         // _id: 12345,
-        name: "NCR Sponsor Challenge",
+        name: "Getting to Know NCR APIs",
         type: "Tech Talk",
         starttime: new Date("October 16, 2020 19:30:00 EDT"),
         endtime: new Date("October 16, 2020 20:00:00 EDT EDT"),
@@ -29,7 +29,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/891100086",
     },
     {
-        name: "NCR Design Workshop",
+        name: "10 Things Every Hacker Needs to Know About Design",
         type: "Tech Talk",
         starttime: new Date("October 16, 2020 20:30:00 EDT"),
         endtime: new Date("October 16, 2020 21:30:00 EDT"),
@@ -37,7 +37,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/398545345",
     },
     {
-        name: "Wayfair Tech Talk",
+        name: "Augmented Reality for Apps",
         type: "Tech Talk",
         starttime: new Date("October 17, 2020 10:30:00 EDT"),
         endtime: new Date("October 17, 2020 11:00:00 EDT"),
@@ -53,15 +53,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/129937416"
     },
     {
-        name: "GM Tech Talk",
-        type: "Tech Talk",
-        starttime: new Date("October 17, 2020 12:30:00 EDT"),
-        endtime: new Date("October 17, 2020 13:00:00 EDT"),
-        points: 10,
-        url: "https://bluejeans.com/148778069"
-    },
-    {
-        name: "Anthem Tech Talk",
+        name: "Network Analysis and Graphical Databases",
         type: "Tech Talk",
         starttime: new Date("October 17, 2020 13:30:00 EDT"),
         endtime: new Date("October 17, 2020 14:00:00 EDT"),
@@ -69,7 +61,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/764810459"
     },
     {
-        name: "NSIN Tech Talk",
+        name: "Life at NSIN",
         type: "Tech Talk",
         starttime: new Date("October 17, 2020 15:00:00 EDT"),
         endtime: new Date("October 17, 2020 15:30:00 EDT"),
@@ -77,7 +69,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/201156086"
     },
     {
-        name: "Microsoft Tech Talk",
+        name: "Deploy React, Angular and Vue apps with Azure Static Web Apps",
         type: "Tech Talk",
         starttime: new Date("October 17, 2020 17:00:00 EDT"),
         endtime: new Date("October 17, 2020 17:30:00 EDT"),
@@ -85,7 +77,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/735730043"
     },
     {
-        name: "Blackrock Tech Talk",
+        name: "Story of Aladdin",
         type: "Tech Talk",
         starttime: new Date("October 17, 2020 17:30:00 EDT"),
         endtime: new Date("October 17, 2020 18:00:00 EDT"),
