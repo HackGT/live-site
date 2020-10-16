@@ -20,15 +20,16 @@ var link = "";
 // }
 // List of workshops with names and points
 workshops = [
-  { name: "NCR Design Workshop", points: "10", date:  new Date("October 16, 2020 20:30:00 EDT")},
-  { name: "Wayfair Tech Talk", points: "10", date:  new Date("October 17, 2020 10:30:00 EDT")},
+
+  { name: "10 Things Every Hacker Needs to Know About Design", points: "10", date:  new Date("October 16, 2020 20:30:00 EDT")},
+  { name: "Augmented Reality for Apps", points: "10", date:  new Date("October 17, 2020 10:30:00 EDT")},
   { name: "IBM Tech Talk", points: "10", date:  new Date("October 17, 2020 12:00:00 EDT") },
-  { name: "NCR Sponsor Challenge", points: "10" , date:  new Date("October 16, 2020 20:30:00 EDT")},
-  { name: "GM Tech Talk", points: "10", date:  new Date("October 17, 2020 12:30:00 EDT") },
-  { name: "Anthem Tech Talk", points: "10", date:  new Date("October 17, 2020 13:30:00 EDT")},
-  { name: "NSIN Tech Talk", points: "10", date:  new Date("October 17, 2020 15:00:00 EDT") },
-  { name: "Microsoft Tech Talk", points: "10", date: new Date("October 17, 2020 17:00:00 EDT") },
-  { name: "Blackrock Tech Talk", points: "10", date:  new Date("October 17, 2020 17:30:00 EDT") },
+  { name: "Getting to Know NCR APIs", points: "10" , date:  new Date("October 16, 2020 20:30:00 EDT")},
+  { name: "Network Analysis and Graphical Databases", points: "10", date:  new Date("October 17, 2020 13:30:00 EDT")},
+  { name: "Life at NSINk", points: "10", date:  new Date("October 17, 2020 15:00:00 EDT") },
+  { name: "Deploy React, Angular and Vue apps with Azure Static Web Apps", points: "10", date: new Date("October 17, 2020 17:00:00 EDT") },
+  { name: "Story of Aladdin", points: "10", date:  new Date("October 17, 2020 17:30:00 EDT") },
+
 
   { name: "Blackrock Mini Challenge", points: "5", date:  new Date("October 16, 2020 22:00:00 EDT") },
   { name: "NCR Mini Challenge", points: "5" , date:  new Date("October 17, 2020 15:30:00 EDT")},
