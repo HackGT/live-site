@@ -78,8 +78,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
         let user = await User.findOne({ uuid: profile.uuid });
 
         const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql'
-        console.log(user)
-        console.log('----------------------------------------------------------------')
 
         // if (!user) {
         //     let confirmed = false;
