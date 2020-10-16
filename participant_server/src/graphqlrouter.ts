@@ -47,7 +47,7 @@ let getUser = async function (args, req) {
 }
 
 let modifyUser = async function (args, req) {
-    // var user = await User.findById(req.user._id)
+    var user = await User.findById(req.user._id)
     // var user = await User.find({ uuid: args.uuid});
     // console.log(user)
     // console.log(req.user._id)
@@ -67,7 +67,7 @@ let modifyUser = async function (args, req) {
      */
     // var user2 = await User.findByIdAndUpdate({ _id: req.user._id },
     // { points: oldPoints+args.points })
-    return null;
+    return user;
 }
 
 let getEvent = async function(args, req) {

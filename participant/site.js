@@ -141,33 +141,53 @@ fetch("http://localhost:3000/graphql", {
   });
   */
 
+let uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
+let points = 0;
+// var mutation = "hello";
+/*
+var query = `mutation {
+  modify_user(uuid: "4f738605-089e-4838-91a8-522a47f9e1f6", points: 0) {
 
-var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
-var points = 0;
-var mutation = `mutation($uuid: String!, $points: Int!) {
-    modify_user(uuid: $uuid, points: $points) {
-      uuid,
-      points
-    }
-  }`;
+    points
+  }
+}`;
 fetch("http://localhost:3000/graphql", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  body: JSON.stringify({ mutation, variables: { uuid, points } }),
+  body: JSON.stringify({ query, variables: { uuid, points } }),
 })
   .then((r) => r.json())
   .then((data) => {
     console.log(data);
   });
+*/
 
 // Join Event Button
 let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
+  var query = `mutation {
+    modify_user(uuid: "4f738605-089e-4838-91a8-522a47f9e1f6", points: 0) {
+  
+      points
+    }
+  }`;
+  fetch("http://localhost:3000/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ query, variables: { uuid, points } }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      console.log(data);
+    });
   // var submit = document.getElementById("submit");
   // document.getElementById("joinLink").click();
   // submit.click();
