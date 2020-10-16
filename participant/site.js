@@ -117,8 +117,8 @@ document
 var uuid = "";
 var query = `query($uuid: String!) {
     user(uuid: $uuid) {
-      name,
-      points,      
+      name,      
+      points
     }
   }`;
 
@@ -131,9 +131,16 @@ fetch("http://localhost:3000/graphql", {
   body: JSON.stringify({ query, variables: { uuid } }),
 })
   .then((r) => r.json())
-  .then((data) => console.log(data));
+  .then((data) => {
+    console.log(data);
+    var user_name = data["data"]["user"]["name"];
+    document.getElementById("username").innerHTML = user_name;
+    var points = data["data"]["user"]["points"];
+    document.getElementById("open-workshops").innerHTML = points + " Points";
+  });
 
-let button = document.getElementById("joinMeeting");
+let button = document.getElementById("joinMeeting")
+
 button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
@@ -147,6 +154,38 @@ button.addEventListener("click", function () {
   */
   // document.getElementById("joinLink").click();
   // submit.click();
+  var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
+  var points = 0;
+  var mutation = `mutation($uuid: String!, $points: Int!) {
+    modify_user(uuid: $uuid, points: $points) {
+      name,
+      points,      
+    }
+  }`;
+  fetch("http://localhost:3000/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ mutation, variables: { uuid, points } }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      console.log(data);
+    });
+  /*
+  fetch("http://localhost:3000/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ mutation, variables: { uuid, points } }),
+  })
+    .then((r) => r.json())
+    .then((data) => console.log(data));
+  */
 });
 
 console.log(JSON.stringify(selected));

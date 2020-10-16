@@ -67,7 +67,7 @@ body {
   align-items: center;
 }
 
-.nav .back-button {
+.nav .username {
   text-align: center;
   font-size: 20px;
   width: 30%;
@@ -170,7 +170,7 @@ body {
 }
 
 .body .video {
-  width: 30%;
+  width: 20%;
   height: 100%;
 }
 
@@ -206,7 +206,7 @@ body {
   padding-bottom: 2px;
   border-radius: 5rem;
   font-size: 1rem;
-  margin-top: 6vw;
+  margin-top: 3vw;
   margin-left: auto;
   margin-right: auto;
   height: 2vw;
@@ -365,7 +365,7 @@ body {
     width: 50%;
   }
 
-  .nav .back-button {
+  .nav .username {
     text-align: center;
     font-size: 16px;
     width: 30%;
