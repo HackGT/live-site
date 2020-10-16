@@ -128,33 +128,34 @@ body {
 .desc-title-container {
   display: flex;
   flex-direction: column;
-  height: 25%;
+  gap: 5%;
+  height: 7vw;
   width: 100%;
 }
 
 .desc-title-container .desc-title {
-  height: 40%;
-  width: 100%;  
+  height: 4vw;
+  width: 100%;
   padding-left: 1rem;
   padding-top: 0.75rem;
 }
 
 .desc-title-container .desc-info {
-  height: 60%;
+  height: 10vw;
   width: 100%;
-  display: flex;  
+  display: flex;
   padding-left: 1rem;
-  padding-top: 0.4rem;  
+  padding-top: 0.4rem;
   gap: 5%;
 }
 
 .desc-title-container .desc-info .desc-type {
   font-size: 0.75rem;
-  background-color: purple;  
+  background-color: purple;
   border-radius: 3rem;
   padding-top: 0.3vw;
   text-align: center;
-  height: 40%;
+  height: 2vw;
   width: 20%;
 }
 
@@ -165,7 +166,7 @@ body {
 
 #desc-host {
   padding-left: 1rem;
-  padding-top: 1rem;  
+  padding-top: 1rem;
 }
 
 .workshop-elem:hover {
@@ -205,7 +206,7 @@ body {
   background-color: white;
 }
 
-.body .workshop #description {  
+.body .workshop #description {
   height: 40%;
   padding-left: 1rem;
   padding-top: 0.5rem;
@@ -301,15 +302,79 @@ body {
     width: 100%;
     height: 100%;
   }
+
+  .body .workshop #description {
+    height: 40%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin-top: 2vw;
+    color: white;
+    overflow-y: auto;
+  }
+
+  .desc-title-container .desc-info .desc-type {
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0.3vw;
+    text-align: center;
+    height: 2vw;
+    width: 30%;
+  }
+
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    right: 7.5%;
+    z-index: 100;
+    height: 25%;
+    width: 25%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .desc-title-container .desc-info .desc-type {
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0.3vw;
+    text-align: center;
+    height: 2.5vw;
+    width: 30%;
+  }
 }
 
 @media only screen and (max-width: 850px) {
   .container {
-    height: 125vh;
+    height: 150vw;
+  }
+
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    margin-top: 0rem;
+    right: 7.5%;
+    z-index: 100;
+    height: 10%;
+    width: 25%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .container .workshops .workshop-elem {
+    height: 70%;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #658aae;
+    display: flex;
+    cursor: pointer;
   }
 
   .join-event {
-    margin-top: 20vw;
+    margin-top: 15vw;
     height: 3vw;
     width: 15vw;
   }
@@ -318,33 +383,35 @@ body {
     display: flex;
     flex-direction: column;
     padding-top: 2%;
-    height: 50%;
+    height: 80vw;
     justify-content: center;
     gap: 5%;
-    margin-top: 2vw;
+    margin-top: 12vw;
+  }
+
+  .workshop-description {
+    height: 80%;
+    width: 90%;
   }
 
   .body .workshop {
-    background-color: white;
-    width: 80%;
+    width: 60%;
     margin: auto;
-    height: 50%;
+    height: 50vw;
   }
 
   .body .workshop .title {
     height: 10%;
-    width: 100%;
+    width: 95%;
     color: #658aae;
-    padding-left: 1rem;
+    padding-left: 5%;
     padding-top: 0.5rem;
-    background-color: white;
   }
 
   .body .workshop #description {
     color: #658aae;
-    height: 90%;
+    height: 40%;
     width: 100%;
-    background-color: white;
     padding-left: 1rem;
     padding-top: 0.5rem;
   }
@@ -360,20 +427,13 @@ body {
     color: #658aae;
     padding-left: 1rem;
     padding-top: 0.5rem;
-    background-color: white;
   }
 
   .body .video .video-body {
     width: 100%;
     position: relative;
   }
-}
 
-@media only screen and (max-width: 715px) {
-  .join-event {
-    height: 5vw;
-    width: 20vw;
-  }
   .bottom-design {
     background-image: url("assets/about-long-glow.png");
     background-size: 70%;
@@ -384,12 +444,102 @@ body {
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 715px) {
+  .join-event {
+    margin-top: 5vw;
+    height: 5vw;
+    width: 20vw;
+  }
+  .container {
+    height: 200vw;
+  }
+  .bottom-design {
+    background-image: url("assets/about-long-glow.png");
+    background-size: 70%;
+    height: 8%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+  .body .workshop #description {
+    color: #658aae;
+    height: 50%;
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin-top: 2rem;
+  }
 
+  .body {
+    height: 120vw;
+    gap: 0%;
+  }
+
+  .body .video {
+    margin-top: 0vw;
+  }
+
+  .desc-title-container .desc-info .desc-type {
+    font-size: 0.75rem;
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0vw;
+    text-align: center;
+    height: 3vw;
+    width: 30%;
+  }
+
+  .workshop-description {
+    height: 100%;
+  }
+
+  .desc-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    height: 10%;
+    width: 100%;
+  }
+
+  .body .workshop {
+    margin-top: 5vw;
+    height: 50vw;
+  }
+
+  #desc-host {
+    padding-left: 1rem;
+    padding-top: 1rem;
+    height: 30%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
   .body .video {
     width: 60%;
     height: 50%;
     margin: auto;
+  }
+
+  .container {
+    height: 250vw;
+  }
+
+  .join-event {
+    margin-top: 0;
+  }
+
+  .body {
+    height: 160vw;
+  }
+
+  .body .workshop {
+    margin-top: 5vw;
+    height: 70vw;
+    width: 80vw;
+  }
+
+  .body .video {
+    width: 80%;
   }
 
   .body .video .title {
@@ -403,6 +553,15 @@ body {
   .body .video .video-body {
     width: 100%;
     position: relative;
+  }
+
+  .bottom-design {
+    background-image: url("assets/about-long-glow.png");
+    background-size: 70%;
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
   }
 }
 
@@ -415,6 +574,29 @@ body {
     font-size: 16px;
     text-align: center;
     width: 50%;
+  }
+
+  .desc-title-container .desc-info .desc-type {
+    font-size: 0.75rem;
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0vw;
+    text-align: center;
+    height: 4vw;
+    width: 30%;
+  }
+
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    margin-top: 0rem;
+    right: 7.5%;
+    z-index: 100;
+    height: 5%;
+    width: 40%;
+    overflow-y: auto;
+    padding: 1rem;
   }
 
   .nav .username {
@@ -438,8 +620,8 @@ body {
   }
 
   .join-event {
-	  width: 35vw;
-	  height: 10vw;
+    width: 35vw;
+    height: 10vw;
   }
 }
 
@@ -451,8 +633,47 @@ body {
     width: 50%;
   }
 
+  .body {
+    height: 220vw;
+  }
+
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    margin-top: 0rem;
+    right: 7.5%;
+    z-index: 100;
+    height: 5%;
+    width: 70%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .container {
+    height: 300vw;
+  }
+
+  .body .workshop #description {
+    color: #658aae;
+    height: 50%;
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin-top: 3rem;
+  }
+
+  .body .video {
+    margin-top: 2rem;
+  }
+
+  .body .workshop {
+    height: 110vw;
+    width: 90vw;
+  }
+
   .join-event {
-	  width: 35vw;
-	  height: 10vw;
+    width: 35vw;
+    height: 10vw;
   }
 }

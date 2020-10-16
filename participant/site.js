@@ -139,6 +139,7 @@ fetch(CMS_ENDPOINT, {
   .catch((err) => console.log(err));
 
 // Fetching all the user data from MongoDB to render information on dashboard
+var selected = "NCR Design Workshop";
 var uuid = "";
 let points = 0;
 var user_events = [];
@@ -146,7 +147,7 @@ query = `query($uuid: String!) {
     user(uuid: $uuid) {
       name,      
       points,
-      userevents { event, point }
+      userevents { event, points }
     }
   }`;
 fetch("http://localhost:3000/graphql", {
@@ -171,10 +172,10 @@ fetch("http://localhost:3000/graphql", {
     for (let j = 0; j < workshops.length; j++) {
       let workshop = workshops[j];
       var name = workshop["name"];
-      var points = workshop["points"];
+      var points = "";
       for (let k = 0; k < user_events.length; k++) {
         if (user_events[k]["event"] == workshop["name"]) {
-          points = user_events[k]["point"];
+          points = user_events[k]["points"];
           break;
         }
       }
@@ -199,7 +200,7 @@ fetch("http://localhost:3000/graphql", {
 
     // Adds event handlers for each workshop to update description when pressed
     var curr_workshop = document.getElementById("workshop-0");
-    var selected = workshops[0]["name"];
+    selected = workshops[0]["name"];
     let workshop_desc = document.getElementById("description");
     workshop_desc.innerHTML = selected;
     document
@@ -251,10 +252,9 @@ let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
   // Modify the user's obtained points for that event
   var uuid = "";
-  let points = 0;
   let event_name = selected;
-  var query = `mutation($uuid: String!, $points: Int!, $event_name: String!) {
-    modify_user_event(uuid: $uuid, points: $points, event_name: $event_name) {
+  var query = `mutation($uuid: String!, $event_name: String!) {
+    modify_user_event(uuid: $uuid, event_name: $event_name) {
       points
     }
   }`;
@@ -264,31 +264,32 @@ button.addEventListener("click", function () {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({ query, variables: { uuid, points, event_name } }),
+    body: JSON.stringify({ query, variables: { uuid, event_name } }),
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data);
-      // Fetch the BlueJeans event link
-      query = `query($event_name: String!) {
+      if (data["data"]["modify_user_event"] != null) {
+        // Fetch the BlueJeans event link
+        query = `query($event_name: String!) {
         event(event_name: $event_name) {
           url
         }
       }`;
-      fetch("http://localhost:3000/graphql", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ query, variables: { event_name } }),
-      })
-        .then((r) => r.json())
-        .then((data) => {
-          document.getElementById("joinLink").href =
-            data["data"]["event"]["url"];
-          document.getElementById("joinLink").click();
-        });
+        fetch("http://localhost:3000/graphql", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ query, variables: { event_name } }),
+        })
+          .then((r) => r.json())
+          .then((data) => {
+            let joinLink = document.getElementById("joinLink");
+            joinLink.href = data["data"]["event"]["url"];
+            joinLink.click();
+          });
+      }
     })
     .catch((err) => console.log(err));
 });
