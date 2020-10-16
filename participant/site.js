@@ -8,7 +8,16 @@ openWorkshops.addEventListener("click", function () {
     curr.style.display = "";
   }
 });
-
+var link = "";
+// var port =process.env.PORT || 3000;
+// var isProduction = process.env.ISPRODUCTION || false;
+// if (isProduction) 
+// {   
+//   link = "https://calls.hack.gt";
+// } 
+// else {   
+//   link = "http://localhost:"+port;
+// }
 // List of workshops with names and points
 workshops = [
   { name: "NCR Design Workshop", points: "10" },
@@ -150,7 +159,7 @@ query = `query($uuid: String!) {
       userevents { event, points }
     }
   }`;
-fetch("http://localhost:3000/graphql", {
+fetch(link+"/graphql", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -258,7 +267,7 @@ button.addEventListener("click", function () {
       points
     }
   }`;
-  fetch("http://localhost:3000/graphql", {
+  fetch(link+"/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -275,7 +284,7 @@ button.addEventListener("click", function () {
           url
         }
       }`;
-        fetch("http://localhost:3000/graphql", {
+        fetch(link+"/graphql", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
