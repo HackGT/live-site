@@ -60,27 +60,6 @@ workshops = [
   { name: "Closing Ceremonies", points: "20" },
 ];
 
-for (let j = 0; j < workshops.length; j++) {
-  let workshop = workshops[j];
-  var elem = document.createElement("div");
-
-  var elemName = document.createElement("div");
-  elemName.classList.add("workshop-name");
-
-  var elemPoints = document.createElement("div");
-  elemPoints.classList.add("workshop-points");
-  elemName.innerHTML = workshop["name"];
-  elemPoints.innerHTML = workshop["points"];
-
-  var idName = "workshop-" + j;
-
-  elem.classList.add("workshop-elem");
-  elem.id = idName;
-  elem.append(elemName);
-  elem.append(elemPoints);
-  curr.append(elem);
-}
-
 var video = document.querySelector("#localVideo");
 
 if (navigator.mediaDevices.getUserMedia) {
@@ -94,6 +73,7 @@ if (navigator.mediaDevices.getUserMedia) {
     });
 }
 
+var curr_workshop = document.getElementById("workshop-0");
 var selected = workshops[0]["name"];
 let workshop_desc = document.getElementById("description");
 workshop_desc.innerHTML = selected;
@@ -103,7 +83,8 @@ document
   .querySelectorAll(".workshop-elem")
   .forEach((item) =>
     item.addEventListener("click", function (event) {
-      selected = event.target.textContent;
+      curr_workshop = event.target;
+      selected = curr_workshop.textContent;
       for (let j = 0; j < workshops.length; j++) {
         if (workshops[j]["name"] == event.target.textContent) {
           let workshop_desc = document.getElementById("description");
@@ -117,10 +98,12 @@ document
 // Fetching all the user data from MongoDB to render information on dashboard
 var uuid = "";
 let points = 0;
+var user_events = [];
 var query = `query($uuid: String!) {
     user(uuid: $uuid) {
       name,      
-      points
+      points,
+      userevents { event, point }
     }
   }`;
 fetch("http://localhost:3000/graphql", {
@@ -133,12 +116,46 @@ fetch("http://localhost:3000/graphql", {
 })
   .then((r) => r.json())
   .then((data) => {
+
+    // Set up the user's name and points
     console.log(data);
     var user_name = data["data"]["user"]["name"];
     document.getElementById("username").innerHTML = user_name;
     var points = data["data"]["user"]["points"];
     document.getElementById("open-workshops").innerHTML = points + " Points";
-  });
+
+    // Load the workshops onto the dashboard
+    user_events = data["data"]["user"]["userevents"];    
+    for (let j = 0; j < workshops.length; j++) {
+      let workshop = workshops[j];
+      var name = workshop["name"];
+      var points = workshop["points"];
+      for (let k = 0; k < user_events.length; k++) {
+        if (user_events[k]["event"] == workshop["name"]) {    
+          points = user_events[k]["point"];
+          break;
+        }
+      }       
+      var elem = document.createElement("div");
+
+      var elemName = document.createElement("div");
+      elemName.classList.add("workshop-name");
+
+      var elemPoints = document.createElement("div");
+      elemPoints.classList.add("workshop-points");
+      elemName.innerHTML = name;
+      elemPoints.innerHTML = points;
+
+      var idName = "workshop-" + j;
+
+      elem.classList.add("workshop-elem");
+      elem.id = idName;
+      elem.append(elemName);
+      elem.append(elemPoints);
+      curr.append(elem);
+    }
+  })
+  .catch((err) => console.log(err));
 
 // Join Event Button
 let button = document.getElementById("joinMeeting");
