@@ -32,6 +32,7 @@ export interface IUser extends RootDocument {
     visible?: number;
     points?: number;
     userevents?: IUserEvent[];
+    confirm:boolean;
 }
 
 export interface IEvent{
@@ -96,7 +97,8 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
                 type: mongoose.Schema.Types.Mixed,
                 ref: "UserEvent"
             }]
-        }
+        },
+        confirm:Boolean
     },
     {
         usePushEach: true

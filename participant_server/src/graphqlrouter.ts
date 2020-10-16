@@ -42,40 +42,9 @@ let modifyUserEvent = async function (args, req) {
     if (!user) {
         throw new Error("User not found");
     }
+    console.log(user.email)
 
-    // const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql'
-    // let confirmed = false;
-    // const query = `
-    // query ($search: String!) {
-    //     search_user(search: $search, offset: 0, n: 1) {
-    //         users {
-    //             confirmed
-    //         }
-    //     }
-    // }`;
-    // const variables = {
-    //     search: user.email
-    // };
-    // const options = { method: 'POST',
-    //     url: GRAPHQLURL,
-    //     headers:
-    //     {
-    //         Authorization: 'Bearer ' + process.env.GRAPHQLAUTH,
-    //         'Content-Type': "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         query,
-    //         variables
-    //     })
-    // };
-
-    // await request(options, async (err, res, body) => {
-    //     if (err) { return console.log(err); }
-    //     if (JSON.parse(body).data.search_user.users.length > 0) {
-    //         confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
-    //     }
-    //     console.log(confirmed)
-    // });
+   
 
     let events = user.userevents
     if (!events) {
@@ -89,10 +58,11 @@ let modifyUserEvent = async function (args, req) {
         throw new Error("Event not found");
     }
 
-
-    // if(!confirmed && !(event.type=='Opening Ceremonies' && event.type=='Closing Ceremonies' && event.type=='Speakers')) {
-    //     throw new Error('User not confirmed for HackGT 7!')
-    // }
+    // console.log(user.confirm)
+    if(!user.confirm && !(event[0].type=='Opening Ceremonies' || event[0].type=='Closing Ceremonies' || event[0].type=='Speakers')) {
+        console.log('Not confirmed ')
+        throw new Error('User not confirmed for HackGT 7!')
+    }
 
     let inBounds = true
 

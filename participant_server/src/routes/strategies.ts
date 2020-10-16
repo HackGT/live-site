@@ -79,6 +79,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
 
         const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql';
         const GRAPHQLKEY = process.env.GRAPHQLAUTH || 'wow';
+        // console.log(GRAPHQLKEY)
 
         if (!user) {
             let confirmed = false;
@@ -111,17 +112,28 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 if (JSON.parse(body).data.search_user.users.length > 0) {
                     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
                 }
-                if (!process.env.ISPRODUCTION || confirmed) {
-                    user = createNew<IUser>(User, {
-                        ...profile,
-                        visible: 1,
-                        points: 0
-                    });
-                    await user.save();
-                    done(null, user);
-                } else {
-                    done(null, undefined);
-                }
+                // console.log(confirmed)
+                // user = createNew<IUser>(User, {
+                //         ...profile,
+                //         visible: 1,
+                //         points: 0,
+                //         confirm: confirmed
+                //     });
+                // done(null, user)
+
+                // if (!process.env.ISPRODUCTION || confirmed) {
+                    // console.log(confirmed)
+                user = createNew<IUser>(User, {
+                    ...profile,
+                    visible: 1,
+                    points: 0,
+                    confirm: confirmed
+                });
+                await user.save();
+                done(null, user);
+                // } else {
+                //     done(null, undefined);
+                // }
             });
 
         } else {
