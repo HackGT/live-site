@@ -265,6 +265,10 @@ body {
   width: 12vw;
 }
 
+.join-event:hover {
+  cursor: pointer;
+}
+
 .bottom-design {
   background-image: url("assets/about-long-glow.png");
   background-size: 70%;
