@@ -139,7 +139,8 @@ fetch("http://localhost:3000/graphql", {
     var points = data["data"]["user"]["points"];
     document.getElementById("open-workshops").innerHTML = points + " Points";
   });
-*/
+  */
+
 
 var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
 var points = 0;

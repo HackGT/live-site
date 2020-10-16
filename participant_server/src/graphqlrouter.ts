@@ -30,7 +30,7 @@ let getUser = async function (args, req) {
     //console.log(args.uuid);
     // console.log(args.uuid)
     // console.log(req);
-    console.log("GET USER");
+    console.log("Get User Reached!");
     var user = await User.findById(req.user._id);    
     // console.log(user);
     // var user = await User.find({ uuid: info1 });
@@ -77,7 +77,7 @@ let getEvent = async function(args, req) {
     }
     return event[0]
 }
-
+/*
 let modifyUserEvent = async function (args, req) {
 
     var user = await User.findById(req.user._id)
@@ -114,14 +114,14 @@ let modifyUserEvent = async function (args, req) {
     let start = event[0].starttime
     let end = event[0].endtime
     let type = event[0].type
-    let now = Date.now()
-    let half = (end - start)/2 + start
-    let quarter = end- (end-start)/4
+    let now = Date.now()    
+    let half = (end - start) / 2 + start
+    let quarter = end - (end - start)/4
     let fifteen_before = Date.now() - 15*60000
     if (event.type!=="Emerging Workshop") {
         if (Date.now() < start - 30*60000) {
             inBounds = false
-        } else if (Date.now() > end + 30*60000){
+        } else if (Date.now() > end + 30 * 60000){
             inBounds = false
         }
         if (!inBounds) {
@@ -131,7 +131,7 @@ let modifyUserEvent = async function (args, req) {
         }
     }
     
-    if (Date.now()>end+5*60000) {
+    if (Date.now() > end + 5*60000) {
         maxpoints = 0
     }
     if (Date.now()>quarter) {
@@ -152,6 +152,7 @@ let modifyUserEvent = async function (args, req) {
     }
     return user
 }
+*/
 
 // let getUser async function
 // apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
@@ -161,7 +162,7 @@ const root = {
     user: getUser,
     modify_user: modifyUser,
     event: getEvent,
-    modify_user_event: modifyUserEvent
+    // modify_user_event: modifyUserEvent
     // update_user_to_admin: updateToAdmin,
     // check_user_solved: checkUserSolved,
     // add_completed: addCompleted

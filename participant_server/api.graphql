@@ -30,11 +30,6 @@ type Event {
    passcode: Int!
 }
 
-type UserEvent {
-   name: String!
-   points: Int!
-}
-
 type User {
    id: ID!
    name: String!
@@ -48,13 +43,9 @@ type User {
    # accepted_and_notified: Boolean!
    # confirmed: Boolean!
    points: Int!
-<<<<<<< HEAD
-   events: [String!]
-=======
    # events: [Event]
    # pointPerEvent: [Int]
    userevents: [UserEvent]!
->>>>>>> e3752bc5d52e70410daa16e94aab33f29cc129c9
 }
 
 type UserEvent {
