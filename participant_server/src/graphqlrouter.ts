@@ -15,7 +15,7 @@ let getUser = async function (args, req) {
     //     throw new Error('User not logged in')
     // }
 
-    console.log("Get User Reached!");
+    console.log("Found user");
     var user = await User.findById(req.user._id);    
     
     if (!user) {

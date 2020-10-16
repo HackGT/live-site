@@ -77,66 +77,59 @@ export class GroundTruthStrategy extends OAuthStrategy {
     protected static async passportCallback(req: Request,  accessToken: string, refreshToken: string, profile: IProfile, done: PassportDone) {
         let user = await User.findOne({ uuid: profile.uuid });
 
-        const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql'
+        const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql';
+        const GRAPHQLKEY = process.env.GRAPHQLAUTH || 'wow';
 
-        // if (!user) {
-        //     let confirmed = false;
-        //     const query = `
-        //     query($search: String!) {
-        //         search_user(search: $search, offset: 0, n: 1) {
-        //             users {
-        //                 confirmed
-        //             }
-        //         }
-        //     }`;
-        //     const variables = {
-        //         search: profile.email
-        //     };
-        //     const options = { method: 'POST',
-        //         url: GRAPHQLURL,
-        //         headers:
-        //         {
-        //             Authorization: 'Bearer ' + process.env.GRAPHQLAUTH,
-        //             'Content-Type': "application/json"
-        //         },
-        //         body: JSON.stringify({
-        //             query,
-        //             variables
-        //         })
-        //     };
-
-        //     await request(options, async (err:any, res:any, body:any) => {
-        //         if (err) { return console.log(err); }
-        //         // if (JSON.parse(body).data.search_user.users.length > 0) {
-        //         //     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
-        //         // }
-        //         confirmed = true;
-        //         if (!process.env.ISPRODUCTION || confirmed) {
-        //             console.log("here")
-        //             user = createNew<IUser>(User, {
-        //                 ...profile,
-        //                 visible: 1
-        //             });
-        //             await user.save();
-        //             done(null, user);
-        //         } else {
-        //             done(null, undefined);
-        //         }
-        //     });
-
-        // } else {
-        //     user.token = accessToken;
-        //     user.admin = false;
-        //     await user.save();
-        //     done(null, user);
-        // }
         if (!user) {
-            user = createNew<IUser>(User, { ...profile });
+            let confirmed = false;
+            const query = `
+            query($search: String!) {
+                search_user(search: $search, offset: 0, n: 1) {
+                    users {
+                        confirmed
+                    }
+                }
+            }`;
+            const variables = {
+                search: profile.email
+            };
+            const options = { method: 'POST',
+                url: GRAPHQLURL,
+                headers:
+                {
+                    "Content-Type": "application/json",
+                    "Authorization": `Basic ${Buffer.from(GRAPHQLKEY, "utf8").toString("base64")}`
+                },
+                body: JSON.stringify({
+                    query,
+                    variables
+                })
+            };
+
+            await request(options, async (err:any, res:any, body:any) => {
+                if (err) { return console.log(err); }
+                if (JSON.parse(body).data.search_user.users.length > 0) {
+                    confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+                }
+                if (!process.env.ISPRODUCTION || confirmed) {
+                    user = createNew<IUser>(User, {
+                        ...profile,
+                        visible: 1,
+                        points: 0
+                    });
+                    await user.save();
+                    done(null, user);
+                } else {
+                    done(null, undefined);
+                }
+            });
+
         } else {
             user.token = accessToken;
+            user.admin = false;
+            await user.save();
+            done(null, user);
         }
-        await user.save();
-        done(null, user);
 
 
     }
