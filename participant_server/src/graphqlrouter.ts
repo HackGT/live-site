@@ -14,9 +14,16 @@ let getUser = async function (args, req) {
     // if (!context._id) {
     //     throw new Error('User not logged in')
     // }
-
-    console.log("Found user");
-    var user = await User.findById(req.user._id);    
+    if (args.uuid) {
+        var userArr = await User.find({uuid: args.uuid});
+        if (userArr.length <= 0) {
+            throw new Error("User not found");
+        } 
+                  
+         return userArr[0];
+    }
+        
+    var user = await User.findById(req.user._id)
     
     if (!user) {
         throw new Error("User not found");
