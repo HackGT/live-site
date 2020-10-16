@@ -76,6 +76,8 @@ workshops = [
 workshops.sort(function(a,b){
   return a.date-b.date
 })
+
+/*
 // Shows local video
 var video = document.querySelector("#localVideo");
 if (navigator.mediaDevices.getUserMedia) {
@@ -88,6 +90,7 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log("Something went wrong!");
     });
 }
+*/
 
 // Fetching description data from CMS
 var descriptions = [];
