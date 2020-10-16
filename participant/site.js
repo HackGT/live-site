@@ -25,7 +25,7 @@ workshops = [
   { name: "IBM Tech Talk", points: "10" },
   { name: "Getting to Know NCR APIs", points: "10" },
   { name: "Network Analysis and Graphical Databases", points: "10" },
-  { name: "Life at NSINk", points: "10" },
+  { name: "Life at NSIN", points: "10" },
   { name: "Deploy React, Angular and Vue apps with Azure Static Web Apps", points: "10" },
   { name: "Story of Aladdin", points: "10" },
 
