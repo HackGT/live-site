@@ -656,7 +656,7 @@ button.addEventListener("click", function () {
     .then((r) => r.json())
     .then((data) => {
       // console.log(data);
-      if (data["data"]["modify_user_event"] != null) {
+      // if (data["data"]["modify_user_event"] != null) {
         // Fetch the BlueJeans event link
         query = `query($event_name: String!) {
         event(event_name: $event_name) {
@@ -680,10 +680,10 @@ button.addEventListener("click", function () {
             joinLink.click();            
             location.reload();
           });
-      } else {
-        let link = document.getElementById("joinMeeting");
-        link.innerHTML = "Cannot Join";
-      }
+      // } else {
+      //   let link = document.getElementById("joinMeeting");
+      //   link.innerHTML = "Cannot Join";
+      // }
     })
     .catch((err) => console.log(err));
 });
