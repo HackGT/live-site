@@ -245,7 +245,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/225156525"
     },
     {
-        name: "NSIN - Scavenger Hunt",
+        name: "Wayfair - Codenames",
         type: "Mini Event",
         starttime: new Date("October 17, 2020 11:00:00 EDT"),
         endtime: new Date("October 17, 2020 11:30:00 EDT"),
@@ -285,7 +285,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/162127374"
     },
     {
-        name: "Wayfair - Codenames",
+        name: "NSIN - Scavenger Hunt",
         type: "Mini Event",
         starttime: new Date("October 17, 2020 19:30:00 EDT"),
         endtime: new Date("October 17, 2020 20:00:00 EDT"),
