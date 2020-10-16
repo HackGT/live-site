@@ -71,7 +71,7 @@ app.use("/auth", authRoutes);
 
 
 
-
+/*
 var uuid = "ea655e36-97b8-429b-ba0f-d87b78bef33e"
 var query = `query($uuid: String!) {
     user(uuid: $uuid) {
@@ -80,7 +80,6 @@ var query = `query($uuid: String!) {
         id
     }
 }`
-
 
 app.post('/clicked', (req, res) => {
     const click = {clickTime: new Date()};
@@ -134,6 +133,7 @@ app.get('/dashboard', (req, res) => {
         console.log(body)
     }); 
 })
+*/
 
 // apiRouter.get("/", function(req, res, next) {
 

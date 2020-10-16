@@ -30,8 +30,9 @@ let getUser = async function (args, req) {
     //console.log(args.uuid);
     // console.log(args.uuid)
     // console.log(req);
-    var user = await User.findById(req.user._id);
-    console.log(user);
+    console.log("GET USER");
+    var user = await User.findById(req.user._id);    
+    // console.log(user);
     // var user = await User.find({ uuid: info1 });
     // console.log(user);
     // console.log(user)
@@ -46,11 +47,14 @@ let getUser = async function (args, req) {
 }
 
 let modifyUser = async function (args, req) {
-    var user = await User.findById(req.user._id)
+    // var user = await User.findById(req.user._id)
     // var user = await User.find({ uuid: args.uuid});
-    console.log(user)
-    console.log(req.user._id)
-    console.log(args.uuid)
+    // console.log(user)
+    // console.log(req.user._id)
+    // console.log(args.uuid)
+    console.log("Modify User Reached!");
+    // console.log(user);
+    /*
     if (!user) {
         throw new Error("User not found");
     }  
@@ -60,11 +64,11 @@ let modifyUser = async function (args, req) {
             points: oldPoints+args.points
         }
      });
+     */
     // var user2 = await User.findByIdAndUpdate({ _id: req.user._id },
     // { points: oldPoints+args.points })
-    return user2
+    return null;
 }
-
 
 
 // let getUser async function

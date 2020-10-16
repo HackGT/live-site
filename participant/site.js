@@ -114,6 +114,8 @@ document
     })
   );
 
+// Fetching all the data from MongoDB to render information on dashboard
+/*
 var uuid = "";
 var query = `query($uuid: String!) {
     user(uuid: $uuid) {
@@ -121,7 +123,6 @@ var query = `query($uuid: String!) {
       points
     }
   }`;
-
 fetch("http://localhost:3000/graphql", {
   method: "POST",
   headers: {
@@ -138,28 +139,45 @@ fetch("http://localhost:3000/graphql", {
     var points = data["data"]["user"]["points"];
     document.getElementById("open-workshops").innerHTML = points + " Points";
   });
+*/
 
-let button = document.getElementById("joinMeeting")
+var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
+var points = 0;
+var mutation = `mutation($uuid: String!, $points: Int!) {
+    modify_user(uuid: $uuid, points: $points) {
+      uuid,
+      points
+    }
+  }`;
+fetch("http://localhost:3000/graphql", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({ mutation, variables: { uuid, points } }),
+})
+  .then((r) => r.json())
+  .then((data) => {
+    console.log(data);
+  });
 
+// Join Event Button
+let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
   var event_name = document.getElementById("event_name");
   event_name.value = selected;
   // var submit = document.getElementById("submit");
-
-  /*
-  fetchMoviesJSON().then((data) => {
-    console.log("FETCH MOVIES: ");
-    console.log(data);
-  });
-  */
   // document.getElementById("joinLink").click();
   // submit.click();
+
+  /*
   var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
   var points = 0;
   var mutation = `mutation($uuid: String!, $points: Int!) {
     modify_user(uuid: $uuid, points: $points) {
       name,
-      points,      
+      points,
     }
   }`;
   fetch("http://localhost:3000/graphql", {
@@ -174,18 +192,7 @@ button.addEventListener("click", function () {
     .then((data) => {
       console.log(data);
     });
-  /*
-  fetch("http://localhost:3000/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ mutation, variables: { uuid, points } }),
-  })
-    .then((r) => r.json())
-    .then((data) => console.log(data));
-  */
+    */
 });
 
 console.log(JSON.stringify(selected));
