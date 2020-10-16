@@ -63,7 +63,8 @@ export class GroundTruthStrategy extends OAuthStrategy {
             try {
                 let profile: IProfile = {
                     ...JSON.parse(data),
-                    token: accessToken
+                    token: accessToken,
+                    points: 0
                 };
                 done(null, profile);
             }
@@ -133,7 +134,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
         // }
         if (!user) {
             user = createNew<IUser>(User, { ...profile });
-            user.points = 0;
         } else {
             user.token = accessToken;
         }

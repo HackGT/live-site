@@ -1,9 +1,12 @@
 import express = require("express");
 import passport = require("passport");
 import session = require("express-session");
+import dotenv from "dotenv"
 import { app } from "./app";
 import { IUser, User } from "./schema";
 import { GroundTruthStrategy } from "./routes/strategies";
+
+dotenv.config();
 
 if (process.env.PRODUCTION === 'true') {
     app.enable("trust proxy");
