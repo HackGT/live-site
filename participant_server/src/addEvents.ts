@@ -157,7 +157,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/683549242"
     },
     {
-        name: "App Dev Workshop 1 / Office Hours",
+        name: "Android App Dev Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
         endtime: new Date("October 16, 22:00:00 EDT"),
@@ -165,7 +165,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/492994741"
     },
     {
-        name: "App Dev Workshop 2 / Office Hours",
+        name: "iOS App Dev Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 22:00:00 EDT"),
         endtime: new Date("October 17, 00:00:00 EDT"),
@@ -213,7 +213,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/919084003"
     },
     {
-        name: "App Dev 3 Workshop / Office Hours",
+        name: "Android App Dev Workshop 2",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
         endtime: new Date("October 17, 12:00:00 EDT"),
