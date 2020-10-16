@@ -382,6 +382,7 @@ fetch(link + "/graphql", {
     document.getElementById("username").innerHTML = user_name;
     var points = data["data"]["user"]["points"];
     document.getElementById("open-workshops").innerHTML = points + " Points";
+    user_events = data["data"]["user"]["userevents"];
 
     var descriptions = [];
     const CMS_ENDPOINT = "https://cms.hack.gt/admin/api";
@@ -446,7 +447,7 @@ fetch(link + "/graphql", {
           for (let j = 0; j < workshops.length; j++) {
             if (workshops[j]["name"] == cms_desc[i].name) {
               if (workshops[j]["name"] == "Getting to Know NCR APIs") {
-                console.log(new Date(date_string));
+                // console.log(new Date(date_string));
               }
               workshops[j]["date"] = new Date(date_string);
               break;
@@ -462,13 +463,16 @@ fetch(link + "/graphql", {
           let workshop = workshops[j];
           // console.log(workshop["date"]);
           if (workshop["name"] == "Getting to Know NCR APIs") {
-            console.log(workshops[j - 1]["name"]);
-            console.log(workshop["name"]);
-            console.log(workshops[j - 1]["date"]);
-            console.log(workshop["date"]);
+            // console.log(workshops[j - 1]["name"]);
+            // console.log(workshop["name"]);
+            // console.log(workshops[j - 1]["date"]);
+            // console.log(workshop["date"]);
           }
           var name = workshop["name"];
           var points = "";
+          if (name == "Opening Ceremonies") {
+            // console.log(user_events);            
+          }
           for (let k = 0; k < user_events.length; k++) {
             if (user_events[k]["event"] == workshop["name"]) {
               points = user_events[k]["points"];
@@ -658,7 +662,7 @@ button.addEventListener("click", function () {
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data["data"]["modify_user_event"] != null) {
         // Fetch the BlueJeans event link
         query = `query($event_name: String!) {
@@ -677,8 +681,11 @@ button.addEventListener("click", function () {
           .then((r) => r.json())
           .then((data) => {
             let joinLink = document.getElementById("joinLink");
+            let link = document.getElementById("joinMeeting");
+            link.innerHTML = "Joining Event";
             joinLink.href = data["data"]["event"]["url"];
             joinLink.click();
+            link.innerHTML = "Join Event";
           });
       } else {
         let link = document.getElementById("joinMeeting");
