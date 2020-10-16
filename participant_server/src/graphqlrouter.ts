@@ -25,17 +25,24 @@ let getUser = async function (args, req) {
     // let start2 = info1.indexOf(":");
     // info1 = info1.substring(start2 + 2, info1.length - 1);
     // console.log(info1);
-    console.log(args)
-    let info1 = args.uuid
+    // console.log(args)
+    //let info1 = args.uuid
+    //console.log(args.uuid);
     // console.log(args.uuid)
-    var user = await User.find({ uuid: info1 });
+    // console.log(req);
+    var user = await User.findById(req.user._id);
+    console.log(user);
+    // var user = await User.find({ uuid: info1 });
+    // console.log(user);
     // console.log(user)
+    /*
     if (!user || user.length ==0) {
         throw new Error("User not found");
-    }        
-    return user[0];
+    } 
+    */          
+    //return user[0];
     // return user;
-    // return user
+     return user;
 }
 
 let modifyUser = async function (args, req) {
@@ -56,15 +63,14 @@ let modifyUser = async function (args, req) {
     // var user2 = await User.findByIdAndUpdate({ _id: req.user._id },
     // { points: oldPoints+args.points })
     return user2
-
 }
 
 
 
 // let getUser async function
 // apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
-apiRouter.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
-apiRouter.use(/\/((?!graphql).)*/, bodyParser.json());
+// apiRouter.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
+// apiRouter.use(/\/((?!graphql).)*/, bodyParser.json());
 const root = {
     user: getUser,
     modify_user: modifyUser,

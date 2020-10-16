@@ -29,6 +29,7 @@ app.use(passport.session());
 export function isAuthenticated(request: express.Request, response: express.Response, next: express.NextFunction): void {
     response.setHeader("Cache-Control", "private");
     if (!request.isAuthenticated() || !request.user) {
+        console.log("HELLO");
         console.log(request.isAuthenticated(), request.user)
         if (request.session) {
             // console.log(request.session.returnTo, request.originalUrl)

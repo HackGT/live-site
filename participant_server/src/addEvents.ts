@@ -389,7 +389,13 @@ let events: IEvent[] = [
         url: "https://youtu.be/h69l98Nm_Ls"
     },
 ]
-Event.insertMany(events) 
+async function insertEvents() {
+	await Event.insertMany(events) 
+}
+insertEvents()
+
+console.log('done')
+
 
 
 // event = createNew<IEvent>(Event, {
