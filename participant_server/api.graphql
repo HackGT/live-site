@@ -11,7 +11,7 @@ schema {
 
 type Mutation {
    modify_user(uuid: String!, points: Int!): User
-   addUrl(event:String!):String!
+   modify_user_event(uuid: String!, points: Int!, event_name: String!):User
 
 }
 
@@ -43,10 +43,15 @@ type User {
    # accepted_and_notified: Boolean!
    # confirmed: Boolean!
    points: Int!
-   events: [Event]
+   # events: [Event]
+   # pointPerEvent: [Int]
+   userevents: [UserEvent]!
 }
 
-
+type UserEvent {
+   event: String!
+   point: Int!
+}
 
 # input UserInput {
 #    name: String!
