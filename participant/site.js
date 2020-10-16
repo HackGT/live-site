@@ -1,3 +1,4 @@
+// Create the workshops button for rendering the list
 var openWorkshops = document.getElementById("open-workshops");
 var curr = document.getElementById("workshops-list");
 openWorkshops.addEventListener("click", function () {
@@ -8,6 +9,7 @@ openWorkshops.addEventListener("click", function () {
   }
 });
 
+// List of workshops with names and points
 workshops = [
   { name: "NCR Design Workshop", points: "10" },
   { name: "Wayfair Tech Talk", points: "10" },
@@ -60,8 +62,8 @@ workshops = [
   { name: "Closing Ceremonies", points: "20" },
 ];
 
+// Shows local video
 var video = document.querySelector("#localVideo");
-
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices
     .getUserMedia({ video: true })
@@ -73,33 +75,74 @@ if (navigator.mediaDevices.getUserMedia) {
     });
 }
 
-var curr_workshop = document.getElementById("workshop-0");
-var selected = workshops[0]["name"];
-let workshop_desc = document.getElementById("description");
-workshop_desc.innerHTML = selected;
-
-document
-  .getElementById("workshops-list")
-  .querySelectorAll(".workshop-elem")
-  .forEach((item) =>
-    item.addEventListener("click", function (event) {
-      curr_workshop = event.target;
-      selected = curr_workshop.textContent;
-      for (let j = 0; j < workshops.length; j++) {
-        if (workshops[j]["name"] == event.target.textContent) {
-          let workshop_desc = document.getElementById("description");
-          workshop_desc.innerHTML = workshops[j]["name"];
-          break;
-        }
+// Fetching description data from CMS
+var descriptions = [];
+const CMS_ENDPOINT = "https://cms.hack.gt/admin/api";
+var query = `{
+  allEvents 
+  { 
+    name, 
+    description,
+    startDay,
+    startTime,
+    endTime,
+    type {
+      name
+    },
+    tags {
+      name
+    }
+  }
+}`;
+fetch(CMS_ENDPOINT, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({ query: query }),
+})
+  .then((r) => r.json())
+  .then((data) => {
+    var cms_desc = data["data"]["allEvents"];
+    for (let i = 0; i < cms_desc.length; i++) {
+      var day = cms_desc[i].startDay;
+      var desc_day = "";
+      if (day.substring(day.length - 2) == "16") {
+        desc_day = "Friday";
+      } else if (day.substring(day.length - 2) == "17") {
+        desc_day = "Saturday";
+      } else {
+        desc_day = "Sunday";
       }
-    })
-  );
+
+      var start = cms_desc[i].startTime;
+      if (start.substring(0, 1) == "0") {
+        start = start.substring(1);
+      }
+      var end = cms_desc[i].endTime;
+      if (end.substring(0, 1) == "0") {
+        end = end.substring(1);
+      }
+      var name_desc = {
+        name: cms_desc[i].name,
+        desc: cms_desc[i].description,
+        startDay: desc_day,
+        startTime: start,
+        endTime: end,
+        type: cms_desc[i].type,
+        tags: cms_desc[i].tags,
+      };
+      descriptions.push(name_desc);
+    }
+  })
+  .catch((err) => console.log(err));
 
 // Fetching all the user data from MongoDB to render information on dashboard
 var uuid = "";
 let points = 0;
 var user_events = [];
-var query = `query($uuid: String!) {
+query = `query($uuid: String!) {
     user(uuid: $uuid) {
       name,      
       points,
@@ -116,7 +159,6 @@ fetch("http://localhost:3000/graphql", {
 })
   .then((r) => r.json())
   .then((data) => {
-
     // Set up the user's name and points
     console.log(data);
     var user_name = data["data"]["user"]["name"];
@@ -125,17 +167,17 @@ fetch("http://localhost:3000/graphql", {
     document.getElementById("open-workshops").innerHTML = points + " Points";
 
     // Load the workshops onto the dashboard
-    user_events = data["data"]["user"]["userevents"];    
+    user_events = data["data"]["user"]["userevents"];
     for (let j = 0; j < workshops.length; j++) {
       let workshop = workshops[j];
       var name = workshop["name"];
       var points = workshop["points"];
       for (let k = 0; k < user_events.length; k++) {
-        if (user_events[k]["event"] == workshop["name"]) {    
+        if (user_events[k]["event"] == workshop["name"]) {
           points = user_events[k]["point"];
           break;
         }
-      }       
+      }
       var elem = document.createElement("div");
 
       var elemName = document.createElement("div");
@@ -154,6 +196,53 @@ fetch("http://localhost:3000/graphql", {
       elem.append(elemPoints);
       curr.append(elem);
     }
+
+    // Adds event handlers for each workshop to update description when pressed
+    var curr_workshop = document.getElementById("workshop-0");
+    var selected = workshops[0]["name"];
+    let workshop_desc = document.getElementById("description");
+    workshop_desc.innerHTML = selected;
+    document
+      .getElementById("workshops-list")
+      .querySelectorAll(".workshop-elem")
+      .forEach((item) => {
+        item.addEventListener("click", function (event) {
+          curr_workshop = event.target;
+          selected = curr_workshop.textContent;
+          for (let j = 0; j < workshops.length; j++) {
+            let workshop = workshops[j];
+            if (workshop["name"] == curr_workshop.textContent) {
+              // Find the correct description
+              let flag = false;
+              let desc_title = document.getElementById("desc-title");
+              desc_title.innerHTML = workshop["name"];
+              for (let k = 0; k < descriptions.length; k++) {
+                if (descriptions[k]["name"].includes(workshop["name"])) {
+                  let workshop_desc = document.getElementById("description");
+                  let desc_type = document.getElementById("desc-type");
+                  let desc_date = document.getElementById("desc-date");
+
+                  workshop_desc.innerHTML = descriptions[k]["desc"];
+                  desc_type.innerHTML = descriptions[k]["type"]["name"];
+                  desc_date.innerHTML =
+                    descriptions[k]["startDay"] +
+                    ", " +
+                    descriptions[k]["startTime"] +
+                    "-" +
+                    descriptions[k]["endTime"];
+                  flag = true;
+                  break;
+                }
+              }
+              if (!flag) {
+                workshop_desc.innerHTML =
+                  workshop["name"] + " description not available.";
+              }
+              break;
+            }
+          }
+        });
+      });
   })
   .catch((err) => console.log(err));
 

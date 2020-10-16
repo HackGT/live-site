@@ -125,6 +125,49 @@ body {
   cursor: pointer;
 }
 
+.desc-title-container {
+  display: flex;
+  flex-direction: column;
+  height: 25%;
+  width: 100%;
+}
+
+.desc-title-container .desc-title {
+  height: 40%;
+  width: 100%;  
+  padding-left: 1rem;
+  padding-top: 0.75rem;
+}
+
+.desc-title-container .desc-info {
+  height: 60%;
+  width: 100%;
+  display: flex;  
+  padding-left: 1rem;
+  padding-top: 0.4rem;  
+  gap: 5%;
+}
+
+.desc-title-container .desc-info .desc-type {
+  font-size: 0.75rem;
+  background-color: purple;  
+  border-radius: 3rem;
+  padding-top: 0.3vw;
+  text-align: center;
+  height: 40%;
+  width: 20%;
+}
+
+.desc-title-container .desc-info .desc-date {
+  font-size: 0.75rem;
+  width: 50%;
+}
+
+#desc-host {
+  padding-left: 1rem;
+  padding-top: 1rem;  
+}
+
 .workshop-elem:hover {
   background-color: lightblue;
 }
@@ -149,7 +192,7 @@ body {
 }
 
 .body .workshop {
-  background-color: white;
+  background-color: #83b3abc4;
   width: 40%;
   height: 100%;
 }
@@ -162,15 +205,16 @@ body {
   background-color: white;
 }
 
-.body .workshop #description {
-  color: #658aae;
-  height: 90%;
+.body .workshop #description {  
+  height: 40%;
   padding-left: 1rem;
   padding-top: 0.5rem;
+  color: white;
+  overflow-y: auto;
 }
 
 .body .video {
-  width: 35%;
+  width: 37.5%;
   height: 100%;
 }
 
@@ -241,6 +285,10 @@ body {
 
 .container #form {
   display: none;
+}
+
+.workshop-description {
+  height: 100%;
 }
 
 @media only screen and (max-width: 1100px) {
