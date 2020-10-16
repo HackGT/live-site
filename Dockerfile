@@ -2,8 +2,8 @@ FROM node:10-alpine
 
 # Bundle Source
 RUN mkdir -p /usr/src/virtual-checkin
-WORKDIR /usr/src/virtual-checkin/participant_server
-COPY . /usr/src/virtual-checkin/participant_server
+WORKDIR /usr/src/virtual-checkin
+COPY . /usr/src/virtual-checkin
 RUN npm install --unsafe-perm
 
 # Set Timezone to EST
