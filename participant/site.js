@@ -461,17 +461,10 @@ fetch(link + "/graphql", {
         });
         for (let j = 0; j < workshops.length; j++) {
           let workshop = workshops[j];
-          // console.log(workshop["date"]);
-          if (workshop["name"] == "Getting to Know NCR APIs") {
-            // console.log(workshops[j - 1]["name"]);
-            // console.log(workshop["name"]);
-            // console.log(workshops[j - 1]["date"]);
-            // console.log(workshop["date"]);
-          }
           var name = workshop["name"];
           var points = "";
           if (name == "Opening Ceremonies") {
-            // console.log(user_events);            
+            points = "20";            
           }
           for (let k = 0; k < user_events.length; k++) {
             if (user_events[k]["event"] == workshop["name"]) {
