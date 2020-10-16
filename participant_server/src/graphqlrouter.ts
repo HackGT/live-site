@@ -71,9 +71,10 @@ let modifyUser = async function (args, req) {
 }
 
 let getEvent = async function(args, req) {
+    console.log(args.event_name);
     var event = await Event.find({name:args.event_name});
     if (!event || event.length ==0) {
-        throw new Error("User not found");
+        throw new Error("Event not found");
     }
     return event[0]
 }

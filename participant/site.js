@@ -114,9 +114,9 @@ document
     })
   );
 
-// Fetching all the data from MongoDB to render information on dashboard
-/*
+// Fetching all the user data from MongoDB to render information on dashboard
 var uuid = "";
+let points = 0;
 var query = `query($uuid: String!) {
     user(uuid: $uuid) {
       name,      
@@ -139,40 +139,16 @@ fetch("http://localhost:3000/graphql", {
     var points = data["data"]["user"]["points"];
     document.getElementById("open-workshops").innerHTML = points + " Points";
   });
-  */
-
-let uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
-let points = 0;
-// var mutation = "hello";
-/*
-var query = `mutation {
-  modify_user(uuid: "4f738605-089e-4838-91a8-522a47f9e1f6", points: 0) {
-
-    points
-  }
-}`;
-fetch("http://localhost:3000/graphql", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
-  body: JSON.stringify({ query, variables: { uuid, points } }),
-})
-  .then((r) => r.json())
-  .then((data) => {
-    console.log(data);
-  });
-*/
 
 // Join Event Button
 let button = document.getElementById("joinMeeting");
 button.addEventListener("click", function () {
-  var event_name = document.getElementById("event_name");
-  event_name.value = selected;
-  var query = `mutation {
-    modify_user(uuid: "4f738605-089e-4838-91a8-522a47f9e1f6", points: 0) {
-  
+  // Modify the user's obtained points for that event
+  var uuid = "";
+  let points = 0;
+  let event_name = selected;
+  var query = `mutation($uuid: String!, $points: Int!, $event_name: String!) {
+    modify_user_event(uuid: $uuid, points: $points, event_name: $event_name) {
       points
     }
   }`;
@@ -182,50 +158,31 @@ button.addEventListener("click", function () {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({ query, variables: { uuid, points } }),
+    body: JSON.stringify({ query, variables: { uuid, points, event_name } }),
   })
     .then((r) => r.json())
     .then((data) => {
       console.log(data);
-    });
-  // var submit = document.getElementById("submit");
-  // document.getElementById("joinLink").click();
-  // submit.click();
-
-  /*
-  var uuid = "4f738605-089e-4838-91a8-522a47f9e1f6";
-  var points = 0;
-  var mutation = `mutation($uuid: String!, $points: Int!) {
-    modify_user(uuid: $uuid, points: $points) {
-      name,
-      points,
-    }
-  }`;
-  fetch("http://localhost:3000/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ mutation, variables: { uuid, points } }),
-  })
-    .then((r) => r.json())
-    .then((data) => {
-      console.log(data);
-    });
-    */
+      // Fetch the BlueJeans event link
+      query = `query($event_name: String!) {
+        event(event_name: $event_name) {
+          url
+        }
+      }`;
+      fetch("http://localhost:3000/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ query, variables: { event_name } }),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          document.getElementById("joinLink").href =
+            data["data"]["event"]["url"];
+          document.getElementById("joinLink").click();
+        });
+    })
+    .catch((err) => console.log(err));
 });
-
-console.log(JSON.stringify(selected));
-/*
-async function fetchMoviesJSON() {
-  const response = await fetch("http://localhost:3000/clicked", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ data: selected }),
-  });
-  return response.json();
-}
-*/

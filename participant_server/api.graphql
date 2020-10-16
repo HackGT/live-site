@@ -25,9 +25,8 @@ type Event {
    name: String!
    starttime: String!,
    endtime: String!,
-   points: Int!
-   meetingId: Int!,
-   passcode: Int!
+   points: Int!,
+   url: String!
 }
 
 type User {
