@@ -677,8 +677,8 @@ button.addEventListener("click", function () {
             let link = document.getElementById("joinMeeting");
             link.innerHTML = "Joining Event";
             joinLink.href = data["data"]["event"]["url"];
-            joinLink.click();
-            link.innerHTML = "Join Event";
+            joinLink.click();            
+            location.reload();
           });
       } else {
         let link = document.getElementById("joinMeeting");
