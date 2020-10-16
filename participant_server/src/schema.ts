@@ -31,10 +31,7 @@ export interface IUser extends RootDocument {
     admin?: boolean;
     visible?: number;
     points?: number;
-    events?: IEvent[];
-
-
-
+    userevents?: IUserEvent[];
 }
 
 export interface IEvent{
@@ -45,6 +42,18 @@ export interface IEvent{
     points: number;
     url:string;
 }
+
+export interface IUserEvent{
+    event: string;
+    points: number;
+}
+export type IUserEventMongoose = IUserEvent & mongoose.Document;
+
+export const UserEvent = mongoose.model<IUserEventMongoose>("UserEvent", new mongoose.Schema({
+    event: String,
+    points: Number, 
+
+}));
 
 export type IUserMongoose = IUser & mongoose.Document;
 export type IEventMongoose = IEvent & mongoose.Document;
@@ -82,10 +91,10 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
             type: Number,
             required: true
         },
-        events: {
+        userevents: {
             type: [{
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Event"
+                ref: "UserEvent"
             }]
         }
     },

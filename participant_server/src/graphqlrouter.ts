@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { buildSchema } from "graphql"
-import { IUser, User, Event } from "./schema";
+import { IUser, User, Event, UserEvent, IEvent, IUserEvent} from "./schema";
 var express = require('express')
 const bodyParser = require('body-parser')
 const express_graphql = require("express-graphql")
@@ -70,6 +70,88 @@ let modifyUser = async function (args, req) {
     return null;
 }
 
+let getEvent = async function(args, req) {
+    var event = await Event.find({name:args.event_name});
+    if (!event || event.length ==0) {
+        throw new Error("User not found");
+    }
+    return event[0]
+}
+
+let modifyUserEvent = async function (args, req) {
+
+    var user = await User.findById(req.user._id)
+    if (!user) {
+        throw new Error("User not found");
+    }
+    let events = user.userevents
+    if (!events) {
+        throw new Error("Event not found");
+    }
+    // let oldPoints = user.points
+    var event = await Event.find({name:args.event_name});
+    if (!event || event.length ==0) {
+        throw new Error("Event not found");
+    }
+
+    // for (let i = 0; i < events.length;  i++) {
+    //     var event = await Event.find({name:events[i].event});
+    //     if (!event || event.length ==0) {
+    //         throw new Error("Event not found");
+    //     }
+    //     let point = event[0].points
+    //     let date = Date.now()
+    //     console.log(event[0].starttime)
+    //     console.log(event[0].endtime)
+    // var user2 = await User.findByIdAndUpdate(req.user._id, {
+    //     "$set": {
+    //         points: oldPoints+args.points
+    //     }
+    // });
+    let inBounds = true
+
+    let maxpoints = event[0].points
+    let start = event[0].starttime
+    let end = event[0].endtime
+    let type = event[0].type
+    let now = Date.now()
+    let half = (end - start)/2 + start
+    let quarter = end- (end-start)/4
+    let fifteen_before = Date.now() - 15*60000
+    if (event.type!=="Emerging Workshop") {
+        if (Date.now() < start - 30*60000) {
+            inBounds = false
+        } else if (Date.now() > end + 30*60000){
+            inBounds = false
+        }
+        if (!inBounds) {
+            console('not in bounds!')
+            throw new Error("Event not in bounds")
+            return null
+        }
+    }
+    
+    if (Date.now()>end+5*60000) {
+        maxpoints = 0
+    }
+    if (Date.now()>quarter) {
+       maxpoints = maxpoints/4
+    } else if (Date.now()> half) {
+        maxpoints = maxpoints/2
+    } 
+    const userevent = {
+        event: event[0].name
+        points: maxpoints
+    }
+    var user2 = await User.findByIdAndUpdate(req.user._id, {
+        "$push": {
+            userevents: userevent
+        }
+    })
+
+    }
+    return user
+}
 
 // let getUser async function
 // apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
@@ -78,6 +160,8 @@ let modifyUser = async function (args, req) {
 const root = {
     user: getUser,
     modify_user: modifyUser,
+    event: getEvent,
+    modify_user_event: modifyUserEvent
     // update_user_to_admin: updateToAdmin,
     // check_user_solved: checkUserSolved,
     // add_completed: addCompleted
