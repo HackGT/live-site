@@ -314,7 +314,7 @@ let events: IEvent[] = [
         starttime: new Date("October 16, 2020 17:00:00 EDT"),
         endtime: new Date("October 16, 2020 18:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/77Bs_7LFujE"
     },
     {
         name: "Closing Ceremonies",
@@ -322,7 +322,7 @@ let events: IEvent[] = [
         starttime: new Date("October 18, 2020 15:30:00 EDT"),
         endtime: new Date("October 18, 2020 16:30:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/xw_PEnX7T_4"
     },
     {
         name: "HackGT Organizer Panel",
@@ -330,7 +330,7 @@ let events: IEvent[] = [
         starttime: new Date("October 17, 2020 22:00:00 EDT"),
         endtime: new Date("October 17, 2020 22:30:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Rangr Hour",
@@ -338,7 +338,7 @@ let events: IEvent[] = [
         starttime: new Date("October 16, 2020 21:00:00 EDT"),
         endtime: new Date("October 16, 2020 22:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Nicholas Walsh",
@@ -346,7 +346,7 @@ let events: IEvent[] = [
         starttime: new Date("October 16, 2020 23:00:00 EDT"),
         endtime: new Date("October 17, 2020 00:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Mr. Gary Brantley; CIO of Atlanta",
@@ -354,7 +354,7 @@ let events: IEvent[] = [
         starttime: new Date("October 17, 2020 11:00:00 EDT"),
         endtime: new Date("October 17, 2020 12:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Joy Harris",
@@ -362,7 +362,7 @@ let events: IEvent[] = [
         starttime: new Date("October 17, 2020 12:30:00 EDT"),
         endtime: new Date("October 17, 2020 13:30:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Adam Phillippy",
@@ -370,7 +370,7 @@ let events: IEvent[] = [
         starttime: new Date("October 17, 2020 14:00:00 EDT"),
         endtime: new Date("October 17, 2020 15:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Tim Aveni",
@@ -378,7 +378,7 @@ let events: IEvent[] = [
         starttime: new Date("October 17, 2020 16:00:00 EDT"),
         endtime: new Date("October 17, 2020 17:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
     {
         name: "Stone Librande",
@@ -386,7 +386,7 @@ let events: IEvent[] = [
         starttime: new Date("October 17, 2020 18:00:00 EDT"),
         endtime: new Date("October 17, 2020 19:00:00 EDT"),
         points: 20,
-        url: "https://www.youtube.com/watch?v=77Bs_7LFujE"
+        url: "https://youtu.be/h69l98Nm_Ls"
     },
 ]
 Event.insertMany(events) 
