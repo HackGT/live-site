@@ -2,73 +2,29 @@ import fs from "fs";
 import path from "path";
 import { buildSchema } from "graphql"
 import { IUser, User, Event, UserEvent, IEvent, IUserEvent} from "./schema";
+import request from "request"
+
 var express = require('express')
 const bodyParser = require('body-parser')
 const express_graphql = require("express-graphql")
 const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 var apiRouter = express.Router()
 let getUser = async function (args, req) {
+
     // if (!context._id) {
     //     throw new Error('User not logged in')
     // }
-    //     const getUser = async function (args, req) {
-    //     var user = await User.find({ uuid: args.uuid });
-    //     return user[0];
-    // }
-    // let user = await User.findById(args.user_id);
-    // let query_str = args.body.query;
-    // let starting_idx = query_str.indexOf("user_id");
-    // let ending_idx = query_str.indexOf(")");
-    
-    // let info1 = query_str.substring(starting_idx, ending_idx);
-    // console.log(info1);
-    // let start2 = info1.indexOf(":");
-    // info1 = info1.substring(start2 + 2, info1.length - 1);
-    // console.log(info1);
-    // console.log(args)
-    //let info1 = args.uuid
-    //console.log(args.uuid);
-    // console.log(args.uuid)
-    // console.log(req);
+
     console.log("Get User Reached!");
     var user = await User.findById(req.user._id);    
-    // console.log(user);
-    // var user = await User.find({ uuid: info1 });
-    // console.log(user);
-    // console.log(user)
     
     if (!user) {
         throw new Error("User not found");
     } 
               
-    //return user[0];
-    // return user;
      return user;
 }
 
-let modifyUser = async function (args, req) {
-    var user = await User.findById(req.user._id)
-    // var user = await User.find({ uuid: args.uuid});
-    // console.log(user)
-    // console.log(req.user._id)
-    // console.log(args.uuid)
-    console.log("Modify User Reached!");
-    // console.log(user);
-    /*
-    if (!user) {
-        throw new Error("User not found");
-    }  
-    let oldPoints = user.points
-    var user2 = await User.findByIdAndUpdate(req.user._id, {
-        "$set": {
-            points: oldPoints+args.points
-        }
-     });
-     */
-    // var user2 = await User.findByIdAndUpdate({ _id: req.user._id },
-    // { points: oldPoints+args.points })
-    return user;
-}
 
 let getEvent = async function(args, req) {
     console.log(args.event_name);
@@ -81,34 +37,63 @@ let getEvent = async function(args, req) {
 
 let modifyUserEvent = async function (args, req) {
 
+
     var user = await User.findById(req.user._id)
     if (!user) {
         throw new Error("User not found");
     }
+
+    // const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql'
+    // let confirmed = false;
+    // const query = `
+    // query ($search: String!) {
+    //     search_user(search: $search, offset: 0, n: 1) {
+    //         users {
+    //             confirmed
+    //         }
+    //     }
+    // }`;
+    // const variables = {
+    //     search: user.email
+    // };
+    // const options = { method: 'POST',
+    //     url: GRAPHQLURL,
+    //     headers:
+    //     {
+    //         Authorization: 'Bearer ' + process.env.GRAPHQLAUTH,
+    //         'Content-Type': "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         query,
+    //         variables
+    //     })
+    // };
+
+    // await request(options, async (err, res, body) => {
+    //     if (err) { return console.log(err); }
+    //     if (JSON.parse(body).data.search_user.users.length > 0) {
+    //         confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+    //     }
+    //     console.log(confirmed)
+    // });
+
     let events = user.userevents
     if (!events) {
         throw new Error("Event not found");
     }
+
+
     // let oldPoints = user.points
     var event = await Event.find({name:args.event_name});
     if (!event || event.length ==0) {
         throw new Error("Event not found");
     }
 
-    // for (let i = 0; i < events.length;  i++) {
-    //     var event = await Event.find({name:events[i].event});
-    //     if (!event || event.length ==0) {
-    //         throw new Error("Event not found");
-    //     }
-    //     let point = event[0].points
-    //     let date = Date.now()
-    //     console.log(event[0].starttime)
-    //     console.log(event[0].endtime)
-    // var user2 = await User.findByIdAndUpdate(req.user._id, {
-    //     "$set": {
-    //         points: oldPoints+args.points
-    //     }
-    // });
+
+    // if(!confirmed && !(event.type=='Opening Ceremonies' && event.type=='Closing Ceremonies' && event.type=='Speakers')) {
+    //     throw new Error('User not confirmed for HackGT 7!')
+    // }
+
     let inBounds = true
 
     let maxpoints = event[0].points
@@ -116,21 +101,24 @@ let modifyUserEvent = async function (args, req) {
     let end = event[0].endtime.getTime()
     let type = event[0].type
     let now = Date.now()
-    now = new Date("October 16, 2020 22:00:10 EDT").getTime()
+    // now = new Date("October 16, 2020 20:30:10 EDT").getTime()
     let half = (end - start) / 2 + start
     let quarter = end - (end - start)/4
     // let fifteen_before = new Date(now - 15*60000)
-    if (event[0].type!=="Emerging Workshop") {
-        if (now < start - 30*60000) {
-            inBounds = false
-        } else if (now > end + 30 * 60000){
-            inBounds = false
-        }
-        if (!inBounds) {
-            console.log('not in bounds!')
-            throw new Error("Event not in bounds")
-            // return null
-        }
+
+    if (now < start - 30*60000) {
+        inBounds = false
+    } else if (now > end + 30 * 60000){
+        inBounds = false
+    }
+    if (!inBounds && event[0].type!=="Emerging Workshop") {
+        console.log('not in bounds!')
+        throw new Error("Event not in bounds")
+        // return null
+    }
+    if (!inBounds && event[0].type=="Emerging Workshop") {
+        return user
+        // return null
     }
 
     if (user.userevents) {
@@ -151,10 +139,6 @@ let modifyUserEvent = async function (args, req) {
     } 
     // console.log(maxpoints)
 
-    // const userevent = {
-    //     event: args.event_name,
-    //     points: maxpoints
-    // }
     var user2 = await User.findByIdAndUpdate(req.user._id, {
         "$push": {
             userevents: {
@@ -163,21 +147,21 @@ let modifyUserEvent = async function (args, req) {
             }
         }
     }, {new: true});
+    var pts = 0
+    if (user.points!=null && user.points !=undefined) {
+        pts = user.points+maxpoints
+    } else {
+        pts = maxpoints
+    }
+
+
+    var user2 = await User.findByIdAndUpdate(req.user._id, {
+        "$set": {
+            points: pts
+        }
+    }, {new: true});
+
     console.log(user2)
-
-// if (code == actualSolution) {
-//         return await User.findByIdAndUpdate(req.user._id, {
-//             "$push": {
-//                 problemsSolved: {
-//                     problem: args.problem,
-//                     date: new Date()
-//                 }
-//             }
-//         }, { new: true });
-//     } else {
-//         return null;
-//     }
-
 
 
     return user2
@@ -186,18 +170,15 @@ let modifyUserEvent = async function (args, req) {
 
 
 
-// let getUser async function
+
 // apiRouter.use(bodyParser.text({ type: 'application/graphql' }));
 // apiRouter.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
 // apiRouter.use(/\/((?!graphql).)*/, bodyParser.json());
 const root = {
     user: getUser,
-    // modify_user: modifyUser,
     event: getEvent,
     modify_user_event: modifyUserEvent
-    // update_user_to_admin: updateToAdmin,
-    // check_user_solved: checkUserSolved,
-    // add_completed: addCompleted
+
 };
 
 
