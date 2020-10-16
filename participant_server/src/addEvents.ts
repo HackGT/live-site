@@ -133,7 +133,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/825086141"
     },
     {
-        name: "Web Dev 1 Workshop / OFfice Hours",
+        name: "Web Dev 1 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
         endtime: new Date("October 16, 22:00:00 EDT"),
