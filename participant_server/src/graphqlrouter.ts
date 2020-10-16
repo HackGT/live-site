@@ -85,7 +85,7 @@ let modifyUserEvent = async function (args, req) {
 
     if (now < start - 15*60000) {
         inBounds = false
-    } else if (now > end + 30 * 60000){
+    } else if (now > end + 15 * 60000){
         inBounds = false
     }
     if (!inBounds && event[0].type!=="Emerging Workshop") {

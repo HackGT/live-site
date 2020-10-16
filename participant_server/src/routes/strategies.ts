@@ -139,7 +139,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
         } else {
             user.token = accessToken;
             user.admin = false;
-            user.points = 20
             await user.save();
             done(null, user);
         }
