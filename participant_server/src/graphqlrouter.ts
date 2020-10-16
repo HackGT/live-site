@@ -83,7 +83,7 @@ let modifyUserEvent = async function (args, req) {
     let quarter = end - (end - start)/4
     // let fifteen_before = new Date(now - 15*60000)
 
-    if (now < start - 30*60000) {
+    if (now < start - 15*60000) {
         inBounds = false
     } else if (now > end + 30 * 60000){
         inBounds = false

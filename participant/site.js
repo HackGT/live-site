@@ -29,48 +29,62 @@ workshops = [
   { name: "Deploy React, Angular and Vue apps with Azure Static Web Apps", points: "10" },
   { name: "Story of Aladdin", points: "10" },
 
-  { name: "Blackrock Mini Challenge", points: "5" },
-  { name: "NCR Mini Challenge", points: "5" },
-  { name: "NSIN Mini Challenge", points: "5" },
-  { name: "Anthem Mini Challenge", points: "5" },
-  
-  { name: "Web Dev 1 Workshop", points: "15" },
-  { name: "Prototype Workshop", points: "15" },
-  { name: "Android App Dev Workshop 1", points: "15" },
-  { name: "iOS App Dev Workshop 1", points: "15" },
-  { name: "Data Science Workshop 1", points: "15" },
-  { name: "Data Science Workshop 2", points: "15" },
-  { name: "Gaming and Graphics Workshop 1", points: "15" },
-  { name: "Gaming and Graphics Workshop 2", points: "15" },
-  { name: "Web Dev 3 Workshop", points: "15" },
-  { name: "Android App Dev Workshop 2", points: "15" },
-  { name: "Data Science 3 Workshop", points: "15" },
-  
-  { name: "NCR - Pillow Fort", points: "20" },
-  { name: "Anthem - Community Hangout", points: "20" },
-  { name: "Wayfair - Codenames", points: "20" },
-  { name: "GM - Typing Speed Racer", points: "20" },
-  { name: "IBM - Among Us Personalization", points: "20" },
-  { name: "BlackRock Series", points: "20" },
-  { name: "Microsoft - Yoga", points: "20" },
-  { name: "NSIN - Scavenger Hunt", points: "20" },
-  { name: "MLH - Werewolf", points: "20" },
-  { name: "MLH - CTF", points: "20" },
-  
-  { name: "Opening Ceremonies", points: "20" },
-  { name: "Web Dev 2 Workshop", points: "15" },
-  { name: "HackGT Organizer Panel", points: "20" },
-  { name: "Rangr Hour", points: "20" },
-  { name: "Nicholas Walsh", points: "20" },
-  { name: "Gary Brantley, City of Atlanta CIO", points: "20" },
-  { name: "Joy Harris", points: "20" },
-  { name: "Adam Phillippy", points: "20" },
+  { name: "10 Things Every Hacker Needs to Know About Design", points: "10", date:  new Date("October 16, 2020 20:30:00 EDT")},
+  { name: "Augmented Reality for Apps", points: "10", date:  new Date("October 17, 2020 10:30:00 EDT")},
+  { name: "IBM Tech Talk", points: "10", date:  new Date("October 17, 2020 12:00:00 EDT") },
+  { name: "Getting to Know NCR APIs", points: "10" , date:  new Date("October 16, 2020 20:30:00 EDT")},
+  { name: "Network Analysis and Graphical Databases", points: "10", date:  new Date("October 17, 2020 13:30:00 EDT")},
+  { name: "Life at NSINk", points: "10", date:  new Date("October 17, 2020 15:00:00 EDT") },
+  { name: "Deploy React, Angular and Vue apps with Azure Static Web Apps", points: "10", date: new Date("October 17, 2020 17:00:00 EDT") },
+  { name: "Story of Aladdin", points: "10", date:  new Date("October 17, 2020 17:30:00 EDT") },
 
-  { name: "Tim Aveni", points: "20" },
-  { name: "Stone Librande", points: "20" },
-  { name: "Closing Ceremonies", points: "20" },
+
+  { name: "Blackrock Mini Challenge", points: "5", date:  new Date("October 16, 2020 22:00:00 EDT") },
+  { name: "NCR Mini Challenge", points: "5" , date:  new Date("October 17, 2020 15:30:00 EDT")},
+  { name: "NSIN Mini Challenge", points: "5" , date:  new Date("October 17, 2020 16:30:00 EDT")},
+  { name: "Anthem Mini Challenge", points: "5" , date:  new Date("October 17, 2020 11:30:00 EDT")},
+  { name: "GM Mini Challenge", points:"5", date: new Date("October 17, 2020 13:00:00 EDT")},
+
+  { name: "Web Dev 1 Workshop", points: "15" , date:  new Date("October 16, 2020 20:00:00 EDT")},
+
+  { name: "Prototype Workshop", points: "15" , date:  new Date("October 16, 2020 23:00:00 EDT")},
+  { name: "Android App Dev Workshop 1", points: "15" , date:  new Date("October 16, 2020 20:00:00 EDT")},
+  { name: "iOS App Dev Workshop 1", points: "15" , date:  new Date("October 16, 2020 22:00:00 EDT")},
+  { name: "Data Science Workshop 1", points: "15" , date:  new Date("October 16, 2020 20:00:00 EDT")},
+  { name: "Data Science Workshop 2", points: "15" , date:  new Date("October 16, 2020 22:00:00 EDT")},
+  { name: "Gaming and Graphics Workshop 1", points: "15" , date:  new Date("October 16, 2020 20:00:00 EDT")},
+  { name: "Gaming and Graphics Workshop 2", points: "15" , date:  new Date("October 17, 2020 10:00:00 EDT")},
+  { name: "Web Dev 3 Workshop", points: "15" , date:  new Date("October 17, 2020 10:00:00 EDT")},
+  { name: "Android App Dev Workshop 2", points: "15", date:  new Date("October 17, 2020 10:00:00 EDT") },
+  { name: "Data Science 3 Workshop", points: "15" , date:  new Date("October 17, 2020 10:00:00 EDT")},
+  
+  { name: "NCR - Pillow Fort", points: "20" , date:  new Date("October 16, 2020 20:30:00 EDT")},
+  { name: "Anthem - Community Hangout", points: "20" , date:  new Date("October 17, 2020 01:00:00 EDT")},
+  { name: "Wayfair - Codenames", points: "20" , date:  new Date("October 17, 2020 11:00:00 EDT")},
+  { name: "GM - Typing Speed Racer", points: "20" , date:  new Date("October 17, 2020 13:00:00 EDT")},
+  { name: "IBM - Among Us Personalization", points: "20", date:  new Date("October 17, 2020 14:30:00 EDT") },
+  { name: "BlackRock Series", points: "20" , date:  new Date("October 17, 2020 16:00:00 EDT")},
+  { name: "Microsoft - Yoga", points: "20" , date:  new Date("October 17, 2020 18:00:00 EDT")},
+  { name: "NSIN - Scavenger Hunt", points: "20" , date:  new Date("October 17, 2020 19:30:00 EDT")},
+  { name: "MLH - Werewolf", points: "20" , date:  new Date("October 18, 2020 00:00:00 EDT")},
+  { name: "MLH - CTF", points: "20" , date:  new Date("October 18, 2020 13:00:00 EDT")},
+  
+  { name: "Opening Ceremonies", points: "20" , date:  new Date("October 16, 2020 17:00:00 EDT")},
+  { name: "Web Dev 2 Workshop", points: "15" , date:  new Date("October 16, 2020 22:00:00 EDT")},
+  { name: "HackGT Organizer Panel", points: "20" , date:  new Date("October 17, 2020 22:00:00 EDT")},
+  { name: "Rangr Hour", points: "20" , date:  new Date("October 16, 2020 21:00:00 EDT")},
+  { name: "Nicholas Walsh", points: "20" , date:  new Date("October 16, 2020 23:00:00 EDT")},
+  { name: "Gary Brantley, City of Atlanta CIO", points: "20", date:  new Date("October 17, 2020 11:00:00 EDT") },
+  { name: "Joy Harris", points: "20", date:  new Date("October 17, 2020 12:30:00 EDT") },
+  { name: "Adam Phillippy", points: "20" , date:  new Date("October 17, 2020 14:00:00 EDT")},
+
+  { name: "Tim Aveni", points: "20" , date:  new Date("October 17, 2020 16:00:00 EDT")},
+  { name: "Stone Librande", points: "20" , date:  new Date("October 17, 2020 18:00:00 EDT")},
+  { name: "Closing Ceremonies", points: "20", date:  new Date("October 18, 2020 15:30:00 EDT") },
 ];
-
+workshops.sort(function(a,b){
+  return a.date-b.date
+})
 // Shows local video
 var video = document.querySelector("#localVideo");
 if (navigator.mediaDevices.getUserMedia) {

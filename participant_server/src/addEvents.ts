@@ -24,7 +24,7 @@ let events: IEvent[] = [
         name: "Getting to Know NCR APIs",
         type: "Tech Talk",
         starttime: new Date("October 16, 2020 19:30:00 EDT"),
-        endtime: new Date("October 16, 2020 20:00:00 EDT EDT"),
+        endtime: new Date("October 16, 2020 20:15:00 EDT EDT"),
         points: 10,
         url: "https://bluejeans.com/891100086",
     },
