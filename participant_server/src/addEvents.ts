@@ -45,7 +45,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/340471228"
     },
     {
-        name: "IBM Tech Talk",
+        name: "An Overview of IBM Cloud Services",
         type: "Tech Talk",
         starttime: new Date("October 17, 2020 12:00:00 EDT"),
         endtime: new Date("October 17, 2020 12:30:00 EDT"),

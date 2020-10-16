@@ -20,21 +20,12 @@ var link = "";
 // }
 // List of workshops with names and points
 workshops = [
-  { name: "10 Things Every Hacker Needs to Know About Design", points: "10" },
-  { name: "Augmented Reality for Apps", points: "10" },
-  { name: "IBM Tech Talk", points: "10" },
-  { name: "Getting to Know NCR APIs", points: "10" },
-  { name: "Network Analysis and Graphical Databases", points: "10" },
-  { name: "Life at NSIN", points: "10" },
-  { name: "Deploy React, Angular and Vue apps with Azure Static Web Apps", points: "10" },
-  { name: "Story of Aladdin", points: "10" },
-
   { name: "10 Things Every Hacker Needs to Know About Design", points: "10", date:  new Date("October 16, 2020 20:30:00 EDT")},
   { name: "Augmented Reality for Apps", points: "10", date:  new Date("October 17, 2020 10:30:00 EDT")},
-  { name: "IBM Tech Talk", points: "10", date:  new Date("October 17, 2020 12:00:00 EDT") },
+  { name: "An Overview of IBM Cloud Services", points: "10", date:  new Date("October 17, 2020 12:00:00 EDT") },
   { name: "Getting to Know NCR APIs", points: "10" , date:  new Date("October 16, 2020 20:30:00 EDT")},
   { name: "Network Analysis and Graphical Databases", points: "10", date:  new Date("October 17, 2020 13:30:00 EDT")},
-  { name: "Life at NSINk", points: "10", date:  new Date("October 17, 2020 15:00:00 EDT") },
+  { name: "Life at NSIN", points: "10", date:  new Date("October 17, 2020 15:00:00 EDT") },
   { name: "Deploy React, Angular and Vue apps with Azure Static Web Apps", points: "10", date: new Date("October 17, 2020 17:00:00 EDT") },
   { name: "Story of Aladdin", points: "10", date:  new Date("October 17, 2020 17:30:00 EDT") },
 
