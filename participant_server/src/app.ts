@@ -47,6 +47,14 @@ else {
 app.use(morgan("dev"));
 app.use(compression());
 app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
 const session_secret = process.env.SECRET;
 if (!session_secret) {
     throw new Error("Secret not specified");
@@ -169,8 +177,34 @@ app.get('/dashboard', (req, res) => {
 //     graphiql:process.env.ISPRODUCTION !== 'true'
 // }))
 
+function isAdmin(request: express.Request, response: express.Response, next: express.NextFunction) {
+    response.setHeader("Cache-Control", "private");
+	let user = request.user as IUser;
+	const auth = request.headers.authorization;
+
+	if (auth && typeof auth === "string" && auth.indexOf(" ") > -1) {
+		const key = Buffer.from(auth.split(" ")[1], "base64").toString();
+		if (key === process.env.SECRET) {
+			next();
+		}
+		else {
+			response.status(401).json({
+				"error": "Incorrect auth token!"
+			});
+		}
+	}
+	else if (!request.isAuthenticated()) {
+		response.status(401).json({
+			"error": "You must log in to access this endpoint"
+		});
+	}
+	else {
+		next();
+	}
+}
+
 var apigraphql = require('./graphqlrouter')
-app.use('/graphql', isAuthenticated, apigraphql)
+app.use('/graphql', isAdmin, apigraphql)
 
 
 
