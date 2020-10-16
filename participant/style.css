@@ -265,6 +265,10 @@ body {
   width: 12vw;
 }
 
+.join-event:hover {
+  cursor: pointer;
+}
+
 .bottom-design {
   background-image: url("assets/about-long-glow.png");
   background-size: 70%;
@@ -389,7 +393,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 5%;
-    margin-top: 12vw;
+    margin-top: 5vw;
   }
 
   .workshop-description {
@@ -397,15 +401,9 @@ body {
     width: 90%;
   }
 
-  .body .workshop {
-    width: 60%;
-    margin: auto;
-    height: 50vw;
-  }
-
   .body .workshop .title {
     height: 10%;
-    width: 95%;
+    width: 96.3%;
     color: #658aae;
     padding-left: 5%;
     padding-top: 0.5rem;
@@ -421,8 +419,13 @@ body {
 
   .body .workshop {
     width: 50%;
-    height: 50%;
+    height: 80%;
     margin: auto;
+  }
+
+  .body .workshop-body {
+    width: 40%;
+    height: 60%;
   }
 
   .body .workshop .title {
@@ -470,11 +473,11 @@ body {
     width: 100%;
     padding-left: 1rem;
     padding-top: 0.5rem;
-    margin-top: 2rem;
+    margin-top: 0rem;
   }
 
   .body .workshop .title {
-    height: 20%;
+    height: 15%;
     color: #658aae;
     padding-left: 1rem;
     padding-top: 0.5rem;
@@ -494,6 +497,7 @@ body {
     height: 180vw;
     gap: 10%;
     margin-top: 0vw;
+    padding-top: 0%;
   }
 
   .desc-title-container .desc-info .desc-type {
@@ -508,7 +512,7 @@ body {
 
   .container .workshops .workshop-elem {
     height: 10%;
-    width: 100%;
+    width: 80%;
     font-size: 1rem;
     margin-top: 1rem;
     color: #658aae;
@@ -531,6 +535,7 @@ body {
   .body .workshop {
     margin: 0;
     height: 30%;
+    width: 80%;
   }
 
   .body .workshop-body {
@@ -554,6 +559,11 @@ body {
 
   .container {
     height: 250vw;
+  }
+
+  .body .workshop-body {
+    height: 40%;
+    width: 60%;
   }
 
   .join-event {
@@ -668,7 +678,7 @@ body {
 
   .container .workshops .workshop-elem {
     height: 20%;
-    width: 100%;
+    width: 80%;
     font-size: 1rem;
     margin-top: 1rem;
     color: #658aae;
@@ -678,6 +688,14 @@ body {
 }
 
 @media only screen and (max-width: 400px) {
+  .desc-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    height: 20%;
+    width: 100%;
+  }
+
   .nav .title {
     font-family: var(--primary-font);
     font-size: 16px;
@@ -697,7 +715,7 @@ body {
     color: #658aae;
     display: flex;
     cursor: pointer;
-}
+  }
 
   .container {
     height: 300vw;
