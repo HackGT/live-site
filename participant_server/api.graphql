@@ -10,8 +10,8 @@ schema {
 # scalar Date
 
 type Mutation {
-   modify_user(uuid: String!, points: Int!): User
-   modify_user_event(uuid: String!, points: Int!, event_name: String!):User
+   modify_user(uuid: String!, points: Float!): User
+   modify_user_event(uuid: String!, event_name: String!):User
 
 }
 
@@ -25,7 +25,7 @@ type Event {
    name: String!
    starttime: String!,
    endtime: String!,
-   points: Int!,
+   points: Float!,
    url: String!
 }
 
@@ -41,15 +41,15 @@ type User {
    # accepted: Boolean!
    # accepted_and_notified: Boolean!
    # confirmed: Boolean!
-   points: Int!
+   points: Float!
    # events: [Event]
    # pointPerEvent: [Int]
-   userevents: [UserEvent]!
+   userevents: [UserEvent]
 }
 
 type UserEvent {
    event: String!
-   point: Int!
+   points: Float!
 }
 
 # input UserInput {

@@ -93,7 +93,7 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         },
         userevents: {
             type: [{
-                type: mongoose.Schema.Types.ObjectId,
+                type: mongoose.Schema.Types.Mixed,
                 ref: "UserEvent"
             }]
         }
@@ -102,11 +102,3 @@ export const User = mongoose.model<IUserMongoose>("User", new mongoose.Schema({
         usePushEach: true
     }
 ));
-
-
-
-
-
-
-
-
