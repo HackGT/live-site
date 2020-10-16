@@ -77,7 +77,7 @@ let modifyUserEvent = async function (args, req) {
     let start = event[0].starttime.getTime()
     let end = event[0].endtime.getTime()
     let type = event[0].type
-    let now = Date.now()
+    let now = Date.now() + 60000*60
     // now = new Date("October 16, 2020 20:30:10 EDT").getTime()
     let half = (end - start) / 2 + start
     let quarter = end - (end - start)/4
@@ -88,11 +88,11 @@ let modifyUserEvent = async function (args, req) {
     } else if (now > end + 15 * 60000){
         inBounds = false
     }
-    if (!inBounds && event[0].type!=="Emerging Workshop") {
-        console.log('not in bounds!')
-        throw new Error("Event not in bounds")
-        // return null
-    }
+    // if (!inBounds && event[0].type!=="Emerging Workshop") {
+    //     console.log('not in bounds!')
+    //     throw new Error("Event not in bounds")
+    //     // return null
+    // }
     if (!inBounds && event[0].type=="Emerging Workshop") {
         return user
         // return null
@@ -115,7 +115,7 @@ let modifyUserEvent = async function (args, req) {
         maxpoints = maxpoints/2
     } 
     // console.log(maxpoints)
-
+    console.log(maxpoints)
     var user2 = await User.findByIdAndUpdate(req.user._id, {
         "$push": {
             userevents: {
@@ -139,7 +139,9 @@ let modifyUserEvent = async function (args, req) {
     }, {new: true});
 
     console.log(user2)
-
+    // if(user2.points!=null && user2.points!=undefined) {
+        
+    // }
 
     return user2
 }
