@@ -173,7 +173,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/894804876"
     },
     {
-        name: "Data Science Workshop 1 / Office Hours",
+        name: "Data Science Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
         endtime: new Date("October 16, 22:00:00 EDT"),
@@ -181,7 +181,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/136170629"
     },
     {
-        name: "Data Science Workshop 2 / Office Hours",
+        name: "Data Science Workshop 2",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 22:00:00 EDT"),
         endtime: new Date("October 17, 00:00:00 EDT"),
@@ -189,7 +189,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/847022760"
     },
     {
-        name: "Gaming and Graphics Workshop 1 / Office Hours",
+        name: "Gaming and Graphics Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
         endtime: new Date("October 16, 22:00:00 EDT"),
@@ -197,7 +197,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/978047451"
     },
     {
-        name: "Gaming and Graphics Workshop 2 / Office Hours",
+        name: "Gaming and Graphics Workshop 2",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
         endtime: new Date("October 17, 12:00:00 EDT"),
@@ -205,7 +205,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/489296217"
     },
     {
-        name: "Web Dev 3 Workshop / Office Hours",
+        name: "Web Dev 3 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
         endtime: new Date("October 17, 12:00:00 EDT"),
@@ -221,7 +221,7 @@ let events: IEvent[] = [
         url: "https://bluejeans.com/545457659"
     },
     {
-        name: "Data Science 3 Workshop / Office Hours",
+        name: "Data Science 3 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
         endtime: new Date("October 17, 12:00:00 EDT"),
