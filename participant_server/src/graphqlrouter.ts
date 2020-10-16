@@ -71,6 +71,7 @@ let modifyUser = async function (args, req) {
 }
 
 let getEvent = async function(args, req) {
+    console.log(args.event_name);
     var event = await Event.find({name:args.event_name});
     if (!event || event.length ==0) {
         throw new Error("Event not found");
@@ -115,9 +116,10 @@ let modifyUserEvent = async function (args, req) {
     let end = event[0].endtime.getTime()
     let type = event[0].type
     let now = Date.now()
+    now = new Date("October 16, 2020 22:00:10 EDT").getTime()
     let half = (end - start) / 2 + start
     let quarter = end - (end - start)/4
-    let fifteen_before = new Date(now - 15*60000)
+    // let fifteen_before = new Date(now - 15*60000)
     if (event[0].type!=="Emerging Workshop") {
         if (now < start - 30*60000) {
             inBounds = false
@@ -127,10 +129,19 @@ let modifyUserEvent = async function (args, req) {
         if (!inBounds) {
             console.log('not in bounds!')
             throw new Error("Event not in bounds")
-            return null
+            // return null
         }
     }
-    
+
+    if (user.userevents) {
+        for (let i = 0; i < user.userevents.length; i++) {
+            if (user.userevents[i].event==args.event_name) {
+                console.log(user.userevents[i].event)
+                return user
+            }
+        }
+    }
+    // console.log(now, half, quarter)
     if (now > end + 5*60000) {
         maxpoints = 0
     } else if (now>quarter) {
@@ -138,16 +149,38 @@ let modifyUserEvent = async function (args, req) {
     } else if (now> half) {
         maxpoints = maxpoints/2
     } 
-    const userevent = {
-        event: event[0].name,
-        points: maxpoints
-    }
-    // var user2 = await User.findByIdAndUpdate(req.user._id, {
-    //     "$push": {
-    //         userevents: userevent
-    //     }
-    // })
-    return user[0]
+    // console.log(maxpoints)
+
+    // const userevent = {
+    //     event: args.event_name,
+    //     points: maxpoints
+    // }
+    var user2 = await User.findByIdAndUpdate(req.user._id, {
+        "$push": {
+            userevents: {
+                event: args.event_name,
+                points:maxpoints
+            }
+        }
+    }, {new: true});
+    console.log(user2)
+
+// if (code == actualSolution) {
+//         return await User.findByIdAndUpdate(req.user._id, {
+//             "$push": {
+//                 problemsSolved: {
+//                     problem: args.problem,
+//                     date: new Date()
+//                 }
+//             }
+//         }, { new: true });
+//     } else {
+//         return null;
+//     }
+
+
+
+    return user2
 }
     
 
@@ -159,7 +192,7 @@ let modifyUserEvent = async function (args, req) {
 // apiRouter.use(/\/((?!graphql).)*/, bodyParser.json());
 const root = {
     user: getUser,
-    modify_user: modifyUser,
+    // modify_user: modifyUser,
     event: getEvent,
     modify_user_event: modifyUserEvent
     // update_user_to_admin: updateToAdmin,
