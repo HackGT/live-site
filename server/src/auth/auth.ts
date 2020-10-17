@@ -1,10 +1,12 @@
+import mongoose = require("mongoose");
 import express = require("express");
 import passport = require("passport");
 import session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
 import dotenv from "dotenv"
-import { app } from "./app";
-import { IUser, User } from "./schema";
-import { GroundTruthStrategy } from "./routes/strategies";
+import { app } from "../app";
+import { IUser, User } from "../schema";
+import { GroundTruthStrategy } from "./strategies";
 
 dotenv.config();
 
@@ -23,7 +25,10 @@ if (!session_secret) {
 app.use(session({
     secret: session_secret,
     saveUninitialized: false,
-    resave: true
+    resave: true,
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
 }));
 
 app.use(passport.initialize());
@@ -32,21 +37,17 @@ app.use(passport.session());
 export function isAuthenticated(request: express.Request, response: express.Response, next: express.NextFunction): void {
     response.setHeader("Cache-Control", "private");
     if (!request.isAuthenticated() || !request.user) {
-        // console.log("HELLO");
-        // console.log(request.isAuthenticated(), request.user)
         if (request.session) {
-            // console.log(request.session.returnTo, request.originalUrl)
             request.session.returnTo = request.originalUrl;
         }
-        // console.log('here a lot boi!')
         response.redirect("/auth/login");
     } else {
         next();
     }
 }
 
-const groundTruthStrategy = new GroundTruthStrategy(String(process.env.GROUNDTRUTHURL));
-console.log(groundTruthStrategy.url)
+const groundTruthStrategy = new GroundTruthStrategy(String(process.env.GROUND_TRUTH_URL));
+
 passport.use(groundTruthStrategy);
 passport.serializeUser<IUser, string>((user, done) => {
     done(null, user.uuid);

@@ -12,41 +12,24 @@ import cors from "cors"
 import dotenv from "dotenv"
 import { buildSchema } from "graphql"
 export let app = express();
-const { ApolloServer, gql } = require('apollo-server-express');
-const express_graphql = require("express-graphql")
 const bodyParser = require('body-parser')
 
-
-// import { GroundTruthStrategy } from "./routes/strategies"
 import { IUser, User, Event } from "./schema";
-import { userRoutes } from "./routes/user";
-import { isAuthenticated } from "./auth";
 import { authRoutes } from "./routes/auth";
+import { isAuthenticated } from "./auth/auth";
 
 
 dotenv.config();
 
-const PORT = 3000;
-// const typeDefs = gql`${fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8")}`;
-
-const typeDefs = fs.readFileSync(path.resolve(__dirname, "../api.graphql"), "utf8");
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
-//const VERSION_HASH = require("git-rev-sync").short();
-
-
-
-
-if (process.env.ISPRODUCTION === 'true') {
-    app.enable("trust proxy");
-}
-else {
-    console.warn("OAuth callback(s) running in development mode");
-}
-
 
 app.use(morgan("dev"));
 app.use(compression());
+app.use(com)
 app.use(cors());
+
+
+
 const session_secret = process.env.SECRET;
 if (!session_secret) {
     throw new Error("Secret not specified");
@@ -171,28 +154,28 @@ app.get('/dashboard', (req, res) => {
 
 function isAdmin(request: express.Request, response: express.Response, next: express.NextFunction) {
     response.setHeader("Cache-Control", "private");
-	let user = request.user as IUser;
-	const auth = request.headers.authorization;
+    let user = request.user as IUser;
+    const auth = request.headers.authorization;
 
-	if (auth && typeof auth === "string" && auth.indexOf(" ") > -1) {
-		const key = Buffer.from(auth.split(" ")[1], "base64").toString();
-		if (key === process.env.SECRET) {
-			next();
-		}
-		else {
-			response.status(401).json({
-				"error": "Incorrect auth token!"
-			});
-		}
-	}
-	else if (!request.isAuthenticated()) {
-		response.status(401).json({
-			"error": "You must log in to access this endpoint"
-		});
-	}
-	else {
-		next();
-	}
+    if (auth && typeof auth === "string" && auth.indexOf(" ") > -1) {
+        const key = Buffer.from(auth.split(" ")[1], "base64").toString();
+        if (key === process.env.SECRET) {
+            next();
+        }
+        else {
+            response.status(401).json({
+                "error": "Incorrect auth token!"
+            });
+        }
+    }
+    else if (!request.isAuthenticated()) {
+        response.status(401).json({
+            "error": "You must log in to access this endpoint"
+        });
+    }
+    else {
+        next();
+    }
 }
 
 var apigraphql = require('./graphqlrouter')
@@ -218,30 +201,7 @@ app.use('/graphql', isAdmin, apigraphql)
 //     graphiql: true
 // }));
 
-app.use(
-    isAuthenticated,
-    express.static(path.join(__dirname, "../../participant")));
-app.get("/", isAuthenticated, (request, response) => {
-    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
-});
 
-
-app.get("*", (request, response) => {
-    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
-});
-
-app.get("/*", function (req, res) {
-    res.sendFile(
-        path.join(__dirname, "../../participant", "index.html"),
-        function (err) {
-            if (err) {
-                res.status(500).send(err);
-            }
-        }
-    );
-});
-
-
-app.listen(PORT, () => {
-    console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${process.env.PORT}`);
 });

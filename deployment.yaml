@@ -6,12 +6,13 @@ wants:
 
 secrets:
   - SECRET
-  - GROUNDTRUTHSECRET
-  - GRAPHQLAUTH
-
+  - GROUND_TRUTH_ID
+  - GROUND_TRUTH_SECRET
+  - GRAPHQL_AUTH
 
 env:
-  GROUNDTRUTHID: 0210ea983bb12338091be47378af1cf51a75c2a53c0ae31c259b0ce0b5b63825
-  GROUNDTRUTHURL: https://login.hack.gt
-  GRAPHQLURL: https://registration.2020.hack.gt/graphql
-  ISPRODUCTION: true
+  GROUND_TRUTH_URL: https://login.hack.gt
+  GRAPHQL_URL: https://registration.2020.hack.gt/graphql
+  PRODUCTION: true
+  PORT: 3000
+  CMS_URL: https://cms.hack.gt/admin/api

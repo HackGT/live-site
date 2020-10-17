@@ -37,8 +37,8 @@ export class GroundTruthStrategy extends OAuthStrategy {
     public readonly url: string;
 
     constructor(url: string) {
-        const secret = (process.env.GROUNDTRUTHSECRET);
-        const id = (process.env.GROUNDTRUTHID);
+        const secret = (process.env.GROUND_TRUTH_SECRET);
+        const id = (process.env.GROUND_TRUTH_ID);
         if (!secret || !id) {
             throw new Error(`Client ID or secret not configured in environment variables for Ground Truth`);
         }
@@ -63,8 +63,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
             try {
                 let profile: IProfile = {
                     ...JSON.parse(data),
-                    token: accessToken,
-                    points: 0
+                    token: accessToken
                 };
                 done(null, profile);
             }
@@ -74,15 +73,12 @@ export class GroundTruthStrategy extends OAuthStrategy {
         });
     }
 
-    protected static async passportCallback(req: Request,  accessToken: string, refreshToken: string, profile: IProfile, done: PassportDone) {
+    protected static async passportCallback(req: Request, accessToken: string, refreshToken: string, profile: IProfile, done: PassportDone) {
         let user = await User.findOne({ uuid: profile.uuid });
-
-        const GRAPHQLURL = process.env.GRAPHQLURL || 'https://registration.hack.gt/graphql';
-        const GRAPHQLKEY = process.env.GRAPHQLAUTH || 'wow';
-        // console.log(GRAPHQLKEY)
 
         if (!user) {
             let confirmed = false;
+
             const query = `
             query($search: String!) {
                 search_user(search: $search, offset: 0, n: 1) {
@@ -91,15 +87,18 @@ export class GroundTruthStrategy extends OAuthStrategy {
                     }
                 }
             }`;
+
             const variables = {
                 search: profile.email
             };
-            const options = { method: 'POST',
-                url: GRAPHQLURL,
+
+            const options = {
+                method: 'POST',
+                url: process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql",
                 headers:
                 {
+                    "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
                     "Content-Type": "application/json",
-                    "Authorization": `Basic ${Buffer.from(GRAPHQLKEY, "utf8").toString("base64")}`
                 },
                 body: JSON.stringify({
                     query,
@@ -107,7 +106,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 })
             };
 
-            await request(options, async (err:any, res:any, body:any) => {
+            await request(options, async (err: any, res: any, body: any) => {
                 if (err) { return console.log(err); }
                 if (JSON.parse(body).data.search_user.users.length > 0) {
                     confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
@@ -122,11 +121,11 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 // done(null, user)
 
                 // if (!process.env.ISPRODUCTION || confirmed) {
-                    // console.log(confirmed)
+                // console.log(confirmed)
                 user = createNew<IUser>(User, {
                     ...profile,
                     visible: 1,
-                    points: 20,
+                    points: 0,
                     confirm: confirmed
                 });
                 await user.save();
@@ -142,8 +141,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
             await user.save();
             done(null, user);
         }
-
-
     }
 }
 
