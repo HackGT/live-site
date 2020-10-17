@@ -88,15 +88,20 @@ let modifyUserEvent = async function (args, req) {
     } else if (now > end + 15 * 60000){
         inBounds = false
     }
-    if (!inBounds && event[0].type!=="Emerging Workshop") {
-        console.log('not in bounds!')
-        throw new Error("Event not in bounds")
-        // return null
-    }
+    console.log(now, start, end, event[0].name)
+    console.log(now<1)
+    console.log(now < start - 15*60000, now > end + 15 * 60000)
+    console.log( event[0].starttime,  event[0].endtime)
+    // if (!inBounds && event[0].type!=="Emerging Workshop") {
+    //     console.log('not in bounds!')
+    //     throw new Error("Event not in bounds")
+    //     // return null
+    // }
     if (!inBounds && event[0].type=="Emerging Workshop") {
         return user
         // return null
     }
+    console.log('herererer')
 
     if (user.userevents) {
         for (let i = 0; i < user.userevents.length; i++) {

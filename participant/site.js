@@ -20,6 +20,18 @@ var link = "";
 // }
 // List of workshops with names and points
 workshops = [
+  { name: "10 Things Every Hacker Needs to Know About Design", points: "10" },
+  { name: "Augmented Reality for Apps", points: "10" },
+  { name: "IBM Tech Talk", points: "10" },
+  { name: "Getting to Know NCR APIs", points: "10" },
+  { name: "Network Analysis and Graphical Databases", points: "10" },
+  { name: "Life at NSIN", points: "10" },
+  {
+    name: "Deploy React, Angular and Vue apps with Azure Static Web Apps",
+    points: "10",
+  },
+  { name: "Story of Aladdin", points: "10" },
+
   {
     name: "10 Things Every Hacker Needs to Know About Design",
     points: "10",
@@ -644,7 +656,7 @@ button.addEventListener("click", function () {
     .then((r) => r.json())
     .then((data) => {
       // console.log(data);
-      // if (data["data"]["modify_user_event"] != null) {
+      if (data["data"]["modify_user_event"] != null) {
         // Fetch the BlueJeans event link
         query = `query($event_name: String!) {
         event(event_name: $event_name) {
@@ -665,13 +677,13 @@ button.addEventListener("click", function () {
             let link = document.getElementById("joinMeeting");
             link.innerHTML = "Joining Event";
             joinLink.href = data["data"]["event"]["url"];
-            joinLink.click();            
-            location.reload();
+            joinLink.click();
+            link.innerHTML = "Join Event";
           });
-      // } else {
-      //   let link = document.getElementById("joinMeeting");
-      //   link.innerHTML = "Cannot Join";
-      // }
+      } else {
+        let link = document.getElementById("joinMeeting");
+        link.innerHTML = "Cannot Join";
+      }
     })
     .catch((err) => console.log(err));
 });

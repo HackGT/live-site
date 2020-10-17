@@ -88,7 +88,7 @@ let events: IEvent[] = [
         name: "Blackrock Mini Challenge",
         type: "Mini Challenge",
         starttime: new Date("October 16, 2020 22:00:00 EDT"),
-        endtime: new Date("October 16, 23:00:00 EDT"),
+        endtime: new Date("October 16, 2020 23:00:00 EDT"),
         points: 5,
         url: "https://bluejeans.com/568823688"
     },
@@ -96,7 +96,7 @@ let events: IEvent[] = [
         name: "Anthem Mini Challenge",
         type: "Mini Challenge",
         starttime: new Date("October 17, 2020 11:30:00 EDT"),
-        endtime: new Date("October 17, 12:30:00 EDT"),
+        endtime: new Date("October 17, 2020 12:30:00 EDT"),
         points: 5,
         url: "https://bluejeans.com/626750528"
     },
@@ -104,7 +104,7 @@ let events: IEvent[] = [
         name: "GM Mini Challenge",
         type: "Mini Challenge",
         starttime: new Date("October 17, 2020 13:00:00 EDT"),
-        endtime: new Date("October 17, 14:00:00 EDT"),
+        endtime: new Date("October 17, 2020 14:00:00 EDT"),
         points: 5,
         url: "https://bluejeans.com/996851227"
     },
@@ -112,7 +112,7 @@ let events: IEvent[] = [
         name: "NCR Mini Challenge",
         type: "Mini Challenge",
         starttime: new Date("October 17, 2020 15:30:00 EDT"),
-        endtime: new Date("October 17, 16:30:00 EDT"),
+        endtime: new Date("October 17, 2020 16:30:00 EDT"),
         points: 5,
         url: "https://bluejeans.com/732170726"
     },
@@ -120,7 +120,7 @@ let events: IEvent[] = [
         name: "NSIN Mini Challenge",
         type: "Mini Challenge",
         starttime: new Date("October 17, 2020 16:30:00 EDT"),
-        endtime: new Date("October 17, 17:30:00 EDT"),
+        endtime: new Date("October 17, 2020 17:30:00 EDT"),
         points: 5,
         url: "https://bluejeans.com/825086141"
     },
@@ -128,7 +128,7 @@ let events: IEvent[] = [
         name: "Web Dev 1 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
-        endtime: new Date("October 16, 22:00:00 EDT"),
+        endtime: new Date("October 16, 2020 22:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/693811111"
     },
@@ -136,7 +136,7 @@ let events: IEvent[] = [
         name: "Web Dev 2 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 22:00:00 EDT"),
-        endtime: new Date("October 16, 23:00:00 EDT"),
+        endtime: new Date("October 16, 2020 23:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/613306731"
     },
@@ -144,7 +144,7 @@ let events: IEvent[] = [
         name: "Prototype Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 23:00:00 EDT"),
-        endtime: new Date("October 17, 12:00:00 EDT"),
+        endtime: new Date("October 17, 2020 12:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/683549242"
     },
@@ -152,7 +152,7 @@ let events: IEvent[] = [
         name: "Android App Dev Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
-        endtime: new Date("October 16, 22:00:00 EDT"),
+        endtime: new Date("October 16, 2002 22:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/492994741"
     },
@@ -160,7 +160,7 @@ let events: IEvent[] = [
         name: "iOS App Dev Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 22:00:00 EDT"),
-        endtime: new Date("October 17, 00:00:00 EDT"),
+        endtime: new Date("October 17, 2020 00:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/894804876"
     },
@@ -168,7 +168,7 @@ let events: IEvent[] = [
         name: "Data Science Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
-        endtime: new Date("October 16, 22:00:00 EDT"),
+        endtime: new Date("October 16, 2020 22:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/136170629"
     },
@@ -176,7 +176,7 @@ let events: IEvent[] = [
         name: "Data Science Workshop 2",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 22:00:00 EDT"),
-        endtime: new Date("October 17, 00:00:00 EDT"),
+        endtime: new Date("October 17, 2020 00:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/847022760"
     },
@@ -184,7 +184,7 @@ let events: IEvent[] = [
         name: "Gaming and Graphics Workshop 1",
         type: "Emerging Workshop",
         starttime: new Date("October 16, 2020 20:00:00 EDT"),
-        endtime: new Date("October 16, 22:00:00 EDT"),
+        endtime: new Date("October 16, 2020 22:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/978047451"
     },
@@ -192,7 +192,7 @@ let events: IEvent[] = [
         name: "Gaming and Graphics Workshop 2",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
-        endtime: new Date("October 17, 12:00:00 EDT"),
+        endtime: new Date("October 17, 2020 12:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/489296217"
     },
@@ -200,7 +200,7 @@ let events: IEvent[] = [
         name: "Web Dev 3 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
-        endtime: new Date("October 17, 12:00:00 EDT"),
+        endtime: new Date("October 17, 2020 12:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/919084003"
     },
@@ -216,7 +216,7 @@ let events: IEvent[] = [
         name: "Data Science 3 Workshop",
         type: "Emerging Workshop",
         starttime: new Date("October 17, 2020 10:00:00 EDT"),
-        endtime: new Date("October 17, 12:00:00 EDT"),
+        endtime: new Date("October 17, 2020 12:00:00 EDT"),
         points: 15,
         url: "https://bluejeans.com/823880646"
     },
@@ -381,14 +381,24 @@ let events: IEvent[] = [
         url: "https://youtu.be/h69l98Nm_Ls"
     },
 ]
-async function insertEvents() {
-	await Event.insertMany(events) 
-}
-insertEvents()
+// async function insertEvents() {
+// 	await Event.insertMany(events) 
+// }
+// insertEvents()
 
-console.log('done')
+// console.log('done')
 
-
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:7777/";
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("virtual-checkin");
+    dbo.collection("events").insertMany(events, function(err, res) {
+        if (err) throw err;
+        console.log("Number of documents inserted: " + res.insertedCount);
+        db.close();
+    });
+});
 
 // event = createNew<IEvent>(Event, {
 //     name: "NCR Sponsor Challenge",
