@@ -27,7 +27,7 @@ import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 
 app.get("/", (req, res) => {
-    res.status(200).send("Please provide a valid URL");
+    res.redirect("https://live.hack.gt");
 });
 
 app.get("/status", (req, res) => {
