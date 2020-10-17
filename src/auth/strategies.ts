@@ -109,7 +109,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
             const data = JSON.parse(body);
 
             if (data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
-                done(new Error("User is not confirmed in registration"));
+                done(new Error("User is not confirmed in registration"), undefined);
             }
         });
 
