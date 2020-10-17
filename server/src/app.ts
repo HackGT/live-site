@@ -1,57 +1,36 @@
 import fs from "fs";
 import path from "path";
 import express from "express";
-import fetch from "node-fetch";
 import compression from "compression";
 import morgan from "morgan";
-import passport from "passport";
-import session from "express-session"
-import request from "request"
-
 import cors from "cors"
 import dotenv from "dotenv"
-import { buildSchema } from "graphql"
-export let app = express();
-const bodyParser = require('body-parser')
-
 import { IUser, User, Event } from "./schema";
-import { authRoutes } from "./routes/auth";
-import { isAuthenticated } from "./auth/auth";
-
 
 dotenv.config();
 
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 
+export let app = express();
+
 app.use(morgan("dev"));
 app.use(compression());
-app.use(com)
+app.use(express.json());
 app.use(cors());
 
+// Throw and show a stack trace on an unhandled Promise rejection instead of logging an unhelpful warning
+process.on("unhandledRejection", err => {
+    throw err;
+});
 
-
-const session_secret = process.env.SECRET;
-if (!session_secret) {
-    throw new Error("Secret not specified");
-}
-app.use(session({
-    secret: session_secret,
-    saveUninitialized: false,
-    resave: true
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
+import { authRoutes } from "./routes/auth";
+import { isAuthenticated } from "./auth/auth";
 
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(/\/((?!graphql).)*/, bodyParser.json());
 // apiRouter.use("/user", userRoutes);
-app.use(bodyParser.json());
 app.use("/auth", authRoutes);
-
-
 
 
 /*
