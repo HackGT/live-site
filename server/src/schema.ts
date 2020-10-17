@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 dotenv.config()
 
 const MONGO_URL = String(process.env.MONGO_URL);
-mongoose.connect(MONGO_URL).catch(err => {
+mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
     throw err;
 });
 
@@ -18,6 +18,7 @@ export function createNew<T extends RootDocument>(model: mongoose.Model<T & mong
 
 
 export interface IEvent extends RootDocument {
+    id: string;
     name: string;
     points: number;
 }
@@ -36,7 +37,6 @@ export interface IUser extends RootDocument {
     admin: boolean;
     points: number;
     events: IEvent[];
-    confirm: boolean;
 }
 export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoose.Schema({
     uuid: {
@@ -65,7 +65,7 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
     },
     events: {
         type: [{
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.Mixed,
             ref: "UserEvent"
         }],
         default: []

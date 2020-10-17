@@ -124,7 +124,8 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 user = createNew<IUser>(User, {
                     ...profile,
                     points: 0,
-                    confirm: confirmed
+                    admin: false,
+                    events: []
                 });
                 await user.save();
                 done(null, user);
