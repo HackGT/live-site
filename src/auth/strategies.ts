@@ -2,7 +2,7 @@ import { URL } from "url";
 import passport from "passport";
 import { Strategy as OAuthStrategy } from "passport-oauth2";
 import dotenv from "dotenv"
-import request from "request"
+import fetch from "node-fetch";
 import { Request } from "express";
 import { createNew, IUser, User } from "../schema";
 
@@ -87,9 +87,8 @@ export class GroundTruthStrategy extends OAuthStrategy {
             search: profile.email
         };
 
-        const options = {
+        const res = await fetch(process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql", {
             method: 'POST',
-            url: process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql",
             headers: {
                 "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
                 "Content-Type": "application/json",
@@ -98,20 +97,13 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 query,
                 variables
             })
-        };
-
-        await request(options, async (err: any, res: any, body: any) => {
-            if (err) {
-                console.error(err);
-                done(err);
-            }
-
-            const data = JSON.parse(body);
-
-            if (data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
-                done(new Error("User is not confirmed in registration"), undefined);
-            }
         });
+
+        const data = await res.json();
+
+        if (!data || data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
+            done(new Error("User is not confirmed in registration"), undefined);
+        }
 
         let user = await User.findOne({ uuid: profile.uuid });
 
