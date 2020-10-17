@@ -9,6 +9,7 @@ export interface ICMSEvent {
         name: string
         points: number
     }
+    url: string
 }
 
 const query = `
@@ -22,6 +23,7 @@ const query = `
                 name
                 points
             }
+            url
         }
     }
 `;
