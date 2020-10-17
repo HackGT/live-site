@@ -16,18 +16,6 @@ export function createNew<T extends RootDocument>(model: mongoose.Model<T & mong
     return new model(doc);
 }
 
-
-export interface IUserEvent {
-    id: string;
-    name: string;
-    points: number;
-}
-export const UserEvent = new mongoose.Schema({
-    id: String,
-    name: String,
-    points: Number,
-});
-
 export interface IUser extends RootDocument {
     uuid: string;
     email: string;
@@ -35,7 +23,11 @@ export interface IUser extends RootDocument {
     token: string;
     admin: boolean;
     points: number;
-    events: IUserEvent[];
+    events: {
+        id: string,
+        name: string,
+        points: number
+    }[];
 }
 export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoose.Schema({
     uuid: {
@@ -63,7 +55,13 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
         required: true
     },
     events: {
-        type: [UserEvent],
+        type: [
+            {
+                id: String,
+                name: String,
+                points: Number
+            }
+        ],
         default: []
     }
 },

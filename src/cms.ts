@@ -47,7 +47,7 @@ export const getCMSEvent = async (eventId) => {
         })
     });
 
-    const data = res.json();
+    const data = await res.json();
 
-    return data.data as ICMSEvent | null;
+    return data.data?.Event as ICMSEvent | null;
 }
