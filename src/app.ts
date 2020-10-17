@@ -26,12 +26,17 @@ import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 
-app.use("/auth", authRoutes);
-app.use("/event", isAuthenticated, eventRoutes);
+app.get("/", (req, res) => {
+    res.status(200).send("Please provide a valid URL");
+});
 
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
+
+app.use("/auth", authRoutes);
+app.use("/event", isAuthenticated, eventRoutes);
+
 
 app.get("*", (req, res) => {
     res.status(404).send("Sorry :( this is an invalid url");
