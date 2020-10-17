@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "start": "cd src && ts-node app.ts",
-    "dev": "cd src && nodemon --watch 'src/**/*.ts' --exec 'ts-node' app.ts"
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
   "keywords": [],
   "license": "MIT",

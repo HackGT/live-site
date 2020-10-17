@@ -33,6 +33,10 @@ app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
 
+app.get("*", (req, res) => {
+    res.status(404).send("Sorry :( this is an invalid url");
+})
+
 app.listen(process.env.PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${process.env.PORT}`);
 });

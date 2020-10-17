@@ -52,7 +52,8 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
     },
     points: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     events: {
         type: [
