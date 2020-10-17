@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "start": "gulp",
-    "serve": "cd src/ && ts-node app.ts",
-    "build": "gulp build"
+    "start": "cd src && ts-node app.ts",
+    "dev": "cd src && nodemon --watch 'src/**/*.ts' --exec 'ts-node' app.ts"
   },
   "keywords": [],
   "license": "MIT",
