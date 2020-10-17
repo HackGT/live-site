@@ -21,7 +21,7 @@ const session_secret = process.env.SECRET;
 if (!session_secret) {
     throw new Error("Secret not specified");
 }
-// console.log(app)
+
 app.use(session({
     secret: session_secret,
     saveUninitialized: false,

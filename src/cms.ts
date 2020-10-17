@@ -11,7 +11,7 @@ export interface ICMSEvent {
     }
 }
 
-const query = () => `
+const query = `
     query eventData($id: ID!) {
         Event(where: { id: $id }) {
             id
@@ -28,12 +28,12 @@ const query = () => `
 
 export const getCMSEvent = async (eventId) => {
     const headers = {
-        "Content-Type": `application/json`,
-        "Accept": `application/json`
+        "Content-Type": "application/json",
+        "Accept": "application/json"
     }
 
     const variables = {
-        id: eventId
+        "id": eventId
     }
 
     const res = await fetch(process.env.CMS_URL || "https://cms.hack.gt/admin/api", {
@@ -45,16 +45,7 @@ export const getCMSEvent = async (eventId) => {
         })
     });
 
-    console.log(await res.text());
+    const data = res.json();
 
-    const data = await res.data.json();
-
-    console.log(data);
-
-    if (res.status !== 200 || data.errors) {
-        console.error(data.errors);
-        return [res.statusText, null];
-    }
-
-    return [null, data];
+    return data.data as ICMSEvent | null;
 }

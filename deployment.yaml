@@ -10,6 +10,9 @@ secrets:
   - GROUND_TRUTH_SECRET
   - GRAPHQL_AUTH
 
+health:
+  path: /status
+
 env:
   GROUND_TRUTH_URL: https://login.hack.gt
   GRAPHQL_URL: https://registration.2020.hack.gt/graphql

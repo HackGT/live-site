@@ -29,6 +29,10 @@ import { eventRoutes } from "./routes/event";
 app.use("/auth", authRoutes);
 app.use("/event", isAuthenticated, eventRoutes);
 
+app.get("/status", (req, res) => {
+    res.status(200).send("Success");
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${process.env.PORT}`);
 });
