@@ -9,10 +9,14 @@ userRoutes.route("/points/:userId").get(async (req, res) => {
     if (!userId) {
         return res.status(400).send("userId not defined");
     }
-    const user = await User.findById(userId);
-
-    if(!user) {
-        return res.status(400).send("user not found");
+    let user;
+    try {
+        user = await User.findOne({uuid: userId});
+        if(!user) {
+            return res.status(400).send("user not found");
+        }
+    } catch(err) {
+        return res.status(418).send("unknown error")
     }
     return res.send({points: user.points})
 })
