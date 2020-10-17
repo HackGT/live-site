@@ -42,7 +42,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
         if (!secret || !id) {
             throw new Error(`Client ID or secret not configured in environment variables for Ground Truth`);
         }
-        console.log('GroundTruthStrategy')
         let options: IOAuthStrategyOptions = {
             authorizationURL: new URL("/oauth/authorize", url).toString(),
             tokenURL: new URL("/oauth/token", url).toString(),

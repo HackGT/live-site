@@ -24,10 +24,10 @@ process.on("unhandledRejection", err => {
 
 import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
-// import { eventRoutes } from "./routes/event";
+import { eventRoutes } from "./routes/event";
 
 app.use("/auth", authRoutes);
-// app.use("/event", eventRoutes);
+app.use("/event", isAuthenticated, eventRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${process.env.PORT}`);

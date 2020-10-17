@@ -1,22 +1,18 @@
 import express from "express"
-import { getCMSEvent, ICMSEvent } from "../cms"
-import moment from "moment-timezone"
-import { IUser, User, Event, UserEvent, IEvent,  IUserEvent } from "../schema";
-import { DateTime } from "luxon"
+import { getCMSEvent } from "../cms"
+// import moment from "moment-timezone"
+import { IUser, User } from "../schema";
+// import { DateTime } from "luxon";
 
-let eventRoutes = express.Router();
+export let eventRoutes = express.Router();
 
 
-eventRoutes.route("/:eventId").get(async (req,res) => {
-    if(!req.user) {
-        res.status(401).send("Not authorized");
-    }
-    const event: ICMSEvent = await getCMSEvent(req.params.eventId);
-
+eventRoutes.route("/:eventId").get(async (req, res) => {
+    const event: any = await getCMSEvent(req.params.eventId);
 
     let url = "";
     let name = "";
-    if(event) {
+    if (event) {
         url = event.url;
         name = event.name;
         const startTime = event.startTime;
@@ -36,6 +32,3 @@ eventRoutes.route("/:eventId").get(async (req,res) => {
     }
 
 });
-
-
-exports.ballotRoutes = ballotRoutes;
