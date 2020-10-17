@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 export let userRoutes = express.Router();
 
 userRoutes.route("/points/:userId").get(async (req, res) => {
-    const userId = req.body.userId;
+    const userId = req.params.userId;
     if (!userId) {
         return res.status(400).send("userId not defined");
     }
