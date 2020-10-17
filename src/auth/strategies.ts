@@ -76,16 +76,15 @@ export class GroundTruthStrategy extends OAuthStrategy {
         let user = await User.findOne({ uuid: profile.uuid });
 
         if (!user) {
-            let confirmed = false;
-
             const query = `
-            query($search: String!) {
-                search_user(search: $search, offset: 0, n: 1) {
-                    users {
-                        confirmed
+                query($search: String!) {
+                    search_user(search: $search, offset: 0, n: 1) {
+                        users {
+                            confirmed
+                        }
                     }
                 }
-            }`;
+            `;
 
             const variables = {
                 search: profile.email
@@ -94,8 +93,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
             const options = {
                 method: 'POST',
                 url: process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql",
-                headers:
-                {
+                headers: {
                     "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
                     "Content-Type": "application/json",
                 },
@@ -106,37 +104,31 @@ export class GroundTruthStrategy extends OAuthStrategy {
             };
 
             await request(options, async (err: any, res: any, body: any) => {
-                if (err) { return console.log(err); }
-                if (JSON.parse(body).data.search_user.users.length > 0) {
-                    confirmed = JSON.parse(body).data.search_user.users[0].confirmed;
+                if (err) {
+                    console.error(err);
+                    done(err);
                 }
-                // console.log(confirmed)
-                // user = createNew<IUser>(User, {
-                //         ...profile,
-                //         points: 0,
-                //         confirm: confirmed
-                //     });
-                // done(null, user)
 
-                // if (!process.env.ISPRODUCTION || confirmed) {
-                // console.log(confirmed)
-                user = createNew<IUser>(User, {
-                    ...profile,
-                    points: 0,
-                    admin: false,
-                    events: []
-                });
-                await user.save();
-                done(null, user);
-                // } else {
-                //     done(null, undefined);
-                // }
+                const data = body.json();
+
+                if (data.data.search_user.users.length > 0 && data.data.search_user.users[0].confirmed) {
+                    user = createNew<IUser>(User, {
+                        ...profile,
+                        points: 0,
+                        admin: false,
+                        events: []
+                    });
+
+                    await user.save();
+                    done(null, user);
+                } else {
+                    done(new Error("User is not confirmed in registration"));
+                }
             });
-
         } else {
             user.token = accessToken;
-            user.admin = false;
             await user.save();
+
             done(null, user);
         }
     }
