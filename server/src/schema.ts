@@ -22,6 +22,7 @@ export interface IEvent extends RootDocument {
     name: string;
     points: number;
 }
+
 export const Event = mongoose.model<IEvent & mongoose.Document>("UserEvent", new mongoose.Schema({
     id: String,
     name: String,
