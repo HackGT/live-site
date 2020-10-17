@@ -106,7 +106,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 done(err);
             }
 
-            const data = body.json();
+            const data = JSON.parse(body);
 
             if (data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
                 done(new Error("User is not confirmed in registration"));
@@ -118,9 +118,13 @@ export class GroundTruthStrategy extends OAuthStrategy {
         if (!user) {
             user = createNew<IUser>(User, {
                 ...profile,
-                points: 0,
+                points: 20,
                 admin: false,
-                events: []
+                events: [{
+                    id: "5f5b96c1593dd900222fd5e8",
+                    name: "Opening Ceremonies",
+                    points: 20
+                }]
             });
         } else {
             user.token = accessToken;
