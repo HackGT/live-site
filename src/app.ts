@@ -27,13 +27,16 @@ import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
 
-app.use("/auth", authRoutes);
-app.use("/event", isAuthenticated, eventRoutes);
-app.use("/user", userRoutes);
-
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
+app.get("/", (req, res) => {
+    res.redirect("https://live.hack.gt");
+});
+
+app.use("/auth", authRoutes);
+app.use("/event", isAuthenticated, eventRoutes);
+app.use("/user", userRoutes);
 
 app.get("*", (req, res) => {
     res.status(404).send("Sorry :( this is an invalid url");
