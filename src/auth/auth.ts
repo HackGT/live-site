@@ -46,6 +46,27 @@ export function isAuthenticated(request: express.Request, response: express.Resp
     }
 }
 
+export function isAdmin(request: express.Request, response: express.Response, next: express.NextFunction) {
+    response.setHeader("Cache-Control", "private");
+
+    const auth = request.headers.authorization;
+    const user = request.user as IUser | undefined;
+
+    if (process.env.PRODUCTION !== "true" || user?.admin) {
+        next();
+    } else if (auth && typeof auth === "string" && auth.includes(" ")) {
+        const key = auth.split(" ")[1].toString();
+
+        if (key === process.env.ADMIN_SECRET) {
+            next();
+        } else {
+            response.status(401).json({ error: "Incorrect auth token provided" });
+        }
+    } else {
+        response.status(401).json({ error: "No auth token provided" });
+    }
+}
+
 const groundTruthStrategy = new GroundTruthStrategy(String(process.env.GROUND_TRUTH_URL));
 
 passport.use(groundTruthStrategy);

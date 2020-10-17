@@ -46,9 +46,7 @@ eventRoutes.route("/:eventId").get(async (req, res) => {
             });
             user.points += event.type.points;
 
-            await user.save((err) => {
-                console.log(err);
-            })
+            await user.save(err => console.log(err));
         }
 
         return res.redirect(event.url);

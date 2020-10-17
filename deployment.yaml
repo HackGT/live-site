@@ -9,6 +9,7 @@ secrets:
   - GROUND_TRUTH_ID
   - GROUND_TRUTH_SECRET
   - GRAPHQL_AUTH
+  - ADMIN_SECRET
 
 health:
   path: /status
