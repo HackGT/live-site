@@ -22,9 +22,9 @@ process.on("unhandledRejection", err => {
     throw err;
 });
 
+import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
 // import { eventRoutes } from "./routes/event";
-import { isAuthenticated } from "./auth/auth";
 
 app.use("/auth", authRoutes);
 // app.use("/event", eventRoutes);
