@@ -43,9 +43,13 @@ export const getCMSEvent = async (eventId) => {
             query: query,
             variables: variables
         })
-    })
+    });
 
-    const data = await res.json();
+    console.log(await res.text());
+
+    const data = await res.data.json();
+
+    console.log(data);
 
     if (res.status !== 200 || data.errors) {
         console.error(data.errors);
