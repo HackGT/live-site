@@ -30,7 +30,6 @@ eventRoutes.route("/:eventId").get(async (req,res) => {
             name: event.name,
             points: event.type.points
         })
-
         return res.redirect(url);
     } else {
         return res.status(500).send("Invalid event id")

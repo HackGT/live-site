@@ -1,5 +1,16 @@
 const fetch = require('node-fetch');
 
+export interface ICMSEvent {
+    id: string
+    name: string
+    startDate: string
+    endDate: string
+    type: {
+        name: string
+        points: number
+    }
+}
+
 const query = () => `
     query eventData($id: ID!) {
         Event(where: { id: $id }) {
