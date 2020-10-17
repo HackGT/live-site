@@ -8,6 +8,13 @@ export let eventRoutes = express.Router();
 
 
 eventRoutes.route("/:eventId").get(async (req, res) => {
+    const reqUser = req.user as IUser;
+    const user = await User.findById(reqUser._id);
+
+    if (!user) {
+        res.status(500).send("User not found");
+    }
+
     const event: any = await getCMSEvent(req.params.eventId);
 
     let url = "";
@@ -16,7 +23,6 @@ eventRoutes.route("/:eventId").get(async (req, res) => {
         url = event.url;
         name = event.name;
         const startTime = event.startTime;
-        var user = await User.findById(req.user.id);
         if (!user) {
             throw new Error("User not found");
         }
