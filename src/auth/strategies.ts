@@ -73,10 +73,7 @@ export class GroundTruthStrategy extends OAuthStrategy {
     }
 
     protected static async passportCallback(req: Request, accessToken: string, refreshToken: string, profile: IProfile, done: PassportDone) {
-        let user = await User.findOne({ uuid: profile.uuid });
-
-        if (!user) {
-            const query = `
+        const query = `
                 query($search: String!) {
                     search_user(search: $search, offset: 0, n: 1) {
                         users {
@@ -86,51 +83,51 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 }
             `;
 
-            const variables = {
-                search: profile.email
-            };
+        const variables = {
+            search: profile.email
+        };
 
-            const options = {
-                method: 'POST',
-                url: process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql",
-                headers: {
-                    "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    query,
-                    variables
-                })
-            };
+        const options = {
+            method: 'POST',
+            url: process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql",
+            headers: {
+                "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query,
+                variables
+            })
+        };
 
-            await request(options, async (err: any, res: any, body: any) => {
-                if (err) {
-                    console.error(err);
-                    done(err);
-                }
+        await request(options, async (err: any, res: any, body: any) => {
+            if (err) {
+                console.error(err);
+                done(err);
+            }
 
-                const data = body.json();
+            const data = body.json();
 
-                if (data.data.search_user.users.length > 0 && data.data.search_user.users[0].confirmed) {
-                    user = createNew<IUser>(User, {
-                        ...profile,
-                        points: 0,
-                        admin: false,
-                        events: []
-                    });
+            if (data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
+                done(new Error("User is not confirmed in registration"));
+            }
+        });
 
-                    await user.save();
-                    done(null, user);
-                } else {
-                    done(new Error("User is not confirmed in registration"));
-                }
+        let user = await User.findOne({ uuid: profile.uuid });
+
+        if (!user) {
+            user = createNew<IUser>(User, {
+                ...profile,
+                points: 0,
+                admin: false,
+                events: []
             });
         } else {
             user.token = accessToken;
-            await user.save();
-
-            done(null, user);
         }
+
+        await user.save();
+        done(null, user);
     }
 }
 
