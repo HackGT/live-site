@@ -114,7 +114,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 // console.log(confirmed)
                 // user = createNew<IUser>(User, {
                 //         ...profile,
-                //         visible: 1,
                 //         points: 0,
                 //         confirm: confirmed
                 //     });
@@ -124,7 +123,6 @@ export class GroundTruthStrategy extends OAuthStrategy {
                 // console.log(confirmed)
                 user = createNew<IUser>(User, {
                     ...profile,
-                    visible: 1,
                     points: 0,
                     confirm: confirmed
                 });
