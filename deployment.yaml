@@ -6,12 +6,11 @@ wants:
 
 secrets:
   - SECRET
+  - GROUNDTRUTHID
   - GROUNDTRUTHSECRET
   - GRAPHQLAUTH
 
-
 env:
-  GROUNDTRUTHID: 0210ea983bb12338091be47378af1cf51a75c2a53c0ae31c259b0ce0b5b63825
   GROUNDTRUTHURL: https://login.hack.gt
   GRAPHQLURL: https://registration.2020.hack.gt/graphql
   ISPRODUCTION: true
