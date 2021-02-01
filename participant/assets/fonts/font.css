@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Bavro-Regular';
+  src: url('Bavro-Regular.eot');
+  src: url('Bavro-Regular.eot?#iefix') format('embedded-opentype'),
+       url('Bavro-Regular.svg#Bavro-Regular') format('svg'),
+       url('Bavro-Regular.ttf') format('truetype'),
+       url('Bavro-Regular.woff') format('woff'),
+       url('Bavro-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

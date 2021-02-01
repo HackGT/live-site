@@ -1,0 +1,746 @@
+@font-face {
+  font-family: "Bavro-Regular";
+  src: url("./assets/fonts/Bavro-Regular.eot");
+  src: url("./assets/fonts/Bavro-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/Bavro-Regular.svg#Bavro-Regular") format("svg"),
+    url("./assets/fonts/Bavro-Regular.ttf") format("truetype"),
+    url("./assets/fonts/Bavro-Regular.woff") format("woff"),
+    url("./assets/fonts/Bavro-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --primary-color-1: white;
+  --primary-color-2: white;
+  --primary-font: "Bavro-Regular", "sans-serif";
+  --secondary-font: "Quicksand", "sans-serif";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+.clear {
+  clear: both;
+}
+
+.link {
+  position: relative;
+  z-index: 100;
+  height: 10vw;
+  width: 100%;
+}
+
+#joinLink {
+  position: relative;
+  font-size: 10px;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  color: black;
+}
+
+body {
+  font-family: var(--secondary-font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--primary-color-2);
+  background: linear-gradient(180deg, #658aae 0%, #8bc2b9 100%);
+  background-repeat: no-repeat;
+  height: 70%;
+  position: relative;
+}
+
+.container {
+  height: 80vw;
+  width: 100vw;
+  position: relative;
+}
+
+.nav {
+  padding-top: 3rem;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.nav .username {
+  text-align: center;
+  font-size: 20px;
+  width: 30%;
+  padding-left: 5%;
+}
+
+.nav .title a {
+  text-decoration: none;
+  font-family: var(--primary-font);
+  color: white;
+  font-size: 32px;
+}
+
+.nav .title {
+  text-align: center;
+  width: 50%;
+}
+
+.nav .points {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  gap: 5%;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav .points .points-text {
+  font-size: 20px;
+}
+
+.nav .points .points-number {
+  border: 1px solid white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 12.5px;
+  height: 100%;
+  width: 25%;
+}
+
+.container .workshops {
+  /* background-color: #83b3abc4; */
+  background-color: white;
+  position: absolute;
+  z-index: 100;
+  height: 82.5%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.container .workshops .workshop-elem {
+  height: 20%;
+  width: 90%;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  color: #658aae;
+  display: flex;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.desc-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  height: 20%;
+  width: 100%;
+}
+
+.desc-title-container .desc-title {
+  height: 4vw;
+  width: 100%;
+  padding-left: 1rem;
+  padding-top: 0.75rem;
+}
+
+.desc-title-container .desc-info {
+  height: 10vw;
+  width: 100%;
+  display: flex;
+  padding-left: 1rem;
+  padding-top: 0.4rem;
+  gap: 5%;
+}
+
+.desc-title-container .desc-info .desc-type {
+  font-size: 0.75rem;
+  background-color: purple;
+  border-radius: 3rem;
+  padding-top: 0.35vw;
+  text-align: center;
+  height: 2vw;
+  width: 20%;
+}
+
+.desc-title-container .desc-info .desc-date {
+  font-size: 0.75rem;
+  width: 50%;
+}
+
+#desc-host {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+.workshop-elem:hover {
+  background-color: lightblue;
+}
+
+.workshop-name {
+  text-align: left;
+  width: 80%;
+}
+
+.workshop-body .title {
+  height: 15%;
+  color: #658aae;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  background-color: white;
+}
+
+.workshop-points {
+  text-align: right;
+  width: 20%;
+}
+
+.body {
+  display: flex;
+  padding-top: 2%;
+  height: 40%;
+  justify-content: center;
+  gap: 5%;
+  margin-top: 1vw;
+}
+
+.body .workshop {
+  background-color: #83b3abc4;
+  width: 50%;
+  height: 100%;
+}
+
+.body .workshop #description {
+  height: 60%;
+  width: 90%;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  color: white;
+  overflow-y: auto;
+}
+
+.body .workshop .title {
+  height: 10%;
+  color: #658aae;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  background-color: white;
+}
+
+.body .workshop-body {
+  width: 37.5%;
+  height: 100%;
+  position: relative;
+}
+
+/*
+.body .workshop .workshop-body #localVideo {
+  width: 100%;
+  height: 100%;
+}
+*/
+
+.join-container {
+  display: flex;
+  align-items: center;
+}
+
+.active {
+  background-color: lightblue;
+}
+
+.join-event {
+  border: none;
+  background-color: white;
+  color: #658aae;
+  text-align: center;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 5rem;
+  font-size: 1rem;
+  margin-top: 10vw;
+  margin-left: auto;
+  margin-right: auto;
+  height: 5vw;
+  width: 12vw;
+}
+
+.join-event:hover {
+  cursor: pointer;
+}
+
+.bottom-design {
+  background-image: url("assets/about-long-glow.png");
+  background-size: 70%;
+  height: 15%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.points-number {
+  cursor: pointer;
+}
+
+#form-chris {
+  position: relative;
+  z-index: 100;
+}
+
+.link {
+  display: none;
+}
+
+.container #form {
+  display: none;
+}
+
+.workshop-description {
+  height: 100%;
+}
+
+@media only screen and (max-width: 1100px) {
+  .join-event {
+    height: 3vw;
+    width: 10vw;
+  }
+
+  .body .workshop #description {
+    height: 40%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin-top: 2vw;
+    color: white;
+    overflow-y: auto;
+  }
+
+  .desc-title-container .desc-info .desc-type {
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0.3vw;
+    text-align: center;
+    height: 2vw;
+    width: 30%;
+  }
+
+  /*
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    right: 7.5%;
+    z-index: 100;
+    height: 25%;
+    width: 25%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  */
+}
+
+@media only screen and (max-width: 900px) {
+  .desc-title-container .desc-info .desc-type {
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0.3vw;
+    text-align: center;
+    height: 2.5vw;
+    width: 30%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .container {
+    height: 150vw;
+  }
+
+  /*
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    margin-top: 0rem;
+    right: 7.5%;
+    z-index: 100;
+    height: 10%;
+    width: 25%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  */
+
+  .container .workshops .workshop-elem {
+    height: 20%;
+    width: 90%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #658aae;
+    display: flex;
+    cursor: pointer;
+  }
+
+  .join-event {
+    margin-top: 15vw;
+    height: 3vw;
+    width: 15vw;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2%;
+    height: 80vw;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    margin-top: 5vw;
+  }
+
+  .workshop-description {
+    height: 80%;
+    width: 90%;
+  }
+
+  .body .workshop .title {
+    height: 10%;
+    width: 96.3%;
+    color: #658aae;
+    padding-left: 5%;
+    padding-top: 0.5rem;
+  }
+
+  .body .workshop #description {
+    color: #658aae;
+    height: 40%;
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .body .workshop {
+    width: 50%;
+    height: 80%;
+    margin: auto;
+  }
+
+  .body .workshop-body {
+    width: 40%;
+    height: 60%;
+  }
+
+  .body .workshop .title {
+    height: 10%;
+    color: #658aae;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .body .workshop .workshop-body {
+    width: 100%;
+    position: relative;
+  }
+
+  .bottom-design {
+    background-image: url("assets/about-long-glow.png");
+    background-size: 70%;
+    height: 8%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 715px) {
+  .join-event {
+    margin-top: 0vw;
+    height: 5vw;
+    width: 20vw;
+  }
+  .container {
+    height: 260vw;
+  }
+  .bottom-design {
+    background-image: url("assets/about-long-glow.png");
+    background-size: 70%;
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+  .body .workshop #description {
+    color: #658aae;
+    height: 50%;
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin-top: 0rem;
+  }
+
+  .body .workshop .title {
+    height: 15%;
+    color: #658aae;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .desc-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    width: 100%;
+  }
+  .workshop-description {
+    height: 100%;
+  }
+
+  .body {
+    height: 180vw;
+    gap: 10%;
+    margin-top: 0vw;
+    padding-top: 0%;
+  }
+
+  .desc-title-container .desc-info .desc-type {
+    font-size: 0.75rem;
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0vw;
+    text-align: center;
+    height: 3vw;
+    width: 30%;
+  }
+
+  .container .workshops .workshop-elem {
+    height: 10%;
+    width: 80%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #658aae;
+    display: flex;
+    cursor: pointer;
+  }
+
+  .workshop-description {
+    height: 100%;
+  }
+
+  .desc-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    height: 30%;
+    width: 100%;
+  }
+
+  .body .workshop {
+    margin: 0;
+    height: 30%;
+    width: 80%;
+  }
+
+  .body .workshop-body {
+    height: 40%;
+    width: 60%;
+  }
+
+  #desc-host {
+    padding-left: 1rem;
+    padding-top: 1rem;
+    height: 30%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .body .workshop {
+    width: 60%;
+    height: 50%;
+    margin: auto;
+  }
+
+  .container {
+    height: 250vw;
+  }
+
+  .body .workshop-body {
+    height: 40%;
+    width: 60%;
+  }
+
+  .join-event {
+    margin-top: 0;
+  }
+
+  .body {
+    height: 160vw;
+  }
+
+  .body .workshop {
+    margin-top: 5vw;
+    height: 70vw;
+    width: 80vw;
+  }
+
+  .body .workshop {
+    width: 80%;
+  }
+
+  .body .workshop .title {
+    height: 10%;
+    color: #658aae;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    background-color: white;
+  }
+
+  .body .workshop .workshop-body {
+    width: 100%;
+    position: relative;
+  }
+
+  .bottom-design {
+    background-image: url("assets/about-long-glow.png");
+    background-size: 70%;
+    height: 5%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .body .workshop {
+    width: 80%;
+  }
+  .nav .title {
+    font-family: var(--primary-font);
+    font-size: 16px;
+    text-align: center;
+    width: 50%;
+  }
+
+  .desc-title-container .desc-info .desc-type {
+    font-size: 0.75rem;
+    background-color: purple;
+    border-radius: 3rem;
+    padding-top: 0vw;
+    text-align: center;
+    height: 4vw;
+    width: 30%;
+  }
+
+  .workshop-elem {
+    height: 50%;
+  }
+
+  /*
+  .container .workshops {
+    background-color: white;
+    border-radius: 1rem;
+    position: absolute;
+    margin-top: 0rem;
+    right: 7.5%;
+    z-index: 100;
+    height: 5%;
+    width: 70%;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  */
+
+  .join-event {
+    margin-top: 5vw;
+  }
+
+  .nav .username {
+    text-align: center;
+    font-size: 16px;
+    width: 30%;
+    padding-left: 5%;
+  }
+
+  .nav .points .points-text {
+    display: none;
+  }
+
+  .nav .points .points-number {
+    border: 1px solid white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    height: 100%;
+    width: 50%;
+  }
+
+  .join-event {
+    width: 35vw;
+    height: 10vw;
+  }
+
+  .container .workshops .workshop-elem {
+    height: 20%;
+    width: 80%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #658aae;
+    display: flex;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .desc-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    height: 20%;
+    width: 100%;
+  }
+
+  .nav .title {
+    font-family: var(--primary-font);
+    font-size: 16px;
+    text-align: center;
+    width: 50%;
+  }
+
+  .body {
+    height: 220vw;
+  }
+
+  .container .workshops .workshop-elem {
+    height: 10%;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #658aae;
+    display: flex;
+    cursor: pointer;
+  }
+
+  .container {
+    height: 300vw;
+  }
+
+  .body .workshop #description {
+    color: white;
+    height: 50%;
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin-top: 0rem;
+  }
+
+  .body .workshop {
+    margin-top: 2rem;
+  }
+
+  .body .workshop {
+    height: 110vw;
+    width: 90vw;
+  }
+
+  .join-event {
+    width: 35vw;
+    height: 10vw;
+  }
+}
