@@ -49,19 +49,19 @@ app.use("/user", userRoutes);
 
 app.use(
     isAuthenticated,
-    express.static(path.join(__dirname, "../../participant")));
+    express.static(path.join(__dirname, "../../client/build")));
 app.get("/", isAuthenticated, (request, response) => {
-    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
+    response.sendFile(path.join(__dirname, "../../client/build", "index.html"));
 });
 
 
 app.get("*", (request, response) => {
-    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
+    response.sendFile(path.join(__dirname, "../../client/build", "index.html"));
 });
 
 app.get("/*", function (req, res) {
     res.sendFile(
-        path.join(__dirname, "../../participant", "index.html"),
+        path.join(__dirname, "../../client/build", "index.html"),
         function (err) {
             if (err) {
                 res.status(500).send(err);
