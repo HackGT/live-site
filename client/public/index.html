@@ -28,6 +28,46 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="timeme.js"></script>
+    <script type="text/javascript">
+      TimeMe.initialize({
+        currentPageName: "my-home-page", // current page
+        idleTimeoutInSeconds: NaN, // stop recording time due to inactivity
+        //websocketOptions: { // optional
+        //	websocketHost: "ws://localhost:8080",
+        //	appId: "insert-your-made-up-app-id"
+        //}
+      });
+
+      
+  
+      TimeMe.callAfterTimeElapsedInSeconds(4, function () {
+        console.log("The user has been using the page for 4 seconds! Let's prompt them with something.");
+      });
+  
+      TimeMe.callAfterTimeElapsedInSeconds(9, function () {
+        console.log("The user has been using the page for 9 seconds! Let's prompt them with something.");
+      });
+      window.onload = function () {
+        
+			setInterval(function () {
+				let timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+				document.getElementById('timeInSeconds').textContent = timeSpentOnPage.toFixed(2);
+        
+			}, 37);
+		}
+
+    window.onbeforeunload = function (event) {
+      xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("POST","http://localhost:3000/timesreact", true);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      let t1 = TimeMe.getTimeOnCurrentPageInSeconds();
+      xmlhttp.send(JSON.stringify({
+        time: t1
+      }));
+    };
+  
+    </script>
     <div>
       <h1>
         <span id="timeInSeconds">0</span> <span>seconds</span>

@@ -80,7 +80,7 @@ export interface ITime extends mongoose.Document {
 
 export const TimeSchema: mongoose.Schema = new mongoose.Schema({
     time: {type: String, required: true},
-    user_id: {type: String, required: true}
+    user_id: {type: String, required: false}
 });
 
 export const Time: mongoose.Model<ITime> = mongoose.model('Time', TimeSchema);
