@@ -73,15 +73,6 @@ app.get("/*", function (req, res) {
     );
 });
 
-/*
-const user: IUser = new User({
-  email: 'bill@microsoft.com',
-  firstName: 'Bill',
-  lastName: 'Gates'
-});
-
-await user.save();*/
-
 app.post('/times', function (req, res) {
     const u = req.user as IUser;
     const t = req.body.time;
