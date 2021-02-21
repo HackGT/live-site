@@ -26,10 +26,13 @@ import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
+import { Time, User, IUser, ITime } from "./schema";
 
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
+
+
 // app.get("/", (req, res) => {
 //     res.redirect("https://live.hack.gt");
 // });
@@ -69,6 +72,26 @@ app.get("/*", function (req, res) {
         }
     );
 });
+
+/*
+const user: IUser = new User({
+  email: 'bill@microsoft.com',
+  firstName: 'Bill',
+  lastName: 'Gates'
+});
+
+await user.save();*/
+
+app.post('/times', function (req, res) {
+    const u = req.user as IUser;
+    const t = req.body.time;
+    const time1: ITime = new Time({
+        time: t,
+        user_id: u.uuid
+    })
+    time1.save().then(() => console.log('done'));
+    res.send("success")
+  })
 
 
 app.listen(PORT, () => {
