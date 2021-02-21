@@ -299,7 +299,7 @@ fetch(CMS_ENDPOINT, {
       // console.log(data2)
       var descriptions = [];
       var cms_desc = data2["data"]["allEvents"];
-      console.log(cms_desc)
+      //console.log(cms_desc)
       for (let i = 0; i < cms_desc.length; i++) {
         var day = cms_desc[i].startDay;
         var desc_day = "";
