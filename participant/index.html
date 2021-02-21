@@ -17,10 +17,10 @@
       TimeMe.initialize({
         currentPageName: "my-home-page", // current page
         idleTimeoutInSeconds: NaN, // stop recording time due to inactivity
-        //websocketOptions: { // optional
-        //	websocketHost: "ws://localhost:8080",
-        //	appId: "insert-your-made-up-app-id"
-        //}
+        websocketOptions: { // optional
+        	websocketHost: "ws://localhost:8080",
+        	appId: "insert-your-made-up-app-id"
+        }
       });
 
       
@@ -41,6 +41,7 @@
 			}, 37);
 		}
 
+		/*
     window.onbeforeunload = function (event) {
       xmlhttp=new XMLHttpRequest();
       xmlhttp.open("POST","http://localhost:3000/times", true);
@@ -49,8 +50,9 @@
       xmlhttp.send(JSON.stringify({
         time: t1
       }));
+	  
     };
-  
+	*/
     </script>
 	<div class="container">
 		<div class="nav">
