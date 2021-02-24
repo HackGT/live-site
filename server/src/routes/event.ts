@@ -16,6 +16,17 @@ const UNSAFE_parseAsLocal = (t: string) => { // Parse iso-formatted string as lo
 // tslint:disable-next-line
 const UNSAFE_toUTC = (t: string) => UNSAFE_parseAsLocal(t).utc();
 
+eventRoutes.route("/:getEventID").get(async (req, res) => {
+    const event = await getCMSEvent(req.params.eventId);
+    if (event) {
+        if(event.url)
+            return res.send({"url": event.url})
+        else {
+            return res.status(400).send('No URL')
+        }
+    }
+})
+
 eventRoutes.route("/:eventId").get(async (req, res) => {
     const reqUser = req.user as IUser;
     const user = await User.findById(reqUser._id);

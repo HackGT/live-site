@@ -1,25 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import YouTube from 'react-youtube';
+import {useParams} from "react-router-dom";
+import {getEventUrl} from '../services/cmsService';
+
 
 function _get_state_text(state: any) {
-  if (state == 0) {
+  if (state === 0) {
     return "ended";
-  } else if (state == 1) {
+  } else if (state === 1) {
     return "playing"
-  } else if (state == 2) {
+  } else if (state === 2) {
     return "paused"
-  } else if (state == 3) {
+  } else if (state === 3) {
     return "buffering"
-  } else if (state == 5) {
+  } else if (state === 5) {
     return "video cued"
-  } else if (state == -1) {
+  } else if (state === -1) {
     return "unstarted"
   } 
   return "unknown"
 }
 
-
 const YoutubeWrapper: React.FC = () => {
+
+  let params: any = useParams(); // TODO handle type of video
+  let eventID: string = params.id;
+  let eventUrl: string = ""
+  let youtubeVideoID: string = ""
+
+  useEffect(() => {
+    const fetchIdeas = async () => {
+      eventUrl = await getEventUrl(eventID);
+      youtubeVideoID = "QH2-TGUlwu4"
+    };
+    fetchIdeas();
+  }, []);
 
   const [isMuted, setIsMuted] = useState<String>('');
   const [playerState, setPlayerState] = useState<String>('');
@@ -34,7 +49,7 @@ const YoutubeWrapper: React.FC = () => {
 
   return (
     <div>
-      <YouTube videoId="QH2-TGUlwu4" opts={{height: '390', width: '640', playerVars: {autoplay: 1,}}} onStateChange={_onChange}/>
+      <YouTube videoId={youtubeVideoID} opts={{height: '390', width: '640', playerVars: {autoplay: 1,}}} onStateChange={_onChange}/>
       <div>
         Player State: {playerState}
       </div>
