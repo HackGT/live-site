@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import YouTube from 'react-youtube';
 
 type Props = {
