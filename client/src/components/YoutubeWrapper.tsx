@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import YouTube from 'react-youtube';
-import {useParams} from "react-router-dom";
-import {getEventUrl} from '../services/cmsService';
-
 
 function _get_state_text(state: any) {
   if (state === 0) {
@@ -21,20 +18,11 @@ function _get_state_text(state: any) {
   return "unknown"
 }
 
-const YoutubeWrapper: React.FC = () => {
+type Props = {
+  videoID: string;
+};
 
-  let params: any = useParams(); // TODO handle type of video
-  let eventID: string = params.id;
-  let eventUrl: string = ""
-  let youtubeVideoID: string = ""
-
-  useEffect(() => {
-    const fetchIdeas = async () => {
-      eventUrl = await getEventUrl(eventID);
-      youtubeVideoID = "QH2-TGUlwu4"
-    };
-    fetchIdeas();
-  }, []);
+const YoutubeWrapper: React.FC<Props> = (props: Props) => {
 
   const [isMuted, setIsMuted] = useState<String>('');
   const [playerState, setPlayerState] = useState<String>('');
@@ -49,7 +37,7 @@ const YoutubeWrapper: React.FC = () => {
 
   return (
     <div>
-      <YouTube videoId={youtubeVideoID} opts={{height: '390', width: '640', playerVars: {autoplay: 1,}}} onStateChange={_onChange}/>
+      <YouTube videoId={props.videoID} opts={{height: '390', width: '640', playerVars: {autoplay: 1,}}} onStateChange={_onChange}/>
       <div>
         Player State: {playerState}
       </div>
@@ -58,6 +46,6 @@ const YoutubeWrapper: React.FC = () => {
       </div>
     </div>
   )
-  }
+}
 
 export default YoutubeWrapper;

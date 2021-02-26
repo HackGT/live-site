@@ -1,10 +1,7 @@
 import React from 'react';
 import './App.css';
-
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-
-// components
-import YoutubeWrapper from './components/YoutubeWrapper';
+import VideoWindow from './components/VideoWindow';
 
 const App: React.FC = () => {
   return (
@@ -12,7 +9,7 @@ const App: React.FC = () => {
       <header className="App-header">
         <Router>
           <Switch>
-            <Route path="/:id" children={<YoutubeWrapper/>} />
+            <Route path="/:id" children={<VideoWindow/>} />
           </Switch>
         </Router>
       </header>

@@ -17,56 +17,58 @@ const UNSAFE_parseAsLocal = (t: string) => { // Parse iso-formatted string as lo
 const UNSAFE_toUTC = (t: string) => UNSAFE_parseAsLocal(t).utc();
 
 eventRoutes.route("/:getEventID").get(async (req, res) => {
-    const event = await getCMSEvent(req.params.eventId);
+    const event = await getCMSEvent(req.params.getEventID);
     if (event) {
-        if(event.url)
+        if(event.url) {
+            console.log(event);
             return res.send({"url": event.url})
+        }
         else {
             return res.status(400).send('No URL')
         }
     }
 })
 
-eventRoutes.route("/:eventId").get(async (req, res) => {
-    const reqUser = req.user as IUser;
-    const user = await User.findById(reqUser._id);
+// eventRoutes.route("/:eventId").get(async (req, res) => {
+//     const reqUser = req.user as IUser;
+//     const user = await User.findById(reqUser._id);
 
-    const event = await getCMSEvent(req.params.eventId);
+//     const event = await getCMSEvent(req.params.eventId);
 
-    if (event && user) {
-        console.log(event);
-        const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
-        const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
+//     if (event && user) {
+//         console.log(event);
+//         const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
+//         const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
 
-        const now = moment.utc().tz("America/New_York");
-        const differenceStart = startTime.diff(now, "minutes");
-        const differenceEnd = endTime.diff(now, "minutes");
+//         const now = moment.utc().tz("America/New_York");
+//         const differenceStart = startTime.diff(now, "minutes");
+//         const differenceEnd = endTime.diff(now, "minutes");
 
-        if (differenceStart >= 30) {
-            return res.status(400).send("Event is not in session. Please check back later")
-        }
-        console.log('here')
-        const eventInSession = differenceEnd >= -10 && differenceStart <= 30;
-        const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
+//         if (differenceStart >= 30) {
+//             return res.status(400).send("Event is not in session. Please check back later")
+//         }
+//         console.log('here')
+//         const eventInSession = differenceEnd >= -10 && differenceStart <= 30;
+//         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
 
-        if (eventInSession && notAttended) {
-            user.events.push({
-                id: event.id,
-                name: event.name,
-                points: event.type.points
-            });
-            user.points += event.type.points;
+//         if (eventInSession && notAttended) {
+//             user.events.push({
+//                 id: event.id,
+//                 name: event.name,
+//                 points: event.type.points
+//             });
+//             user.points += event.type.points;
 
-            await user.save(err => console.log(err));
-        }
+//             await user.save(err => console.log(err));
+//         }
 
-        // return res.redirect(event.url);
-        if( event.url)
-            return res.send({"url": event.url})
-        else {
-            return res.status(400).send('no link')
-        }
-    } else {
-        return res.status(400).send("Invalid request");
-    }
-});
+//         // return res.redirect(event.url);
+//         if( event.url)
+//             return res.send({"url": event.url})
+//         else {
+//             return res.status(400).send('no link')
+//         }
+//     } else {
+//         return res.status(400).send("Invalid request");
+//     }
+// });
