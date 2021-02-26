@@ -1,21 +1,21 @@
 import express = require("express");
-import request = require("request")
+import request = require("request");
 import passport = require("passport");
-import { createLink, AuthenticateOptions } from "./strategies"
+import { createLink, AuthenticateOptions } from "../auth/strategies"
 import { IUser } from "../schema";
 
 export let authRoutes = express.Router();
 
-authRoutes.route("/login").get((req, response, next) => {
+authRoutes.route("/login").get((req, res, next) => {
     const callbackURL = createLink(req, "auth/login/callback");
-    passport.authenticate('oauth2', { callbackURL } as AuthenticateOptions)(req, response, next);
+    passport.authenticate('oauth2', { callbackURL } as AuthenticateOptions)(req, res, next);
 });
 
-authRoutes.route("/login/callback").get((req, response, next) => {
+authRoutes.route("/login/callback").get((req, res, next) => {
     const callbackURL = createLink(req, "auth/login/callback");
 
     if (req.query.error === "access_denied") {
-        response.redirect("/auth/login");
+        res.redirect("/auth/login");
         return;
     }
 
@@ -23,19 +23,20 @@ authRoutes.route("/login/callback").get((req, response, next) => {
         failureRedirect: "/",
         successReturnToOrRedirect: "/",
         callbackURL
-    } as AuthenticateOptions)(req, response, next);
+    } as AuthenticateOptions)(req, res, next);
 });
 
-authRoutes.route("/check").get((req, response, next) => {
-    if (req.user) {        
-        return response.status(200).json(req.user);
+authRoutes.route("/check").get((req, res) => {
+    if (req.user) {
+        return res.status(200).json(req.user);
     } else {
-        return response.status(400).json({"success": false});
+        return res.status(400).json({ "success": false });
     }
 });
 
-authRoutes.route("/logout").all(async (req, response) => {
+authRoutes.route("/logout").all(async (req, res) => {
     const user = req.user as IUser | undefined;
+
     if (user) {
         const options = {
             method: 'POST',
@@ -45,14 +46,14 @@ authRoutes.route("/logout").all(async (req, response) => {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        
-        await request(options, async (err, res, body) => {
+
+        await request(options, async (err, response, body) => {
             if (err) { return console.log(err); }
             await req.logout();
-            response.redirect("/auth/login");
+            res.redirect("/auth/login");
         });
     }
     else {
-        response.redirect("/auth/login");
+        res.redirect("/auth/login");
     }
 });
