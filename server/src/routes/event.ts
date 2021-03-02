@@ -19,13 +19,7 @@ const UNSAFE_toUTC = (t: string) => UNSAFE_parseAsLocal(t).utc();
 eventRoutes.route("/:getEventID").get(async (req, res) => {
     const event = await getCMSEvent(req.params.getEventID);
     if (event) {
-        if(event.url) {
-            console.log(event);
-            return res.send({"url": event.url})
-        }
-        else {
-            return res.status(400).send('No URL')
-        }
+        return res.send(event)
     }
 })
 
