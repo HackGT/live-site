@@ -12,14 +12,15 @@ const VideoWindow: React.FC = () => {
   const [videoType, setVideoType] = useState<string>("");
   const [videoID, setVideoID] = useState<string>("");
   const [eventName, setEventName] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
 
   useEffect(() => {
     const fetchEventUrl = async () => {
       let eventData = await getEventUrl(eventID);
       console.log(eventData);
-
       setEventName(eventData.name);
       let eventUrl: string = eventData.url;
+      setStatus(eventData.status)
       if (eventUrl.includes("youtube")) {
           // For https://www.youtube.com/watch?v=5qap5aO4i9A format
         setVideoType("youtube");
@@ -34,16 +35,44 @@ const VideoWindow: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Use ID 5f81edd0c14e740022589677 for testing!
-  if (videoType === "youtube") {
+  if (status=== "eventInSession") {
+    if (videoType === "youtube") {
+      return (
+        <div>
+          <h1 className="Video-title">{eventName}</h1>
+          <YoutubeWrapper videoID={videoID}/>
+        </div>
+      )
+    } else if (videoType === "bluejeans") {
+      return (
+        <div>
+          <h1 className="Video-title">{eventName}</h1>
+        </div>
+      )
+    }
+    else {
+      return <div/>
+    }
+  } else if (status==="eventEnded") {
     return (
       <div>
-        <h1 className="Video-title">{eventName}</h1>
-        <YoutubeWrapper videoID={videoID}/>
+        <h1 className="Video-title">Event has Ended!!</h1>
       </div>
     )
+  } else if (status==="eventWithin24Hours") {
+    return (
+      <div>
+        <h1 className="Video-title">Event is within 24 hours</h1> {/*Enter within 24 hour event page here*/} 
+      </div>
+      )
   } else {
-    return <div/>
+    return (
+      <div>
+        <h1 className="Video-title">Event not in Session!!</h1>
+    </div>
+    )
   }
+  
 }
 
 export default VideoWindow;

@@ -41,7 +41,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         console.log('here')
         let eventInSession = differenceEnd >= -10 && differenceStart <= 30;
         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
-        eventInSession = true
+        // eventInSession = true
         if (eventInSession) {
             if (notAttended) {
                 user.events.push({
@@ -65,8 +65,25 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
             await user.save(err => console.log(err));
 
         }
+        let status= "";
+        let timebeforestart = {
+            hours:0,
+            minutes:0
+        }
+        if (differenceEnd<-10) {
+            status= "eventEnded";
+        } else if (eventInSession) {
+            status="eventInSession";
+        } else if (differenceStart <60*24){
+            status= "eventWithin24Hours";
+            timebeforestart.hours = Math.floor(differenceStart / 60);
+            timebeforestart.minutes = differenceStart % 60
+        } else {
+            status = "eventNotWithin24Hours"
+        }
+
         if(event.url)
-            return res.send({"url": event.url, "timebeforestart":differenceStart,"ended":differenceEnd>0})
+            return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
         else {
             return res.status(400).send('no link')
         }
