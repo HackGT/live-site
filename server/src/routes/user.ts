@@ -40,7 +40,7 @@ userRoutes.route("/points/add").post(isAdmin, async (req, res) => {
         user.events.push({
             id: data.event.id,
             name: data.event.name,
-            points: data.event.type.points
+            attended: []
         });
         user.points += data.event.type.points;
 
