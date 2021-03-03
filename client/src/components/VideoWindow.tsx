@@ -3,17 +3,23 @@ import YoutubeWrapper from './YoutubeWrapper';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 
+import '../App.css';
+
 const VideoWindow: React.FC = () => {
 
   let params: any = useParams();
   let eventID: string = params.id;
   const [videoType, setVideoType] = useState<string>("");
   const [videoID, setVideoID] = useState<string>("");
+  const [eventName, setEventName] = useState<string>("");
 
   useEffect(() => {
     const fetchEventUrl = async () => {
-      let eventUrl = await getEventUrl(eventID);     
+      let eventData = await getEventUrl(eventID);
+      console.log(eventData);
 
+      setEventName(eventData.name);
+      let eventUrl: string = eventData.url;
       if (eventUrl.includes("youtube")) {
           // For https://www.youtube.com/watch?v=5qap5aO4i9A format
         setVideoType("youtube");
@@ -27,8 +33,14 @@ const VideoWindow: React.FC = () => {
     fetchEventUrl();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Use ID 5f81edd0c14e740022589677 for testing!
   if (videoType === "youtube") {
-    return <YoutubeWrapper videoID={videoID}/>
+    return (
+      <div>
+        <h1 className="Video-title">{eventName}</h1>
+        <YoutubeWrapper videoID={videoID}/>
+      </div>
+    )
   } else {
     return <div/>
   }
