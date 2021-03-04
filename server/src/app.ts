@@ -5,14 +5,17 @@ import compression from "compression";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
-import {Server} from "ws";
+// import {Server} from "ws";
+import expressWs from 'express-ws';
+
 import http from "http";
 
 dotenv.config();
 
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 const PORT = process.env.PORT || 3000;
-export let app = express();
+// export let app = express();
+const { app, getWss, applyTo } = expressWs(express());
 
 
 app.use(morgan("dev"));
@@ -74,22 +77,29 @@ app.get("/*", function (req, res) {
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
-
-const wss = new Server({server: app, port: 8080});
-wss.on('connection', (ws) => {
-    console.log('Client connected');
-    const start = Date.now();
-    let delta;
-    setInterval(function() {
-        delta = Math.floor((Date.now() - start) / 1000);
-    }, 1000);
-    ws.on('close', () => {
-        const time1: ITime = new Time({
-            time: delta,
-        });
-        time1.save().then(() => console.log('websocket time saved'));
-        console.log('Client disconnected')
+const router = express.Router() as expressWs.Router;
+router.ws('/echo', (ws, req) => {
+    ws.on('message', (msg: String) => {
+        ws.send(msg);
     });
 });
+app.use("/ws-stuff", router);
+
+// const wss = new Server({server: app, port: 8080});
+// wss.on('connection', (ws) => {
+//     console.log('Client connected');
+//     const start = Date.now();
+//     let delta;
+//     setInterval(function() {
+//         delta = Math.floor((Date.now() - start) / 1000);
+//     }, 1000);
+//     ws.on('close', () => {
+//         const time1: ITime = new Time({
+//             time: delta,
+//         });
+//         time1.save().then(() => console.log('websocket time saved'));
+//         console.log('Client disconnected')
+//     });
+// });
 
 app.disable('etag');
