@@ -4,10 +4,10 @@ import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 
-import '../App.css';
+
+import "../App.css";
 
 const VideoWindow: React.FC = () => {
-
   let params: any = useParams();
   let eventID: string = params.id;
   const [videoType, setVideoType] = useState<string>("");
@@ -41,38 +41,45 @@ const VideoWindow: React.FC = () => {
 
       } catch (e) {
         console.log(e)
+
       }
     };
     fetchEventUrl();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Use ID 5f81edd0c14e740022589677 for testing!
-  if (status=== "eventInSession") {
+  if (status === "eventInSession") {
     if (videoType === "youtube") {
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
-          <YoutubeWrapper videoID={videoID}/>
+          <YoutubeWrapper videoID={videoID} />
         </div>
-      )
+      );
     } else if (videoType === "bluejeans") {
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
-          <iframe id="inlineFrameExample" title="Inline Frame Example" width="1500" height="1000" src={videoID} allow="camera; microphone"></iframe>
+          <iframe
+            id="inlineFrameExample"
+            title="Inline Frame Example"
+            width="1200"
+            height="750"
+            src={videoID}
+            allow="camera; microphone"
+          ></iframe>
         </div>
-      )
+      );
+    } else {
+      return <div />;
     }
-    else {
-      return <div/>
-    }
-  } else if (status==="eventEnded") {
+  } else if (status === "eventEnded") {
     return (
       <div>
         <h1 className="Video-title">Event has Ended!!</h1>
       </div>
-    )
-  } else if (status==="eventWithin24Hours") {
+    );
+  } else if (status === "eventWithin24Hours") {
     return (
       <div>
         <div className="Timer">
@@ -96,8 +103,8 @@ const VideoWindow: React.FC = () => {
           <h1 className="Video-title">Oops! Seems like the page you're looking for doesn't exist.</h1>
       </div>
     )
+
   }
-  
-}
+};
 
 export default VideoWindow;

@@ -1,4 +1,4 @@
-import YouTube from 'react-youtube';
+import YouTube from "react-youtube";
 
 type Props = {
   videoID: string;
@@ -7,9 +7,12 @@ type Props = {
 const YoutubeWrapper: React.FC<Props> = (props: Props) => {
   return (
     <div>
-      <YouTube videoId={props.videoID} opts={{height: '475', width: '780', playerVars: {autoplay: 1,}}}/>
+      <YouTube
+        videoId={props.videoID}
+        opts={{ height: "1200", width: "750", playerVars: { autoplay: 1 } }}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default YoutubeWrapper;
