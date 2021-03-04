@@ -22,17 +22,23 @@ const VideoWindow: React.FC = () => {
         let eventData = await getEventUrl(eventID);
         setTimeBeforeStart(eventData.timebeforestart);
         setEventName(eventData.name);
+        setStatus(eventData.status);
         let eventUrl: string = eventData.url;
-        setStatus(eventData.status)
-        if (eventUrl.includes("youtube")) {
+        if (eventData.url) {
+          if (eventUrl.includes("youtube")) {
             // For https://www.youtube.com/watch?v=5qap5aO4i9A format
-          setVideoType("youtube");
-          setVideoID(eventUrl.split("v=").slice(-1)[0]);
-        } else if (eventUrl.includes("youtu.be")) {
-          // For https://youtu.be/xw_PEnX7T_4 format
-          setVideoType("youtube");
-          setVideoID(eventUrl.split("/").slice(-1)[0]);
+            setVideoType("youtube");
+            setVideoID(eventUrl.split("v=").slice(-1)[0]);
+          } else if (eventUrl.includes("youtu.be")) {
+            // For https://youtu.be/xw_PEnX7T_4 format
+            setVideoType("youtube");
+            setVideoID(eventUrl.split("/").slice(-1)[0]);
+          } else if (eventUrl.includes("bluejeans")) {
+            setVideoType("bluejeans")
+            setVideoID(eventUrl)
+          }
         }
+
       } catch (e) {
         console.log(e)
       }
@@ -53,6 +59,7 @@ const VideoWindow: React.FC = () => {
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
+          <iframe id="inlineFrameExample" title="Inline Frame Example" width="1500" height="1000" src={videoID} allow="camera; microphone"></iframe>
         </div>
       )
     }
@@ -77,11 +84,17 @@ const VideoWindow: React.FC = () => {
         </div>
       </div>
       )
-  } else {
+  } else if (status==="eventNotWithin24Hours"){
     return (
       <div>
         <h1 className="Video-title">Event not in Session!!</h1>
     </div>
+    )
+  } else {
+    return (
+      <div>
+          <h1 className="Video-title">Oops! Seems like the page you're looking for doesn't exist.</h1>
+      </div>
     )
   }
   
