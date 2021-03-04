@@ -110,13 +110,9 @@ export class GroundTruthStrategy extends OAuthStrategy {
         if (!user) {
             user = createNew<IUser>(User, {
                 ...profile,
-                points: 20,
+                points: 0,
                 admin: false,
-                events: [{
-                    id: "5f5b96c1593dd900222fd5e8",
-                    name: "Opening Ceremonies",
-                    points: 20
-                }]
+                events: []
             });
         } else {
             user.token = accessToken;

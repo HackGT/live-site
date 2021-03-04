@@ -1,9 +1,11 @@
 {
   "name": "virtual-checkin",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "server/src/app.ts",
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "build:server": "cd server && npm install",
+    "build:client":  "cd client && npm install && npm run build",
+    "build": "npm run build:server && npm run build:client",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
   "keywords": [],

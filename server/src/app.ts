@@ -49,23 +49,51 @@ import { Time, User, IUser, ITime } from "./schema";
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
+<<<<<<< HEAD
+=======
+app.get("/", (req, res) => {
+    res.redirect("https://live.hack.gt");
+});
+>>>>>>> dev
 
 app.use("/auth", authRoutes);
 app.use("/event", isAuthenticated, eventRoutes);
 app.use("/user", userRoutes);
 
+<<<<<<< HEAD
 app.get("/", (request, response) => {
     response.sendFile(path.join(__dirname, "../../participant", "index.html"));
+=======
+// app.get("*", (req, res) => {
+//     res.status(404).send("Sorry :( this is an invalid url");
+// })
+
+// app.listen(process.env.PORT, () => {
+//     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${process.env.PORT}`);
+// });
+
+
+app.use(isAuthenticated, express.static(path.join(__dirname, "../../client/build")));
+
+app.get("/", isAuthenticated, (request, response) => {
+    response.sendFile(path.join(__dirname, "../../client/build", "index.html"));
+>>>>>>> dev
 });
 
-
-app.get("*", (request, response) => {
-    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
+app.get("*", function (req, res) {
+    res.sendFile(
+        path.join(__dirname, "../../client/build", "index.html"),
+        function (err) {
+            if (err) {
+                res.status(500).send(err);
+            }
+        }
+    );
 });
 
 app.get("/*", function (req, res) {
     res.sendFile(
-        path.join(__dirname, "../../participant", "index.html"),
+        path.join(__dirname, "../../client/build", "index.html"),
         function (err) {
             if (err) {
                 res.status(500).send(err);
