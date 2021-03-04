@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import YoutubeWrapper from "./YoutubeWrapper";
-import { useParams } from "react-router-dom";
-import { getEventUrl } from "../services/cmsService";
+import React, { useEffect, useState } from 'react';
+import YoutubeWrapper from './YoutubeWrapper';
+import CountdownTimer from './Countdown';
+import {useParams} from "react-router-dom";
+import {getEventUrl} from '../services/cmsService';
+
 
 import "../App.css";
 
@@ -12,25 +14,34 @@ const VideoWindow: React.FC = () => {
   const [videoID, setVideoID] = useState<string>("");
   const [eventName, setEventName] = useState<string>("");
   const [status, setStatus] = useState<string>("");
+  const [timeBeforeStart, setTimeBeforeStart] = useState<any>({});
 
   useEffect(() => {
     const fetchEventUrl = async () => {
-      let eventData = await getEventUrl(eventID);
-      console.log(eventData);
-      setEventName(eventData.name);
-      let eventUrl: string = eventData.url;
-      setStatus(eventData.status);
-      if (eventUrl.includes("youtube")) {
-        // For https://www.youtube.com/watch?v=5qap5aO4i9A format
-        setVideoType("youtube");
-        setVideoID(eventUrl.split("v=").slice(-1)[0]);
-      } else if (eventUrl.includes("youtu.be")) {
-        // For https://youtu.be/xw_PEnX7T_4 format
-        setVideoType("youtube");
-        setVideoID(eventUrl.split("/").slice(-1)[0]);
-      } else if (eventUrl.includes("bluejeans")) {
-        setVideoType("bluejeans");
-        setVideoID(eventUrl);
+      try {
+        let eventData = await getEventUrl(eventID);
+        setTimeBeforeStart(eventData.timebeforestart);
+        setEventName(eventData.name);
+        setStatus(eventData.status);
+        let eventUrl: string = eventData.url;
+        if (eventData.url) {
+          if (eventUrl.includes("youtube")) {
+            // For https://www.youtube.com/watch?v=5qap5aO4i9A format
+            setVideoType("youtube");
+            setVideoID(eventUrl.split("v=").slice(-1)[0]);
+          } else if (eventUrl.includes("youtu.be")) {
+            // For https://youtu.be/xw_PEnX7T_4 format
+            setVideoType("youtube");
+            setVideoID(eventUrl.split("/").slice(-1)[0]);
+          } else if (eventUrl.includes("bluejeans")) {
+            setVideoType("bluejeans")
+            setVideoID(eventUrl)
+          }
+        }
+
+      } catch (e) {
+        console.log(e)
+
       }
     };
     fetchEventUrl();
@@ -71,16 +82,28 @@ const VideoWindow: React.FC = () => {
   } else if (status === "eventWithin24Hours") {
     return (
       <div>
-        <h1 className="Video-title">Event is within 24 hours</h1>{" "}
-        {/*Enter within 24 hour event page here*/}
+        <div className="Timer">
+          <h1 className="Video-title">You are too early! Come back in:</h1>
+          <CountdownTimer remainingHours={timeBeforeStart.hours} remainingMinutes={timeBeforeStart.minutes}/>
+          <form action="https://2020.hack.gt/">
+              <input className="Schedule-button" type="submit" value="Return to Schedule"/>
+          </form>
+        </div>
       </div>
-    );
-  } else {
+      )
+  } else if (status==="eventNotWithin24Hours"){
     return (
       <div>
         <h1 className="Video-title">Event not in Session!!</h1>
+    </div>
+    )
+  } else {
+    return (
+      <div>
+          <h1 className="Video-title">Oops! Seems like the page you're looking for doesn't exist.</h1>
       </div>
-    );
+    )
+
   }
 };
 

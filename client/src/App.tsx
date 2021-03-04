@@ -12,6 +12,7 @@ const App: React.FC = () => {
         <Router>
           <Switch>
             <Route path="/:id" children={<VideoWindow/>} />
+            <Route path="/" children={<h1>Something went wrong, please try again or contact HackGT staff!</h1>} />
           </Switch>
         </Router>
       </header>
