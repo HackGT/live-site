@@ -50,7 +50,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url(./assets/Roboto-Black.ttf)
+  src: url(./assets/Roboto-Regular.ttf)
 }
 
 .Video-title {
@@ -62,4 +62,102 @@
   line-height: 82px;
   text-align: center;
   color: #FFFFFF;
+}
+
+.Timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.Early-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.Schedule-button {
+  width: 250px;
+  height: 50px;
+  background: #68B6E5;
+  border-radius: 15px;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+}
+
+.ClockContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 50px;
+}
+
+.ClockInnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.CountdownBox {
+  width: 112px;
+  height: 150px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 20px;
+}
+
+.ClockDigits {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.ClockLabelText {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.CountdownBoxText {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 125px;
+  text-align: center;
+  color: #DD3424;
+}
+
+.ClockColon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.ColonBalls {
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  margin-right: 20px;
 }

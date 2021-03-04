@@ -7,7 +7,7 @@ type Props = {
 const YoutubeWrapper: React.FC<Props> = (props: Props) => {
   return (
     <div>
-      <YouTube videoId={props.videoID} opts={{height: '390', width: '640', playerVars: {autoplay: 1,}}}/>
+      <YouTube videoId={props.videoID} opts={{height: '475', width: '780', playerVars: {autoplay: 1,}}}/>
     </div>
   )
 }
