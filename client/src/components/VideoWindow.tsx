@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import YoutubeWrapper from './YoutubeWrapper';
-import {useParams} from "react-router-dom";
-import {getEventUrl} from '../services/cmsService';
+import React, { useEffect, useState } from "react";
+import YoutubeWrapper from "./YoutubeWrapper";
+import { useParams } from "react-router-dom";
+import { getEventUrl } from "../services/cmsService";
 
-import '../App.css';
+import "../App.css";
 
 const VideoWindow: React.FC = () => {
-
   let params: any = useParams();
   let eventID: string = params.id;
   const [videoType, setVideoType] = useState<string>("");
@@ -20,59 +19,69 @@ const VideoWindow: React.FC = () => {
       console.log(eventData);
       setEventName(eventData.name);
       let eventUrl: string = eventData.url;
-      setStatus(eventData.status)
+      setStatus(eventData.status);
       if (eventUrl.includes("youtube")) {
-          // For https://www.youtube.com/watch?v=5qap5aO4i9A format
+        // For https://www.youtube.com/watch?v=5qap5aO4i9A format
         setVideoType("youtube");
         setVideoID(eventUrl.split("v=").slice(-1)[0]);
       } else if (eventUrl.includes("youtu.be")) {
         // For https://youtu.be/xw_PEnX7T_4 format
         setVideoType("youtube");
         setVideoID(eventUrl.split("/").slice(-1)[0]);
+      } else if (eventUrl.includes("bluejeans")) {
+        setVideoType("bluejeans");
+        setVideoID(eventUrl);
       }
     };
     fetchEventUrl();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Use ID 5f81edd0c14e740022589677 for testing!
-  if (status=== "eventInSession") {
+  if (status === "eventInSession") {
     if (videoType === "youtube") {
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
-          <YoutubeWrapper videoID={videoID}/>
+          <YoutubeWrapper videoID={videoID} />
         </div>
-      )
+      );
     } else if (videoType === "bluejeans") {
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
+          <iframe
+            id="inlineFrameExample"
+            title="Inline Frame Example"
+            width="1200"
+            height="750"
+            src={videoID}
+            allow="camera; microphone"
+          ></iframe>
         </div>
-      )
+      );
+    } else {
+      return <div />;
     }
-    else {
-      return <div/>
-    }
-  } else if (status==="eventEnded") {
+  } else if (status === "eventEnded") {
     return (
       <div>
         <h1 className="Video-title">Event has Ended!!</h1>
       </div>
-    )
-  } else if (status==="eventWithin24Hours") {
+    );
+  } else if (status === "eventWithin24Hours") {
     return (
       <div>
-        <h1 className="Video-title">Event is within 24 hours</h1> {/*Enter within 24 hour event page here*/} 
+        <h1 className="Video-title">Event is within 24 hours</h1>{" "}
+        {/*Enter within 24 hour event page here*/}
       </div>
-      )
+    );
   } else {
     return (
       <div>
         <h1 className="Video-title">Event not in Session!!</h1>
-    </div>
-    )
+      </div>
+    );
   }
-  
-}
+};
 
 export default VideoWindow;
