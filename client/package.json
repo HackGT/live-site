@@ -3,21 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.2",
-    "web-vitals": "^1.0.1"
-=======
     "@chakra-ui/react": "^1.0.4",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
@@ -33,7 +24,6 @@
     "react-youtube": "^7.13.1",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
->>>>>>> dev
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,10 +31,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-<<<<<<< HEAD
-=======
   "proxy": "http://localhost:3000",
->>>>>>> dev
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -62,8 +49,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-<<<<<<< HEAD
-=======
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.11.0",
@@ -73,6 +58,5 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "^7.21.5",
     "prettier": "^2.2.1"
->>>>>>> dev
   }
 }
