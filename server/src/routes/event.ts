@@ -39,6 +39,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const now = moment.utc().tz("America/New_York");
         console.log(process.env.TZ)
         const differenceStart = startTime.diff(now, "minutes");
+        const differenceStartSeconds = startTime.diff(now, "seconds");
         const differenceEnd = endTime.diff(now, "minutes");
         console.log(startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
@@ -72,7 +73,8 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         let status= "";
         let timebeforestart = {
             hours:0,
-            minutes:0
+            minutes:0,
+            seconds:0
         }
         if (differenceEnd<-10) {
             status= "eventEnded";
@@ -82,6 +84,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
             status= "eventWithin24Hours";
             timebeforestart.hours = Math.floor(differenceStart / 60);
             timebeforestart.minutes = differenceStart % 60
+            timebeforestart.seconds = differenceStartSeconds % 60
         } else {
             status = "eventNotWithin24Hours"
         }

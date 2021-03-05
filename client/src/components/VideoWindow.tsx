@@ -86,7 +86,7 @@ const VideoWindow: React.FC = () => {
         <div className="Timer">
           <h1 className="Video-title">{eventName}</h1>
           <h1 className="Video-title">You are too early! Come back in:</h1>
-          <CountdownTimer remainingHours={timeBeforeStart.hours} remainingMinutes={timeBeforeStart.minutes}/>
+          <CountdownTimer remainingHours={timeBeforeStart.hours} remainingMinutes={timeBeforeStart.minutes} remainingSeconds={timeBeforeStart.seconds}/>
           <form action="https://2020.hack.gt/">
               <input className="Schedule-button" type="submit" value="Return to Schedule"/>
           </form>
