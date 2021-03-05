@@ -34,6 +34,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const now = moment.utc().tz("America/New_York");
         const differenceStart = startTime.diff(now, "minutes");
         const differenceEnd = endTime.diff(now, "minutes");
+        console.log(startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         console.log('here')
         let eventInSession = differenceEnd >= -10 && differenceStart <= 30;
