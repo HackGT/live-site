@@ -2,6 +2,11 @@ import express from "express"
 import { getCMSEvent } from "../cms"
 import { IUser, User} from "../schema";
 import moment from "moment-timezone";
+import dotenv from "dotenv"
+
+dotenv.config();
+
+
 export let eventRoutes = express.Router();
 
 // tslint:disable-next-line
@@ -32,6 +37,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
         const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
+        console.log(process.env.TZ)
         const differenceStart = startTime.diff(now, "minutes");
         const differenceEnd = endTime.diff(now, "minutes");
         console.log(startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
@@ -79,7 +85,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         } else {
             status = "eventNotWithin24Hours"
         }
-
+        console.log(status);
         if(event.url)
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
         else {
