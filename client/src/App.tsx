@@ -30,7 +30,7 @@ const App: React.FC = () => {
                   </form>
                 </div>
               </div>
-            }></Route>
+            }></Route>              
             {/* <Route path="/" children={<h1>Something went wrong, please try again or contact HackGT staff!</h1>} /> */}
           </Switch>
         </Router>
