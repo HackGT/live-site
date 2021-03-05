@@ -35,9 +35,6 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const differenceStart = startTime.diff(now, "minutes");
         const differenceEnd = endTime.diff(now, "minutes");
         console.log(startTime, endTime, differenceStart, differenceEnd)
-         if (differenceStart >= 30) {
-            return res.status(400).send("Event is not in session. Please check back later")
-        }
         console.log('here')
         let eventInSession = differenceEnd >= -10 && differenceStart <= 30;
         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
