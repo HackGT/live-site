@@ -76,6 +76,7 @@ const VideoWindow: React.FC = () => {
   } else if (status === "eventEnded") {
     return (
       <div>
+        <h1 className="Video-title">{eventName}</h1>
         <h1 className="Video-title">Event has Ended!!</h1>
       </div>
     );
@@ -83,8 +84,9 @@ const VideoWindow: React.FC = () => {
     return (
       <div>
         <div className="Timer">
+          <h1 className="Video-title">{eventName}</h1>
           <h1 className="Video-title">You are too early! Come back in:</h1>
-          <CountdownTimer remainingHours={timeBeforeStart.hours} remainingMinutes={timeBeforeStart.minutes}/>
+          <CountdownTimer remainingHours={timeBeforeStart.hours} remainingMinutes={timeBeforeStart.minutes} remainingSeconds={timeBeforeStart.seconds}/>
           <form action="https://2020.hack.gt/">
               <input className="Schedule-button" type="submit" value="Return to Schedule"/>
           </form>
@@ -94,6 +96,7 @@ const VideoWindow: React.FC = () => {
   } else if (status==="eventNotWithin24Hours"){
     return (
       <div>
+        <h1 className="Video-title">{eventName}</h1>
         <h1 className="Video-title">Event not in Session!!</h1>
     </div>
     )

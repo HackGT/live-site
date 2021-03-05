@@ -9,7 +9,7 @@ const YoutubeWrapper: React.FC<Props> = (props: Props) => {
     <div>
       <YouTube
         videoId={props.videoID}
-        opts={{ height: "1200", width: "750", playerVars: { autoplay: 1 } }}
+        opts={{ height: "650", width: "900", playerVars: { autoplay: 1 } }}
       />
     </div>
   );

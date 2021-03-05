@@ -2,6 +2,11 @@ import express from "express"
 import { getCMSEvent } from "../cms"
 import { IUser, User} from "../schema";
 import moment from "moment-timezone";
+import dotenv from "dotenv"
+
+dotenv.config();
+
+
 export let eventRoutes = express.Router();
 
 // tslint:disable-next-line
@@ -32,10 +37,18 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
         const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
-        const nowopen = now.subtract(10, "minutes");
+        console.log(process.env.TZ)
         const differenceStart = startTime.diff(now, "minutes");
+        const differenceStartSeconds = startTime.diff(now, "seconds");
         const differenceEnd = endTime.diff(now, "minutes");
-        const differenceOpen = startTime.diff(nowopen,"minutes")
+        const differenceOpen = startTime.diff(now,"minutes")-10;
+        const differenceOpenSeconds = startTime.diff(now, "seconds")-60*10;
+        console.log(`differenceOpen ${differenceOpen}`);
+        console.log(`differenceEnd ${differenceEnd}`);
+        console.log(`differenceStart ${differenceStart}`);
+        console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
+        console.log(`differenceStartSeconds ${differenceStartSeconds}`);
+
         console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         console.log('here')
@@ -68,7 +81,8 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         let status= "";
         let timebeforestart = {
             hours:0,
-            minutes:0
+            minutes:0,
+            seconds:0
         }
         if (differenceEnd<-10) {
             status= "eventEnded";
@@ -78,13 +92,20 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
             status= "eventWithin24Hours";
             timebeforestart.hours = Math.floor(differenceOpen / 60);
             timebeforestart.minutes = differenceOpen % 60
+            timebeforestart.seconds = differenceOpenSeconds % 60
+
+//             timebeforestart.hours = Math.floor(differenceStart / 60);
+//             timebeforestart.minutes = differenceStart % 60
+//             timebeforestart.seconds = differenceStartSeconds % 60
         } else {
             status = "eventNotWithin24Hours"
         }
-
-        if(event.url)
+        console.log(status);
+        if(event.url && status==="eventInSession")
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
-        else {
+        else if (event.url) {
+            return res.send({"name":event.name,  "timebeforestart":timebeforestart, "status": status})
+        } else {
             return res.status(400).send('no link')
         }
     } else {
