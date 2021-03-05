@@ -4,8 +4,6 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import VideoWindow from './components/VideoWindow';
 import logo from './assets/logo.png';
 
-import CountdownTimer from './components/Countdown'
-
 // a little bee ascii art 
 const art = ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/"
 
