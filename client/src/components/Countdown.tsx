@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Clock from './Clock'
 
 type Props = {
-  remainingHours: number;
-  remainingMinutes: number;
-  remainingSeconds: number;
+  startTime: number
 };
 
 const CountdownTimer: React.FC<Props> = (props: Props) => {
-
+  
   const [state, setState] = useState({
-    hours: props.remainingHours,
-    minutes: props.remainingMinutes,
-    seconds: props.remainingSeconds
+    hours: 23,
+    minutes: 59,
+    seconds: 59
   });
 
   useEffect(() => {
@@ -21,16 +19,28 @@ const CountdownTimer: React.FC<Props> = (props: Props) => {
   });
 
   const updateTime = () => {
-    if (state.seconds > 0) {
-      setState({ hours: state.hours, minutes: state.minutes, seconds: state.seconds - 1})
-    }
-    else if (state.minutes > 0) {
-      setState({ hours: state.hours, minutes: state.minutes - 1, seconds: 59})
-    }
-    else if (state.hours > 0) {
-      setState({ hours: state.hours - 1, minutes: 59, seconds: 59})
-    }
-    else {
+    const currentTime = new Date().getTime()
+
+    // get total seconds between the times
+    let delta = Math.abs(props.startTime - currentTime) / 1000;
+
+    // calculate (and subtract) whole days
+    let days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+
+    // calculate (and subtract) whole hours
+    let hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+
+    // calculate (and subtract) whole minutes
+    let minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+
+    // what's left is seconds
+    let seconds = Math.floor(delta % 60);
+
+    setState({ hours: hours, minutes: minutes, seconds: seconds});
+    if (currentTime >= props.startTime) {
       window.location.reload();
     }
   }
