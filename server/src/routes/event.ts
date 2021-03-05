@@ -32,12 +32,14 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
         const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
+        const nowopen = now.subtract(10, "minutes");
         const differenceStart = startTime.diff(now, "minutes");
         const differenceEnd = endTime.diff(now, "minutes");
-        console.log(startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
+        const differenceOpen = startTime.diff(nowopen,"minutes")
+        console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         console.log('here')
-        let eventInSession = differenceEnd >= -10 && differenceStart <= 30;
+        let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
         // eventInSession = true
         if (eventInSession) {
@@ -74,8 +76,8 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
             status="eventInSession";
         } else if (differenceStart <60*24){
             status= "eventWithin24Hours";
-            timebeforestart.hours = Math.floor(differenceStart / 60);
-            timebeforestart.minutes = differenceStart % 60
+            timebeforestart.hours = Math.floor(differenceOpen / 60);
+            timebeforestart.minutes = differenceOpen % 60
         } else {
             status = "eventNotWithin24Hours"
         }
