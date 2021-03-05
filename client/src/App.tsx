@@ -19,19 +19,8 @@ const App: React.FC = () => {
         </a>
         <Router>
           <Switch>
-            <Route path="/:id" children={<VideoWindow/>} />
-            <Route path="/" children={
-              <div>
-                <div className="Timer">
-                  <h1 className="Video-title">You are too early! Come back in:</h1>
-                  <CountdownTimer remainingHours={23} remainingMinutes={42} remainingSeconds={59}/>
-                  <form action="https://2020.hack.gt/">
-                      <input className="Schedule-button" type="submit" value="Return to Schedule"/>
-                  </form>
-                </div>
-              </div>
-            }></Route>              
-            {/* <Route path="/" children={<h1>Something went wrong, please try again or contact HackGT staff!</h1>} /> */}
+            <Route path="/:id" children={<VideoWindow/>} />          
+            <Route path="/" children={<h1>Something went wrong, please try again or contact HackGT staff!</h1>} />
           </Switch>
         </Router>
       </header>
