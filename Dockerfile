@@ -1,6 +1,8 @@
 # Build container
 FROM node:12-alpine AS build
 
+ENV TZ="America/New_York"
+
 WORKDIR /usr/src/virtual-checkin/
 COPY . /usr/src/virtual-checkin/
 
