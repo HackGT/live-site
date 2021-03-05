@@ -15,7 +15,7 @@ dotenv.config();
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 const PORT = process.env.PORT || 3000;
 // export let app = express();
-const { app, getWss, applyTo } = expressWs(express());
+export const { app, getWss, applyTo } = expressWs(express());
 
 
 app.use(morgan("dev"));
@@ -49,21 +49,17 @@ import { Time, User, IUser, ITime } from "./schema";
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
-<<<<<<< HEAD
-=======
-app.get("/", (req, res) => {
-    res.redirect("https://live.hack.gt");
-});
->>>>>>> dev
+
+// app.get("/", (req, res) => {
+//     res.redirect("https://live.hack.gt");
+// });
+
 
 app.use("/auth", authRoutes);
 app.use("/event", isAuthenticated, eventRoutes);
 app.use("/user", userRoutes);
 
-<<<<<<< HEAD
-app.get("/", (request, response) => {
-    response.sendFile(path.join(__dirname, "../../participant", "index.html"));
-=======
+
 // app.get("*", (req, res) => {
 //     res.status(404).send("Sorry :( this is an invalid url");
 // })
@@ -73,12 +69,32 @@ app.get("/", (request, response) => {
 // });
 
 
+
+
+
+
+const router = express.Router() as expressWs.Router;
+// var router = express.Router();
+router.ws('/echo', (ws, req) => {
+        ws.on('connection', (ws => {
+            console.log('Client connected');
+        }))
+    console.log('hihi')
+    ws.on('message', (msg: String) => {
+        ws.send(msg);
+    });
+    ws.on('close', () => {
+        console.log('WebSocket was closed')
+    })
+});
+app.use("/ws-stuff", router);
+
 app.use(isAuthenticated, express.static(path.join(__dirname, "../../client/build")));
 
 app.get("/", isAuthenticated, (request, response) => {
     response.sendFile(path.join(__dirname, "../../client/build", "index.html"));
->>>>>>> dev
 });
+
 
 app.get("*", function (req, res) {
     res.sendFile(
@@ -101,17 +117,10 @@ app.get("/*", function (req, res) {
         }
     );
 });
-
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
-const router = express.Router() as expressWs.Router;
-router.ws('/echo', (ws, req) => {
-    ws.on('message', (msg: String) => {
-        ws.send(msg);
-    });
-});
-app.use("/ws-stuff", router);
+// app.use("/ws-stuff", router);
 
 // const wss = new Server({server: app, port: 8080});
 // wss.on('connection', (ws) => {

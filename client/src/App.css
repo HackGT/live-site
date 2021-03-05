@@ -14,13 +14,11 @@
 }
 
 .App-header {
-<<<<<<< HEAD
-  background-color: #282c34;
-=======
+
   background-image:  url(./assets/video_background.svg);
   background-size: cover;
   background-color: #24012D;
->>>>>>> dev
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -30,8 +28,7 @@
   color: white;
 }
 
-<<<<<<< HEAD
-=======
+
 .HackGT-logo {
   background-size: 50%;
   position: absolute;
@@ -41,7 +38,7 @@
   top: 18pt;
 }
 
->>>>>>> dev
+
 .App-link {
   color: #61dafb;
 }
@@ -54,8 +51,7 @@
     transform: rotate(360deg);
   }
 }
-<<<<<<< HEAD
-=======
+
 
 @font-face {
   font-family: 'Roboto';
@@ -170,4 +166,4 @@
   margin-bottom: 50px;
   margin-right: 20px;
 }
->>>>>>> dev
+

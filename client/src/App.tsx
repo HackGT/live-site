@@ -11,7 +11,7 @@ const App: React.FC = () => {
         <img src={logo} className="HackGT-logo"/>
         <Router>
           <Switch>
-            <Route path="/:id" children={<VideoWindow/>} />
+            <Route path="/events/:id" children={<VideoWindow/>} />
             <Route path="/" children={<h1>Something went wrong, please try again or contact HackGT staff!</h1>} />
           </Switch>
         </Router>
