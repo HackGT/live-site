@@ -4,8 +4,12 @@ import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 
-
 import "../App.css";
+
+function getStartTime(h: number, m: number, s: number) {
+  const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
+  return new Date().getTime() + remainingTimeMS;
+}
 
 const VideoWindow: React.FC = () => {
   let params: any = useParams();
@@ -86,7 +90,7 @@ const VideoWindow: React.FC = () => {
         <div className="Timer">
           <h1 className="Video-title">{eventName}</h1>
           <h1 className="Video-title">You are too early! Come back in:</h1>
-          <CountdownTimer remainingHours={timeBeforeStart.hours} remainingMinutes={timeBeforeStart.minutes} remainingSeconds={timeBeforeStart.seconds}/>
+          <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/>
           <form action="https://2020.hack.gt/">
               <input className="Schedule-button" type="submit" value="Return to Schedule"/>
           </form>
