@@ -6,19 +6,8 @@ type Props = {
 };
 
 const CountdownTimer: React.FC<Props> = (props: Props) => {
-  
-  const [state, setState] = useState({
-    hours: 23,
-    minutes: 59,
-    seconds: 59
-  });
 
-  useEffect(() => {
-    const i = setInterval(() => updateTime(), 1000);
-    return () => clearInterval(i);
-  });
-
-  const updateTime = () => {
+  function getTimeDifference() {
     const currentTime = new Date().getTime()
 
     // get total seconds between the times
@@ -39,7 +28,23 @@ const CountdownTimer: React.FC<Props> = (props: Props) => {
     // what's left is seconds
     let seconds = Math.floor(delta % 60);
 
-    setState({ hours: hours, minutes: minutes, seconds: seconds});
+    return {
+      seconds: seconds,
+      minutes: minutes,
+      hours: hours
+    }
+  }
+  
+  const [state, setState] = useState(getTimeDifference());
+
+  useEffect(() => {
+    const i = setInterval(() => updateTime(), 1000);
+    return () => clearInterval(i);
+  });
+
+  const updateTime = () => {
+    const currentTime = new Date().getTime()
+    setState(getTimeDifference());
     if (currentTime >= props.startTime) {
       window.location.reload();
     }
