@@ -19,6 +19,7 @@ const VideoWindow: React.FC = () => {
   const [eventName, setEventName] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [timeBeforeStart, setTimeBeforeStart] = useState<any>({});
+  const [contentLoaded, setContentLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchEventUrl = async () => {
@@ -42,75 +43,76 @@ const VideoWindow: React.FC = () => {
             setVideoID(eventUrl)
           }
         }
-
       } catch (e) {
         console.log(e)
-
       }
+      setContentLoaded(true);
     };
     fetchEventUrl();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Use ID 5f81edd0c14e740022589677 for testing!
-  if (status === "eventInSession") {
-    if (videoType === "youtube") {
+  if (contentLoaded === true) {
+    if (status === "eventInSession") {
+      if (videoType === "youtube") {
+        return (
+          <div>
+            <h1 className="Video-title">{eventName}</h1>
+            <YoutubeWrapper videoID={videoID} />
+          </div>
+        );
+      } else if (videoType === "bluejeans") {
+        return (
+          <div>
+            <h1 className="Video-title">{eventName}</h1>
+            <iframe
+              id="inlineFrameExample"
+              title="Inline Frame Example"
+              width="1200"
+              height="750"
+              src={videoID}
+              allow="camera; microphone"/>
+          </div>
+        );
+      } else {
+        return <div />;
+      }
+    } else if (status === "eventEnded") {
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
-          <YoutubeWrapper videoID={videoID} />
+          <h1 className="Video-title">Event has Ended!!</h1>
         </div>
       );
-    } else if (videoType === "bluejeans") {
+    } else if (status === "eventWithin24Hours") {
+      return (
+        <div>
+          <div className="Timer">
+            <h1 className="Video-title">{eventName}</h1>
+            <h1 className="Video-title">You are too early! Come back in:</h1>
+            <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/>
+            <a className="Schedule-button" href="https://2020.hack.gt">Return to Schedule</a>
+          </div>
+        </div>
+        )
+    } else if (status==="eventNotWithin24Hours"){
       return (
         <div>
           <h1 className="Video-title">{eventName}</h1>
-          <iframe
-            id="inlineFrameExample"
-            title="Inline Frame Example"
-            width="1200"
-            height="750"
-            src={videoID}
-            allow="camera; microphone"
-          ></iframe>
-        </div>
-      );
-    } else {
-      return <div />;
-    }
-  } else if (status === "eventEnded") {
-    return (
-      <div>
-        <h1 className="Video-title">{eventName}</h1>
-        <h1 className="Video-title">Event has Ended!!</h1>
-      </div>
-    );
-  } else if (status === "eventWithin24Hours") {
-    return (
-      <div>
-        <div className="Timer">
-          <h1 className="Video-title">{eventName}</h1>
-          <h1 className="Video-title">You are too early! Come back in:</h1>
-          <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/>
-          <form action="https://2020.hack.gt/">
-              <input className="Schedule-button" type="submit" value="Return to Schedule"/>
-          </form>
-        </div>
+          <h1 className="Video-title">Event not in Session!!</h1>
       </div>
       )
-  } else if (status==="eventNotWithin24Hours"){
-    return (
-      <div>
-        <h1 className="Video-title">{eventName}</h1>
-        <h1 className="Video-title">Event not in Session!!</h1>
-    </div>
-    )
+    } else {
+      return (
+        <div>
+            <h1 className="Video-title">Oops! Seems like the page you're looking for doesn't exist.</h1>
+        </div>
+      )
+    }
   } else {
     return (
-      <div>
-          <h1 className="Video-title">Oops! Seems like the page you're looking for doesn't exist.</h1>
-      </div>
+      <div/>
     )
-
   }
 };
 
