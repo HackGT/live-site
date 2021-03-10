@@ -68,9 +68,6 @@ const VideoWindow: React.FC = () => {
     return () => window.removeEventListener("resize", updateWindowDimensions);
   }, []);
 
-  console.log(videoSize);
-  console.log(document.body.clientHeight);
-
   // Use ID 5f81edd0c14e740022589677 for testing!
   if (contentLoaded === true) {
     if (status === "eventInSession") {
