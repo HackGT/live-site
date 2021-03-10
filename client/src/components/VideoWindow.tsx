@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import YoutubeWrapper from './YoutubeWrapper';
 import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
+import YouTube from "react-youtube";
 
 import "../App.css";
 
@@ -10,6 +10,13 @@ function getStartTime(h: number, m: number, s: number) {
   const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
   return new Date().getTime() + remainingTimeMS;
 }
+
+function getVideoSize() {
+  return {
+    'width': String(Math.floor(.85 * Math.max(window.innerWidth, document.body.clientWidth))),
+    'height': String(Math.floor(.75 * Math.max(window.innerHeight, document.body.clientHeight)))
+  }
+} 
 
 const VideoWindow: React.FC = () => {
   let params: any = useParams();
@@ -20,6 +27,7 @@ const VideoWindow: React.FC = () => {
   const [status, setStatus] = useState<string>("");
   const [timeBeforeStart, setTimeBeforeStart] = useState<any>({});
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);
+  const [videoSize, setVideoSize] = useState<any>(getVideoSize())
 
   useEffect(() => {
     const fetchEventUrl = async () => {
@@ -39,17 +47,26 @@ const VideoWindow: React.FC = () => {
             setVideoType("youtube");
             setVideoID(eventUrl.split("/").slice(-1)[0]);
           } else if (eventUrl.includes("bluejeans")) {
-            setVideoType("bluejeans")
-            setVideoID(eventUrl)
+            setVideoType("bluejeans");
+            setVideoID(eventUrl);
           }
         }
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
       setContentLoaded(true);
     };
     fetchEventUrl();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
+  useEffect(() => {
+    const updateWindowDimensions = () => {
+      setVideoSize(getVideoSize());
+    };
+    window.addEventListener("resize", updateWindowDimensions);
+    return () => window.removeEventListener("resize", updateWindowDimensions);
+  }, []);
 
   // Use ID 5f81edd0c14e740022589677 for testing!
   if (contentLoaded === true) {
@@ -58,7 +75,10 @@ const VideoWindow: React.FC = () => {
         return (
           <div>
             <h1 className="Video-title">{eventName}</h1>
-            <YoutubeWrapper videoID={videoID} />
+            <YouTube
+              videoId={videoID}
+              opts={{ height: videoSize.height, width: videoSize.width, playerVars: { autoplay: 1 } }}
+            />
           </div>
         );
       } else if (videoType === "bluejeans") {
@@ -68,8 +88,8 @@ const VideoWindow: React.FC = () => {
             <iframe
               id="inlineFrameExample"
               title="Inline Frame Example"
-              width="1200"
-              height="750"
+              width={videoSize.width}
+              height={videoSize.height}
               src={videoID}
               allow="camera; microphone"/>
           </div>
