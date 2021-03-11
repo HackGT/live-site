@@ -1,12 +1,20 @@
+# Build container
+FROM node:12-alpine AS build
+
+WORKDIR /usr/src/virtual-checkin/
+COPY . /usr/src/virtual-checkin/
+
+RUN npm install && npm run build
+
+# Runtime container
 FROM node:12-alpine
 
-RUN mkdir -p /usr/src/virtual-checkin
-WORKDIR /usr/src/virtual-checkin
-COPY . /usr/src/virtual-checkin
-RUN npm install --unsafe-perm
+COPY --from=build /usr/src/virtual-checkin/server/ /usr/src/virtual-checkin/server/
+COPY --from=build /usr/src/virtual-checkin/client/ /usr/src/virtual-checkin/client/
 
-# Set Timezone to EST
+WORKDIR /usr/src/virtual-checkin/server/
+
 ENV TZ="America/New_York"
 
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
