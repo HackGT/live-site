@@ -161,3 +161,14 @@
   margin-bottom: 50px;
   margin-right: 20px;
 }
+
+.RedirectURL {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  color: #FFFFFF;
+  padding-top: 5px;
+  text-decoration: underline;
+}

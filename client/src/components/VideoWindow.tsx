@@ -28,6 +28,7 @@ const VideoWindow: React.FC = () => {
   const [timeBeforeStart, setTimeBeforeStart] = useState<any>({});
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);
   const [videoSize, setVideoSize] = useState<any>(getVideoSize())
+  const [eventUrl, setEventUrl] = useState<string>("")
 
   useEffect(() => {
     const fetchEventUrl = async () => {
@@ -37,6 +38,7 @@ const VideoWindow: React.FC = () => {
         setEventName(eventData.name);
         setStatus(eventData.status);
         let eventUrl: string = eventData.url;
+        setEventUrl(eventUrl);
         if (eventData.url) {
           if (eventUrl.includes("youtube")) {
             // For https://www.youtube.com/watch?v=5qap5aO4i9A format
@@ -78,7 +80,8 @@ const VideoWindow: React.FC = () => {
             <YouTube
               videoId={videoID}
               opts={{ height: videoSize.height, width: videoSize.width, playerVars: { autoplay: 1 } }}
-            />
+            /> 
+            <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
           </div>
         );
       } else if (videoType === "bluejeans") {
@@ -92,6 +95,7 @@ const VideoWindow: React.FC = () => {
               height={videoSize.height}
               src={videoID}
               allow="camera; microphone"/>
+            <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
           </div>
         );
       } else {
