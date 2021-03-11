@@ -84,7 +84,7 @@ const VideoWindow: React.FC = () => {
               videoId={videoID}
               opts={{ height: videoSize.height, width: videoSize.width, playerVars: { autoplay: 1 } }}
             /> 
-            <a href={eventUrl} className="RedirectURL">Click here to open the stream on youtube!</a>
+            <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
           </div>
         );
       } else if (videoType === "bluejeans") {
@@ -98,7 +98,7 @@ const VideoWindow: React.FC = () => {
               height={videoSize.height}
               src={videoID}
               allow="camera; microphone"/>
-            <a href={eventUrl} className="RedirectURL">Click here to open the stream on the BlueJeans app!</a>
+            <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
           </div>
         );
       } else {
