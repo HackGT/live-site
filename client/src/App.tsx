@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <a href="https://live.healthtech.hack.gt/">
+        <a href="https://live.healthtech.hack.gt/schedule/">
           <img src={logo} className="HackGT-logo" alt="hackGT"/>
         </a>
         <Router>
