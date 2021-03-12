@@ -9,33 +9,14 @@ dotenv.config();
 
 export let eventRoutes = express.Router();
 
-// tslint:disable-next-line
-const UNSAFE_parseAsLocal = (t: string) => { // Parse iso-formatted string as local time
-    let localString = t;
-    if (t.slice(-1).toLowerCase() === "z") {
-        localString = t.slice(0, -1);
-    }
-    return moment(localString);
-};
-
-// tslint:disable-next-line
-const UNSAFE_toUTC = (t: string) => UNSAFE_parseAsLocal(t).utc();
-
-// eventRoutes.route("/:getEventID").get(async (req, res) => {
-//     const event = await getCMSEvent(req.params.getEventID);
-//     if (event) {
-//         return res.send(event)
-//     }
-// })
-
 eventRoutes.route("/:getEventID").get(async (req, res) => {
     const reqUser = req.user as IUser;
     const user = await User.findById(reqUser._id);
 
     const event = await getCMSEvent(req.params.getEventID);
     if (event && user && req.user) {
-        const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
-        const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
+        const startTime = moment(event.startDate).tz("America/New_York");
+        const endTime = moment(event.endDate).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
         console.log(process.env.TZ)
         const differenceStart = startTime.diff(now, "minutes");
@@ -49,7 +30,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
         console.log(`differenceStartSeconds ${differenceStartSeconds}`);
 
-        console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
+        //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         console.log('here')
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
