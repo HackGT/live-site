@@ -30,7 +30,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
         console.log(`differenceStartSeconds ${differenceStartSeconds}`);
 
-        console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
+        //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         console.log('here')
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
