@@ -117,11 +117,7 @@ const VideoWindow: React.FC = () => {
             <h1 className="Video-title">{eventName}</h1>
             <h1 className="Video-title">You are too early! Come back in:</h1>
             <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/>
-<<<<<<< HEAD
             <a className="Schedule-button" href="https://live.healthtech.hack.gt/schedule">Return to Schedule</a>
-=======
-            <a className="Schedule-button" href="https://info.hack.gt/schedule">Return to Schedule</a>
->>>>>>> 7d73eba1eaff33bd0f1afc92180fc18ef972f2a2
           </div>
         </div>
         )
