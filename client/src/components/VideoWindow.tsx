@@ -51,6 +51,8 @@ const VideoWindow: React.FC = () => {
           } else if (eventUrl.includes("bluejeans")) {
             setVideoType("bluejeans");
             setVideoID(eventUrl);
+          } else {
+            window.location.href = eventUrl;
           }
         }
       } catch (e) {
