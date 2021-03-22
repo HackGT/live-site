@@ -12,7 +12,6 @@ userRoutes.route("/points/:userId").get(async (req, res) => {
     }
 
     let user = await User.findOne({ uuid: userId });
-
     if (!user) {
         return res.status(400).send("User not found");
     }
@@ -49,3 +48,14 @@ userRoutes.route("/points/add").post(isAdmin, async (req, res) => {
 
     return res.send({ error: false });
 });
+
+userRoutes.route("/topUsers").get(async (req, res) =>  {
+    let users = await User.find({}).sort({points: -1}).limit(5)
+
+    if (!users) {
+        return res.status(400).send("Could not find users");
+    }
+
+    return res.send(users);
+
+ });
