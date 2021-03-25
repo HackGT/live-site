@@ -41,9 +41,10 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
                 user.events.push({
                     id: event.id,
                     name: event.name,
-                    attended: []
+                    attended: [],
+                    points: event.type.points
                 });
-
+                user.points += event.type.points;
             }
             console.log(user.events)
 
