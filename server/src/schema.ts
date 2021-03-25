@@ -26,6 +26,7 @@ export interface IUser extends RootDocument {
     events: {
         id: string,
         name: string,
+        points: number,
         // attended: Date,
         attended: {
             enter: Date,
@@ -64,12 +65,12 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
             {
                 id: String,
                 name: String,
+                points: Number,
                 attended: {
                     type: [
                     {
                             enter:Date,
                             exit:Date
-
                     }
                     ],
                     default:[]
