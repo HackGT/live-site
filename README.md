@@ -12,7 +12,9 @@ Server Instructions
 4. Run `npm install`
 5. Run `npm run dev`
 
-Now go to web browser and enter corresponding `localhost:{PORT}/{event_id}'`
+Go to the cms_url which is https://keystone.dev.hack.gt/ for dev purposes and either make an event for testing or use an existing event. Find the id in the top right corner. This is your event_id.
+
+Now go to web browser and enter corresponding `localhost:3000/{event_id}'`
 This information is output in terminal.
 
 **Alternative to the npm commands, you may also use `yarn` alternatives.  
