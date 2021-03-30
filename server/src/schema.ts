@@ -22,11 +22,11 @@ export interface IUser extends RootDocument {
     name: string;
     token: string;
     admin: boolean;
-    points: number;
+    points?: number;
     events: {
         id: string,
         name: string,
-        points: number,
+        points?: number,
         // attended: Date,
         attended: {
             enter: Date,
@@ -65,7 +65,11 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
             {
                 id: String,
                 name: String,
-                points: Number,
+                points: {
+                    type: Number,
+                    required: false,
+                    default: 0
+                },
                 attended: {
                     type: [
                     {
@@ -75,7 +79,6 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
                     ],
                     default:[]
                 }
-                // attended: Date
             }
         ],
         default: []
