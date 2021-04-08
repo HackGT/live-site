@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import VideoWindow from './components/VideoWindow';
-import logo from './assets/logo.png';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import logo from './assets/logo.png';
 
-const client = new W3CWebSocket('ws://127.0.0.1:8000');
+const client = new W3CWebSocket('ws://localhost:3000/ws-stuff/echo');
 
 const App: React.FC = () => {
-  componentWillMount() {
+  useEffect(() => {
     client.onopen = () => {
       console.log('WebSocket Client Connected');
     };
-    client.onmessage = (message) => {
-      console.log(message);
-    };
-  }
+}, []);
+
   return (
     <div className="App">
       <header className="App-header">
