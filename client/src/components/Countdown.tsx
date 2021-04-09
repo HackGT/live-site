@@ -1,33 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Clock from './Clock'
 
 type Props = {
-  remainingHours: number;
-  remainingMinutes: number;
+  startTime: number
 };
 
 const CountdownTimer: React.FC<Props> = (props: Props) => {
 
-  const [timerHours, setTimerHours] = useState<number>(props.remainingHours);
-  const [timerMinutes, setTimerMinutes] = useState<number>(props.remainingMinutes);
+  function getTimeDifference() {
+    const currentTime = new Date().getTime()
 
-  const interval = setInterval(function() {
-    // This code will run every minute!
-    if (timerMinutes > 0) {
-      setTimerMinutes(timerMinutes - 1);
+    // get total seconds between the times
+    let delta = Math.abs(props.startTime - currentTime) / 1000;
+
+    // calculate (and subtract) whole days
+    let days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+
+    // calculate (and subtract) whole hours
+    let hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+
+    // calculate (and subtract) whole minutes
+    let minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+
+    // what's left is seconds
+    let seconds = Math.floor(delta % 60);
+
+    return {
+      seconds: seconds,
+      minutes: minutes,
+      hours: hours
     }
-    else if (timerHours > 0) {
-      setTimerHours(timerHours - 1);
-      setTimerMinutes(59)
-    }
-    else {
-      clearInterval(interval)
+  }
+  
+  const [state, setState] = useState(getTimeDifference());
+
+  useEffect(() => {
+    const i = setInterval(() => updateTime(), 1000);
+    return () => clearInterval(i);
+  });
+
+  const updateTime = () => {
+    const currentTime = new Date().getTime()
+    setState(getTimeDifference());
+    if (currentTime >= props.startTime) {
       window.location.reload();
     }
-  }, 60*1000);
+  }
 
   return (
-      <Clock minutes={timerMinutes} hours={timerHours}/>
+      <Clock minutes={state.minutes} hours={state.hours} seconds={state.seconds}/>
   )
 }
 

@@ -50,9 +50,15 @@ app.get("/status", (req, res) => {
     res.status(200).send("Success");
 });
 
+
 // app.get("/", (req, res) => {
 //     res.redirect("https://live.hack.gt");
 // });
+
+
+app.get("/", (req, res) => {
+    res.redirect("https://live.healthtech.hack.gt/schedule");
+});
 
 
 app.use("/auth", authRoutes);

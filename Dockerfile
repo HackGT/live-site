@@ -14,5 +14,7 @@ COPY --from=build /usr/src/virtual-checkin/client/ /usr/src/virtual-checkin/clie
 
 WORKDIR /usr/src/virtual-checkin/server/
 
+ENV TZ="America/New_York"
+
 EXPOSE 3000
 CMD ["npm", "start"]
