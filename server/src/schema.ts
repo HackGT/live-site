@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 dotenv.config()
 
 const MONGO_URL = String(process.env.MONGO_URL);
+console.log(MONGO_URL);
 mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }).catch(err => {
     throw err;
 });
@@ -34,6 +35,7 @@ export interface IUser extends RootDocument {
          }[];
     }[];
 }
+
 export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoose.Schema({
     uuid: {
         type: String,
@@ -88,3 +90,15 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
         usePushEach: true
     }
 ));
+
+export interface ITime extends mongoose.Document {
+    time: string,
+    user: IUser
+}
+
+export const TimeSchema: mongoose.Schema = new mongoose.Schema({
+    time: {type: String, required: true},
+    user_id: {type: String, required: false}
+});
+
+export const Time: mongoose.Model<ITime> = mongoose.model('Time', TimeSchema);

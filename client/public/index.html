@@ -26,6 +26,36 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- <script src="timeme.js"></script>
+    <script type="text/javascript">
+      var socket = new WebSocket("ws://localhost:8080");
+      const start = Date.now();
+      let delta = 0;
+      setInterval(function() {
+        delta = (Date.now() - start) / 1000;
+        document.getElementById('timeInSeconds').textContent = delta.toFixed(1);
+      }, 100);
+
+    /*
+    window.onbeforeunload = function (event) {
+      xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("POST","http://localhost:3000/timesreact", true);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      let t1 = TimeMe.getTimeOnCurrentPageInSeconds();
+      xmlhttp.send(JSON.stringify({
+        time: t1
+      }));
+    };
+    */
+  
+    </script>
+    <div>
+      <h1>
+        <span id="timeInSeconds">0</span> <span>seconds</span>
+      </h1>
+    </div> -->
+
     <div id="root"></div>
     <!--
       This HTML file is a template.

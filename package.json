@@ -4,13 +4,14 @@
   "main": "server/src/app.ts",
   "scripts": {
     "build:server": "cd server && npm install",
-    "build:client":  "cd client && npm install && npm run build",
+    "build:client": "cd client && npm install && npm run build",
     "build": "npm run build:server && npm run build:client",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
   "keywords": [],
   "license": "MIT",
   "dependencies": {
+    "@types/websocket": "^1.0.2",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
@@ -27,7 +28,11 @@
     "passport": "^0.4.1",
     "passport-oauth2": "^1.5.0",
     "path": "^0.12.7",
-    "request": "^2.88.2"
+    "react-websocket": "^2.1.0",
+    "react-websockets": "^1.0.0",
+    "request": "^2.88.2",
+    "socket.io-client": "^4.0.1",
+    "sockette": "^2.0.6"
   },
   "devDependencies": {
     "@types/compression": "^1.7.0",
