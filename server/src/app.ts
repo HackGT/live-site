@@ -7,8 +7,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 // import {Server} from "ws";
 import expressWs from 'express-ws';
-
-import http from "http";
+import moment from "moment-timezone";
 
 dotenv.config();
 
@@ -45,6 +44,7 @@ import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
 import { Time, User, IUser, ITime } from "./schema";
+import { start } from "repl";
 
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
@@ -54,11 +54,6 @@ app.get("/status", (req, res) => {
 // app.get("/", (req, res) => {
 //     res.redirect("https://live.hack.gt");
 // });
-
-
-app.get("/", (req, res) => {
-    res.redirect("https://live.healthtech.hack.gt/schedule");
-});
 
 
 app.use("/auth", authRoutes);
@@ -81,19 +76,26 @@ app.use("/user", userRoutes);
 
 const router = express.Router() as expressWs.Router;
 // var router = express.Router();
-router.ws('/echo', (ws, req) => {
-        ws.on('connection', (ws => {
-            console.log('Client connected');
-        }))
-    console.log('hihi')
+router.ws('/echo', function(ws, req) {
+    const startTime = moment.utc().tz("America/New_York");
+    let event_id: string;
+    let user = req.user as IUser;
+    let uuid = user.uuid;
     ws.on('message', (msg: String) => {
-        ws.send(msg);
+        const url = String(msg);
+        event_id = url.split("/")[url.split("/").length-1];
     });
+
     ws.on('close', () => {
-        console.log('WebSocket was closed')
+        const endTime = moment.utc().tz("America/New_York");
+        console.log('WebSocket was closed');
+        console.log("User ID:", uuid);
+        console.log("Event ID:", event_id)
+        console.log("Start Time:", startTime);
+        console.log("End Time:", endTime);
     })
 });
-app.use("/ws-stuff", router);
+app.use("/ws-stuff", isAuthenticated, router);
 
 app.use(isAuthenticated, express.static(path.join(__dirname, "../../client/build")));
 
@@ -126,23 +128,5 @@ app.get("/*", function (req, res) {
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
-// app.use("/ws-stuff", router);
-
-// const wss = new Server({server: app, port: 8080});
-// wss.on('connection', (ws) => {
-//     console.log('Client connected');
-//     const start = Date.now();
-//     let delta;
-//     setInterval(function() {
-//         delta = Math.floor((Date.now() - start) / 1000);
-//     }, 1000);
-//     ws.on('close', () => {
-//         const time1: ITime = new Time({
-//             time: delta,
-//         });
-//         time1.save().then(() => console.log('websocket time saved'));
-//         console.log('Client disconnected')
-//     });
-// });
 
 app.disable('etag');
