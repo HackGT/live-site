@@ -167,7 +167,6 @@
   margin-right: 20px;
 }
 
-
 .RedirectURL {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
@@ -177,5 +176,12 @@
   color: #FFFFFF;
   padding-top: 5px;
   text-decoration: underline;
+}
+
+.ViewerRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
