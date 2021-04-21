@@ -15,7 +15,8 @@ dotenv.config();
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 const PORT = process.env.PORT || 3000;
 // export let app = express();
-export const { app, getWss, applyTo } = expressWs(express());
+export const app  = express();
+export const server = http.createServer(app);
 
 
 app.use(morgan("dev"));
@@ -75,25 +76,33 @@ app.use("/user", userRoutes);
 // });
 
 
+// BEGIN CHAT WEBSOCKET LOGIC
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
-
-
-
-const router = express.Router() as expressWs.Router;
-// var router = express.Router();
-router.ws('/echo', (ws, req) => {
-        ws.on('connection', (ws => {
-            console.log('Client connected');
-        }))
-    console.log('hihi')
-    ws.on('message', (msg: String) => {
-        ws.send(msg);
-    });
-    ws.on('close', () => {
-        console.log('WebSocket was closed')
-    })
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*",
+    },
 });
-app.use("/ws-stuff", router);
+
+io.on("connection", (socket: any) => {
+  
+    // Join a conversation
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
+  
+    // Listen for new messages
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data: any) => {
+      console.log(data);
+      io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+    });
+  
+    // Leave the room if the user closes the socket
+    socket.on("disconnect", () => {
+      socket.leave(roomId);
+    });
+});
+// END CHAT WEBSOCKET LOGIC
 
 app.use(isAuthenticated, express.static(path.join(__dirname, "../../client/build")));
 
@@ -123,7 +132,7 @@ app.get("/*", function (req, res) {
         }
     );
 });
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
 // app.use("/ws-stuff", router);

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Viewer from './components/VideoWindow';
+import Viewer from './components/Viewer';
 import logo from './assets/logo.png';
 
 // a little bee ascii art 
