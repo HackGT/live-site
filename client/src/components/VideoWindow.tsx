@@ -3,8 +3,11 @@ import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 import YouTube from "react-youtube";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 import "../App.css";
+
+const client = new W3CWebSocket('ws://localhost:3000/ws-stuff/echo');
 
 function getStartTime(h: number, m: number, s: number) {
   const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
@@ -31,6 +34,12 @@ const VideoWindow: React.FC = () => {
   const [eventUrl, setEventUrl] = useState<string>("")
 
   useEffect(() => {
+    client.onopen = function() {
+      console.log('WebSocket Client Connected');
+  
+      client.send(window.location.href);
+  };
+    
     const fetchEventUrl = async () => {
       try {
         let eventData = await getEventUrl(eventID);

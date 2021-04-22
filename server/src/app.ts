@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 // import {Server} from "ws";
 import expressWs from 'express-ws';
 import moment from "moment-timezone";
+import { getCMSEvent } from "./cms";
+import { model, Schema, Model, Document } from 'mongoose';
 
 dotenv.config();
 
@@ -43,7 +45,7 @@ import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
-import { Time, User, IUser, ITime } from "./schema";
+import { IUser, User} from "./schema";
 import { start } from "repl";
 
 app.get("/status", (req, res) => {
@@ -76,23 +78,36 @@ app.use("/user", userRoutes);
 
 const router = express.Router() as expressWs.Router;
 // var router = express.Router();
-router.ws('/echo', function(ws, req) {
+router.ws('/echo', async (ws, req) => {
     const startTime = moment.utc().tz("America/New_York");
-    let event_id: string;
-    let user = req.user as IUser;
-    let uuid = user.uuid;
-    ws.on('message', (msg: String) => {
-        const url = String(msg);
-        event_id = url.split("/")[url.split("/").length-1];
-    });
+    
 
-    ws.on('close', () => {
+    ws.on('close', async () => {
+        const reqUser = req.user as IUser;
         const endTime = moment.utc().tz("America/New_York");
-        console.log('WebSocket was closed');
-        console.log("User ID:", uuid);
-        console.log("Event ID:", event_id)
-        console.log("Start Time:", startTime);
-        console.log("End Time:", endTime);
+        const user = await User.findById(reqUser._id);
+        const event = getCMSEvent(req.params.getEventID);
+        
+        if (event && user) {
+            const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
+
+            if (notAttended) {
+                user.events.push({
+                    id: event.id,
+                    name: event.name,
+                    attended: []
+                });
+            }
+
+            for (var i = 0; i < user.events.length; i++) {
+                if (user.events[i].id===event.id) {
+                    user.events[i].attended.push({
+                    enter: startTime.toDate(),
+                    exit: endTime.toDate()
+                    })
+                }
+            } 
+        }
     })
 });
 app.use("/ws-stuff", isAuthenticated, router);
