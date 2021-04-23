@@ -1,5 +1,4 @@
 import Chat from './Chat';
-import VideoWindow from './VideoWindow';
 
 const Viewer: React.FC = () => {
     return (
