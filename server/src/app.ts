@@ -17,10 +17,18 @@ const PORT = process.env.PORT || 3000;
 // export let app = express();
 export const { app, getWss, applyTo } = expressWs(express());
 
+// set up rate limiter: maximum of five requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
 
 app.use(morgan("dev"));
 app.use(compression());
 app.use(express.json());
+//tell app to use limiter
+app.use(limiter);
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", '*');
     res.header(

@@ -6,6 +6,15 @@ import { IUser } from "../schema";
 
 export let authRoutes = express.Router();
 
+// set up rate limiter: maximum of five requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = new RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+
+authRoutes.use(limiter);
+
 authRoutes.route("/login").get((req, res, next) => {
     const callbackURL = createLink(req, "auth/login/callback");
     passport.authenticate('oauth2', { callbackURL } as AuthenticateOptions)(req, res, next);
