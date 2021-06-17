@@ -24,15 +24,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         const differenceEnd = endTime.diff(now, "minutes");
         const differenceOpen = startTime.diff(now,"minutes")-10;
         const differenceOpenSeconds = startTime.diff(now, "seconds")-60*10;
-        console.log(`differenceOpen ${differenceOpen}`);
-        console.log(`differenceEnd ${differenceEnd}`);
-        console.log(`differenceStart ${differenceStart}`);
-        console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
-        console.log(`differenceStartSeconds ${differenceStartSeconds}`);
-
-        //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
-        console.log(startTime, endTime, differenceStart, differenceEnd)
-        console.log('here')
+ 
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
         // eventInSession = true
