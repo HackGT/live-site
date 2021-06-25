@@ -11,7 +11,7 @@ const ChatTile: React.FC<Props> = (props: Props) => {
     return (
         <div>
           <div className="chatTile">
-            <h1 className="chatTileText">You</h1>
+            <h1 className="chatTileTextYou">(you)</h1>
             <h1 className="chatTileText">{props.content}</h1>
           </div>
         </div>
@@ -20,7 +20,7 @@ const ChatTile: React.FC<Props> = (props: Props) => {
     return (
         <div>
           <div className="chatTile">
-            <h1 className="chatTileText">{props.name}</h1>
+            <h1 className="chatTileTextOther">{props.name}</h1>
             <h1 className="chatTileText">{props.content}</h1>
           </div>
         </div>

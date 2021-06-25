@@ -193,7 +193,7 @@
   text-align: center;
   background-color: whitesmoke;
   color: black;
-  padding-top: 5px;
+  margin: 5px;
 }
 
 .TextEntry {
@@ -209,11 +209,12 @@
   font-weight: normal;
   font-size: 24px;
   text-align: center;
-  background-color: whitesmoke;
   color: black;
   height: 100%;
   padding-left: 8px;
   padding-right: 8px;
+  margin: 5px;
+  height: 100%;
 }
 
 .chatTile {
@@ -221,6 +222,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: whitesmoke;
+  width: 300px;
 }
 
 .chatTileText {
@@ -231,11 +233,50 @@
   text-align: center;
   color: black;
   height: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.chatTileTextYou {
+  font-family: 'Roboto', sans-serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: right;
+  color: rgb(59, 59, 59);
+  height: 100%;
+  margin-right: 5px;
+}
+
+.chatTileTextOther {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left;
+  color: black;
+  height: 100%;
+  margin-left: 5px;
 }
 
 .chatWindow {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: 1px black solid;
+  height: 50%;
   background-color: whitesmoke;
+}
+
+.messages {
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  background-color: whitesmoke;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.chatList {
+  list-style-type: none;
 }

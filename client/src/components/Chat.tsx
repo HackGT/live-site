@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {useParams} from "react-router-dom";
 import {getUser} from '../services/cmsService'
 import useChat from './ChatSocket';
-import ChatTile from './ChatTile'
+import Messages from './Messages';
+import Button from '@material-ui/core/Button';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import TextField from '@material-ui/core/TextField';
 
 const Chat: React.FC = () => {
     let params: any = useParams();
@@ -31,29 +34,29 @@ const Chat: React.FC = () => {
     };
 
     const handleSendMessage = () => {
-        sendMessage(newMessage, name, userID);
-        setNewMessage("");
+        if (newMessage.length > 0) {
+            sendMessage(newMessage, name, userID);
+            setNewMessage("");
+        }
     };
 
     return (
         <div className="chatWindow">
-            <div className="chatWindow">
-                {messages.map((message: any, _) => (
-                    <li>
-                        <ChatTile name={message.name} content={message.body} selfOrigin={message.senderId===userID}/>
-                    </li>
-                ))}
-            </div>
+            <Messages messages={messages} userID={userID}/>
             <div className="TextEntry">
-                <textarea
+                <TextField
                     value={newMessage}
                     onChange={handleNewMessageChange}
-                    placeholder="Write a message..."
                     className="chatEntry"
+                    label="Write a message..."
                 />
-                <button onClick={handleSendMessage} className="send-message-button">
+                <Button onClick={handleSendMessage} 
+                        color="primary"
+                        variant="contained"
+                        className="send-message-button"
+                        endIcon={<CloudUploadIcon />}>
                     Send
-                </button>
+                </Button>
             </div>
         </div>
     )
