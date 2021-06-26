@@ -75,6 +75,18 @@ app.get("/*", function (req, res) {
     );
 });
 
+
+//Endpoints for the android app
+
+app.post('/checkin_user', function (req,res)) {
+    res.send('dummy user checked in')
+    
+}
+
+app.post('/events_with_eventid', function (req,res)) {
+    res.send('dummy list of events')
+    
+
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
