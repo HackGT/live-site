@@ -98,8 +98,8 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
    
 })
 
-eventRoutes.route("/").get(async (req, res) => {
-    const event = await getCMSLocation("5ed9837f8992880022b575fc", moment('2020-09-19T18:00:00.000Z'));
-    console.log(event);
-    return res.status(200).send("success");
+// "5ed9837f8992880022b575fc"
+eventRoutes.route("/location/:locationID").get(async (req, res) => {
+    const event = await getCMSLocation(req.params.locationID, moment('2020-09-19T18:00:00.000Z'));
+    return res.status(200).send(event);
 })
