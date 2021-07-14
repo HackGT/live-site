@@ -13,8 +13,8 @@ function getStartTime(h: number, m: number, s: number) {
 
 function getVideoSize() {
   return {
-    'width': String(Math.floor(.85 * Math.max(window.innerWidth, document.body.clientWidth))),
-    'height': String(Math.floor(.75 * Math.max(window.innerHeight, document.body.clientHeight)))
+    'width': Math.floor(.85 * Math.max(window.innerWidth, document.body.clientWidth)),
+    'height': Math.floor(.75 * Math.max(window.innerHeight, document.body.clientHeight))
   }
 } 
 
@@ -79,10 +79,13 @@ const VideoWindow: React.FC = () => {
         return (
           <div>
             <h1 className="Video-title">{eventName}</h1>
-            <YouTube
-              videoId={videoID}
-              opts={{ height: videoSize.height, width: videoSize.width, playerVars: { autoplay: 1 } }}
-            /> 
+            <div className="liveStreamRow">
+              <YouTube
+                videoId={videoID}
+                opts={{ height: String(videoSize.height), width: String(videoSize.width * .7), playerVars: { autoplay: 1 } }}
+              />
+              <iframe width={String(videoSize.width * .3)} height={String(videoSize.height)} src={"https://www.youtube.com/live_chat?v=" + videoID + "&embed_domain=localhost"}></iframe>
+            </div>
             <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
           </div>
         );
