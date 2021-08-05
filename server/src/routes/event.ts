@@ -83,9 +83,8 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         } else {
             status = "eventNotWithin24Hours"
         }
-        
-        if (event.url && event.url.includes("daily")) {
-            let token = "";
+
+        if (event.url && event.url.includes("daily") && status==="eventInSession") {
             const fetch_url = 'https://api.daily.co/v1/meeting-tokens';
             const room_name = event.url.split('/')[event.url.split('/').length-1];
             const options = {
