@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
+const fetch = require('node-fetch');
 
 export let eventRoutes = express.Router();
 
@@ -15,6 +16,7 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
 
     const event = await getCMSEvent(req.params.getEventID);
     if (event && user && req.user) {
+        
         const startTime = moment(event.startDate).tz("America/New_York");
         const endTime = moment(event.endDate).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
@@ -32,7 +34,6 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
 
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
-        console.log('here')
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
         // eventInSession = true
@@ -82,8 +83,27 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         } else {
             status = "eventNotWithin24Hours"
         }
-        console.log(status);
-        if(event.url && status==="eventInSession")
+        
+        if (event.url && event.url.includes("daily")) {
+            let token = "";
+            const fetch_url = 'https://api.daily.co/v1/meeting-tokens';
+            const room_name = event.url.split('/')[event.url.split('/').length-1];
+            const options = {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer ' + String(process.env.DAILY_KEY)
+                },
+                body: JSON.stringify({properties: {room_name: room_name, is_owner: false, user_name: reqUser.name}})
+              };
+              
+              const response = await fetch(fetch_url, options)
+                .then(res => res.json())
+                .catch(err => console.error('error:' + err));
+            
+            return res.send({"name":event.name, "url": event.url + "?t=" + response.token, "timebeforestart":timebeforestart, "status": status}); 
+        } else if(event.url && status==="eventInSession")
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
         else if (event.url) {
             return res.send({"name":event.name,  "timebeforestart":timebeforestart, "status": status})
@@ -92,53 +112,10 @@ eventRoutes.route("/:getEventID").get(async (req, res) => {
         }
     } else {
         return res.status(400).send("Invalid request");
+        
     }
         // return res.send(event)
    
 })
 
 
-
-// eventRoutes.route("/:eventId").get(async (req, res) => {
-//     const reqUser = req.user as IUser;
-//     const user = await User.findById(reqUser._id);
-
-//     const event = await getCMSEvent(req.params.eventId);
-
-//     if (event && user) {
-//         console.log(event);
-//         const startTime = moment(UNSAFE_toUTC(event.startDate)).tz("America/New_York");
-//         const endTime = moment(UNSAFE_toUTC(event.endDate)).tz("America/New_York");
-
-//         const now = moment.utc().tz("America/New_York");
-//         const differenceStart = startTime.diff(now, "minutes");
-//         const differenceEnd = endTime.diff(now, "minutes");
-
-//         if (differenceStart >= 30) {
-//             return res.status(400).send("Event is not in session. Please check back later")
-//         }
-//         console.log('here')
-//         const eventInSession = differenceEnd >= -10 && differenceStart <= 30;
-//         const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
-
-//         if (eventInSession && notAttended) {
-//             user.events.push({
-//                 id: event.id,
-//                 name: event.name,
-//                 points: event.type.points
-//             });
-//             user.points += event.type.points;
-
-//             await user.save(err => console.log(err));
-//         }
-
-//         // return res.redirect(event.url);
-//         if( event.url)
-//             return res.send({"url": event.url})
-//         else {
-//             return res.status(400).send('no link')
-//         }
-//     } else {
-//         return res.status(400).send("Invalid request");
-//     }
-// });
