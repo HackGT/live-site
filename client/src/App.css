@@ -56,7 +56,6 @@
 .navbar_link_text_bold {
   color: black;
   font-weight: 500;
-  text-decoration: underline;
 }
 
 .navbar_button {
@@ -128,7 +127,7 @@
 
 .live_event_card {
   width: 45%;
-  height: auto;
+  height: 100%;
   display: flex;
   margin-left: 2%;
   margin-right: 2%;
@@ -139,4 +138,112 @@
   margin-left: 10%;
   margin-right: 10%;
   margin-top: 60px;
+}
+
+.live_event_card_actions {
+  margin-top: 10px;
+}
+
+/* Live Events List */
+.upcoming_events_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.upcoming_events_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.upcoming_events_card {
+  width: 26%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.upcoming_events {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+/* Schedule */
+.schedule {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 60px;
+}
+
+.schedule_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.schedule_table {
+  margin-bottom: 30px;
+}
+
+/* All events */
+.all_events {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.all_events_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.all_events_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.all_events_card {
+  width: 26%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.all_events_filter_text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.all_events_filter_dropdown {
+  width: 20%;
+}
+
+.all_events_filter_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 50%;
+  margin-top: 10px;
+  margin-bottom: 40px;
 }

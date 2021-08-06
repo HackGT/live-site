@@ -5,9 +5,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
+import CardMedia from '@material-ui/core/CardMedia';
 import CardTag from './CardTag'
-import CardImg from './CardImg'
+
+import placeholder_img from '../assets/blue.png'
 
 const LiveEvents: React.FC = () => {
 
@@ -36,30 +37,35 @@ const LiveEvents: React.FC = () => {
         {
           events.map(function(event) { 
             return (
-              <div className="live_event_card">
-                <div className="live_event_image">
-                  <CardImg />
-                </div>
-                <Card>
-                  <CardActionArea>
-                    <CardContent>
-                      <Typography align='left' gutterBottom variant="h5" component="h2">
-                        {event.title}
-                      </Typography>
-                      <CardActions>
-                        {
-                          event.tags.map(function(obj) { 
-                            return <CardTag tag={obj}  />;
-                          })
-                        }
-                      </CardActions>
-                      <Typography align='left' variant="body2" color="textSecondary" component="p">
-                        {event.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </div>
+              <Card className="live_event_card">
+                <CardMedia
+                  component='img'
+                  image={placeholder_img}
+                  style={{
+                    borderTopLeftRadius: '1.5%',
+                    borderBottomLeftRadius: '1.5%',
+                    width: 175,
+                    objectFit: 'cover'
+                  }}
+                />
+                <CardActionArea>
+                  <CardContent>
+                    <Typography align='left' gutterBottom variant="h5" component="h2">
+                      {event.title}
+                    </Typography>
+                    <Typography align='left' variant="body2" color="textSecondary" component="p">
+                      {event.description}
+                    </Typography>
+                    <CardActions className="live_event_card_actions">
+                      {
+                        event.tags.map(function(obj) { 
+                          return <CardTag tag={obj}  />;
+                        })
+                      }
+                    </CardActions>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             )
           })
         }
