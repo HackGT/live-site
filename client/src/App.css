@@ -6,11 +6,11 @@
 
 .app_main {
   text-align: center;
+  background-color: rgb(245, 245, 245);
 }
 
 
 /* Logo Styling */
-
 .logo_container {
   width: fit-content;
   height: fit-content;
@@ -64,7 +64,6 @@
 }
 
 /* Main Stage */
-
 .main_stage_container {
   display: flex;
   flex-direction: column;
@@ -72,13 +71,13 @@
   align-items: center;
   margin-left: 10%;
   margin-right: 10%;
+  margin-top: 40px;
 }
 
 .main_stage_placeholder {
   background-color: #C4C4C4;
-  height: 500px;
+  height: 600px;
   width: 100%;
-  margin-top: 50px;
 }
 
 .main_stage_content {
@@ -94,4 +93,50 @@
   background-color: #E6E6E6;
   padding: 8px;
   border-radius: 5px;
+}
+
+/* Card Img */
+.card_img {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Live Events List */
+.live_event_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.live_event_image {
+  height: 100%;
+  width: auto;
+}
+
+.live_event_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.live_event_card {
+  width: 45%;
+  height: auto;
+  display: flex;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 20px;
+}
+
+.live_events {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 60px;
 }

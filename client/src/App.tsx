@@ -4,7 +4,7 @@ import './App.css';
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Navbar from './components/Navbar'
-import MainStage from './components/MainStage'
+import Home from './components/Home'
 
 // a little bee ascii art 
 const art = ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/"
@@ -18,7 +18,7 @@ const App: React.FC = () => {
             <Route path="/" children={
               <div>
                 <Navbar />
-                <MainStage />
+                <Home />
               </div>
             } />          
           </Switch>

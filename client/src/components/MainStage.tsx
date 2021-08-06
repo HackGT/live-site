@@ -8,6 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import CardTag from './CardTag'
 
 const MainStage: React.FC = () => {
+
+  const tags = [
+    "Standard Tag 1",
+    "Standard Tag 2",
+    "Standard Tag 3"
+  ]
+
   return (
     <div>
       <div className="main_stage_container">
@@ -24,9 +31,11 @@ const MainStage: React.FC = () => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <CardTag tag="Standard Tag"/>
-            <CardTag tag="Standard Tag"/>
-            <CardTag tag="Standard Tag"/>
+            {
+              tags.map(function(obj) { 
+                return <CardTag tag={obj}  />;
+              })
+            }
           </CardActions>
         </Card>
       </div>
