@@ -36,8 +36,23 @@ userRoutes.route("/events/:userId").get(async (req, res) => {
     return res.send({ events: user.events });
 });
 
-// userRoutes.route("/points/add").post(isAdmin, async (req, res) => {
-//     const data = req.body;
+
+userRoutes.route("/events/:userId").get(async (req, res) => {
+    const userId = req.params.userId;
+
+    if (!userId) {
+        return res.status(400).send("userId not defined");
+    }
+
+    let user = await User.findOne({ uuid: userId });
+
+    if (!user) {
+        return res.status(400).send("User not found");
+    }
+
+    return res.send({ events: user.events });
+});
+
 
 //     if (!data.userId || !data.event) {
 //         return res.status(400).send({ error: true, message: "Invalid request" });
