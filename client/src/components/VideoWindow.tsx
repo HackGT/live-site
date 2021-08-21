@@ -3,7 +3,7 @@ import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 import YouTube from "react-youtube";
-
+import DailyIframe from '@daily-co/daily-js';
 import "../App.css";
 
 function getStartTime(h: number, m: number, s: number) {
@@ -51,9 +51,12 @@ const VideoWindow: React.FC = () => {
           } else if (eventUrl.includes("bluejeans")) {
             setVideoType("bluejeans");
             setVideoID(eventUrl);
+          } else if (eventUrl.includes("daily")) {
+            setVideoType("daily");
+            setVideoID(eventUrl);
           } else {
             window.location.href = eventUrl;
-          }
+          } 
         }
       } catch (e) {
         console.log(e);
@@ -98,6 +101,55 @@ const VideoWindow: React.FC = () => {
               src={videoID}
               allow="camera; microphone"/>
             <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
+          </div>
+        );
+      } else if (videoType === "daily") {
+        
+        var callFrame = DailyIframe.createFrame({
+          showLeaveButton: true,
+          showFullscreenButton: true
+        });
+        callFrame.setTheme({
+          colors: {
+            accent: '#286DA8',
+            accentText: '#FFFFFF',
+            background: '#FFFFFF',
+            backgroundAccent: '#FBFCFD',
+            baseText: '#000000',
+            border: '#EBEFF4',
+            mainAreaBg: '#000000',
+            mainAreaBgAccent: '#333333',
+            mainAreaText: '#FFFFFF',
+            supportiveText: '#808080',
+          }
+        });
+        
+        callFrame.on('left-meeting', () => { 
+          let currentTime = new Date();
+          let data = {"endDate": currentTime.toString(), "EventID": eventID }
+          fetch('http://localhost:3000/user/updateEnd', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+
+          }).then(data => {
+            console.log('success', data)
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+
+        });
+        
+
+        callFrame.join({
+          url: videoID,
+        })
+      
+        return (
+          <div>
+            <h1 className="Video-title"> {eventName}</h1>
           </div>
         );
       } else {

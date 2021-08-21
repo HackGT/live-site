@@ -1,5 +1,5 @@
 import express from "express";
-import { User } from "../schema";
+import { IUser, User } from "../schema";
 import { isAdmin } from "../auth/auth";
 
 export let userRoutes = express.Router();
@@ -65,3 +65,24 @@ userRoutes.route("/points/add").post(isAdmin, async (req, res) => {
 
     return res.send({ error: false });
 });
+
+userRoutes.route("/updateEnd").post(async (req, res) => {
+    let data = req.body;
+    const reqUser = req.user as IUser;
+    const user = await User.findById(reqUser._id);
+
+    if(user != null) {
+        let events = user?.events;
+        for(var i = 0; i < events.length; i++) {
+            if(events[i].id  === data.EventID) {
+                // console.log(events[i].attended[events[i].attended.length - 1])
+                events[i].attended[events[i].attended.length - 1].exit = data.endDate;
+                await user.save(err => console.log(err));
+                // console.log(events[i].attended[events[i].attended.length - 1])
+            } 
+        }
+    }
+    
+
+    return res.status(200).send("updated the end time");
+})

@@ -4,7 +4,7 @@
   "main": "server/src/app.ts",
   "scripts": {
     "build:server": "cd server && npm install",
-    "build:client":  "cd client && npm install && npm run build",
+    "build:client": "cd client && npm install && npm run build",
     "build": "npm run build:server && npm run build:client",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
