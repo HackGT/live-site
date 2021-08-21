@@ -75,10 +75,8 @@ userRoutes.route("/updateEnd").post(async (req, res) => {
         let events = user?.events;
         for(var i = 0; i < events.length; i++) {
             if(events[i].id  === data.EventID) {
-                // console.log(events[i].attended[events[i].attended.length - 1])
                 events[i].attended[events[i].attended.length - 1].exit = data.endDate;
                 await user.save(err => console.log(err));
-                // console.log(events[i].attended[events[i].attended.length - 1])
             } 
         }
     }
