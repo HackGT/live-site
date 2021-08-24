@@ -18,7 +18,6 @@ import Select from '@material-ui/core/Select';
 
 import { fetchEvents } from '../services/cmsService';
 
-
 import placeholder_img from '../assets/blue_wide.png'
 
 const AllEvents: React.FC = () => {
@@ -271,7 +270,7 @@ const AllEvents: React.FC = () => {
                   <CardActionArea>
                     <CardContent>
                       <Typography align='left' gutterBottom variant="h5" component="h2">
-                        {event.title}
+                        {event.name}
                       </Typography>
                       <Typography align='left' variant="body2" color="textSecondary" component="p">
                         {event.description}
