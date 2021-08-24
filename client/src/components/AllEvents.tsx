@@ -16,81 +16,131 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import { fetchEvents } from '../services/cmsService';
+
+
 import placeholder_img from '../assets/blue_wide.png'
 
 const AllEvents: React.FC = () => {
+  // var query =  
+  // `{
+  //   allEvents  (where: {AND:[
+  //       {startDate_gt: "2021-03-13T00:00:00.000Z"},
+  //       {endDate_lt: "2021-03-14T21:00:00.000Z"}
+  //     ]}, orderBy:"startDate") {
+  //     id
+  //     name
+  //     startDate
+  //     endDate
+  //     description
+  //     type {
+  //         name
+  //         points
+  //     }
+  //     url
+  //     location {
+  //       name
+  //     }
+  //     tags {
+  //       name
+  //     }
+  //   }
+  // `;
 
-  const events = [
-    {
-      "title": "Title 1",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "in person"
-    },
-    {
-      "title": "Title 2",
-      "tags": ["tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "in person"
-    },
-    {
-      "title": "Title 3",
-      "tags": ["super long tag 1", "tag 2"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "in person"
-    },
-    {
-      "title": "Title 1a",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "in person"
-    },
-    {
-      "title": "Title 2b",
-      "tags": ["tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "virtual"
-    },
-    {
-      "title": "Title 3c",
-      "tags": ["super long tag 1", "tag 2"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "virtual"
-    },
-    {
-      "title": "Title 1ax",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "virtual"
-    },
-    {
-      "title": "Title 2by",
-      "tags": ["tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "virtual"
-    },
-    {
-      "title": "Title 3cz",
-      "tags": ["super long tag 1", "tag 2"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "event_type": "virtual"
-    }
-  ]
+  // const events = [
+  //   {
+  //     "title": "Title 1",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "in person"
+  //   },
+  //   {
+  //     "title": "Title 2",
+  //     "tags": ["tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "in person"
+  //   },
+  //   {
+  //     "title": "Title 3",
+  //     "tags": ["super long tag 1", "tag 2"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "in person"
+  //   },
+  //   {
+  //     "title": "Title 1a",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "in person"
+  //   },
+  //   {
+  //     "title": "Title 2b",
+  //     "tags": ["tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "virtual"
+  //   },
+  //   {
+  //     "title": "Title 3c",
+  //     "tags": ["super long tag 1", "tag 2"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "virtual"
+  //   },
+  //   {
+  //     "title": "Title 1ax",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "virtual"
+  //   },
+  //   {
+  //     "title": "Title 2by",
+  //     "tags": ["tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "virtual"
+  //   },
+  //   {
+  //     "title": "Title 3cz",
+  //     "tags": ["super long tag 1", "tag 2"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     "event_type": "virtual"
+  //   }
+  // ]
 
+  let [events, setEvents] = useState<any[]>([])
   const [tagFilter, setTagFilter] = useState("None")
   const [eventFilter, setEventFilter] = useState("None")
-  const [tagFilters, setTagFilters] = useState(new Set());
+  const [tagFilters, setTagFilters] = useState(new Set(['test']));
   const [eventFilters, setEventFilters] = useState(new Set());
-  const [filtered_events, set_filtered_events] = useState(events.splice(0, 6));
+  const [filtered_events, set_filtered_events] = useState<any[]>([])
+
+
+
+
 
   useEffect(() => {
+
+   const getEvents = async () => {
+      const data = await fetchEvents();
+      console.log(data.allEvents)
+      setEvents(data.allEvents);
+    };
+    getEvents();
+    console.log('here');
+
+   // fetchEvents(query).then(data => {
+   //  console.log(data)
+   //  console.log(data.allEvents)
+   //  for(var i = 0; i < data.allEvents.length; i++) {
+   //    var obj = data.allEvents[i];
+   //    console.log(obj.tags);
+   //  }
+   //  setEvents(data.allEvents)
+   //  })
     
     // Update filters
     if (tagFilters.size == 0) {
       let filter_set = new Set(["None"])
       for (var i = 0; i < events.length; i++) {
         for (var j = 0; j < events[i]["tags"].length; j++) {
-          filter_set.add(events[i]["tags"][j])
+          filter_set.add(events[i]["tags"][j]["name"])
         }
       }
       setTagFilters(filter_set)
@@ -98,7 +148,11 @@ const AllEvents: React.FC = () => {
     if (eventFilters.size == 0) {
       let filter_set = new Set(["None"])
       for (var i = 0; i < events.length; i++) {
-        filter_set.add(events[i]["event_type"])
+        if (events[i]["location"].length!=0) {
+          filter_set.add(events[i]["location"][0]["name"])
+        } else {
+          filter_set.add("virtual")
+        }
       }
       setEventFilters(filter_set)
     }
@@ -119,18 +173,27 @@ const AllEvents: React.FC = () => {
       let filtered_list = []
       for (var i = 0; i < events.length; i++) {
         if (tagFilter === "None" && eventFilter !== "None") {
-          if (events[i]['event_type'] === eventFilter) {
+          if (events[i]["location"][0]["name"] === eventFilter) {
             filtered_list.push(events[i])
           }
         } else if (tagFilter !== "None" && eventFilter === "None") {
-          if (events[i]['tags'].includes(tagFilter)) {
-            filtered_list.push(events[i])
+          for (var j = 0; j < events[i]['tags'].length; j++) {
+            if (events[i]['tags'][j]['name'] === tagFilter) {
+              filtered_list.push(events[i])
+              break;
+            }
           }
         } else {
-          if (events[i]['event_type'] === eventFilter) {
-            if (events[i]['tags'].includes(tagFilter)) {
-              filtered_list.push(events[i])
+          if (events[i]["location"][0]["name"] === eventFilter) {
+            for (var j = 0; j < events[i]['tags'].length; j++) {
+              if (events[i]['tags'][j]['name'] === tagFilter) {
+                filtered_list.push(events[i])
+                break;
+              }
             }
+            // if (events[i]['tags'].includes(tagFilter)) {
+            //   filtered_list.push(events[i])
+            // }
           }
         }
       }
@@ -215,7 +278,7 @@ const AllEvents: React.FC = () => {
                       </Typography>
                       <CardActions>
                         {
-                          event.tags.map(function(obj) { 
+                          event.tags.map(function(obj:any) { 
                             return <CardTag tag={obj}  />;
                           })
                         }
