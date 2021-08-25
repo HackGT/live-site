@@ -50,7 +50,8 @@ export const Interaction = mongoose.model<IInteraction & mongoose.Document>("Int
     },
     eventID: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     timeIn: {
         type: Date,
