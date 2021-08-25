@@ -34,6 +34,33 @@ export interface IUser extends RootDocument {
          }[];
     }[];
 }
+
+export interface IInteraction extends RootDocument {
+    uuid: string;
+    eventID: string;
+    timeIn: Date;
+    timeOut: Date;
+}
+
+export const Interaction = mongoose.model<IInteraction & mongoose.Document>("Interaction", new mongoose.Schema({
+    uuid: {
+        type: String,
+        required: true,
+        index: true
+    },
+    eventID: {
+        type: String,
+        required: true
+    },
+    timeIn: {
+        type: Date,
+        required: true
+    },
+    timeOut: {
+        type: Date
+    }
+}))
+
 export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoose.Schema({
     uuid: {
         type: String,
