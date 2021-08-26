@@ -13,4 +13,112 @@ const getEventUrl = async (eventId: string): Promise<any> => {
   }
 };
 
-export { getEventUrl };
+
+
+
+
+let fetchLiveEvents = async ()=> {
+  var today = new Date().toISOString()
+  var liveEventsQuery =  
+  `{
+    allEvents  (where: {AND:[
+        {startDate_lt: "${today}"},
+        {endDate_gt: "${today}"}
+      ]}, orderBy:"startDate") {
+      id
+      name
+      startDate
+      endDate
+      description
+      type {
+          name
+          points
+      }
+      url
+      location {
+        name
+      }
+      tags {
+        name
+      }
+    }
+  }
+  `;
+  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: liveEventsQuery }),
+  });
+  var jsonResponse = await res.json();
+  return jsonResponse.data;
+};
+
+
+let fetchUpcomingEvents = async ()=> {
+  var today = new Date().toISOString()
+  var upcomingEventsQuery =  
+  `{
+    allEvents (where: {startDate_gt: "${today}"}, orderBy:"startDate") {
+      id
+      name
+      startDate
+      endDate
+      description
+      type {
+          name
+          points
+      }
+      url
+      location {
+        name
+      }
+      tags {
+        name
+      }
+    }
+  }
+  `;
+  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: upcomingEventsQuery }),
+  });
+  var jsonResponse = await res.json();
+  return jsonResponse.data;
+};
+
+
+
+let fetchAllEvents = async ()=> {
+  var allEventsQuery =  
+  `{
+    allEvents  (where: {hackathon: {name: "HackGT 7"} }, orderBy:"startDate") {
+      id
+      name
+      startDate
+      endDate
+      description
+      type {
+          name
+          points
+      }
+      url
+      location {
+        name
+      }
+      tags {
+        name
+      }
+    }
+  }
+  `;
+  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: allEventsQuery }),
+  });
+  var jsonResponse = await res.json();
+  return jsonResponse.data;
+};
+
+export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents };
