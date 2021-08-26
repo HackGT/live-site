@@ -1,4 +1,5 @@
 import '../App.css';
+import React, { useState, useEffect } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -10,25 +11,40 @@ import CardTag from './CardTag'
 
 import placeholder_img from '../assets/blue.png'
 
+import { fetchLiveEvents } from '../services/cmsService';
+
 const LiveEvents: React.FC = () => {
 
-  const events = [
-    {
-      "title": "Title 1",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "title": "Title 2",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "title": "Title 3",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    }
-  ]
+  // const events = [
+  //   {
+  //     "title": "Title 1",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  //   },
+  //   {
+  //     "title": "Title 2",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  //   },
+  //   {
+  //     "title": "Title 3",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  //   }
+  // ]
+
+  let [events, setEvents] = useState<any[]>([])
+
+  useEffect(() => {
+
+    const getEvents = async () => {
+       const data = await fetchLiveEvents();
+       console.log(data.allEvents)
+       setEvents(data.allEvents);
+     };
+     getEvents();
+     console.log('here');
+   }, []);
 
   return (
     <div className="live_events">
@@ -51,14 +67,14 @@ const LiveEvents: React.FC = () => {
                 <CardActionArea>
                   <CardContent>
                     <Typography align='left' gutterBottom variant="h5" component="h2">
-                      {event.title}
+                      {event.name}
                     </Typography>
                     <Typography align='left' variant="body2" color="textSecondary" component="p">
                       {event.description}
                     </Typography>
                     <CardActions className="live_event_card_actions">
                       {
-                        event.tags.map(function(obj) { 
+                        event.tags.map(function(obj: any) { 
                           return <CardTag tag={obj}  />;
                         })
                       }

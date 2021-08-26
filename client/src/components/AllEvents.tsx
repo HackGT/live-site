@@ -16,7 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { fetchEvents } from '../services/cmsService';
+import { fetchAllEvents } from '../services/cmsService';
 
 import placeholder_img from '../assets/blue_wide.png'
 
@@ -117,7 +117,7 @@ const AllEvents: React.FC = () => {
   useEffect(() => {
 
    const getEvents = async () => {
-      const data = await fetchEvents();
+      const data = await fetchAllEvents();
       console.log(data.allEvents)
       setEvents(data.allEvents);
     };
@@ -155,7 +155,7 @@ const AllEvents: React.FC = () => {
       }
       setEventFilters(filter_set)
     }
-  });
+  }, []);
 
   const handleTagFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTagFilter(event.target.value as string)

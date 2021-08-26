@@ -1,4 +1,5 @@
 import '../App.css';
+import React, { useState, useEffect } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import custom_theme from './Theme'
@@ -13,25 +14,27 @@ import CardTag from './CardTag'
 
 import placeholder_img from '../assets/blue_wide.png'
 
+import { fetchUpcomingEvents } from '../services/cmsService';
+
 const UpcomingEvents: React.FC = () => {
 
-  const events = [
-    {
-      "title": "Title 1",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "title": "Title 2",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "title": "Title 3",
-      "tags": ["super long tag 1", "tag 2", "tag"],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    }
-  ]
+  // const events = [
+  //   {
+  //     "title": "Title 1",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  //   },
+  //   {
+  //     "title": "Title 2",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  //   },
+  //   {
+  //     "title": "Title 3",
+  //     "tags": ["super long tag 1", "tag 2", "tag"],
+  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  //   }
+  // ]
 
   const StyledButton = withStyles({
     root: {
@@ -48,6 +51,18 @@ const UpcomingEvents: React.FC = () => {
       textTransform: 'capitalize',
     },
   })(Button);
+  let [events, setEvents] = useState<any[]>([])
+
+  useEffect(() => {
+
+    const getEvents = async () => {
+       const data = await fetchUpcomingEvents();
+       console.log(data.allEvents)
+       setEvents(data.allEvents);
+     };
+     getEvents();
+     console.log('here');
+   }, []);
 
   return (
     <div className="upcoming_events">
@@ -69,14 +84,14 @@ const UpcomingEvents: React.FC = () => {
                   <CardActionArea>
                     <CardContent>
                       <Typography align='left' gutterBottom variant="h5" component="h2">
-                        {event.title}
+                        {event.name}
                       </Typography>
                       <Typography align='left' variant="body2" color="textSecondary" component="p">
                         {event.description}
                       </Typography>
                       <CardActions>
                         {
-                          event.tags.map(function(obj) { 
+                          event.tags.map(function(obj:any) { 
                             return <CardTag tag={obj}  />;
                           })
                         }
