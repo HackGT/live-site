@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CountdownTimer from './Countdown';
+// import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 import YouTube from "react-youtube";
@@ -7,10 +7,10 @@ import DailyIframe from '@daily-co/daily-js';
 
 import "../App.css";
 
-function getStartTime(h: number, m: number, s: number) {
-  const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
-  return new Date().getTime() + remainingTimeMS;
-}
+// function getStartTime(h: number, m: number, s: number) {
+//   const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
+//   return new Date().getTime() + remainingTimeMS;
+// }
 
 function getVideoSize() {
   return {
@@ -26,7 +26,7 @@ const VideoWindow: React.FC = () => {
   const [videoID, setVideoID] = useState<string>("");
   const [eventName, setEventName] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-  const [timeBeforeStart, setTimeBeforeStart] = useState<any>({});
+  const [setTimeBeforeStart] = useState<any>({});
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);
   const [videoSize, setVideoSize] = useState<any>(getVideoSize())
   const [eventUrl, setEventUrl] = useState<string>("")
@@ -169,7 +169,7 @@ const VideoWindow: React.FC = () => {
           <div className="Timer">
             <h1 className="Video-title">{eventName}</h1>
             <h1 className="Video-title">You are too early! Come back in:</h1>
-            <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/>
+            {/* <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/> */}
             <a className="Schedule-button" href="https://live.healthtech.hack.gt/schedule">Return to Schedule</a>
           </div>
         </div>
