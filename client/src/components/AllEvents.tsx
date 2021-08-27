@@ -20,141 +20,55 @@ import { fetchAllEvents } from '../services/cmsService';
 
 import placeholder_img from '../assets/blue_wide.png'
 
-const AllEvents: React.FC = () => {
-  // var query =  
-  // `{
-  //   allEvents  (where: {AND:[
-  //       {startDate_gt: "2021-03-13T00:00:00.000Z"},
-  //       {endDate_lt: "2021-03-14T21:00:00.000Z"}
-  //     ]}, orderBy:"startDate") {
-  //     id
-  //     name
-  //     startDate
-  //     endDate
-  //     description
-  //     type {
-  //         name
-  //         points
-  //     }
-  //     url
-  //     location {
-  //       name
-  //     }
-  //     tags {
-  //       name
-  //     }
-  //   }
-  // `;
+type Props = {
+  setEventCallback: any;
+};
 
-  // const events = [
-  //   {
-  //     "title": "Title 1",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "in person"
-  //   },
-  //   {
-  //     "title": "Title 2",
-  //     "tags": ["tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "in person"
-  //   },
-  //   {
-  //     "title": "Title 3",
-  //     "tags": ["super long tag 1", "tag 2"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "in person"
-  //   },
-  //   {
-  //     "title": "Title 1a",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "in person"
-  //   },
-  //   {
-  //     "title": "Title 2b",
-  //     "tags": ["tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "virtual"
-  //   },
-  //   {
-  //     "title": "Title 3c",
-  //     "tags": ["super long tag 1", "tag 2"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "virtual"
-  //   },
-  //   {
-  //     "title": "Title 1ax",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "virtual"
-  //   },
-  //   {
-  //     "title": "Title 2by",
-  //     "tags": ["tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "virtual"
-  //   },
-  //   {
-  //     "title": "Title 3cz",
-  //     "tags": ["super long tag 1", "tag 2"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     "event_type": "virtual"
-  //   }
-  // ]
+const AllEvents: React.FC<Props> = (props: Props) => {
 
   let [events, setEvents] = useState<any[]>([])
   const [tagFilter, setTagFilter] = useState("None")
   const [eventFilter, setEventFilter] = useState("None")
-  const [tagFilters, setTagFilters] = useState(new Set(['test']));
+  const [tagFilters, setTagFilters] = useState(new Set());
   const [eventFilters, setEventFilters] = useState(new Set());
   const [filtered_events, set_filtered_events] = useState<any[]>([])
 
-
-
-
-
   useEffect(() => {
 
-   const getEvents = async () => {
-      const data = await fetchAllEvents();
-      console.log(data.allEvents)
-      setEvents(data.allEvents);
+    const getEvents = async () => {
+      const data = await fetchAllEvents()
+      const events = data.allEvents
+      setEvents(events);
+      set_filtered_events(events.splice(0, 6))
+
+      // Update filters
+      if (tagFilters.size == 0) {
+        let filter_set = new Set(["None"])
+        for (var i = 0; i < events.length; i++) {
+          for (var j = 0; j < events[i].tags.length; j++) {
+            filter_set.add(events[i].tags[j].name)
+          }
+        }
+        setTagFilters(filter_set)
+      }
+      if (eventFilters.size == 0) {
+        let filter_set = new Set(["None"])
+        for (var i = 0; i < events.length; i++) {
+          if (events[i].location.length != 0) {
+            for (var j = 0; j < events[i].location.length; j++) {
+              filter_set.add(events[i].location[j].name)
+            }
+          } else {
+            events[i].location = [{
+              "name": "virtual"
+            }]
+            filter_set.add("virtual")
+          }
+        }
+        setEventFilters(filter_set)
+      }
     };
     getEvents();
-    console.log('here');
-
-   // fetchEvents(query).then(data => {
-   //  console.log(data)
-   //  console.log(data.allEvents)
-   //  for(var i = 0; i < data.allEvents.length; i++) {
-   //    var obj = data.allEvents[i];
-   //    console.log(obj.tags);
-   //  }
-   //  setEvents(data.allEvents)
-   //  })
-    
-    // Update filters
-    if (tagFilters.size == 0) {
-      let filter_set = new Set(["None"])
-      for (var i = 0; i < events.length; i++) {
-        for (var j = 0; j < events[i]["tags"].length; j++) {
-          filter_set.add(events[i]["tags"][j]["name"])
-        }
-      }
-      setTagFilters(filter_set)
-    }
-    if (eventFilters.size == 0) {
-      let filter_set = new Set(["None"])
-      for (var i = 0; i < events.length; i++) {
-        if (events[i]["location"].length!=0) {
-          filter_set.add(events[i]["location"][0]["name"])
-        } else {
-          filter_set.add("virtual")
-        }
-      }
-      setEventFilters(filter_set)
-    }
   }, []);
 
   const handleTagFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -172,11 +86,16 @@ const AllEvents: React.FC = () => {
       let filtered_list = []
       for (var i = 0; i < events.length; i++) {
         if (tagFilter === "None" && eventFilter !== "None") {
-          if (events[i]["location"][0]["name"] === eventFilter) {
-            filtered_list.push(events[i])
+          for (let j = 0; j < events[i]['tags'].length; j++) {
+            console.log(events[i].location[j])
+            console.log(events[i].location[j].name)
+            if (events[i].location[j].hasOwnProperty("name") && events[i].location[j].name === eventFilter) {
+              filtered_list.push(events[i])
+              break;
+            }
           }
         } else if (tagFilter !== "None" && eventFilter === "None") {
-          for (var j = 0; j < events[i]['tags'].length; j++) {
+          for (let j = 0; j < events[i]['tags'].length; j++) {
             if (events[i]['tags'][j]['name'] === tagFilter) {
               filtered_list.push(events[i])
               break;
@@ -184,7 +103,7 @@ const AllEvents: React.FC = () => {
           }
         } else {
           if (events[i]["location"][0]["name"] === eventFilter) {
-            for (var j = 0; j < events[i]['tags'].length; j++) {
+            for (let j = 0; j < events[i]['tags'].length; j++) {
               if (events[i]['tags'][j]['name'] === tagFilter) {
                 filtered_list.push(events[i])
                 break;
@@ -218,7 +137,7 @@ const AllEvents: React.FC = () => {
 
   return (
     <div className="all_events">
-      <p className="all_events_title">Upcoming Events</p>
+      <p className="all_events_title">All Events</p>
       <div className="all_events_filter_container">
         <p className="all_events_filter_text">Filter by: </p>
         <FormControl className="all_events_filter_dropdown">
@@ -237,7 +156,7 @@ const AllEvents: React.FC = () => {
           </Select>
         </FormControl>
         <FormControl className="all_events_filter_dropdown">
-          <InputLabel id="event-select-label">Event Type</InputLabel>
+          <InputLabel id="event-select-label">Location</InputLabel>
           <Select
             labelId="event-select-label"
             id="event-select-id"
@@ -255,39 +174,37 @@ const AllEvents: React.FC = () => {
       </div>
       <div className="all_events_container">
         {
-          filtered_events.map(function(event) { 
-            return (
-              <div className="all_events_card">
-                <CardMedia
-                  component='img'
-                  image={placeholder_img}
-                  style={{
-                    borderTopLeftRadius: '1.5%',
-                    borderTopRightRadius: '1.5%'
-                  }}
-                />
-                <Card>
-                  <CardActionArea>
-                    <CardContent>
-                      <Typography align='left' gutterBottom variant="h5" component="h2">
-                        {event.name}
-                      </Typography>
-                      <Typography align='left' variant="body2" color="textSecondary" component="p">
-                        {event.description}
-                      </Typography>
-                      <CardActions>
-                        {
-                          event.tags.map(function(obj:any) { 
-                            return <CardTag tag={obj}  />;
-                          })
-                        }
-                      </CardActions>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </div>
-            )
-          })
+          filtered_events.map((event) => (
+            <div className="all_events_card">
+              <CardMedia
+                component='img'
+                image={placeholder_img}
+                style={{
+                  borderTopLeftRadius: '1.5%',
+                  borderTopRightRadius: '1.5%'
+                }}
+              />
+              <Card>
+                <CardActionArea onClick={() => props.setEventCallback(event)}>
+                  <CardContent>
+                    <Typography align='left' gutterBottom variant="h5" component="h2">
+                      {event.name}
+                    </Typography>
+                    <Typography align='left' variant="body2" color="textSecondary" component="p">
+                      {event.description}
+                    </Typography>
+                    <CardActions>
+                      {
+                        event.tags.map((tag: any, index: number) => (
+                          <CardTag key={index} tag={tag.name}/>
+                        ))
+                      }
+                    </CardActions>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </div>
+          ))
         }
       </div>
       <StyledButton variant="contained" href="/schedule" color="primary">Check Full Schedule</StyledButton>

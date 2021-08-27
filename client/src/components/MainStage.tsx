@@ -1,40 +1,34 @@
 import '../App.css';
 
+import EventInformation from './EventInformation';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardTag from './CardTag'
 
-const MainStage: React.FC = () => {
+type Props = {
+  event: EventInformation;
+};
 
-  const tags = [
-    "Standard Tag 1",
-    "Standard Tag 2",
-    "Standard Tag 3"
-  ]
+const MainStage: React.FC<Props> = (props: Props) => {
 
-  return (
+  // TODO: Add countdown logic for upcoming events + game link 
+
+ return (
     <div>
       <div className="main_stage_container">
-        <div className="main_stage_placeholder"></div>
+        <div className="main_stage_placeholder">{props.event.url}</div>
         <Card className="main_stage_content">
-          <CardActionArea>
-            <CardContent>
-              <Typography align='left' gutterBottom variant="h5" component="h2">
-                Title goes here
-              </Typography>
-              <Typography align='left' variant="body2" color="textSecondary" component="p">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </Typography>
-            </CardContent>
-          </CardActionArea>
+          <CardContent>
+            <Typography align='left' gutterBottom variant="h5" component="h2">{props.event.title}</Typography>
+            <Typography align='left' variant="body2" color="textSecondary" component="p">{props.event.description}</Typography>
+          </CardContent>
           <CardActions>
             {
-              tags.map(function(obj) { 
-                return <CardTag tag={obj}  />;
-              })
+              props.event.tags.map((tag: any, index: number) => (
+                <CardTag key={index} tag={tag.name}/>
+              ))
             }
           </CardActions>
         </Card>

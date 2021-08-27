@@ -14,9 +14,6 @@ const getEventUrl = async (eventId: string): Promise<any> => {
 };
 
 
-
-
-
 let fetchLiveEvents = async ()=> {
   var today = new Date().toISOString()
   var liveEventsQuery =  
@@ -56,6 +53,7 @@ let fetchLiveEvents = async ()=> {
 
 let fetchUpcomingEvents = async ()=> {
   var today = new Date().toISOString()
+  console.log(today)
   var upcomingEventsQuery =  
   `{
     allEvents (where: {startDate_gt: "${today}"}, orderBy:"startDate") {

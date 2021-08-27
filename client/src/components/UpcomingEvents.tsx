@@ -16,25 +16,11 @@ import placeholder_img from '../assets/blue_wide.png'
 
 import { fetchUpcomingEvents } from '../services/cmsService';
 
-const UpcomingEvents: React.FC = () => {
+type Props = {
+  setEventCallback: any;
+};
 
-  // const events = [
-  //   {
-  //     "title": "Title 1",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  //   },
-  //   {
-  //     "title": "Title 2",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  //   },
-  //   {
-  //     "title": "Title 3",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  //   }
-  // ]
+const UpcomingEvents: React.FC<Props> = (props: Props) => {
 
   const StyledButton = withStyles({
     root: {
@@ -51,17 +37,15 @@ const UpcomingEvents: React.FC = () => {
       textTransform: 'capitalize',
     },
   })(Button);
+  
   let [events, setEvents] = useState<any[]>([])
 
   useEffect(() => {
-
     const getEvents = async () => {
        const data = await fetchUpcomingEvents();
-       console.log(data.allEvents)
-       setEvents(data.allEvents);
+       setEvents(data.allEvents.splice(0, 6));
      };
      getEvents();
-     console.log('here');
    }, []);
 
   return (
@@ -72,16 +56,16 @@ const UpcomingEvents: React.FC = () => {
           events.map(function(event) { 
             return (
               <div className="upcoming_events_card">
-                <CardMedia
-                  component='img'
-                  image={placeholder_img}
-                  style={{
-                    borderTopLeftRadius: '1.5%',
-                    borderTopRightRadius: '1.5%'
-                  }}
-                />
                 <Card>
-                  <CardActionArea>
+                  <CardActionArea onClick={() => props.setEventCallback(event)}>
+                    <CardMedia
+                      component='img'
+                      image={placeholder_img}
+                      style={{
+                        borderTopLeftRadius: '1.5%',
+                        borderTopRightRadius: '1.5%'
+                      }}
+                    />
                     <CardContent>
                       <Typography align='left' gutterBottom variant="h5" component="h2">
                         {event.name}
@@ -91,9 +75,9 @@ const UpcomingEvents: React.FC = () => {
                       </Typography>
                       <CardActions>
                         {
-                          event.tags.map(function(obj:any) { 
-                            return <CardTag tag={obj}  />;
-                          })
+                          event.tags.map((tag: any, index: number) => (
+                            <CardTag key={index} tag={tag.name}/>
+                          ))
                         }
                       </CardActions>
                     </CardContent>

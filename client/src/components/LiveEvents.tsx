@@ -13,37 +13,22 @@ import placeholder_img from '../assets/blue.png'
 
 import { fetchLiveEvents } from '../services/cmsService';
 
-const LiveEvents: React.FC = () => {
+type Props = {
+  setEventCallback: any;
+};
 
-  // const events = [
-  //   {
-  //     "title": "Title 1",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  //   },
-  //   {
-  //     "title": "Title 2",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  //   },
-  //   {
-  //     "title": "Title 3",
-  //     "tags": ["super long tag 1", "tag 2", "tag"],
-  //     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  //   }
-  // ]
+
+const LiveEvents: React.FC<Props> = (props: Props) => {
 
   let [events, setEvents] = useState<any[]>([])
 
   useEffect(() => {
 
     const getEvents = async () => {
-       const data = await fetchLiveEvents();
-       console.log(data.allEvents)
-       setEvents(data.allEvents);
+      const data = await fetchLiveEvents();
+      setEvents(data.allEvents);
      };
      getEvents();
-     console.log('here');
    }, []);
 
   return (
@@ -51,39 +36,37 @@ const LiveEvents: React.FC = () => {
       <p className="live_event_title">Live Events</p>
       <div className="live_event_container">
         {
-          events.map(function(event) { 
-            return (
-              <Card className="live_event_card">
-                <CardMedia
-                  component='img'
-                  image={placeholder_img}
-                  style={{
-                    borderTopLeftRadius: '1.5%',
-                    borderBottomLeftRadius: '1.5%',
-                    width: 175,
-                    objectFit: 'cover'
-                  }}
-                />
-                <CardActionArea>
-                  <CardContent>
-                    <Typography align='left' gutterBottom variant="h5" component="h2">
-                      {event.name}
-                    </Typography>
-                    <Typography align='left' variant="body2" color="textSecondary" component="p">
-                      {event.description}
-                    </Typography>
-                    <CardActions className="live_event_card_actions">
-                      {
-                        event.tags.map(function(obj: any) { 
-                          return <CardTag tag={obj}  />;
-                        })
-                      }
-                    </CardActions>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            )
-          })
+          events.map((event) => ( 
+            <Card className="live_event_card">
+              <CardMedia
+                component='img'
+                image={placeholder_img}
+                style={{
+                  borderTopLeftRadius: '1.5%',
+                  borderBottomLeftRadius: '1.5%',
+                  width: 175,
+                  objectFit: 'cover'
+                }}
+              />
+              <CardActionArea onClick={() => props.setEventCallback(event)}>
+                <CardContent>
+                  <Typography align='left' gutterBottom variant="h5" component="h2">
+                    {event.name}
+                  </Typography>
+                  <Typography align='left' variant="body2" color="textSecondary" component="p">
+                    {event.description}
+                  </Typography>
+                  <CardActions className="live_event_card_actions">
+                    {
+                      event.tags.map((tag: any, index: number) => (
+                        <CardTag key={index} tag={tag.name}/>
+                      ))
+                    }
+                  </CardActions>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))
         }
       </div>
     </div>

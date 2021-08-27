@@ -1,4 +1,5 @@
 import '../App.css';
+import React, { useState, useEffect } from 'react';
  
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,45 +13,20 @@ import Paper from '@material-ui/core/Paper';
 
 import custom_theme from './Theme'
 
+import { fetchAllEvents } from '../services/cmsService';
+
 const Schedule: React.FC = () => {
 
-  const rows = [
-    {
-      "name": "Event name goes here",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-      "link": "https://hexlabs.org/link-goes-here/",
-      "start": "10:00 PM",
-      "end": "11:00 PM"
-    },
-    {
-      "name": "Event name goes here",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-      "link": "https://hexlabs.org/link-goes-here/",
-      "start": "10:00 PM",
-      "end": "11:00 PM"
-    },
-    {
-      "name": "Event name goes here",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-      "link": "https://hexlabs.org/link-goes-here/",
-      "start": "10:00 PM",
-      "end": "11:00 PM"
-    },
-    {
-      "name": "Event name goes here",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-      "link": "https://hexlabs.org/link-goes-here/",
-      "start": "10:00 PM",
-      "end": "11:00 PM"
-    },
-    {
-      "name": "Event name goes here",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
-      "link": "https://hexlabs.org/link-goes-here/",
-      "start": "10:00 PM",
-      "end": "11:00 PM"
-    }
-  ];
+  let [events, setEvents] = useState<any[]>([])
+
+  useEffect(() => {
+    const getEvents = async () => {
+       const data = await fetchAllEvents();
+       console.log(data)
+       setEvents(data.allEvents.splice(0, 6));
+     };
+     getEvents();
+   }, []);
 
   const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -95,13 +71,15 @@ const Schedule: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {events.map((row) => (
               <TableRow key={row.name}>
                 <TableCell component="th" scope="row">{row.name}</TableCell>
                 <TableCell align="left">{row.description}</TableCell>
-                <TableCell align="left">{row.link}</TableCell>
-                <TableCell align="left">{row.start}</TableCell>
-                <TableCell align="left">{row.end}</TableCell>
+                <TableCell align="left">
+                  <a href={row.url}>{row.url}</a>
+                </TableCell>
+                <TableCell align="left">{row.startDate}</TableCell>
+                <TableCell align="left">{row.endDate}</TableCell>
               </TableRow>
             ))}
           </TableBody>

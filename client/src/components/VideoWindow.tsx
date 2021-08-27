@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 import YouTube from "react-youtube";
@@ -76,7 +75,6 @@ const VideoWindow: React.FC = () => {
     return () => window.removeEventListener("resize", updateWindowDimensions);
   }, []);
 
-  // Use ID 5f81edd0c14e740022589677 for testing!
   if (contentLoaded === true) {
     if (status === "eventInSession") {
       if (videoType === "youtube") {
