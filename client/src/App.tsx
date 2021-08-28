@@ -1,8 +1,10 @@
 import React from 'react';
+
 import './App.css';
+
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import VideoWindow from './components/VideoWindow';
-import logo from './assets/logo.png';
+import Navbar from './components/Navbar'
+import Home from './components/Home'
 
 // a little bee ascii art 
 const art = ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/"
@@ -10,18 +12,17 @@ const art = ".' '.                             buzz buzz\n.        .   .        
 const App: React.FC = () => {
   console.log(art);
   return (
-    <div className="App">
-      <header className="App-header">
-        <a href="https://live.healthtech.hack.gt/schedule">
-          <img src={logo} className="HackGT-logo" alt="hackGT"/>
-        </a>
-        <Router>
+    <div className="app_main">
+      <Router>
           <Switch>
-            <Route path="/:id" children={<VideoWindow/>} />          
-            <Route path="/" children={<h1>Something went wrong, please try again or contact HackGT staff!</h1>} />
+            <Route path="/" children={
+              <div>
+                <Navbar />
+                <Home />
+              </div>
+            } />          
           </Switch>
         </Router>
-      </header>
     </div>
   );
 };

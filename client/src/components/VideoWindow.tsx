@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import CountdownTimer from './Countdown';
 import {useParams} from "react-router-dom";
 import {getEventUrl} from '../services/cmsService';
 import YouTube from "react-youtube";
+import DailyIframe from '@daily-co/daily-js';
 
 import "../App.css";
 
-function getStartTime(h: number, m: number, s: number) {
-  const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
-  return new Date().getTime() + remainingTimeMS;
-}
+// function getStartTime(h: number, m: number, s: number) {
+//   const remainingTimeMS: number = s * 1000 + m * 60 * 1000 + h * 60 * 60 * 1000;
+//   return new Date().getTime() + remainingTimeMS;
+// }
 
 function getVideoSize() {
   return {
@@ -25,7 +25,7 @@ const VideoWindow: React.FC = () => {
   const [videoID, setVideoID] = useState<string>("");
   const [eventName, setEventName] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-  const [timeBeforeStart, setTimeBeforeStart] = useState<any>({});
+  const [setTimeBeforeStart] = useState<any>({});
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);
   const [videoSize, setVideoSize] = useState<any>(getVideoSize())
   const [eventUrl, setEventUrl] = useState<string>("")
@@ -51,6 +51,9 @@ const VideoWindow: React.FC = () => {
           } else if (eventUrl.includes("bluejeans")) {
             setVideoType("bluejeans");
             setVideoID(eventUrl);
+          } else if (eventUrl.includes("daily")) {
+            setVideoType("daily");
+            setVideoID(eventUrl);
           } else {
             window.location.href = eventUrl;
           }
@@ -72,7 +75,6 @@ const VideoWindow: React.FC = () => {
     return () => window.removeEventListener("resize", updateWindowDimensions);
   }, []);
 
-  // Use ID 5f81edd0c14e740022589677 for testing!
   if (contentLoaded === true) {
     if (status === "eventInSession") {
       if (videoType === "youtube") {
@@ -100,7 +102,56 @@ const VideoWindow: React.FC = () => {
             <a href={eventUrl} className="RedirectURL">click here if the stream won't load</a>
           </div>
         );
-      } else {
+      } else if (videoType === "daily") {
+        
+        var callFrame = DailyIframe.createFrame({
+          showLeaveButton: true,
+          showFullscreenButton: true
+        });
+        callFrame.setTheme({
+          colors: {
+            accent: '#286DA8',
+            accentText: '#FFFFFF',
+            background: '#FFFFFF',
+            backgroundAccent: '#FBFCFD',
+            baseText: '#000000',
+            border: '#EBEFF4',
+            mainAreaBg: '#000000',
+            mainAreaBgAccent: '#333333',
+            mainAreaText: '#FFFFFF',
+            supportiveText: '#808080',
+          }
+        });
+
+        callFrame.on('left-meeting', () => { 
+          let currentTime = new Date();
+          let data = {"endDate": currentTime.toString(), "EventID": eventID }
+          fetch('http://localhost:3000/user/updateEnd', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+
+          }).then(data => {
+            console.log('success', data)
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+
+        });
+
+
+        callFrame.join({
+          url: videoID,
+        })
+
+        return (
+          <div>
+            <h1 className="Video-title"> {eventName}</h1>
+          </div>
+        );
+        } else {
         return <div />;
       }
     } else if (status === "eventEnded") {
@@ -116,7 +167,7 @@ const VideoWindow: React.FC = () => {
           <div className="Timer">
             <h1 className="Video-title">{eventName}</h1>
             <h1 className="Video-title">You are too early! Come back in:</h1>
-            <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/>
+            {/* <CountdownTimer startTime={getStartTime(timeBeforeStart.hours, timeBeforeStart.minutes, timeBeforeStart.seconds)}/> */}
             <a className="Schedule-button" href="https://live.healthtech.hack.gt/schedule">Return to Schedule</a>
           </div>
         </div>
