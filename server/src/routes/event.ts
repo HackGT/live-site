@@ -13,10 +13,8 @@ export let eventRoutes = express.Router();
 
 eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
     const user = await User.findById(req.body.uuid);
-
     const event = await getCMSEvent(req.body.eventid);
-    if (event && user && req.user) {
-        
+    if (event && user) {
         const startTime = moment(event.startDate).tz("America/New_York");
         const endTime = moment(event.endDate).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
@@ -26,11 +24,11 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
         const differenceEnd = endTime.diff(now, "minutes");
         const differenceOpen = startTime.diff(now,"minutes")-10;
         const differenceOpenSeconds = startTime.diff(now, "seconds")-60*10;
-        console.log(`differenceOpen ${differenceOpen}`);
-        console.log(`differenceEnd ${differenceEnd}`);
-        console.log(`differenceStart ${differenceStart}`);
-        console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
-        console.log(`differenceStartSeconds ${differenceStartSeconds}`);
+        // console.log(`differenceOpen ${differenceOpen}`);
+        // console.log(`differenceEnd ${differenceEnd}`);
+        // console.log(`differenceStart ${differenceStart}`);
+        // console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
+        // console.log(`differenceStartSeconds ${differenceStartSeconds}`);
 
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
@@ -84,32 +82,15 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
         } else {
             status = "eventNotWithin24Hours"
         }
+        return res.send({'status': status})
 
-        if (event.url && event.url.includes("daily") && status==="eventInSession") {
-            const fetch_url = 'https://api.daily.co/v1/meeting-tokens';
-            const room_name = event.url.split('/')[event.url.split('/').length-1];
-            const options = {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  Authorization: 'Bearer ' + String(process.env.DAILY_KEY)
-                },
-                body: JSON.stringify({properties: {room_name: room_name, is_owner: false, user_name: reqUser.name}})
-              };
-              
-              const response = await fetch(fetch_url, options)
-                .then(res => res.json())
-                .catch(err => console.error('error:' + err));
-            
-            return res.send({"name":event.name, "url": event.url + "?t=" + response.token, "timebeforestart":timebeforestart, "status": status}); 
-        } else if(event.url && status==="eventInSession")
-            return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
-        else if (event.url) {
-            return res.send({"name":event.name,  "timebeforestart":timebeforestart, "status": status})
-        } else {
-            return res.status(400).send('no link')
-        }
+        // if(event.url && status==="eventInSession")
+        //     return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
+        // else if (event.url) {
+        //     return res.send({"name":event.name,  "timebeforestart":timebeforestart, "status": status})
+        // } else {
+        //     return res.status(400).send('no link')
+        // }
     } else {
         return res.status(400).send("Invalid request");
         
