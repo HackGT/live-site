@@ -91,7 +91,23 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
         // return res.send(event)
 })
 
-
+eventRoutes.route("/updateEnd").post(async (req, res) => {
+    let data = req.body;
+    const reqUser = req.user as IUser;
+    const user = await User.findById(reqUser._id);
+    let interaction = await Interaction.findOne({uuid: reqUser._id.toHexString(), eventID: req.body.eventID })
+    if (!interaction) {
+        return res.status(400).send('User never attended meeting to begin with')
+    } else if (interaction.timeInOutPairs){
+        let latestPair = interaction.timeInOutPairs[interaction.timeInOutPairs.length - 1]
+        if (latestPair.timeOut) {
+            return res.status(400).send('End already recorded')
+        } else {
+            latestPair.timeOut = new Date()
+        }
+    }
+    return res.status(200).send("updated the end time");
+})
 
 
 
@@ -120,32 +136,57 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
-        const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
-        // eventInSession = true
-        if (eventInSession) {
-            if (notAttended) {
-                user.events.push({
-                    id: event.id,
-                    name: event.name,
-                    eventType: event.type.name,
-                    attended: []
-                    // points: event.type.points
-                });
-                // user.points += event.type.points;
+        // const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
+        // // eventInSession = true
+        // if (eventInSession) {
+        //     if (notAttended) {
+        //         user.events.push({
+        //             id: event.id,
+        //             name: event.name,
+        //             eventType: event.type.name,
+        //             attended: []
+        //             // points: event.type.points
+        //         });
+        //         // user.points += event.type.points;
+        //     }
+        //     console.log(user.events)
+
+        //     for (var i = 0; i < user.events.length; i++) {
+        //         if (user.events[i].id===event.id) {
+        //             user.events[i].attended.push({
+        //                enter: now.toDate(),
+        //                exit: endTime.toDate()
+        //             })
+        //         }
+        //     } 
+        //     await user.save(err => console.log(err));
+
+        // }
+        let duplicate = false
+        let interaction = await Interaction.findOne({uuid: req.body.uuid, eventID: req.body.eventID })
+        if (interaction && interaction.timeInOutPairs) {
+            if (interaction.timeInOutPairs[interaction.timeInOutPairs?.length - 1].timeOut!==undefined) {
+                interaction.timeInOutPairs?.push({
+                    timeIn: now.toDate(),
+                    timeOut: undefined,
+                    type: 'virtual'
+                })
             }
-            console.log(user.events)
-
-            for (var i = 0; i < user.events.length; i++) {
-                if (user.events[i].id===event.id) {
-                    user.events[i].attended.push({
-                       enter: now.toDate(),
-                       exit: endTime.toDate()
-                    })
-                }
-            }          
-
-            await user.save(err => console.log(err));
-
+        } else {
+            interaction = createNew(Interaction, {
+                uuid: reqUser._id.toHexString(),
+                eventID: event.id,
+                timeInOutPairs: [{
+                    timeIn: now.toDate(),
+                    timeOut: undefined,
+                    type: 'virtual'
+                }],
+                employees: req.body.employees.map(employee => ({
+                    uuid: employee.uuid,
+                    name: employee.name,
+                    email: employee.email
+                }))
+            });
         }
         let status= "";
         let timebeforestart = {
@@ -182,7 +223,6 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 },
                 body: JSON.stringify({properties: {room_name: room_name, is_owner: false, user_name: reqUser.name}})
               };
-              
               const response = await fetch(fetch_url, options)
                 .then(res => res.json())
                 .catch(err => console.error('error:' + err));
@@ -197,7 +237,6 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         }
     } else {
         return res.status(400).send("Invalid request");
-        
     }
         // return res.send(event)
 })
