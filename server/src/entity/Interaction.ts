@@ -9,7 +9,8 @@ export interface IInteractionInstance {
 
 const InteractionInstanceSchema = {
     timein: {type: Date, required: true},
-    timeout: Date
+    timeout: Date,
+    type: String
 }
 
 //unique interaction for each event/user combo
