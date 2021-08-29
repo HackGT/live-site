@@ -123,7 +123,7 @@ const VideoWindow: React.FC = () => {
           }
         });
 
-        callFrame.on('left-meeting', () => { 
+        callFrame.on('left-meeting', () => {
           let currentTime = new Date();
           let data = {"endDate": currentTime.toString(), "EventID": eventID }
           fetch('http://localhost:3000/user/updateEnd', {

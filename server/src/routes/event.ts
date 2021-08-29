@@ -99,11 +99,8 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
    
 })
 
-
-
-
-
 eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
+    console.log('reached here boiii')
     const reqUser = req.user as IUser;
     const user = await User.findById(reqUser._id);
 

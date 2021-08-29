@@ -6,6 +6,7 @@ const getEventUrl = async (eventId: string): Promise<any> => {
     return ideas.data;
   } catch (e: any) {
     if (e.response) {
+      console.log(e.response.data.message)
       throw new Error(e.response.data.message);
     } else {
       throw new Error('Please refresh page & try again.');
