@@ -44,7 +44,7 @@ import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
-import { Time, User, IUser, ITime } from "./schema";
+// import { Time, User, IUser, ITime } from "./schema";
 
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
