@@ -3,6 +3,7 @@ import { mongoose, RootDocument } from './database'
 export interface IInteractionInstance {
     timeIn: Date,
     timeOut: Date | undefined,
+    duration: number| undefined,
     type: string //virtual or inperson
 }
 
@@ -10,6 +11,7 @@ export interface IInteractionInstance {
 const InteractionInstanceSchema = {
     timein: {type: Date, required: true},
     timeout: Date,
+    duration: Number,
     type: String
 }
 

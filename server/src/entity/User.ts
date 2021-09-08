@@ -1,4 +1,6 @@
 import { mongoose, RootDocument } from './database'
+import {IInteraction, Interaction} from './Interaction'
+
 
 export interface IUser extends RootDocument {
     uuid: string;
