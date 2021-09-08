@@ -13,7 +13,6 @@ const fetch = require('node-fetch');
 
 export let eventRoutes = express.Router();
 
-
 eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
     const user = await User.findById(req.body.uuid);
     const event = await getCMSEvent(req.body.eventID);

@@ -1,5 +1,6 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
+import dateFormat from 'dateformat';
  
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -15,24 +16,40 @@ import custom_theme from './Theme'
 
 import { fetchAllEvents } from '../services/cmsService';
 
-const Schedule: React.FC = () => {
+type Props = {
+  tableLength: number;
+};
+
+const Schedule: React.FC<Props> = (props: Props) => {
 
   let [events, setEvents] = useState<any[]>([])
 
   useEffect(() => {
     const getEvents = async () => {
        const data = await fetchAllEvents();
-       console.log(data)
-       setEvents(data.allEvents.splice(0, 6));
+       let sortedData = data.allEvents.sort(function(a: any, b: any) {
+         let dateA = a.startDate;
+         let dateB = b.startDate;
+         return dateA >= dateB ? 1 : -1;
+       })
+       setEvents(sortedData.slice(0, props.tableLength));
      };
      getEvents();
    }, []);
+
+  const formateDateString = (date: string) => {
+    return dateFormat(date, "h:MM TT Z")
+  }
+
+  const getDayFromDate = (date: string) => {
+    return dateFormat(date, "mmm dS")
+  }
 
   const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
       head: {
         backgroundColor: custom_theme.palette.primary.main,
-        color: theme.palette.common.white,
+        color: theme.palette.common.white
       },
       body: {
         fontSize: 14,
@@ -61,11 +78,20 @@ const Schedule: React.FC = () => {
       <p className="schedule_title">Schedule</p>
       <TableContainer className="schedule_table" component={Paper}>
         <Table aria-label="simple table">
+          <colgroup>
+              <col width="15%" />
+              <col width="50%" />
+              <col width="8%" />
+              <col width="7%" />
+              <col width="10%" />
+              <col width="10%" />
+          </colgroup>
           <TableHead>
             <TableRow>
-              <StyledTableCell>Event Name</StyledTableCell>
+              <StyledTableCell align="left">Event Name</StyledTableCell>
               <StyledTableCell align="left">Event Description</StyledTableCell>
               <StyledTableCell align="left">Event Link</StyledTableCell>
+              <StyledTableCell align="left">Date</StyledTableCell>
               <StyledTableCell align="left">Start Time</StyledTableCell>
               <StyledTableCell align="left">End Time</StyledTableCell>
             </TableRow>
@@ -76,10 +102,11 @@ const Schedule: React.FC = () => {
                 <TableCell component="th" scope="row">{row.name}</TableCell>
                 <TableCell align="left">{row.description}</TableCell>
                 <TableCell align="left">
-                  <a href={row.url}>{row.url}</a>
+                  <a href={row.url} target="_blank">{row.url ? ("Join Here!"):("")}</a>
                 </TableCell>
-                <TableCell align="left">{row.startDate}</TableCell>
-                <TableCell align="left">{row.endDate}</TableCell>
+                <TableCell style={{width: 'max-content'}} align="left">{getDayFromDate(row.startDate)}</TableCell>
+                <TableCell align="left">{formateDateString(row.startDate)}</TableCell>
+                <TableCell align="left">{formateDateString(row.endDate)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
