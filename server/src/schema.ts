@@ -45,45 +45,56 @@ export interface IInteraction extends RootDocument {
     timeInOutPairs?: {
         timeIn: Date,
         timeOut: Date | undefined,
-        type: string
+        eventType: string
     }[];
     employees?: {
         uuid: string;
         name: string;
         email: string;
     }[]; // Single scanner can be associated with multiple employees
+    duration?: number
 }
 
-export const Interaction = mongoose.model<IInteraction & mongoose.Document>("Interaction", new mongoose.Schema({
+
+const InteractionSchema = new mongoose.Schema({
     uuid: {
         type: String,
         required: true,
-        index: true
     },
     eventID: {
         type: String,
         required: true,
-        index: true
     },
     timeIn: {
         type: Date,
-        required: true
+        required: false
     },
     timeOut: {
-        type: Date
+        type: Date,
+        required: false
     }, 
-
-    timeInOutPairs: [{
-        timeIn: Date,
-        timeOut: Date,
-        type: String
-    }],
+    timeInOutPairs: {
+        type:[{
+            timeIn: Date,
+            timeOut: Date,
+            eventType: String
+        }],
+        default: []
+    },
     employees: [{
         uuid: String,
         name: String,
         email: String
-    }]
-}))
+    }],
+    duration: Number
+})
+InteractionSchema.index({ uuid: 1, eventID: 1}, { unique: true });
+
+
+export const Interaction = mongoose.model<IInteraction & mongoose.Document>("Interaction", InteractionSchema
+)
+
+
 
 export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoose.Schema({
     uuid: {
