@@ -16,6 +16,10 @@ const Home: React.FC = () => {
 
   const updateMainStageEvent = (e: any) => {
     setMainStageEvent(new EventInformation(e.url, e.name, e.tags, e.description))
+    window.scrollTo({
+      top: 0, 
+      behavior: 'smooth'
+    });
   }
 
   useEffect(() => {
@@ -35,19 +39,20 @@ const Home: React.FC = () => {
       // Then any live event
       if (allEvents.length > 0) {
         setMainStageEvent(new EventInformation(allEvents[0].url, allEvents[0].name, allEvents[0].tags, allEvents[0].description))
-      } else {
-        // Then the next upcoming event
-        const upcomingData = await fetchUpcomingEvents()
-        const allUpcomingEvents = upcomingData.allEvents
-        
-        for (let i = 0; i < allUpcomingEvents.length; i++) {
-          if (allUpcomingEvents[i].url !== null) {
-            setMainStageEvent(new EventInformation(allUpcomingEvents[i].url, allUpcomingEvents[i].name, allUpcomingEvents[i].tags, allUpcomingEvents[i].description))
-          }
-          return
-        } 
+        return
       }
 
+      // Then the next upcoming event
+      const upcomingData = await fetchUpcomingEvents()
+      const allUpcomingEvents = upcomingData.allEvents
+      
+      for (let i = 0; i < allUpcomingEvents.length; i++) {
+        if (allUpcomingEvents[i].url !== null) {
+          setMainStageEvent(new EventInformation(allUpcomingEvents[i].url, allUpcomingEvents[i].name, allUpcomingEvents[i].tags, allUpcomingEvents[i].description))
+        }
+        return
+      } 
+      
       // If all else fails, a placeholder event
       setMainStageEvent(new EventInformation("", "No Events are currently live!", [], "Check the schedule to see when the next event will go live!"))
      };
@@ -59,7 +64,7 @@ const Home: React.FC = () => {
     <div>
         <MainStage event={mainStageEvent} />
         <LiveEvents setEventCallback={updateMainStageEvent} />
-        <Schedule />
+        <Schedule tableLength={6} />
         <UpcomingEvents setEventCallback={updateMainStageEvent} />
         <AllEvents setEventCallback={updateMainStageEvent} />
     </div>

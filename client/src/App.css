@@ -248,3 +248,18 @@
   margin-top: 10px;
   margin-bottom: 40px;
 }
+
+/* Info Tab */
+.faq {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 60px;
+}
+
+.live_event_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}

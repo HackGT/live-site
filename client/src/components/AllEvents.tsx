@@ -28,9 +28,9 @@ const AllEvents: React.FC<Props> = (props: Props) => {
 
   let [events, setEvents] = useState<any[]>([])
   const [tagFilter, setTagFilter] = useState("None")
-  const [eventFilter, setEventFilter] = useState("None")
+  const [locationFilter, setLocationFilter] = useState("None")
   const [tagFilters, setTagFilters] = useState(new Set());
-  const [eventFilters, setEventFilters] = useState(new Set());
+  const [locationFilters, setLocationFilters] = useState(new Set());
   const [filtered_events, set_filtered_events] = useState<any[]>([])
 
   useEffect(() => {
@@ -39,34 +39,30 @@ const AllEvents: React.FC<Props> = (props: Props) => {
       const data = await fetchAllEvents()
       const events = data.allEvents
       setEvents(events);
-      set_filtered_events(events.splice(0, 6))
+      set_filtered_events(events.slice(0, 6))
 
-      // Update filters
+      // Update possible tag filters
       if (tagFilters.size == 0) {
-        let filter_set = new Set(["None"])
-        for (var i = 0; i < events.length; i++) {
-          for (var j = 0; j < events[i].tags.length; j++) {
-            filter_set.add(events[i].tags[j].name)
+        let tag_filter_set = new Set(["None"])
+        for (let i = 0; i < events.length; i++) {
+          for (let j = 0; j < events[i].tags.length; j++) {
+            tag_filter_set.add(events[i].tags[j].name)
           }
         }
-        setTagFilters(filter_set)
+        setTagFilters(tag_filter_set)
       }
-      if (eventFilters.size == 0) {
-        let filter_set = new Set(["None"])
-        for (var i = 0; i < events.length; i++) {
-          if (events[i].location.length != 0) {
-            for (var j = 0; j < events[i].location.length; j++) {
-              filter_set.add(events[i].location[j].name)
-            }
-          } else {
-            events[i].location = [{
-              "name": "virtual"
-            }]
-            filter_set.add("virtual")
+
+      // Update possible location filters
+      if (locationFilters.size == 0) {
+        let location_filter_set = new Set(["None"])
+        for (let i = 0; i < events.length; i++) {
+          for (let j = 0; j < events[i].location.length; j++) {
+            location_filter_set.add(events[i].location[j].name)
           }
         }
-        setEventFilters(filter_set)
+        setLocationFilters(location_filter_set)
       }
+
     };
     getEvents();
   }, []);
@@ -76,42 +72,36 @@ const AllEvents: React.FC<Props> = (props: Props) => {
   };
 
   const handleEventFilterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setEventFilter(event.target.value as string)
+    setLocationFilter(event.target.value as string)
   };
 
+  // This function is called when the filter button is clicked
+  // It should return a list of events that have the tags specified by the filters! 
+  // If there are both filters, we show events have have the tag filter OR the location filter.
   const handle_filter_button = () => {
-    if (tagFilter === "None" && eventFilter === "None") {
-      set_filtered_events(events.splice(0, 6))
+    if (tagFilter === "None" && locationFilter === "None") {
+      set_filtered_events(events.slice(0, 6))
     } else {
       let filtered_list = []
-      for (var i = 0; i < events.length; i++) {
-        if (tagFilter === "None" && eventFilter !== "None") {
-          for (let j = 0; j < events[i]['tags'].length; j++) {
-            console.log(events[i].location[j])
-            console.log(events[i].location[j].name)
-            if (events[i].location[j].hasOwnProperty("name") && events[i].location[j].name === eventFilter) {
+
+      // Loop through each event
+      for (let i = 0; i < events.length; i++) {
+        if (locationFilter !== "None") {
+          // If there is a location filter and no tag filter
+          for (let j = 0; j < events[i]['location'].length; j++) {
+            if (events[i].location[j].hasOwnProperty("name") && events[i].location[j].name === locationFilter) {
               filtered_list.push(events[i])
               break;
             }
           }
-        } else if (tagFilter !== "None" && eventFilter === "None") {
+        } 
+        if (tagFilter !== "None") {
+          // If there is a tag filter but no location filter
           for (let j = 0; j < events[i]['tags'].length; j++) {
             if (events[i]['tags'][j]['name'] === tagFilter) {
               filtered_list.push(events[i])
               break;
             }
-          }
-        } else {
-          if (events[i]["location"][0]["name"] === eventFilter) {
-            for (let j = 0; j < events[i]['tags'].length; j++) {
-              if (events[i]['tags'][j]['name'] === tagFilter) {
-                filtered_list.push(events[i])
-                break;
-              }
-            }
-            // if (events[i]['tags'].includes(tagFilter)) {
-            //   filtered_list.push(events[i])
-            // }
           }
         }
       }
@@ -160,11 +150,11 @@ const AllEvents: React.FC<Props> = (props: Props) => {
           <Select
             labelId="event-select-label"
             id="event-select-id"
-            value={eventFilter}
+            value={locationFilter}
             onChange={handleEventFilterChange}
           >
             {
-              Array.from(eventFilters).map(function(obj: any) { 
+              Array.from(locationFilters).map(function(obj: any) { 
                 return <MenuItem value={obj}>{obj}</MenuItem>
               })
             }

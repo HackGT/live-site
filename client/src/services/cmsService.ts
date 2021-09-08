@@ -86,7 +86,6 @@ let fetchUpcomingEvents = async ()=> {
 };
 
 
-
 let fetchAllEvents = async ()=> {
   var allEventsQuery =  
   `{
@@ -119,4 +118,25 @@ let fetchAllEvents = async ()=> {
   return jsonResponse.data;
 };
 
-export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents };
+let fetchBlock = async (blockSlug: string)=> {
+  var blockQuery =  
+  `
+  {
+    allBlocks (where: { slug: "${blockSlug}" }) 
+    {
+      name
+      content
+    }
+  }
+  `;
+  console.log(blockQuery)
+  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: blockQuery }),
+  });
+  var jsonResponse = await res.json();
+  return jsonResponse.data;
+};
+
+export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents, fetchBlock};
