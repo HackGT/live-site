@@ -2,7 +2,7 @@ import express = require("express");
 import request = require("request");
 import passport = require("passport");
 import { createLink, AuthenticateOptions } from "../auth/strategies"
-import { IUser } from "../schema";
+import { IUser } from "../entity/User";
 
 export let authRoutes = express.Router();
 

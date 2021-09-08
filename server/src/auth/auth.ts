@@ -5,7 +5,7 @@ import session = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 import dotenv from "dotenv"
 import { app } from "../app";
-import { IUser, User } from "../schema";
+import { IUser, User } from "../entity/User";
 import { GroundTruthStrategy } from "./strategies";
 
 dotenv.config();

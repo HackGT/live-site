@@ -1,5 +1,7 @@
 import express from "express";
-import { IUser, User, Interaction } from "../schema";
+import { IUser, User} from "../entity/User";
+import { Interaction } from "../entity/Interaction";
+
 import { isAdmin } from "../auth/auth";
 
 export let userRoutes = express.Router();

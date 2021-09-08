@@ -4,7 +4,8 @@ import { Strategy as OAuthStrategy } from "passport-oauth2";
 import dotenv from "dotenv"
 import fetch from "node-fetch";
 import { Request } from "express";
-import { createNew, IUser, User } from "../schema";
+import {createNew} from "../entity/database"
+import { IUser, User } from "../entity/User";
 
 dotenv.config()
 
@@ -110,14 +111,11 @@ export class GroundTruthStrategy extends OAuthStrategy {
         if (!user) {
             user = createNew<IUser>(User, {
                 ...profile,
-                points: 0,
                 admin: false,
-                events: []
             });
         } else {
             user.token = accessToken;
         }
-
         await user.save();
         done(null, user);
     }

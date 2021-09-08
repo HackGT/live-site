@@ -1,6 +1,9 @@
 import express from "express"
 import { getCMSEvent } from "../cms"
-import { IUser, User, IInteraction, Interaction, createNew} from "../schema";
+import { createNew} from "../entity/database";
+import { IUser, User} from "../entity/User"
+import { IInteraction, Interaction, IInteractionInstance} from "../entity/Interaction"
+
 import moment from "moment-timezone";
 import dotenv from "dotenv"
 
@@ -30,7 +33,7 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
         let interaction = await Interaction.findOne({uuid: req.body.uuid, eventID: req.body.eventID })
         if (interaction) {
-            interaction.timeInOutPairs?.push({
+            interaction.instances?.push({
                 timeIn: now.toDate(),
                 timeOut: undefined,
                 eventType: 'inperson'
@@ -40,7 +43,7 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
             interaction = createNew(Interaction, {
                 uuid: req.body.uuid,
                 eventID: req.body.eventID,
-                timeInOutPairs: [{
+                instances: [{
                     timeIn: now.toDate(),
                     timeOut: undefined,
                     eventType: 'inperson'
@@ -53,9 +56,6 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
             });
             await interaction.save()
         }
-        
-        // const notAttended = user.events.filter(userEvent => userEvent.id === event.id).length === 0;
-        // eventInSession = true
         let status= "";
         let timebeforestart = {
             hours:0,
@@ -100,8 +100,8 @@ eventRoutes.route("/updateEnd").post(async (req, res) => {
     let interaction = await Interaction.findOne({uuid: reqUser._id.toHexString(), eventID: req.body.eventID })
     if (!interaction) {
         return res.status(400).send('User never attended meeting to begin with')
-    } else if (interaction.timeInOutPairs){
-        let latestPair = interaction.timeInOutPairs[interaction.timeInOutPairs.length - 1]
+    } else if (interaction.instances){
+        let latestPair = interaction.instances[interaction.instances.length - 1]
         if (latestPair.timeOut) {
             return res.status(400).send('End already recorded')
         } else {
@@ -138,16 +138,15 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
-        let duplicate = false
         let interaction = await Interaction.findOne({uuid: reqUser._id.toHexString(), eventID: req.params.getEventID })
         console.log(interaction)
-        if (interaction && interaction.timeInOutPairs) {
-            if (interaction.timeInOutPairs[interaction.timeInOutPairs?.length - 1].timeOut!==undefined) {
-                interaction.timeInOutPairs?.push({
+        if (interaction && interaction.instances) {
+            if (interaction.instances[interaction.instances?.length - 1].timeOut!==undefined) {
+                interaction.instances?.push({
                     timeIn: now.toDate(),
                     timeOut: undefined,
                     eventType: 'virtual'
-                })
+                }as IInteractionInstance)
                 await interaction.save();
             }
         } else {
@@ -155,30 +154,12 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             interaction = createNew(Interaction, {
                 uuid: reqUser._id.toHexString(),
                 eventID: event.id,
-                timeInOutPairs: [{
+                instances: [{
                     timeIn: now.toDate(),
                     timeOut: undefined,
                     eventType: 'virtual'
-                }]
+                } as IInteractionInstance] 
             });
-            // await interaction.save()
-            // let interaction = new Interaction({
-            //     uuid: reqUser._id.toHexString(),
-            //     eventID: event.id,
-            //     timeInOutPairs: [{
-            //         timeIn: now.toDate(),
-            //         // timeOut: undefined,
-            //         timeOut: now.toDate(),
-            //         eventType: 'virtual'
-            //     }]
-            //     // timeInOutPairs: []
-            // })
-            // interaction.timeInOutPairs?.push({
-            //         timeIn: now.toDate(),
-            //         // timeOut: undefined,
-            //         timeOut: now.toDate(),
-            //         eventType: 'virtual'
-            //     })
             await interaction.save();
         }
         let status= "";
@@ -196,14 +177,12 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             timebeforestart.hours = Math.floor(differenceOpen / 60);
             timebeforestart.minutes = differenceOpen % 60
             timebeforestart.seconds = differenceOpenSeconds % 60
-
 //             timebeforestart.hours = Math.floor(differenceStart / 60);
 //             timebeforestart.minutes = differenceStart % 60
 //             timebeforestart.seconds = differenceStartSeconds % 60
         } else {
             status = "eventNotWithin24Hours"
         }
-
         if (event.url && event.url.includes("daily") && status==="eventInSession") {
             const fetch_url = 'https://api.daily.co/v1/meeting-tokens';
             const room_name = event.url.split('/')[event.url.split('/').length-1];
@@ -219,7 +198,6 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
               const response = await fetch(fetch_url, options)
                 .then(res => res.json())
                 .catch(err => console.error('error:' + err));
-            
             return res.send({"name":event.name, "url": event.url + "?t=" + response.token, "timebeforestart":timebeforestart, "status": status}); 
         } else if(event.url && status==="eventInSession")
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
@@ -231,5 +209,4 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     } else {
         return res.status(400).send("Invalid request");
     }
-        // return res.send(event)
 })
