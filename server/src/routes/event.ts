@@ -37,7 +37,7 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
                 timeIn: now.toDate(),
                 timeOut: undefined,
                 eventType: 'inperson'
-            })
+            }  as IInteractionInstance)
             await interaction.save()
         } else {
             interaction = createNew(Interaction, {
@@ -47,7 +47,7 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
                     timeIn: now.toDate(),
                     timeOut: undefined,
                     eventType: 'inperson'
-                }],
+                }  as IInteractionInstance],
                 employees: req.body.employees.map(employee => ({
                     uuid: employee.uuid,
                     name: employee.name,
@@ -112,7 +112,6 @@ eventRoutes.route("/updateEnd").post(async (req, res) => {
 })
 
 
-
 eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     const reqUser = req.user as IUser;
     const user = await User.findById(reqUser._id);
@@ -146,7 +145,7 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                     timeIn: now.toDate(),
                     timeOut: undefined,
                     eventType: 'virtual'
-                }as IInteractionInstance)
+                } as IInteractionInstance)
                 await interaction.save();
             }
         } else {
