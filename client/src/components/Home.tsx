@@ -8,6 +8,7 @@ import MainStage from './MainStage';
 import LiveEvents from './LiveEvents'
 import Schedule from './Schedule'
 import UpcomingEvents from './UpcomingEvents'
+import SeeFullScheduleButton from './SeeFullScheduleButton'
 import AllEvents from './AllEvents'
 
 const Home: React.FC = () => {
@@ -65,6 +66,7 @@ const Home: React.FC = () => {
         <MainStage event={mainStageEvent} />
         <LiveEvents setEventCallback={updateMainStageEvent} />
         <Schedule tableLength={6} />
+        <SeeFullScheduleButton />
         <UpcomingEvents setEventCallback={updateMainStageEvent} />
         <AllEvents setEventCallback={updateMainStageEvent} />
     </div>

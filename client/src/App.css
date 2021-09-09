@@ -249,17 +249,114 @@
   margin-bottom: 40px;
 }
 
-/* Info Tab */
-.faq {
-  margin-left: 10%;
+/* Block Collection */
+.block_title_container {
+  margin-left: 5%;
   margin-right: 10%;
   margin-top: 60px;
 }
 
-.live_event_title {
+.block_title {
   font-family: 'Roboto', sans-serif;
-  font-size: 50px;
+  font-size: 32px;
   color: black;
   margin-bottom: 10px;
   text-align: left;
+}
+
+.blocks_card {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 20px;
+}
+
+.block_card_text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  color: black;
+  margin: 10px;
+  text-align: left;
+}
+
+.block_card_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  margin: 10px;
+  text-align: left;
+}
+
+.block_card_container {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+/* Prizes */
+
+.prize_title_container {
+  margin-left: 5%;
+  margin-right: 10%;
+  margin-top: 60px;
+}
+
+.prize_title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Footer */
+
+footer {
+  color: #FFFFFF;
+  margin: var(--base-unit-4);
+  box-shadow: 0 -8px 4px 0px gray;
+  margin-top: 100px;
+  padding-bottom: 20px;
+}
+
+.footer_socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.footer_text_hex {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: black;
+  text-align: left;
+}
+
+.footer_text_mlh {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: black;
+  text-align: left;
+  margin-bottom: 50px;
+}
+
+.footer_container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer_logo {
+  margin-left: 2px;
+  margin-right: 2px;
 }

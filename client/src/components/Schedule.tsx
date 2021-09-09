@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import dateFormat from 'dateformat';
  
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -57,27 +56,13 @@ const Schedule: React.FC<Props> = (props: Props) => {
     }),
   )(TableCell);
 
-  const StyledButton = withStyles({
-    root: {
-      background: custom_theme.palette.primary.main,
-      borderRadius: 5,
-      border: 0,
-      color: 'white',
-      height: 48,
-      fontSize: 16,
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-    label: {
-      textTransform: 'capitalize',
-    },
-  })(Button);
-
   return (
     <div className="schedule">
       <p className="schedule_title">Schedule</p>
-      <TableContainer className="schedule_table" component={Paper}>
-        <Table aria-label="simple table">
+      <TableContainer className="schedule_table" component={Paper} style={{ maxHeight: 600 }}>
+        <Table stickyHeader aria-label="simple table" style={{
+          tableLayout: "fixed"
+        }}>
           <colgroup>
               <col width="15%" />
               <col width="50%" />
@@ -112,7 +97,6 @@ const Schedule: React.FC<Props> = (props: Props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <StyledButton className="upcoming_events_button" variant="contained" href="/schedule" color="primary">See Full Schedule</StyledButton>
     </div>
   )
 }
