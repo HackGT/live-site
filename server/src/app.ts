@@ -56,11 +56,6 @@ app.get("/status", (req, res) => {
 // });
 
 
-app.get("/", (req, res) => {
-    res.redirect("https://live.healthtech.hack.gt/schedule");
-});
-
-
 app.use("/auth", authRoutes);
 app.use("/event", isAuthenticated, eventRoutes);
 app.use("/user", userRoutes);

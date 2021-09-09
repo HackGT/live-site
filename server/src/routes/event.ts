@@ -116,22 +116,17 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     const user = await User.findById(reqUser._id);
 
     const event = await getCMSEvent(req.params.getEventID);
+    console.log(event)
     if (event && user && req.user) {
         
         const startTime = moment(event.startDate).tz("America/New_York");
         const endTime = moment(event.endDate).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
-        console.log(process.env.TZ)
         const differenceStart = startTime.diff(now, "minutes");
         const differenceStartSeconds = startTime.diff(now, "seconds");
         const differenceEnd = endTime.diff(now, "minutes");
         const differenceOpen = startTime.diff(now,"minutes")-10;
         const differenceOpenSeconds = startTime.diff(now, "seconds")-60*10;
-        console.log(`differenceOpen ${differenceOpen}`);
-        console.log(`differenceEnd ${differenceEnd}`);
-        console.log(`differenceStart ${differenceStart}`);
-        console.log(`differenceOpenSeconds ${differenceOpenSeconds}`);
-        console.log(`differenceStartSeconds ${differenceStartSeconds}`);
 
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
@@ -148,7 +143,6 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 await interaction.save();
             }
         } else {
-            console.log('here boi')
             interaction = createNew(Interaction, {
                 uuid: reqUser._id.toHexString(),
                 eventID: event.id,
@@ -197,8 +191,9 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 .then(res => res.json())
                 .catch(err => console.error('error:' + err));
             return res.send({"name":event.name, "url": event.url + "?t=" + response.token, "timebeforestart":timebeforestart, "status": status}); 
-        } else if(event.url && status==="eventInSession")
+        } else if(event.url && status==="eventInSession") {
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
+        }
         else if (event.url) {
             return res.send({"name":event.name,  "timebeforestart":timebeforestart, "status": status})
         } else {
