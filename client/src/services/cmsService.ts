@@ -3,6 +3,8 @@ import axios from 'axios';
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
     const event = await axios.get('/event/virtualInteraction/' + eventId);
+    console.log(eventId)
+    console.log(event)
     return event.data;
   } catch (e: any) {
     if (e.response) {
