@@ -63,14 +63,36 @@
 }
 
 /* Main Stage */
+.main_stage_wrapper {
+  width: 100%;
+  position: relative;
+  padding-bottom: 56.45%;
+}
+
 .main_stage_container {
+  margin: 0 auto;
+  width: 65%;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 40px;
+}
+
+.youtubeStage{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dailyStage{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .main_stage_placeholder {
