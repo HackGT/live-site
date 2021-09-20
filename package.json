@@ -44,7 +44,7 @@
     "@types/mongoose": "^5.7.30",
     "@types/morgan": "^1.9.1",
     "@types/passport": "^1.0.4",
-    "@types/passport-oauth2": "^1.4.9",
+    "@types/passport-oauth2": "^1.4.11",
     "@types/request": "^2.48.5",
     "gulp-tslint": "^8.1.4",
     "nodemon": "^2.0.4",
