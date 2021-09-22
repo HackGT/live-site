@@ -4,6 +4,10 @@ FROM node:12-alpine AS build
 WORKDIR /usr/src/virtual-checkin/
 COPY . /usr/src/virtual-checkin/
 
+WORKDIR /usr/src/virtual-checkin/server
+RUN npm install
+
+WORKDIR /usr/src/virtual-checkin/client
 RUN npm install && npm run build
 
 # Runtime container
