@@ -7,7 +7,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 // import {Server} from "ws";
 import expressWs from 'express-ws';
-
+import * as cron from 'node-cron'
 import http from "http";
 
 dotenv.config();
@@ -45,6 +45,7 @@ import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
 // import { Time, User, IUser, ITime } from "./schema";
+import { getEndedEvents } from "./cms"
 
 app.get("/status", (req, res) => {
     res.status(200).send("Success");
@@ -121,6 +122,13 @@ app.get("/*", function (req, res) {
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
+
+cron.schedule('*/1 * * * *', () => {
+    console.log('running a task every 5th minute ' + new Date().toISOString());
+    // check which events have ended every 5 minutes so ...\
+    let minInterval = 5;
+    getEndedEvents(minInterval);
+  });
 // app.use("/ws-stuff", router);
 
 // const wss = new Server({server: app, port: 8080});

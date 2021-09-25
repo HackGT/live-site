@@ -38,6 +38,7 @@
     "moment-timezone": "^0.5.33",
     "mongoose": "5.11.8",
     "morgan": "1.10.0",
+    "node-cron": "^3.0.0",
     "node-fetch": "2.6.1",
     "passport": "0.4.1",
     "passport-oauth2": "1.5.0",
