@@ -144,7 +144,7 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             }
         } else {
             interaction = createNew(Interaction, {
-                uuid: reqUser._id.toHexString(),
+                uuid: user.uuid,
                 eventID: event.id,
                 instances: [{
                     timeIn: now.toDate(),
@@ -185,7 +185,7 @@ eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                   'Content-Type': 'application/json',
                   Authorization: 'Bearer ' + String(process.env.DAILY_KEY)
                 },
-                body: JSON.stringify({properties: {room_name: room_name, is_owner: false, user_name: reqUser.name, user_id: reqUser._id.toHexString()}})
+                body: JSON.stringify({properties: {room_name: room_name, is_owner: false, user_name: reqUser.name, user_id: user.uuid}})
               };
               const response = await fetch(fetch_url, options)
                 .then(res => res.json())
