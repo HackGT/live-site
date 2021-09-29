@@ -45,7 +45,7 @@ let fetchLiveEvents = async ()=> {
     }
   }
   `;
-  var res = await fetch(, {
+  var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: liveEventsQuery }),
