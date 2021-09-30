@@ -10,6 +10,7 @@ secrets:
   - GROUND_TRUTH_SECRET
   - GRAPHQL_AUTH
   - ADMIN_SECRET
+  - DAILY_KEY
 
 health:
   path: /status
