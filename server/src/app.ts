@@ -5,6 +5,7 @@ import compression from "compression";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import * as cron from 'node-cron'
 // import {Server} from "ws";
 import expressWs from 'express-ws';
 
@@ -44,6 +45,7 @@ import { isAuthenticated } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
 import { eventRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
+import { getEndedEvents } from "./cms"
 // import { Time, User, IUser, ITime } from "./schema";
 
 app.get("/status", (req, res) => {
@@ -121,6 +123,13 @@ app.get("/*", function (req, res) {
 app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
+
+cron.schedule('*/1 * * * *', () => {
+    let minInterval = 5;
+    console.log('running a task every ' + minInterval + ' minute ' + new Date().toISOString());
+    getEndedEvents(minInterval);
+  });
+
 // app.use("/ws-stuff", router);
 
 // const wss = new Server({server: app, port: 8080});
