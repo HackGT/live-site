@@ -92,23 +92,6 @@ eventRoutes.route("/inpersonInteraction").post(async (req, res) => {
         // return res.send(event)
 })
 
-eventRoutes.route("/updateEnd").post(async (req, res) => {
-    let data = req.body;
-    const reqUser = req.user as IUser;
-    const user = await User.findById(reqUser._id);
-    let interaction = await Interaction.findOne({uuid: reqUser._id.toHexString(), eventID: req.body.eventID })
-    if (!interaction) {
-        return res.status(400).send('User never attended meeting to begin with')
-    } else if (interaction.instances){
-        let latestPair = interaction.instances[interaction.instances.length - 1]
-        if (latestPair.timeOut) {
-            return res.status(400).send('End already recorded')
-        } else {
-            latestPair.timeOut = new Date()
-        }
-    }
-    return res.status(200).send("updated the end time");
-})
 
 
 eventRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
