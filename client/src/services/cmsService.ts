@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev.hack.gt/admin/api"
+
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
     const event = await axios.get('/event/virtualInteraction/' + eventId);
@@ -43,7 +45,7 @@ let fetchLiveEvents = async ()=> {
     }
   }
   `;
-  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+  var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: liveEventsQuery }),
@@ -78,7 +80,7 @@ let fetchUpcomingEvents = async ()=> {
     }
   }
   `;
-  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+  var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: upcomingEventsQuery }),
@@ -111,7 +113,7 @@ let fetchAllEvents = async ()=> {
     }
   }
   `;
-  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+  var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: allEventsQuery }),
@@ -132,7 +134,7 @@ let fetchBlock = async (blockSlug: string)=> {
   }
   `;
   console.log(blockQuery)
-  var res = await fetch(process.env.REACT_APP_CMS_URL|| "https://cms.hack.gt/admin/api", {
+  var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: blockQuery }),
