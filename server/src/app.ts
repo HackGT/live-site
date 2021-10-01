@@ -41,9 +41,9 @@ process.on("unhandledRejection", err => {
     throw err;
 });
 
-import { isAuthenticated } from "./auth/auth";
+import { isAuthenticated, isAdmin } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
-import { eventRoutes } from "./routes/event";
+import { inpersonRoutes, virtualRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
 import { getEndedEvents } from "./cms"
 // import { Time, User, IUser, ITime } from "./schema";
@@ -59,7 +59,8 @@ app.get("/status", (req, res) => {
 
 
 app.use("/auth", authRoutes);
-app.use("/event", isAuthenticated, eventRoutes);
+app.use("/event", isAuthenticated, virtualRoutes);
+app.use("/event", isAdmin , inpersonRoutes);
 app.use("/user", userRoutes);
 
 
