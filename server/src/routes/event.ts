@@ -22,7 +22,7 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
     // assigns the time to now to event end
     //
     
-    const user = await User.findById(req.body.uuid);
+    const user = await User.findOne({uuid:req.body.uuid});
     const event = await getCMSEvent(req.body.eventID);
     const eventType = req.body.eventType || 'inperson';
 
@@ -35,7 +35,8 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
             return res.status(400).send("Event already ended")
         }
 
-        let interaction = await Interaction.findOne({uuid: req.body.uuid, eventID: req.body.eventID })
+        let interaction = await Interaction.findOne({uuid: user.uuid, 
+                                                    eventID: req.body.eventID })
         if (interaction) {
             interaction.instances?.push({
                 timeIn: now.toDate(),
@@ -52,14 +53,10 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
                     timeOut: endTime.toDate(),
                     eventType: eventType
                 }  as IInteractionInstance],
-                employees: req.body.employees.map(employee => ({
-                    uuid: employee.uuid,
-                    name: employee.name,
-                    email: employee.email
-                }))
             });
             await interaction.save()
         }
+        return res.status(200).send();
     } else if (!user) {
        return res.status(400).send("Invalid user uuid");
     } else if (!event) {
@@ -67,7 +64,6 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
     } else {
         return res.status(400).send("Invalid request"); 
     }
-        // return res.send(event)
 })
 
 

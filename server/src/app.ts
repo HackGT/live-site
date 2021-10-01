@@ -59,8 +59,8 @@ app.get("/status", (req, res) => {
 
 
 app.use("/auth", authRoutes);
-app.use("/event", isAuthenticated, virtualRoutes);
-app.use("/event", isAdmin , inpersonRoutes);
+app.use("/virtual", isAuthenticated, virtualRoutes);
+app.use("/inperson", isAdmin, inpersonRoutes);
 app.use("/user", userRoutes);
 
 
