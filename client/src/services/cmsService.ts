@@ -4,7 +4,7 @@ const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
-    const event = await axios.get('/event/virtualInteraction/' + eventId);
+    const event = await axios.get('/virtual/virtualInteraction/' + eventId);
     console.log(eventId)
     console.log(event)
     return event.data;

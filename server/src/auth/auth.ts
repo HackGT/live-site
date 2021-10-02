@@ -53,29 +53,32 @@ export function isAuthenticated(
   }
 }
 
-export function isAdmin(
-  request: express.Request,
-  response: express.Response,
-  next: express.NextFunction
-) {
-  response.setHeader("Cache-Control", "private");
-
-  const auth = request.headers.authorization;
-  const user = request.user as IUser | undefined;
-
-  if (process.env.PRODUCTION !== "true" || user?.admin) {
-    next();
-  } else if (auth && typeof auth === "string" && auth.includes(" ")) {
-    const key = auth.split(" ")[1].toString();
-
-    if (key === process.env.ADMIN_SECRET) {
-      next();
-    } else {
-      response.status(401).json({ error: "Incorrect auth token provided" });
+export function isAdmin(request: express.Request, response: express.Response, next: express.NextFunction): void {
+    const user = request.user as IUser;
+    const auth = request.headers.authorization;
+    if (auth && typeof auth === "string" && auth.includes(" ")) {
+        var origin = request.get('origin');
+        const key = auth.split(" ")[1];
+        if (key === process.env.ADMIN_SECRET) {
+            next();
+        } else {
+            response.status(401).json({
+            error: "Incorrect auth token",
+            });
+        }
     }
-  } else {
-    response.status(401).json({ error: "No auth token provided" });
-  }
+    else if (!request.isAuthenticated() || !user) {
+        if (request.session) {
+            request.session.returnTo = request.originalUrl;
+        }
+        response.redirect("/auth/login");
+    } else {
+        if (user['admin']==true) {
+            next();
+        } else {
+            response.redirect('/auth/login');
+        }
+    }
 }
 
 passport.use(
