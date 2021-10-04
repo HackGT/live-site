@@ -12,15 +12,13 @@ type Props = {
 };
 
 const DailyStage: React.FC<Props> = (props: Props) => {
-  // str.split(" ", 3)
   let url = props.videoID.split("?t=")[0]
   let token = props.videoID.split("?t=")[1]
-  // console.log('hlkdsjfsdlkf', props.videoID.split("?t=")  )
 
-  const containerRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   async function createCallFrameAndJoinCall() {
-    if (containerRef !== null) {
+    if (containerRef.current !== null) {
       const divElement = containerRef.current;
       if (divElement !== null) {
         const callFrame = DailyIframe.createFrame(divElement, {
@@ -45,13 +43,26 @@ const DailyStage: React.FC<Props> = (props: Props) => {
           url: url,
           token: token
         });
+        callFrame.on('left-meeting', (_) => {
+          if (containerRef != null) {
+            if (containerRef.current != null) {
+              containerRef.current.innerHTML = "";
+            }
+          }
+          createCallFrameAndJoinCall()
+        })
       }
     }
   }
 
   useEffect(() => {
+    if (containerRef != null) {
+      if (containerRef.current != null) {
+        containerRef.current.innerHTML = "";
+      }
+    }
     createCallFrameAndJoinCall()
-  }, [containerRef]);
+  }, [props.videoID]);
 
   return (
     <div className="main_stage_container">
@@ -61,7 +72,6 @@ const DailyStage: React.FC<Props> = (props: Props) => {
       <MainStageInformation event={props.event} />
     </div>
   );
-
 }
 
 export default DailyStage;
