@@ -12,6 +12,10 @@ type Props = {
 };
 
 const DailyStage: React.FC<Props> = (props: Props) => {
+  // str.split(" ", 3)
+  let url = props.videoID.split("?t=")[0]
+  let token = props.videoID.split("?t=")[1]
+  // console.log('hlkdsjfsdlkf', props.videoID.split("?t=")  )
 
   const containerRef = useRef(null)
 
@@ -38,7 +42,8 @@ const DailyStage: React.FC<Props> = (props: Props) => {
           }
         });
         await callFrame.join({
-          url: props.videoID,
+          url: url,
+          token: token
         });
       }
     }
