@@ -90,27 +90,27 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
         let interaction = await Interaction.findOne({uuid: reqUser._id.toHexString(), eventID: req.params.getEventID })
         console.log(interaction)
-        if (interaction && interaction.instances) {
-            if (interaction.instances[interaction.instances?.length - 1].timeOut!==undefined) {
-                interaction.instances?.push({
-                    timeIn: now.toDate(),
-                    timeOut: undefined,
-                    eventType: 'virtual'
-                } as IInteractionInstance)
-                await interaction.save();
-            }
-        } else {
-            interaction = createNew(Interaction, {
-                uuid: user.uuid,
-                eventID: event.id,
-                instances: [{
-                    timeIn: now.toDate(),
-                    timeOut: undefined,
-                    eventType: 'virtual'
-                } as IInteractionInstance] 
-            });
-            await interaction.save();
-        }
+        // if (interaction && interaction.instances) {
+            // if (interaction.instances[interaction.instances?.length - 1].timeOut!==undefined) {
+            //     interaction.instances?.push({
+            //         timeIn: now.toDate(),
+            //         timeOut: undefined,
+            //         eventType: 'virtual'
+            //     } as IInteractionInstance)
+            //     await interaction.save();
+            // }
+        // } else {
+            // interaction = createNew(Interaction, {
+            //     uuid: user.uuid,
+            //     eventID: event.id,
+            //     instances: [{
+            //         timeIn: now.toDate(),
+            //         timeOut: undefined,
+            //         eventType: 'virtual'
+            //     } as IInteractionInstance] 
+            // });
+            // await interaction.save();
+        // }
         let status= "";
         let timebeforestart = {
             hours:0,
