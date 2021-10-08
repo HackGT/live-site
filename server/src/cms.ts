@@ -123,13 +123,23 @@ export const getEndedEvents = async(minInterval) =>  {
             if (moment(js_endtime).tz("America/New_York").diff(startTime, "seconds") < 0) {
                 js_duration = 0
             } else {
-                js_duration = moment(js_jointime).tz("America/New_York").diff(startTime, "seconds") 
-                if (js_duration < 0) {
-                    js_duration = participants[j].duration+ js_duration
+                // js_duration = moment(js_jointime).tz("America/New_York").diff(startTime, "seconds") 
+                js_duration = startTime.diff(moment(js_jointime).tz("America/New_York"), "seconds") 
+                if (js_duration > 0) {
+                    js_duration = participants[j].duration - js_duration
                 } else {
                     js_duration = participants[j].duration
                 }
             }
+
+            if (moment(js_jointime).tz("America/New_York").diff(endTime, "seconds") > 0) {
+                js_duration = 0
+            } else {
+                let js_duration_end = moment(js_endtime).tz("America/New_York").diff(endTime, "seconds") 
+                if (js_duration > 0) {
+                    js_duration = js_duration - js_duration_end
+            }
+
             if(map.has(participants[j].user_id)) { // update the duration
                 var current = map.get(participants[j].user_id);
                 current.virtualDuration += js_duration;
