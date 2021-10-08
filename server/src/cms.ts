@@ -58,7 +58,7 @@ export const getCMSEvent = async (eventId) => {
     return data.data?.Event as ICMSEvent | null;
 }
 export const getEndedEvents = async(minInterval) =>  {
-    var curr  = new Date("2021-09-29T06:45:00.000Z"); // this is the sample event ive been working with later on change this to new Date()
+    var curr  = new Date(); // this is the sample event ive been working with later on change this to new Date()
     var prev = new Date(curr.getTime() - minInterval * 60000);
     const queryEndEvents = 
         `query {
