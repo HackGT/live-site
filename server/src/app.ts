@@ -41,9 +41,9 @@ process.on("unhandledRejection", err => {
     throw err;
 });
 
-import { isAuthenticated } from "./auth/auth";
+import { isAuthenticated, isAdmin } from "./auth/auth";
 import { authRoutes } from "./routes/auth";
-import { eventRoutes } from "./routes/event";
+import { inpersonRoutes, virtualRoutes } from "./routes/event";
 import { userRoutes } from "./routes/user";
 import { getEndedEvents } from "./cms"
 // import { Time, User, IUser, ITime } from "./schema";
@@ -59,7 +59,8 @@ app.get("/status", (req, res) => {
 
 
 app.use("/auth", authRoutes);
-app.use("/event", isAuthenticated, eventRoutes);
+app.use("/virtual", isAuthenticated, virtualRoutes);
+app.use("/inperson", isAdmin, inpersonRoutes);
 app.use("/user", userRoutes);
 
 
@@ -125,10 +126,10 @@ app.listen(PORT, () => {
 });
 
 cron.schedule('*/1 * * * *', () => {
-    let minInterval = 5;
-    console.log('running a task every ' + minInterval + ' minute ' + new Date().toISOString());
-    getEndedEvents(minInterval);
-  });
+   let minInterval = 5;
+   console.log('running a task every ' + minInterval + ' minute ' + new Date().toISOString());
+   getEndedEvents(minInterval);
+ });
 
 // app.use("/ws-stuff", router);
 

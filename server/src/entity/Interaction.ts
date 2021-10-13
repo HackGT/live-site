@@ -3,14 +3,14 @@ import { mongoose, RootDocument } from './database'
 export interface IInteractionInstance {
     timeIn: Date;
     timeOut?: Date | undefined;
-    eventType: string; //virtual or inperson
+    interactionType: string; //virtual or inperson
 }
 
 
 const InteractionInstanceSchema = {
     timeIn: {type: Date, required: true},
     timeOut: Date,
-    eventType: String
+    interactionType: String
 }
 
 //unique interaction for each event/user combo
@@ -24,6 +24,11 @@ export interface IInteraction extends RootDocument {
         email: string;
     }[]; // Single scanner can be associated with multiple employees
     virtualDuration?: number;
+    eventTotalDuration?:number;
+    eventStartTime?: string;
+    eventEndTime?: string;
+    eventName?: string;
+    eventType?: string;
 }
 
 export const Interaction = mongoose.model<IInteraction & mongoose.Document>("Interaction", new mongoose.Schema({
@@ -54,7 +59,12 @@ export const Interaction = mongoose.model<IInteraction & mongoose.Document>("Int
         type: Number,
         required: false,
         default: 0
-    }
+    }, 
+    eventTotalDuration: Number, 
+    eventStartTime: String, 
+    eventEndTime: String, 
+    eventName: String, 
+    eventType: String
 }))
 
 

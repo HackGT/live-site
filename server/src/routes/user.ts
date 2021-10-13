@@ -1,24 +1,21 @@
 import express from "express";
 import { IUser, User} from "../entity/User";
 import { Interaction } from "../entity/Interaction";
-
+import { getCMSEvent } from "../cms"
 import { isAdmin } from "../auth/auth";
+import moment from "moment-timezone";
 
 export let userRoutes = express.Router();
 
 // userRoutes.route("/points/:userId").get(async (req, res) => {
 //     const userId = req.params.userId;
-
 //     if (!userId) {
 //         return res.status(400).send("userId not defined");
 //     }
-
 //     let user = await User.findOne({ uuid: userId });
-
 //     if (!user) {
 //         return res.status(400).send("User not found");
 //     }
-
 //     return res.send({ points: user.points });
 // });
 
@@ -47,6 +44,10 @@ userRoutes.route("/interaction").post(async (req, res) => {
     if (!interaction ) {
         return res.status(400).send("User has not attended this event");
     }
+    const event = await getCMSEvent(req.body.eventID);
+    if (!event) {
+        return res.status(400).send("Event id not correct!");
+    } 
     return res.send({ interaction: interaction });
 });
 

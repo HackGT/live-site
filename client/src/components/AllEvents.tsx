@@ -38,7 +38,6 @@ const AllEvents: React.FC<Props> = (props: Props) => {
     const getEvents = async () => {
       const data = await fetchAllEvents()
       const events = data.allEvents
-      console.log(events)
       setEvents(events);
       set_filtered_events(events.slice(0, 6))
 
