@@ -1,8 +1,9 @@
 import express from "express";
 import { IUser, User} from "../entity/User";
 import { Interaction } from "../entity/Interaction";
-
+import { getCMSEvent } from "../cms"
 import { isAdmin } from "../auth/auth";
+import moment from "moment-timezone";
 
 export let userRoutes = express.Router();
 
@@ -47,6 +48,22 @@ userRoutes.route("/interaction").post(async (req, res) => {
     if (!interaction ) {
         return res.status(400).send("User has not attended this event");
     }
+    const event = await getCMSEvent(req.body.eventID);
+    if (!event) {
+        return res.status(400).send("Event id not correct!");
+    }
+    const startTime = moment(event.startDate).tz("America/New_York");
+    const endTime = moment(event.endDate).tz("America/New_York");
+    let totalduration = endTime.diff(startTime, "seconds")
+    let newinteraction = {
+        ...interaction,
+        "name":event.name, 
+        "type":event.type.name, 
+        "startDate": event.startDate,
+        "endDate": event.endDate,
+        "totalDuration": totalduration
+    }
+    
     return res.send({ interaction: interaction });
 });
 

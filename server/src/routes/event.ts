@@ -2,26 +2,17 @@ import express from "express"
 import { getCMSEvent } from "../cms"
 import { createNew} from "../entity/database";
 import { IUser, User} from "../entity/User"
-import { IInteraction, Interaction, IInteractionInstance} from "../entity/Interaction"
+import { Interaction, IInteractionInstance} from "../entity/Interaction"
 
 import moment from "moment-timezone";
 import dotenv from "dotenv"
-
 dotenv.config();
-
 const fetch = require('node-fetch');
 
 export let virtualRoutes = express.Router();
 export let inpersonRoutes = express.Router();
 
 inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
-
-    // request structure: { 'uuid': 'ground_truth_uuid', 
-    //                      'eventID': 'CMS_ID'
-    //                      'eventType': 'type of interaction'}
-    // assigns the time to now to event end
-    //
-    
     const user = await User.findOne({uuid:req.body.uuid});
     const event = await getCMSEvent(req.body.eventID);
     const eventType = req.body.eventType || 'inperson';
@@ -41,7 +32,7 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
             interaction.instances?.push({
                 timeIn: now.toDate(),
                 timeOut: endTime.toDate(),
-                eventType: eventType 
+                interactionType: eventType 
             }  as IInteractionInstance)
             await interaction.save()
         } else {
@@ -51,7 +42,7 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
                 instances: [{
                     timeIn: now.toDate(),
                     timeOut: endTime.toDate(),
-                    eventType: eventType
+                    interactionType: eventType
                 }  as IInteractionInstance],
             });
             await interaction.save()
@@ -67,7 +58,6 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
 })
 
 
-
 virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     const reqUser = req.user as IUser;
     const user = await User.findById(reqUser._id);
@@ -75,7 +65,6 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     const event = await getCMSEvent(req.params.getEventID);
     console.log(event)
     if (event && user && req.user) {
-        
         const startTime = moment(event.startDate).tz("America/New_York");
         const endTime = moment(event.endDate).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
@@ -88,29 +77,6 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
         let eventInSession = differenceEnd >= -10 && differenceStart <= 10;
-        let interaction = await Interaction.findOne({uuid: reqUser._id.toHexString(), eventID: req.params.getEventID })
-        console.log(interaction)
-        // if (interaction && interaction.instances) {
-            // if (interaction.instances[interaction.instances?.length - 1].timeOut!==undefined) {
-            //     interaction.instances?.push({
-            //         timeIn: now.toDate(),
-            //         timeOut: undefined,
-            //         eventType: 'virtual'
-            //     } as IInteractionInstance)
-            //     await interaction.save();
-            // }
-        // } else {
-            // interaction = createNew(Interaction, {
-            //     uuid: user.uuid,
-            //     eventID: event.id,
-            //     instances: [{
-            //         timeIn: now.toDate(),
-            //         timeOut: undefined,
-            //         eventType: 'virtual'
-            //     } as IInteractionInstance] 
-            // });
-            // await interaction.save();
-        // }
         let status= "";
         let timebeforestart = {
             hours:0,

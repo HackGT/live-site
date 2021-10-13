@@ -1,8 +1,6 @@
 const fetch = require('node-fetch');
-import { User } from "entity/User";
 import { IInteraction, Interaction, IInteractionInstance } from "./entity/Interaction";
 import { createNew} from "./entity/database";
-import e from "express";
 import moment from "moment-timezone";
 
 
@@ -59,6 +57,7 @@ export const getCMSEvent = async (eventId) => {
 }
 export const getEndedEvents = async(minInterval) =>  {
     var curr  = new Date("2021-09-29T06:45:00.000Z"); // this is the sample event ive been working with later on change this to new Date()
+    // var curr  = new Date();
     var prev = new Date(curr.getTime() - minInterval * 60000);
     const queryEndEvents = 
         `query {
@@ -66,13 +65,17 @@ export const getEndedEvents = async(minInterval) =>  {
               {endDate_gte: "${prev.toISOString()}"},
               {endDate_lte: "${curr.toISOString()}"}
             ]}, orderBy: "startDate") {
-              name
-              endTime
-              endDate
-              startTime
-              startDate
-              url
-              id
+                name
+                endTime
+                endDate
+                startTime
+                startDate
+                url
+                id
+                type {
+                    name
+                    points
+                }
             }
         }
     `;
@@ -110,12 +113,16 @@ export const getEndedEvents = async(minInterval) =>  {
         const sessionInfo =  dailySessionInfo.data[0]; // we only want to check the lastest session for every room 
         const participants = sessionInfo.participants;
         let map = new Map();
+        // if allEvents
         
+        // const startTime = moment(allEvents[i].startTime).tz("America/New_York");
+        // const endTime = moment(allEvents[i].endTime).tz("America/New_York");
         const startTime = moment(allEvents[i].startDate).tz("America/New_York");
         const endTime = moment(allEvents[i].endDate).tz("America/New_York");
-        console.log(participants[0].join_time*1000)
-        console.log(startTime.diff(moment(participants[0].join_time)))
-        console.log('LKSJFLKDSJFLKDSJFLSDKFJ', dailySessionInfo)
+        // console.log(participants[0].join_time*1000)
+        // console.log(startTime.diff(moment(participants[0].join_time)))
+        // console.log('LKSJFLKDSJFLKDSJFLSDKFJ', dailySessionInfo)
+        let totalduration = endTime.diff(startTime, "seconds")
         for(var j = 0; j < participants.length; j++) {
             let js_jointime = new Date(participants[j].join_time*1000)
             let js_endtime = new Date((participants[j].join_time+ participants[j].duration)*1000)
@@ -159,15 +166,20 @@ export const getEndedEvents = async(minInterval) =>  {
                         instances: [{
                             timeIn: js_jointime,
                             timeOut: js_endtime,
-                            eventType: 'virtual'
+                            interactionType: 'virtual'
                         } as IInteractionInstance],
-                        virtualDuration: js_duration
+                        virtualDuration: js_duration,
+                        eventTotalDuration: totalduration,
+                        eventName: allEvents[i].name,
+                        eventType: allEvents[i].type.name,
+                        eventStartTime: allEvents[i].startDate,
+                        eventEndTime: allEvents[i].endDate
                     })
                 } else {
                     interaction.instances = [{
                         timeIn: js_jointime,
                         timeOut: js_endtime,
-                        eventType: 'virtual'
+                        interactionType: 'virtual'
                     } as IInteractionInstance]
                     interaction.virtualDuration =  js_duration
                 }
