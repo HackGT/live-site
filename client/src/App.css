@@ -1,14 +1,13 @@
 /* General styling */
 @font-face {
-  font-family: 'Roboto';
-  src: url(./assets/Roboto-Regular.ttf)
+  font-family: "Roboto";
+  src: url(./assets/Roboto-Regular.ttf);
 }
 
 .app_main {
   text-align: center;
   background-color: rgb(245, 245, 245);
 }
-
 
 /* Logo Styling */
 .logo_container {
@@ -24,17 +23,17 @@
   font-size: 1.9rem;
   user-select: none;
   color: black;
-  font-weight: 500
+  font-weight: 500;
 }
 
 /* Navbar Styling */
 .navbar {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 18px;
   padding: 10px 5%;
   display: grid;
   grid-template-columns: 1fr auto;
-  box-shadow: 0 8px 4px -4px gray;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 8%);
   margin-bottom: 10px;
 }
 
@@ -79,7 +78,7 @@
   align-items: center;
 }
 
-.youtubeStage{
+.youtubeStage {
   position: absolute;
   top: 0;
   left: 0;
@@ -87,7 +86,7 @@
   height: 100%;
 }
 
-.dailyStage{
+.dailyStage {
   position: absolute;
   top: 0;
   left: 0;
@@ -96,7 +95,7 @@
 }
 
 .main_stage_placeholder {
-  background-color: #C4C4C4;
+  background-color: #c4c4c4;
   height: 600px;
   width: 100%;
 }
@@ -108,11 +107,11 @@
 
 /* Card Tag */
 .card_tag {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   color: black;
-  border:1px black;
-  background-color: #E6E6E6;
+  border: 1px black;
+  background-color: #e6e6e6;
   padding: 8px;
   border-radius: 5px;
 }
@@ -128,7 +127,7 @@
 
 /* Live Events List */
 .live_event_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 50px;
   color: black;
   margin-bottom: 10px;
@@ -169,7 +168,7 @@
 
 /* Live Events List */
 .upcoming_events_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 50px;
   color: black;
   margin-bottom: 10px;
@@ -207,7 +206,7 @@
 }
 
 .schedule_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 50px;
   color: black;
   margin-bottom: 10px;
@@ -227,7 +226,7 @@
 }
 
 .all_events_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 50px;
   color: black;
   margin-bottom: 10px;
@@ -251,7 +250,7 @@
 }
 
 .all_events_filter_text {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 24px;
   color: black;
   margin-bottom: 10px;
@@ -279,7 +278,7 @@
 }
 
 .block_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 32px;
   color: black;
   margin-bottom: 10px;
@@ -296,7 +295,7 @@
 }
 
 .block_card_text {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 18px;
   color: black;
   margin: 10px;
@@ -304,7 +303,7 @@
 }
 
 .block_card_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 24px;
   font-weight: bold;
   color: black;
@@ -331,7 +330,7 @@
 }
 
 .prize_title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 36px;
   color: black;
   margin-bottom: 10px;
@@ -341,9 +340,9 @@
 /* Footer */
 
 footer {
-  color: #FFFFFF;
+  color: #ffffff;
   margin: var(--base-unit-4);
-  box-shadow: 0 -8px 4px 0px gray;
+  box-shadow: 0 -3px 4px 0 rgba(0, 0, 0, 8%);
   margin-top: 100px;
   padding-bottom: 20px;
 }
@@ -356,14 +355,14 @@ footer {
 }
 
 .footer_text_hex {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   color: black;
   text-align: left;
 }
 
 .footer_text_mlh {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   color: black;
   text-align: left;

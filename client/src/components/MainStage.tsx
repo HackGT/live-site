@@ -60,7 +60,6 @@ const MainStage: React.FC<Props> = (props: Props) => {
 
   if (videoInformation !== undefined && videoInformation !== null) {
     if (videoInformation.status === "eventInSession") {
-      console.log(videoInformation.type)
       if (videoInformation.type === "youtube") {
         return (
           <YoutubeStage event={props.event} videoID={videoInformation.url} />
