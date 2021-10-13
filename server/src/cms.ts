@@ -56,8 +56,8 @@ export const getCMSEvent = async (eventId) => {
     return data.data?.Event as ICMSEvent | null;
 }
 export const getEndedEvents = async(minInterval) =>  {
-    var curr  = new Date("2021-09-29T06:45:00.000Z"); // this is the sample event ive been working with later on change this to new Date()
-    // var curr  = new Date();
+    // var curr  = new Date("2021-09-29T06:45:00.000Z"); // this is the sample event ive been working with later on change this to new Date()
+    var curr  = new Date();
     var prev = new Date(curr.getTime() - minInterval * 60000);
     const queryEndEvents = 
         `query {
@@ -113,15 +113,12 @@ export const getEndedEvents = async(minInterval) =>  {
         const sessionInfo =  dailySessionInfo.data[0]; // we only want to check the lastest session for every room 
         const participants = sessionInfo.participants;
         let map = new Map();
-        // if allEvents
+
         
-        // const startTime = moment(allEvents[i].startTime).tz("America/New_York");
-        // const endTime = moment(allEvents[i].endTime).tz("America/New_York");
+
         const startTime = moment(allEvents[i].startDate).tz("America/New_York");
         const endTime = moment(allEvents[i].endDate).tz("America/New_York");
-        // console.log(participants[0].join_time*1000)
-        // console.log(startTime.diff(moment(participants[0].join_time)))
-        // console.log('LKSJFLKDSJFLKDSJFLSDKFJ', dailySessionInfo)
+
         let totalduration = endTime.diff(startTime, "seconds")
         for(var j = 0; j < participants.length; j++) {
             let js_jointime = new Date(participants[j].join_time*1000)
@@ -189,7 +186,6 @@ export const getEndedEvents = async(minInterval) =>  {
 
         map.forEach((value)=> {
             value.virtualDuration = Math.min(value.virtualDuration, endTime.diff(startTime, "seconds"))
-            // console.log(value)
             value.save()
         })
         i++

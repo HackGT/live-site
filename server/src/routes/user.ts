@@ -9,17 +9,13 @@ export let userRoutes = express.Router();
 
 // userRoutes.route("/points/:userId").get(async (req, res) => {
 //     const userId = req.params.userId;
-
 //     if (!userId) {
 //         return res.status(400).send("userId not defined");
 //     }
-
 //     let user = await User.findOne({ uuid: userId });
-
 //     if (!user) {
 //         return res.status(400).send("User not found");
 //     }
-
 //     return res.send({ points: user.points });
 // });
 
@@ -51,19 +47,7 @@ userRoutes.route("/interaction").post(async (req, res) => {
     const event = await getCMSEvent(req.body.eventID);
     if (!event) {
         return res.status(400).send("Event id not correct!");
-    }
-    const startTime = moment(event.startDate).tz("America/New_York");
-    const endTime = moment(event.endDate).tz("America/New_York");
-    let totalduration = endTime.diff(startTime, "seconds")
-    let newinteraction = {
-        ...interaction,
-        "name":event.name, 
-        "type":event.type.name, 
-        "startDate": event.startDate,
-        "endDate": event.endDate,
-        "totalDuration": totalduration
-    }
-    
+    } 
     return res.send({ interaction: interaction });
 });
 
