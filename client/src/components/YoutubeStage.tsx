@@ -19,7 +19,7 @@ const YoutubeStage: React.FC<Props> = (props: Props) => {
           opts={{ playerVars: { autoplay: 1 } }}
           className="youtubeStage"
         />
-        <iframe className="youtubechat" height="100%" src={"https://www.youtube.com/live_chat?v=" + props.videoID + "&embed_domain=localhost"}></iframe>
+        <iframe className="youtubechat" height="100%" src={"https://www.youtube.com/live_chat?v=" + props.videoID + "&embed_domain=" + window.location.hostname}></iframe>
       </div>
       <MainStageInformation event={props.event} />
     </div>
