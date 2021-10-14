@@ -10,14 +10,16 @@ type Props = {
 };
 
 const YoutubeStage: React.FC<Props> = (props: Props) => {
+
   return (
     <div className="main_stage_container">
-      <div className="main_stage_wrapper">
+      <div className="main_stage_wrapper_youtube">
         <YouTube
           videoId={props.videoID}
           opts={{ playerVars: { autoplay: 1 } }}
           className="youtubeStage"
-        /> 
+        />
+        <iframe className="youtubechat" height="100%" src={"https://www.youtube.com/live_chat?v=" + props.videoID + "&embed_domain=localhost"}></iframe>
       </div>
       <MainStageInformation event={props.event} />
     </div>

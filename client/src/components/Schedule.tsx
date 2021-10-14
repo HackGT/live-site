@@ -61,7 +61,8 @@ const Schedule: React.FC<Props> = (props: Props) => {
       <p className="schedule_title">Schedule</p>
       <TableContainer className="schedule_table" component={Paper} style={{ maxHeight: 600 }}>
         <Table stickyHeader aria-label="simple table" style={{
-          tableLayout: "fixed"
+          tableLayout: "fixed",
+          minWidth: "1100px", overflow: "auto"
         }}>
           <colgroup>
               <col width="15%" />
