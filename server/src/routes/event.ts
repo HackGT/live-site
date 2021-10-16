@@ -6,6 +6,7 @@ import { Interaction, IInteractionInstance} from "../entity/Interaction"
 
 import moment from "moment-timezone";
 import dotenv from "dotenv"
+import { start } from "repl";
 dotenv.config();
 const fetch = require('node-fetch');
 
@@ -71,8 +72,10 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         const differenceStart = startTime.diff(now, "minutes");
         const differenceStartSeconds = startTime.diff(now, "seconds");
         const differenceEnd = endTime.diff(now, "minutes");
+        const differenceEndSeconds = endTime.diff(now, "seconds");
         const differenceOpen = startTime.diff(now,"minutes")-10;
         const differenceOpenSeconds = startTime.diff(now, "seconds")-60*10;
+        const differenceTotalDuration = endTime.diff(startTime, "seconds");
 
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
@@ -92,9 +95,6 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             timebeforestart.hours = Math.floor(differenceOpen / 60);
             timebeforestart.minutes = differenceOpen % 60
             timebeforestart.seconds = differenceOpenSeconds % 60
-//             timebeforestart.hours = Math.floor(differenceStart / 60);
-//             timebeforestart.minutes = differenceStart % 60
-//             timebeforestart.seconds = differenceStartSeconds % 60
         } else {
             status = "eventNotWithin24Hours"
         }
@@ -115,6 +115,26 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 .catch(err => console.error('error:' + err));
             return res.send({"name":event.name, "url": event.url + "?t=" + response.token, "timebeforestart":timebeforestart, "status": status}); 
         } else if(event.url && status==="eventInSession") {
+            let interaction = await Interaction.findOne({uuid: user.uuid, 
+                eventID: event.id })
+            if (!interaction) {
+                interaction = createNew(Interaction, {
+                    uuid:  user.uuid, 
+                    eventID:  event.id,
+                    instances: [{
+                        timeIn: now.toDate(),
+                        timeOut: endTime.toDate(),
+                        interactionType: 'virtual'
+                    } as IInteractionInstance],
+                    virtualDuration: Math.min(differenceEndSeconds, differenceTotalDuration),
+                    eventTotalDuration: differenceTotalDuration,
+                    eventName: event.name,
+                    eventType: event.type.name,
+                    eventStartTime: event.startDate,
+                    eventEndTime: event.endDate
+                })
+                await interaction.save();
+            }
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
         }
         else if (event.url) {
