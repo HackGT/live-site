@@ -17,6 +17,7 @@ const Home: React.FC = () => {
 
   const updateMainStageEvent = (e: any) => {
     setMainStageEvent(new EventInformation(e.id, e.url, e.name, e.tags, e.description))
+
     window.scrollTo({
       top: 0, 
       behavior: 'smooth'
@@ -61,13 +62,53 @@ const Home: React.FC = () => {
      window.scrollTo(0, 0);
    }, []);
 
+  // Logic for updating Upcoming and Live events
+  let [liveEvents, setLiveEvents] = useState<any[]>([])
+  let [upcomingEvents, setUpcomingEvents] = useState<any[]>([])
+
+  // The time to refresh next, use the next Upcoming Event to time this.
+  async function updateEvents() {
+    const upcomingEventDataRaw = await fetchUpcomingEvents();
+    const liveEventDataRaw = await fetchLiveEvents();
+
+    const upcomingEventData = upcomingEventDataRaw.allEvents
+    const liveEventData = liveEventDataRaw.allEvents 
+
+    let minRefreshTime = new Date(Date.now() + 6000000)
+    for (let i = 0; i < upcomingEventData.length; i++) {
+      let event_start = new Date(upcomingEventData[i].startDate);
+      if (event_start < minRefreshTime) {
+        minRefreshTime = event_start
+      }
+    }
+    for (let i = 0; i < liveEventData.length; i++) {
+      let event_end = new Date(liveEventData[i].endDate);
+      if (event_end < minRefreshTime) {
+        minRefreshTime = event_end
+      }
+    }
+    setLiveEvents(liveEventData);
+    setUpcomingEvents(upcomingEventData.splice(0, 6));
+
+    let nextRefreshTime = minRefreshTime.getTime() - Date.now()
+    if (nextRefreshTime > 0) {
+      setTimeout(updateEvents, nextRefreshTime);
+    } else {
+      setTimeout(updateEvents, 600000)
+    }
+  }
+
+  useEffect(()=>{
+    updateEvents();
+  }, [])
+
   return (
     <div>
         <MainStage event={mainStageEvent} />
-        <LiveEvents setEventCallback={updateMainStageEvent} />
+        <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
         <Schedule tableLength={6} />
         <SeeFullScheduleButton />
-        <UpcomingEvents setEventCallback={updateMainStageEvent} />
+        <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
         <AllEvents setEventCallback={updateMainStageEvent} />
     </div>
   )
