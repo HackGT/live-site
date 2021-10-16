@@ -83,6 +83,12 @@
   flex-direction: row;
 }
 
+@media (max-width: 900px) {
+  .main_stage_wrapper_youtube {
+    flex-direction: column;
+  }
+}
+
 .main_stage_container {
   margin: 0 auto;
   width: 75%;

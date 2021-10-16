@@ -20,6 +20,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
     const fetchEventUrl = async () => {
       try {
         let eventData = await getEventUrl(props.event.id);
+        console.log(eventData)
         let eventUrl: string = eventData.url;
 
         let videoID: string = ""
@@ -27,8 +28,8 @@ const MainStage: React.FC<Props> = (props: Props) => {
         let eventName: string = eventData.name;
         let eventStatus: string = eventData.status;
         
-        
-        if (props.event.url) {
+        if (eventData.url) {
+          console.log(props.event.url)
           if (eventUrl.includes("youtube")) {
             // For https://www.youtube.com/watch?v=... format
             videoType = "youtube";
