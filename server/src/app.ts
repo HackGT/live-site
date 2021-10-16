@@ -125,7 +125,7 @@ app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
 
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
    let minInterval = 5;
    console.log('running a task every ' + minInterval + ' minute ' + new Date().toISOString());
    getEndedEvents(minInterval);
