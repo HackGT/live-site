@@ -91,7 +91,7 @@
 
 .main_stage_container {
   margin: 0 auto;
-  width: 75%;
+  width: calc(60% + 300px);
   margin-top: 40px;
   display: flex;
   flex-direction: column;
@@ -103,15 +103,15 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 75%;
+  width: calc(100% - 300px);
   height: 100%;
 }
 
 .youtubechat {
   position: absolute;
   top: 0;
-  left: 75%;
-  width: 25%;
+  left: calc(100% - 300px);
+  width: 300px;
   height: 100%;
 }
 
