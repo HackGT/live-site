@@ -17,7 +17,6 @@ const Home: React.FC = () => {
 
   const updateMainStageEvent = (e: any) => {
     setMainStageEvent(new EventInformation(e.id, e.url, e.name, e.tags, e.description))
-
     window.scrollTo({
       top: 0, 
       behavior: 'smooth'

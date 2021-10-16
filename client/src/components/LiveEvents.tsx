@@ -31,8 +31,8 @@ const LiveEvents: React.FC<Props> = (props: Props) => {
                 style={{
                   borderTopLeftRadius: '1.5%',
                   borderBottomLeftRadius: '1.5%',
-                  width: 175,
-                  objectFit: 'cover'
+                  objectFit: 'cover',
+                  height: '100px'
                 }}
               />
               <CardActionArea onClick={() => props.setEventCallback(event)}>
