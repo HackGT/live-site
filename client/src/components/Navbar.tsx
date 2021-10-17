@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
               </p>
             </Link>
             <div className="navbar_button">
-              <Button variant="outlined" color="primary">Slack</Button>
+            <Button variant="outlined" color="primary"    href="https://join.hack.gt" target="_blank"  >Discord</Button>
             </div>
           </div>
         </div>
