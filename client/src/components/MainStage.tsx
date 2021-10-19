@@ -3,7 +3,7 @@ import '../App.css';
 
 import EventInformation from './EventInformation';
 import React, { useEffect, useState } from 'react';
-import {getEventUrl} from '../services/cmsService';
+import { getEventUrl } from '../services/cmsService';
 import YoutubeStage from './YoutubeStage';
 import DailyStage from './DailyStage'
 import InvalidEventStage from './InvalidEventStage'
@@ -16,48 +16,53 @@ type Props = {
 const MainStage: React.FC<Props> = (props: Props) => {
   const [videoInformation, setVideoInformation] = useState<VideoInformation>()
 
-  useEffect(() => {
-    const fetchEventUrl = async () => {
-      try {
-        let eventData = await getEventUrl(props.event.id);
-        console.log(eventData)
-        let eventUrl: string = eventData.url;
+  function getTimeInMS(timebeforestart: any) {
+    return ((timebeforestart.hours * 60 * 60 + timebeforestart.minutes * 60 + timebeforestart.seconds) * 1000);
+  }
 
-        let videoID: string = ""
-        let videoType: string = ""
-        let eventName: string = eventData.name;
-        let eventStatus: string = eventData.status;
-        
-        if (eventData.url) {
-          console.log(props.event.url)
-          if (eventUrl.includes("youtube")) {
-            // For https://www.youtube.com/watch?v=... format
-            videoType = "youtube";
-            videoID = eventUrl.split("v=").slice(-1)[0];
-          } else if (eventUrl.includes("youtu.be")) {
-            // For https://youtu.be/... format
-            videoType = "youtube";
-            videoID = eventUrl.split("/").slice(-1)[0];
-          } else if (eventUrl.includes("daily")) {
-            videoType = "daily"
-            videoID = eventUrl
-          } else {
-            videoType = "none"
-            videoID = ""
-          }
+  async function updateVideoData() {
+    try {
+      let eventData = await getEventUrl(props.event.id);
+      let eventUrl: string = eventData.url;
+
+      let videoID: string = ""
+      let videoType: string = ""
+      let eventName: string = eventData.name;
+      let eventStatus: string = eventData.status;
+      
+      if (eventData.url) {
+        if (eventUrl.includes("youtube")) {
+          // For https://www.youtube.com/watch?v=... format
+          videoType = "youtube";
+          videoID = eventUrl.split("v=").slice(-1)[0];
+        } else if (eventUrl.includes("youtu.be")) {
+          // For https://youtu.be/... format
+          videoType = "youtube";
+          videoID = eventUrl.split("/").slice(-1)[0];
+        } else if (eventUrl.includes("daily")) {
+          videoType = "daily"
+          videoID = eventUrl
         } else {
           videoType = "none"
           videoID = ""
         }
-        setVideoInformation(new VideoInformation(videoType, videoID, eventStatus, eventName))
-      } catch (e) {
-        console.log(e);
+      } else {
+        videoType = "none"
+        videoID = ""
       }
-    };
-    fetchEventUrl();
+      let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
+      if (timeTillStartMS > 0) {
+        setTimeout(updateVideoData, timeTillStartMS)
+      }
+      setVideoInformation(new VideoInformation(videoType, videoID, eventStatus, eventName))
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
+  useEffect(() => {
+    updateVideoData()
   }, [props.event]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // TODO: Add countdown logic for upcoming events + game link 
 
   if (videoInformation !== undefined && videoInformation !== null) {
     if (videoInformation.status === "eventInSession") {
