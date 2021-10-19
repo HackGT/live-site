@@ -68,7 +68,7 @@ inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
         }
 
         //don't allow multiple food stuff
-        if (req.body.eventType==EventType.Meal){
+        if (req.body.eventType==EventType.Food){
             warnOnDup=true;
         }
 
