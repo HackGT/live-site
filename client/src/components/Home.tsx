@@ -88,7 +88,13 @@ const Home: React.FC = () => {
       }
     }
     setLiveEvents(liveEventData);
-    setUpcomingEvents(upcomingEventData.splice(0, 6));
+
+    let sortedUpcomingEvents = upcomingEventData.sort(function(a: any, b: any) {
+      let dateA = a.startDate;
+      let dateB = b.startDate;
+      return dateA >= dateB ? 1 : -1;
+    })
+    setUpcomingEvents(sortedUpcomingEvents.splice(0, 12));
 
     let nextRefreshTime = minRefreshTime.getTime() - Date.now()
     if (nextRefreshTime > 0) {

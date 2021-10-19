@@ -7,6 +7,7 @@
 .app_main {
   text-align: center;
   background-color: rgb(245, 245, 245);
+  min-width: 800px;
 }
 
 /* Logo Styling */
@@ -238,6 +239,12 @@
   margin-bottom: 20px;
 }
 
+@media (max-width: 900px) {
+  .upcoming_events_card {
+    width: 65%;
+  }
+}
+
 /* Schedule */
 .schedule {
   margin-left: 10%;
@@ -289,27 +296,6 @@
   margin-bottom: 20px;
 }
 
-@media (max-width: 900px) {
-  .all_events_container {
-    flex-direction: column;
-    align-content: center;
-    width: 100%;
-  }
-  .all_events_card {
-    width: 50%;
-  }
-  .all_events_filter_dropdown {
-    width: 75%;
-    padding-top: 10px;
-  }
-  .all_events_filter_container {
-    align-items: center;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-  }
-}
-
 .all_events_filter_text {
   font-family: "Roboto", sans-serif;
   font-size: 24px;
@@ -329,6 +315,28 @@
   width: 80%;
   margin-top: 10px;
   margin-bottom: 40px;
+}
+
+@media (max-width: 900px) {
+  .all_events_container {
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+  }
+  .all_events_card {
+    width: 65%;
+  }
+  .all_events_filter_dropdown {
+    width: 50%;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  .all_events_filter_container {
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 
 /* Block Collection */

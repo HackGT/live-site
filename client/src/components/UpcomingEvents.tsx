@@ -51,7 +51,8 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => {
                       image={placeholder_img}
                       style={{
                         borderTopLeftRadius: '1.5%',
-                        borderTopRightRadius: '1.5%'
+                        borderTopRightRadius: '1.5%', 
+                        height: '100px'
                       }}
                     />
                     <CardContent>
