@@ -6,28 +6,26 @@ export enum InteractionType {
 
 //strings need to match cms, 
 export enum EventType{
-    Meal = "Meal",
-    EmergingWorkshop = "Emerging Workshop",
-    Ceremony = "Ceremony",
-    SponsorTechTalk = "Sponsor Tech Talk",
-    MiniEvents = "Mini-Events",
-    Expo = "Expo",
-    SponsorFair = "Sponsor Fair",
-    Speaker = "Speaker",
-    SponsorMiniChallenge = "Sponsor Mini-Challenge",
-    Insight = "Insight",
-    Discord = "Discord"
+    Ceremony = "ceremony",
+    Food = "food",
+    Important = "important",
+    MiniChallenge = "mini-challenge",
+    MiniEvent = "mini-event",
+    Speaker = "speaker",
+    TechTalk = "tech-talk",
+    Workshop = "workshop",
+    Insight = "insight",
+    Discord = "discord"
 }
 
 export enum IsCMSEvent{
-    Meal = EventType.Meal,
-    EmergingWorkshop = EventType.EmergingWorkshop,
+    Food = EventType.Food,
     Ceremony = EventType.Ceremony,
-    SponsorTechTalk = EventType.SponsorTechTalk,
-    MiniEvents = EventType.MiniEvents,
-    Expo = EventType.Expo,
-    SponsorFair = EventType.SponsorFair,
+    Important = EventType.Important,
+    MiniEvent = EventType.MiniEvent,
+    MiniChallenge = EventType.MiniChallenge,
+    TechTalk = EventType.TechTalk,
     Speaker = EventType.Speaker,
-    SponsorMiniChallenge = EventType.SponsorMiniChallenge
+    Workshop = EventType.Workshop
 }
 
