@@ -90,7 +90,7 @@ let fetchUpcomingEvents = async ()=> {
 let fetchAllEvents = async ()=> {
   var allEventsQuery =  
   `{
-    allEvents  (where: {hackathon: {name: "HackGT 7"} }, orderBy:"startDate") {
+    allEvents  (where: {hackathon: {name: "HackGT 8"} }, orderBy:"startDate") {
       id
       name
       startDate
