@@ -42,7 +42,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
       set_filtered_events(events.slice(0, 6))
 
       // Update possible tag filters
-      if (tagFilters.size == 0) {
+      if (tagFilters.size === 0) {
         let tag_filter_set = new Set(["None"])
         for (let i = 0; i < events.length; i++) {
           for (let j = 0; j < events[i].tags.length; j++) {
@@ -53,7 +53,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
       }
 
       // Update possible location filters
-      if (locationFilters.size == 0) {
+      if (locationFilters.size === 0) {
         let location_filter_set = new Set(["None"])
         for (let i = 0; i < events.length; i++) {
           for (let j = 0; j < events[i].location.length; j++) {
@@ -82,7 +82,8 @@ const AllEvents: React.FC<Props> = (props: Props) => {
     if (tagFilter === "None" && locationFilter === "None") {
       set_filtered_events(events.slice(0, 6))
     } else {
-      let filtered_list = []
+      let location_filtered_set = new Set()
+      let tag_filtered_set = new Set()
 
       // Loop through each event
       for (let i = 0; i < events.length; i++) {
@@ -90,19 +91,31 @@ const AllEvents: React.FC<Props> = (props: Props) => {
           // If there is a location filter and no tag filter
           for (let j = 0; j < events[i]['location'].length; j++) {
             if (events[i].location[j].hasOwnProperty("name") && events[i].location[j].name === locationFilter) {
-              filtered_list.push(events[i])
+              location_filtered_set.add(events[i])
               break;
             }
           }
-        } 
+        } else {
+          location_filtered_set.add(events[i])
+        }
         if (tagFilter !== "None") {
           // If there is a tag filter but no location filter
           for (let j = 0; j < events[i]['tags'].length; j++) {
             if (events[i]['tags'][j]['name'] === tagFilter) {
-              filtered_list.push(events[i])
+              tag_filtered_set.add(events[i])
               break;
             }
           }
+        } else {
+          tag_filtered_set.add(events[i])
+        }
+      }
+
+      let location_filtered_list = Array.from(location_filtered_set)
+      let filtered_list = new Array()
+      for (let k = 0; k < location_filtered_list.length; k++) {
+        if (tag_filtered_set.has(location_filtered_list[k])) {
+          filtered_list.push(location_filtered_list[k])
         }
       }
       set_filtered_events(filtered_list)
@@ -119,6 +132,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
       fontSize: 16,
       padding: '0 30px',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      marginTop: '20px'
     },
     label: {
       textTransform: 'capitalize',
@@ -171,7 +185,8 @@ const AllEvents: React.FC<Props> = (props: Props) => {
                 image={placeholder_img}
                 style={{
                   borderTopLeftRadius: '1.5%',
-                  borderTopRightRadius: '1.5%'
+                  borderTopRightRadius: '1.5%',
+                  height: '100px',
                 }}
               />
               <Card>

@@ -1,5 +1,4 @@
 import '../App.css';
-import React, { useState, useEffect } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -11,32 +10,20 @@ import CardTag from './CardTag'
 
 import placeholder_img from '../assets/blue.png'
 
-import { fetchLiveEvents } from '../services/cmsService';
-
 type Props = {
   setEventCallback: any;
+  events: any;
 };
 
 
 const LiveEvents: React.FC<Props> = (props: Props) => {
-
-  let [events, setEvents] = useState<any[]>([])
-
-  useEffect(() => {
-
-    const getEvents = async () => {
-      const data = await fetchLiveEvents();
-      setEvents(data.allEvents);
-     };
-     getEvents();
-   }, []);
 
   return (
     <div className="live_events">
       <p className="live_event_title">Live Events</p>
       <div className="live_event_container">
         {
-          events.map((event) => ( 
+          props.events.map((event: any) => ( 
             <Card className="live_event_card">
               <CardMedia
                 component='img'

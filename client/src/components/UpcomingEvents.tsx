@@ -1,5 +1,4 @@
 import '../App.css';
-import React, { useState, useEffect } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import custom_theme from './Theme'
@@ -14,10 +13,9 @@ import CardTag from './CardTag'
 
 import placeholder_img from '../assets/blue_wide.png'
 
-import { fetchUpcomingEvents } from '../services/cmsService';
-
 type Props = {
   setEventCallback: any;
+  events: any;
 };
 
 const UpcomingEvents: React.FC<Props> = (props: Props) => {
@@ -37,23 +35,13 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => {
       textTransform: 'capitalize',
     },
   })(Button);
-  
-  let [events, setEvents] = useState<any[]>([])
-
-  useEffect(() => {
-    const getEvents = async () => {
-       const data = await fetchUpcomingEvents();
-       setEvents(data.allEvents.splice(0, 6));
-     };
-     getEvents();
-   }, []);
 
   return (
     <div className="upcoming_events">
       <p className="upcoming_events_title">Upcoming Events</p>
       <div className="upcoming_events_container">
         {
-          events.map(function(event) { 
+          props.events.map(function(event: any) { 
             return (
               <div className="upcoming_events_card">
                 <Card>
@@ -63,7 +51,8 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => {
                       image={placeholder_img}
                       style={{
                         borderTopLeftRadius: '1.5%',
-                        borderTopRightRadius: '1.5%'
+                        borderTopRightRadius: '1.5%', 
+                        height: '100px'
                       }}
                     />
                     <CardContent>
