@@ -9,6 +9,7 @@ import { Strategy as GroundTruthStrategy } from "passport-ground-truth";
 import { app } from "../app";
 import { createNew } from "../entity/database";
 import { IUser, User } from "../entity/User";
+import { InteractionType } from '../utils/utils'
 
 dotenv.config();
 
@@ -62,9 +63,7 @@ export function isAdmin(request: express.Request, response: express.Response, ne
         if (key === process.env.ADMIN_SECRET) {
             next();
         } else {
-            response.status(401).json({
-            error: "Incorrect auth token",
-            });
+            response.status(401).send("Incorrect auth token");
         }
     }
     else if (!request.isAuthenticated() || !user) {
