@@ -21,7 +21,10 @@ let fetchLiveEvents = async ()=> {
   var liveEventsQuery =  
   `{
     allEvents  (where: {AND:[
-        {startDate_lt: "${today}"},
+        {AND:[
+          {startDate_lt: "${today}"},
+          {hackathon: {name: "HackGT 7"} }
+        ]},
         {endDate_gt: "${today}"}
       ]}, orderBy:"startDate") {
       id
@@ -57,7 +60,10 @@ let fetchUpcomingEvents = async ()=> {
   var today = new Date().toISOString()
   var upcomingEventsQuery =  
   `{
-    allEvents (where: {startDate_gt: "${today}"}, orderBy:"startDate") {
+    allEvents (where:   {AND:[
+      {startDate_gt: "${today}"},
+      {hackathon: {name: "HackGT 7"} }
+    ]}   , orderBy:"startDate") {
       id
       name
       startDate
@@ -77,6 +83,8 @@ let fetchUpcomingEvents = async ()=> {
     }
   }
   `;
+
+
   var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -123,7 +131,13 @@ let fetchBlock = async (blockSlug: string)=> {
   var blockQuery =  
   `
   {
-    allBlocks (where: { slug: "${blockSlug}" }) 
+    allBlocks (where: 
+
+      {AND:[
+        { slug: "${blockSlug}" },
+        {hackathon: {name: "HackGT 7"} }
+      ]} 
+      ) 
     {
       name
       content
