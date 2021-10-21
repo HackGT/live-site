@@ -26,7 +26,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const data = await fetchLiveEvents();
+      const data = await fetchLiveEvents(true);
       const allEvents = data.allEvents
       
       // Choose which event we want to show in the main stage first
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
       }
 
       // Then the next upcoming event
-      const upcomingData = await fetchUpcomingEvents()
+      const upcomingData = await fetchUpcomingEvents(true)
       const allUpcomingEvents = upcomingData.allEvents
       
       for (let i = 0; i < allUpcomingEvents.length; i++) {
@@ -68,8 +68,8 @@ const Home: React.FC = () => {
 
   // The time to refresh next, use the next Upcoming Event to time this.
   async function updateEvents() {
-    const upcomingEventDataRaw = await fetchUpcomingEvents();
-    const liveEventDataRaw = await fetchLiveEvents();
+    const upcomingEventDataRaw = await fetchUpcomingEvents(true);
+    const liveEventDataRaw = await fetchLiveEvents(true);
 
     const upcomingEventData = upcomingEventDataRaw.allEvents
     const liveEventData = liveEventDataRaw.allEvents 
@@ -112,7 +112,7 @@ const Home: React.FC = () => {
     <div>
         <MainStage event={mainStageEvent} />
         <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
-        <Schedule tableLength={6} />
+        <Schedule tableLength={6} homepage={true} />
         <SeeFullScheduleButton />
         <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
         <AllEvents setEventCallback={updateMainStageEvent} />
