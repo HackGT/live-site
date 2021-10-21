@@ -42,7 +42,7 @@ export const getCMSEvent = async (eventId) => {
         "id": eventId
     }
 
-    const res = await fetch(process.env.CMS_URL || "https://cms.hack.gt/admin/api", {
+    const res = await fetch(process.env.CMS_URL || "https://keystone.dev.hack.gt/admin/api", {
         method: "POST",
         headers: headers,
         body: JSON.stringify({

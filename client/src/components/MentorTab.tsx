@@ -17,7 +17,7 @@ const MentorTab: React.FC = () => {
    }, []);
 
   return (
-    <div style={{height: window.innerHeight}}>
+    <div>
       <div className="prize_title_container">
         <h1 className="prize_title">
         Mentorship FAQ

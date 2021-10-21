@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api"
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev.hack.gt/admin/api"
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
@@ -168,7 +168,6 @@ let fetchUpcomingEvents = async (virtual:boolean)=> {
   return jsonResponse.data;
 };
 
-
 let fetchAllEvents = async (virtual:boolean)=> {
   if (virtual) {
     var allEventsQuery =  
@@ -179,7 +178,6 @@ let fetchAllEvents = async (virtual:boolean)=> {
       ]},
       orderBy:"startDate") {
         id
-
         name
         startDate
         endDate
