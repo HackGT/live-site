@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.hack.gt/admin/api"
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev.hack.gt/admin/api"
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
