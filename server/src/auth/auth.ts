@@ -5,7 +5,7 @@ import session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 import dotenv from "dotenv";
 import { Strategy as GroundTruthStrategy } from "passport-ground-truth";
-
+import fetch from "node-fetch";
 import { app } from "../app";
 import { createNew } from "../entity/database";
 import { IUser, User } from "../entity/User";
@@ -62,9 +62,7 @@ export function isAdmin(request: express.Request, response: express.Response, ne
         if (key === process.env.ADMIN_SECRET) {
             next();
         } else {
-            response.status(401).json({
-            error: "Incorrect auth token",
-            });
+            response.status(401).send("Incorrect auth token");
         }
     }
     else if (!request.isAuthenticated() || !user) {
@@ -90,46 +88,62 @@ passport.use(
       callbackURL: "/auth/login/callback",
     },
     async (req, accessToken, refreshToken, profile, done) => {
-      //   const query = `
-      //             query($search: String!) {
-      //                 search_user(search: $search, offset: 0, n: 1) {
-      //                     users {
-      //                         confirmed
-      //                     }
-      //                 }
-      //             }
-      //         `;
+        const query = `
+                  query($search: String!) {
+                      search_user(search: $search, offset: 0, n: 1) {
+                          users {
+                            confirmed
+                            application {
+                                type
+                            }
+                          }
+                      }
+                  }
+              `;
 
-      //   const variables = {
-      //     search: profile.email,
-      //   };
+        const variables = {
+          search: profile.email,
+          // search: "pdodda6@gatech.edu",
+        };
 
-      // const res = await fetch(process.env.GRAPHQL_URL || "https://registration.hack.gt/graphql", {
-      //     method: 'POST',
-      //     headers: {
-      //         "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
-      //         "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //         query,
-      //         variables
-      //     })
-      // });
+        console.log(variables);
 
-      // const data = await res.json();
+      console.log(process.env.GRAPHQLURL, process.env.GRAPHQL_AUTH)
+      const res = await fetch(process.env.GRAPHQLURL || "https://registration.hack.gt/graphql", {
+          method: 'POST',
+          headers: {
+              "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              query,
+              variables
+          })
+      });
 
-      // if (!data || data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
-      //     done(new Error("User is not confirmed in registration"), undefined);
-      // }
+      const data = await res.json();
+      console.log(data)
+      let branch; 
+      if (!data || data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
+          branch = "notconfirmed"
+      } else {
+        branch = data.data.search_user.users[0].application.type
+      }
+      console.log(branch)
 
       let user = await User.findOne({ uuid: profile.uuid });
+      
 
       if (!user) {
         user = createNew<IUser>(User, {
           ...profile,
           admin: false,
+          branch: branch
         });
       } else {
+        if (!user.branch) {
+          user.branch = branch
+        }
         user.token = accessToken;
       }
       await user.save();

@@ -11,10 +11,18 @@ import UpcomingEvents from './UpcomingEvents'
 import SeeFullScheduleButton from './SeeFullScheduleButton'
 import AllEvents from './AllEvents'
 
-const Home: React.FC = () => {
+
+type Props = {
+  virtual: boolean;
+  confirmed: boolean;
+};
+
+const Home: React.FC<Props> = (props: Props) => {
+
+// const Home: React.FC = () => {
 
   let [mainStageEvent, setMainStageEvent] = useState<EventInformation>(new EventInformation("", "", "", [], ""))
-
+  
   const updateMainStageEvent = (e: any) => {
     setMainStageEvent(new EventInformation(e.id, e.url, e.name, e.tags, e.description))
 
@@ -26,13 +34,14 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const data = await fetchLiveEvents();
+      const data = await fetchLiveEvents(true);
       const allEvents = data.allEvents
       
       // Choose which event we want to show in the main stage first
       // Youtube livestreams if they exist
+      console.log(allEvents)
       for (let i = 0; i < allEvents.length; i++) {
-        if (allEvents[i].url !== null && (allEvents[i].url.includes("youtube") || allEvents[i].includes("youtu.be") ) ){
+        if (allEvents[i].url !== null && (allEvents[i].url.includes("youtube") || allEvents[i].url.includes("youtu.be") ) ){
           setMainStageEvent(new EventInformation(allEvents[i].id, allEvents[i].url, allEvents[i].name, allEvents[i].tags, allEvents[i].description))
           return
         }
@@ -45,7 +54,7 @@ const Home: React.FC = () => {
       }
 
       // Then the next upcoming event
-      const upcomingData = await fetchUpcomingEvents()
+      const upcomingData = await fetchUpcomingEvents(true)
       const allUpcomingEvents = upcomingData.allEvents
       
       for (let i = 0; i < allUpcomingEvents.length; i++) {
@@ -68,8 +77,8 @@ const Home: React.FC = () => {
 
   // The time to refresh next, use the next Upcoming Event to time this.
   async function updateEvents() {
-    const upcomingEventDataRaw = await fetchUpcomingEvents();
-    const liveEventDataRaw = await fetchLiveEvents();
+    const upcomingEventDataRaw = await fetchUpcomingEvents(true);
+    const liveEventDataRaw = await fetchLiveEvents(true);
 
     const upcomingEventData = upcomingEventDataRaw.allEvents
     const liveEventData = liveEventDataRaw.allEvents 
@@ -88,7 +97,13 @@ const Home: React.FC = () => {
       }
     }
     setLiveEvents(liveEventData);
-    setUpcomingEvents(upcomingEventData.splice(0, 6));
+
+    let sortedUpcomingEvents = upcomingEventData.sort(function(a: any, b: any) {
+      let dateA = a.startDate;
+      let dateB = b.startDate;
+      return dateA >= dateB ? 1 : -1;
+    })
+    setUpcomingEvents(sortedUpcomingEvents.splice(0, 9));
 
     let nextRefreshTime = minRefreshTime.getTime() - Date.now()
     if (nextRefreshTime > 0) {
@@ -102,16 +117,37 @@ const Home: React.FC = () => {
     updateEvents();
   }, [])
 
-  return (
-    <div>
-        <MainStage event={mainStageEvent} />
-        <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
-        <Schedule tableLength={6} />
-        <SeeFullScheduleButton />
-        <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
-        <AllEvents setEventCallback={updateMainStageEvent} />
-    </div>
-  )
+
+  if (props.virtual) {
+
+    return (
+      <div>
+          <MainStage event={mainStageEvent} confirmed={props.confirmed}/>
+          <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
+          <Schedule tableLength={6} homepage={true} virtual={props.virtual}/>
+          <SeeFullScheduleButton />
+          <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+          <AllEvents setEventCallback={updateMainStageEvent} />
+      </div>
+    )
+
+  } else {
+
+    return (
+      <div>
+          <Schedule tableLength={6} homepage={true} virtual={props.virtual}/>
+          <SeeFullScheduleButton />
+          <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+          <MainStage event={mainStageEvent} confirmed={props.confirmed}/>
+          <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
+          <AllEvents setEventCallback={updateMainStageEvent} />
+      </div>
+    )
+
+  }
+
+
+ 
 }
 
 export default Home;

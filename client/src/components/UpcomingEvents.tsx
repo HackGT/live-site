@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import CardTag from './CardTag'
-
+import MediaQuery from "react-responsive";
 import placeholder_img from '../assets/blue_wide.png'
 
 type Props = {
@@ -40,41 +40,73 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => {
     <div className="upcoming_events">
       <p className="upcoming_events_title">Upcoming Events</p>
       <div className="upcoming_events_container">
-        {
-          props.events.map(function(event: any) { 
-            return (
-              <div className="upcoming_events_card">
-                <Card>
-                  <CardActionArea onClick={() => props.setEventCallback(event)}>
-                    <CardMedia
-                      component='img'
-                      image={placeholder_img}
-                      style={{
-                        borderTopLeftRadius: '1.5%',
-                        borderTopRightRadius: '1.5%'
-                      }}
-                    />
-                    <CardContent>
-                      <Typography align='left' gutterBottom variant="h5" component="h2">
-                        {event.name}
-                      </Typography>
-                      <Typography align='left' variant="body2" color="textSecondary" component="p">
-                        {event.description}
-                      </Typography>
-                      <CardActions>
-                        {
-                          event.tags.map((tag: any, index: number) => (
-                            <CardTag key={index} tag={tag.name}/>
-                          ))
-                        }
-                      </CardActions>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </div>
-            )
-          })
-        }
+        <MediaQuery minWidth={900}>
+          {
+            props.events.map(function(event: any) { 
+              return (
+                <div className="upcoming_events_card">
+                  <Card>
+                    <CardActionArea onClick={() => props.setEventCallback(event)}>
+                      <CardMedia
+                        component='img'
+                        image={placeholder_img}
+                        style={{
+                          borderTopLeftRadius: '1.5%',
+                          borderTopRightRadius: '1.5%', 
+                          height: '100px'
+                        }}
+                      />
+                      <CardContent>
+                        <Typography align='left' gutterBottom variant="h5" component="h2">
+                          {event.name}
+                        </Typography>
+                        <Typography align='left' variant="body2" color="textSecondary" component="p">
+                          {event.description}
+                        </Typography>
+                        <CardActions>
+                          {
+                            event.tags.map((tag: any, index: number) => (
+                              <CardTag key={index} tag={tag.name}/>
+                            ))
+                          }
+                        </CardActions>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </div>
+              )
+            })
+          }
+        </MediaQuery>
+        <MediaQuery maxWidth={900}>
+          {
+            props.events.map(function(event: any) { 
+              return (
+                <div className="upcoming_events_card">
+                  <Card>
+                    <CardActionArea onClick={() => props.setEventCallback(event)}>
+                      <CardContent>
+                        <Typography align='left' gutterBottom variant="h5" component="h2">
+                          {event.name}
+                        </Typography>
+                        <Typography align='left' variant="body2" color="textSecondary" component="p">
+                          {event.description}
+                        </Typography>
+                        <CardActions>
+                          {
+                            event.tags.map((tag: any, index: number) => (
+                              <CardTag key={index} tag={tag.name}/>
+                            ))
+                          }
+                        </CardActions>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </div>
+              )
+            })
+          }
+        </MediaQuery>
       </div>
       <StyledButton className="upcoming_events_button" variant="contained" href="/schedule" color="primary">Show All Upcoming Events</StyledButton>
     </div>

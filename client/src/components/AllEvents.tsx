@@ -15,6 +15,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import MediaQuery from "react-responsive";
 
 import { fetchAllEvents } from '../services/cmsService';
 
@@ -36,7 +37,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
   useEffect(() => {
 
     const getEvents = async () => {
-      const data = await fetchAllEvents()
+      const data = await fetchAllEvents(false)
       const events = data.allEvents
       setEvents(events);
       set_filtered_events(events.slice(0, 6))
@@ -132,6 +133,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
       fontSize: 16,
       padding: '0 30px',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      marginTop: '20px'
     },
     label: {
       textTransform: 'capitalize',
@@ -176,40 +178,69 @@ const AllEvents: React.FC<Props> = (props: Props) => {
         <StyledButton variant="contained" onClick={handle_filter_button} color="primary">Filter</StyledButton>
       </div>
       <div className="all_events_container">
-        {
-          filtered_events.map((event) => (
-            <div className="all_events_card">
-              <CardMedia
-                component='img'
-                image={placeholder_img}
-                style={{
-                  borderTopLeftRadius: '1.5%',
-                  borderTopRightRadius: '1.5%',
-                  height: '100px',
-                }}
-              />
-              <Card>
-                <CardActionArea onClick={() => props.setEventCallback(event)}>
-                  <CardContent>
-                    <Typography align='left' gutterBottom variant="h5" component="h2">
-                      {event.name}
-                    </Typography>
-                    <Typography align='left' variant="body2" color="textSecondary" component="p">
-                      {event.description}
-                    </Typography>
-                    <CardActions>
-                      {
-                        event.tags.map((tag: any, index: number) => (
-                          <CardTag key={index} tag={tag.name}/>
-                        ))
-                      }
-                    </CardActions>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </div>
-          ))
-        }
+        <MediaQuery minWidth={900}>
+          {
+            filtered_events.map((event) => (
+              <div className="all_events_card">
+                <CardMedia
+                  component='img'
+                  image={placeholder_img}
+                  style={{
+                    borderTopLeftRadius: '1.5%',
+                    borderTopRightRadius: '1.5%',
+                    height: '100px',
+                  }}
+                />
+                <Card>
+                  <CardActionArea onClick={() => props.setEventCallback(event)}>
+                    <CardContent>
+                      <Typography align='left' gutterBottom variant="h5" component="h2">
+                        {event.name}
+                      </Typography>
+                      <Typography align='left' variant="body2" color="textSecondary" component="p">
+                        {event.description}
+                      </Typography>
+                      <CardActions>
+                        {
+                          event.tags.map((tag: any, index: number) => (
+                            <CardTag key={index} tag={tag.name}/>
+                          ))
+                        }
+                      </CardActions>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </div>
+            ))
+          }
+        </MediaQuery>
+        <MediaQuery maxWidth={900}>
+          {
+            filtered_events.map((event) => (
+              <div className="all_events_card">
+                <Card>
+                  <CardActionArea onClick={() => props.setEventCallback(event)}>
+                    <CardContent>
+                      <Typography align='left' gutterBottom variant="h5" component="h2">
+                        {event.name}
+                      </Typography>
+                      <Typography align='left' variant="body2" color="textSecondary" component="p">
+                        {event.description}
+                      </Typography>
+                      <CardActions>
+                        {
+                          event.tags.map((tag: any, index: number) => (
+                            <CardTag key={index} tag={tag.name}/>
+                          ))
+                        }
+                      </CardActions>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </div>
+            ))
+          }
+        </MediaQuery>
       </div>
       <StyledButton variant="contained" href="/schedule" color="primary">Check Full Schedule</StyledButton>
     </div>

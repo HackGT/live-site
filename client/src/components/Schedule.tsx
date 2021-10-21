@@ -13,10 +13,12 @@ import Paper from '@material-ui/core/Paper';
 
 import custom_theme from './Theme'
 
-import { fetchAllEvents } from '../services/cmsService';
+import { fetchAllEvents, fetchUpcomingEvents } from '../services/cmsService';
 
 type Props = {
   tableLength: number;
+  homepage: boolean;
+  virtual: boolean;
 };
 
 const Schedule: React.FC<Props> = (props: Props) => {
@@ -25,7 +27,12 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     const getEvents = async () => {
-       const data = await fetchAllEvents();
+      let data;
+       if (props.homepage) {
+        data = await fetchUpcomingEvents(props.virtual);
+      } else {
+        data = await fetchAllEvents(props.virtual);
+      }
        let sortedData = data.allEvents.sort(function(a: any, b: any) {
          let dateA = a.startDate;
          let dateB = b.startDate;
@@ -66,17 +73,19 @@ const Schedule: React.FC<Props> = (props: Props) => {
         }}>
           <colgroup>
               <col width="15%" />
-              <col width="50%" />
+              <col width="40%" />
+              <col width="8" />
+              <col width="10%" />
               <col width="8%" />
               <col width="7%" />
-              <col width="10%" />
-              <col width="10%" />
+              <col width="7%" />
           </colgroup>
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">Event Name</StyledTableCell>
-              <StyledTableCell align="left">Event Description</StyledTableCell>
-              <StyledTableCell align="left">Event Link</StyledTableCell>
+              <StyledTableCell align="left">Name</StyledTableCell>
+              <StyledTableCell align="left">Description</StyledTableCell>
+              <StyledTableCell align="left">Link</StyledTableCell>
+              <StyledTableCell align="left">Location</StyledTableCell>
               <StyledTableCell align="left">Date</StyledTableCell>
               <StyledTableCell align="left">Start Time</StyledTableCell>
               <StyledTableCell align="left">End Time</StyledTableCell>
@@ -90,6 +99,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
                 <TableCell align="left">
                   <a href={row.url} target="_blank">{row.url ? ("Join Here!"):("")}</a>
                 </TableCell>
+                <TableCell style={{width: 'max-content'}} align="left">{row.location.map((x: any) => x.name).join(", ")}</TableCell>
                 <TableCell style={{width: 'max-content'}} align="left">{getDayFromDate(row.startDate)}</TableCell>
                 <TableCell align="left">{formateDateString(row.startDate)}</TableCell>
                 <TableCell align="left">{formateDateString(row.endDate)}</TableCell>

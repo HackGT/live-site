@@ -28,7 +28,7 @@ userRoutes.route("/events/:userId").get(async (req, res) => {
 
     let interactions = await Interaction.find({ uuid: userId });
 
-    if (!interactions || interactions.length == 0) {
+    if (!interactions) {
         return res.status(400).send("User not found or User has not attended any events");
     }
     return res.send({ interactions: interactions });

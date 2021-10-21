@@ -47,6 +47,11 @@ const HamburgerNavbar: React.FC = () => {
               Mentors
             </p>
           </Link>
+          <Link className="navbar_link" color='textPrimary' href="/sponsors">
+              <p className={location === "/sponsors" ? "navbar_link_text_bold" : "navbar_link_text"}>
+                Sponsors
+              </p>
+            </Link>
           <Link className="navbar_link" color='textPrimary' href="/prizes">
             <p className={location === "/prizes" ? "navbar_link_text_bold" : "navbar_link_text"}>
               Prizes
@@ -58,7 +63,7 @@ const HamburgerNavbar: React.FC = () => {
             </p>
           </Link>
           <div className="navbar_button">
-            <Button variant="outlined" color="primary">Slack</Button>
+          <Button variant="outlined" color="primary"    href="https://join.hack.gt" target="_blank"  >Discord</Button>
           </div>
         </div>
       )}

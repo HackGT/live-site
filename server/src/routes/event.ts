@@ -2,62 +2,16 @@ import express from "express"
 import { getCMSEvent } from "../cms"
 import { createNew} from "../entity/database";
 import { IUser, User} from "../entity/User"
-import { Interaction, IInteractionInstance} from "../entity/Interaction"
+import { Interaction, IInteractionInstance, IInteraction} from "../entity/Interaction"
 
-import moment from "moment-timezone";
+import moment, {Moment} from "moment-timezone";
 import dotenv from "dotenv"
-import { start } from "repl";
+import {Date} from "mongoose";
 dotenv.config();
 const fetch = require('node-fetch');
 
 export let virtualRoutes = express.Router();
 export let inpersonRoutes = express.Router();
-
-inpersonRoutes.route("/inpersonInteraction").post(async (req, res) => {
-    const user = await User.findOne({uuid:req.body.uuid});
-    const event = await getCMSEvent(req.body.eventID);
-    const eventType = req.body.eventType || 'inperson';
-
-    if (event && user && eventType) {
-        const endTime = moment(event.endDate).tz("America/New_York");
-        const now = moment.utc().tz("America/New_York");
-        
-        //event already over check
-        if (moment.duration(endTime.diff(now)).minutes() < 0) {
-            return res.status(400).send("Event already ended")
-        }
-
-        let interaction = await Interaction.findOne({uuid: user.uuid, 
-                                                    eventID: req.body.eventID })
-        if (interaction) {
-            interaction.instances?.push({
-                timeIn: now.toDate(),
-                timeOut: endTime.toDate(),
-                interactionType: eventType 
-            }  as IInteractionInstance)
-            await interaction.save()
-        } else {
-            interaction = createNew(Interaction, {
-                uuid: req.body.uuid,
-                eventID: req.body.eventID,
-                instances: [{
-                    timeIn: now.toDate(),
-                    timeOut: endTime.toDate(),
-                    interactionType: eventType
-                }  as IInteractionInstance],
-            });
-            await interaction.save()
-        }
-        return res.status(200).send();
-    } else if (!user) {
-       return res.status(400).send("Invalid user uuid");
-    } else if (!event) {
-        return res.status(400).send("Invalid eventID");
-    } else {
-        return res.status(400).send("Invalid request"); 
-    }
-})
-
 
 virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     const reqUser = req.user as IUser;
