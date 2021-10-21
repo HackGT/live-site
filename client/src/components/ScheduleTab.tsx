@@ -6,7 +6,7 @@ const ScheduleTab: React.FC = () => {
 
   return (
     <div style={{height: window.innerHeight}}>
-        <Schedule tableLength={Infinity}/>
+        <Schedule tableLength={Infinity} homepage={false}/>
     </div>
   )
 }
