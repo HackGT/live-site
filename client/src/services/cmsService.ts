@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev.hack.gt/admin/api"
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api"
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
@@ -16,13 +16,22 @@ const getEventUrl = async (eventId: string): Promise<any> => {
 };
 
 
-let fetchLiveEvents = async ()=> {
+let fetchLiveEvents = async (virtual:boolean)=> {
   var today = new Date().toISOString()
+
+if (virtual) {
+
   var liveEventsQuery =  
   `{
     allEvents  (where: {AND:[
-        {startDate_lt: "${today}"},
-        {endDate_gt: "${today}"}
+        {AND:[
+          {startDate_lt: "${today}"},
+          {hackathon: {name: "HackGT 8"} }
+        ]},
+        {AND:[
+          {location_some: {name: "Virtual"} },
+          {endDate_gt: "${today}"}
+        ]},
       ]}, orderBy:"startDate") {
       id
       name
@@ -43,6 +52,39 @@ let fetchLiveEvents = async ()=> {
     }
   }
   `;
+
+  } else {
+
+    var liveEventsQuery =  
+    `{
+      allEvents  (where: {AND:[
+          {AND:[
+            {startDate_lt: "${today}"},
+            {hackathon: {name: "HackGT 8"} }
+          ]},
+          {endDate_gt: "${today}"}
+        ]}, orderBy:"startDate") {
+        id
+        name
+        startDate
+        endDate
+        description
+        type {
+            name
+            points
+        }
+        url
+        location {
+          name
+        }
+        tags {
+          name
+        }
+      }
+    }
+    `;
+  }
+  
   var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -53,30 +95,70 @@ let fetchLiveEvents = async ()=> {
 };
 
 
-let fetchUpcomingEvents = async ()=> {
+let fetchUpcomingEvents = async (virtual:boolean)=> {
   var today = new Date().toISOString()
-  var upcomingEventsQuery =  
-  `{
-    allEvents (where: {startDate_gt: "${today}"}, orderBy:"startDate") {
-      id
-      name
-      startDate
-      endDate
-      description
-      type {
+
+  if (virtual) {
+    var upcomingEventsQuery =  
+    `{
+      allEvents (where:  {AND:[
+        {AND:[
+          {startDate_gt: "${today}"},
+          {hackathon: {name: "HackGT 8"} }
+        ]},
+        {location_some: {name: "Virtual"} },
+      ]}   , orderBy:"startDate") {
+        id
+
+        name
+        startDate
+        endDate
+        description
+        type {
+            name
+            points
+        }
+        url
+        location {
           name
-          points
-      }
-      url
-      location {
-        name
-      }
-      tags {
-        name
+        }
+        tags {
+          name
+        }
       }
     }
+    `;
+
+  } else {
+
+    var upcomingEventsQuery =  
+    `{
+      allEvents (where:   {AND:[
+        {startDate_gt: "${today}"},
+        {hackathon: {name: "HackGT 8"} }
+      ]}   , orderBy:"startDate") {
+        id
+        name
+        startDate
+        endDate
+        description
+        type {
+            name
+            points
+        }
+        url
+        location {
+          name
+        }
+        tags {
+          name
+        }
+      }
+    }
+    `;
   }
-  `;
+
+
   var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -87,29 +169,61 @@ let fetchUpcomingEvents = async ()=> {
 };
 
 
-let fetchAllEvents = async ()=> {
-  var allEventsQuery =  
-  `{
-    allEvents  (where: {hackathon: {name: "HackGT 7"} }, orderBy:"startDate") {
-      id
-      name
-      startDate
-      endDate
-      description
-      type {
+let fetchAllEvents = async (virtual:boolean)=> {
+  if (virtual) {
+    var allEventsQuery =  
+    `{
+      allEvents  (where:   {AND:[
+        {location_some: {name: "Virtual"} },
+        {hackathon: {name: "HackGT 8"} }
+      ]},
+      orderBy:"startDate") {
+        id
+
+        name
+        startDate
+        endDate
+        description
+        type {
+            name
+            points
+        }
+        url
+        location {
           name
-          points
-      }
-      url
-      location {
-        name
-      }
-      tags {
-        name
+        }
+        tags {
+          name
+        }
       }
     }
+    `;
+  } else {
+    var allEventsQuery =  
+    `{
+      allEvents  (where: {hackathon: {name: "HackGT 8"} }, orderBy:"startDate") {
+        id
+        name
+        startDate
+        endDate
+        description
+        type {
+            name
+            points
+        }
+        url
+        location {
+          name
+        }
+        tags {
+          name
+        }
+      }
+    }
+    `;
+
   }
-  `;
+
   var res = await fetch(REACT_APP_CMS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -123,7 +237,13 @@ let fetchBlock = async (blockSlug: string)=> {
   var blockQuery =  
   `
   {
-    allBlocks (where: { slug: "${blockSlug}" }) 
+    allBlocks (where: 
+
+      {AND:[
+        { slug: "${blockSlug}" },
+        {hackathon: {name: "HackGT 8"} }
+      ]} 
+      ) 
     {
       name
       content

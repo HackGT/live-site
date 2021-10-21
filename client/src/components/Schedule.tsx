@@ -13,10 +13,11 @@ import Paper from '@material-ui/core/Paper';
 
 import custom_theme from './Theme'
 
-import { fetchUpcomingEvents } from '../services/cmsService';
+import { fetchAllEvents, fetchUpcomingEvents } from '../services/cmsService';
 
 type Props = {
   tableLength: number;
+  homepage: boolean;
 };
 
 const Schedule: React.FC<Props> = (props: Props) => {
@@ -25,7 +26,12 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     const getEvents = async () => {
-       const data = await fetchUpcomingEvents();
+      let data;
+       if (props.homepage) {
+        data = await fetchUpcomingEvents(false);
+      } else {
+        data = await fetchAllEvents(false);
+      }
        let sortedData = data.allEvents.sort(function(a: any, b: any) {
          let dateA = a.startDate;
          let dateB = b.startDate;
