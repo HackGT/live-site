@@ -9,5 +9,5 @@ export type User = {
     name: string;
     token: string;
     admin: boolean;
-    branch?: string;
+    branch?: string | undefined;
 }
