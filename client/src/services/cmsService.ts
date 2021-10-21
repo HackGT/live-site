@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev.hack.gt/admin/api"
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api"
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
@@ -23,7 +23,7 @@ let fetchLiveEvents = async ()=> {
     allEvents  (where: {AND:[
         {AND:[
           {startDate_lt: "${today}"},
-          {hackathon: {name: "HackGT 7"} }
+          {hackathon: {name: "HackGT 8"} }
         ]},
         {endDate_gt: "${today}"}
       ]}, orderBy:"startDate") {
@@ -62,7 +62,7 @@ let fetchUpcomingEvents = async ()=> {
   `{
     allEvents (where:   {AND:[
       {startDate_gt: "${today}"},
-      {hackathon: {name: "HackGT 7"} }
+      {hackathon: {name: "HackGT 8"} }
     ]}   , orderBy:"startDate") {
       id
       name
@@ -98,7 +98,7 @@ let fetchUpcomingEvents = async ()=> {
 let fetchAllEvents = async ()=> {
   var allEventsQuery =  
   `{
-    allEvents  (where: {hackathon: {name: "HackGT 7"} }, orderBy:"startDate") {
+    allEvents  (where: {hackathon: {name: "HackGT 8"} }, orderBy:"startDate") {
       id
       name
       startDate
@@ -135,7 +135,7 @@ let fetchBlock = async (blockSlug: string)=> {
 
       {AND:[
         { slug: "${blockSlug}" },
-        {hackathon: {name: "HackGT 7"} }
+        {hackathon: {name: "HackGT 8"} }
       ]} 
       ) 
     {
