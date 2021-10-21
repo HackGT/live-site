@@ -31,8 +31,9 @@ const Home: React.FC = () => {
       
       // Choose which event we want to show in the main stage first
       // Youtube livestreams if they exist
+      console.log(allEvents)
       for (let i = 0; i < allEvents.length; i++) {
-        if (allEvents[i].url !== null && (allEvents[i].url.includes("youtube") || allEvents[i].includes("youtu.be") ) ){
+        if (allEvents[i].url !== null && (allEvents[i].url.includes("youtube") || allEvents[i].url.includes("youtu.be") ) ){
           setMainStageEvent(new EventInformation(allEvents[i].id, allEvents[i].url, allEvents[i].name, allEvents[i].tags, allEvents[i].description))
           return
         }

@@ -8,6 +8,7 @@ export interface IUser extends RootDocument {
     name: string;
     token: string;
     admin: boolean;
+    branch?: string | undefined;
 }
 
 export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoose.Schema({
@@ -31,6 +32,10 @@ export const User = mongoose.model<IUser & mongoose.Document>("User", new mongoo
         type: Boolean,
         default: false
     },
+    branch: {
+        type: String, 
+        required: false
+    }
 },
     {
         usePushEach: true
