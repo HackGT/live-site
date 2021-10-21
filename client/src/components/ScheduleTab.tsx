@@ -5,8 +5,8 @@ import Schedule from './Schedule';
 const ScheduleTab: React.FC = () => {
 
   return (
-    <div>
-        <Schedule tableLength={-1}/>
+    <div style={{height: window.innerHeight}}>
+        <Schedule tableLength={Infinity}/>
     </div>
   )
 }
