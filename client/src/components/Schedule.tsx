@@ -18,6 +18,7 @@ import { fetchAllEvents, fetchUpcomingEvents } from '../services/cmsService';
 type Props = {
   tableLength: number;
   homepage: boolean;
+  virtual: boolean;
 };
 
 const Schedule: React.FC<Props> = (props: Props) => {
@@ -28,9 +29,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
     const getEvents = async () => {
       let data;
        if (props.homepage) {
-        data = await fetchUpcomingEvents(false);
+        data = await fetchUpcomingEvents(props.virtual);
       } else {
-        data = await fetchAllEvents(false);
+        data = await fetchAllEvents(props.virtual);
       }
        let sortedData = data.allEvents.sort(function(a: any, b: any) {
          let dateA = a.startDate;
