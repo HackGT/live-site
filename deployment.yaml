@@ -17,7 +17,7 @@ health:
 
 env:
   GROUND_TRUTH_URL: https://login.hack.gt
-  GRAPHQL_URL: https://registration.2021.hack.gt/graphql
+  GRAPHQLURL: https://registration.2021.hack.gt/graphql
   PRODUCTION: true
   PORT: 3000
   CMS_URL: https://cms.hack.gt/admin/api
