@@ -58,8 +58,13 @@ const MainStage: React.FC<Props> = (props: Props) => {
   }, [props.event]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // TODO: Add countdown logic for upcoming events + game link 
-
+  var notRegisted = false;
   if (videoInformation !== undefined && videoInformation !== null) {
+    if(notRegisted) {
+      return (
+        <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="You are not registered for this event" />
+      );
+    }
     if (videoInformation.status === "eventInSession") {
       if (videoInformation.type === "youtube") {
         return (
