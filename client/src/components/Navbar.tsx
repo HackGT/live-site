@@ -40,6 +40,11 @@ const Navbar: React.FC = () => {
                 Mentors
               </p>
             </Link>
+            <Link className="navbar_link" color='textPrimary' href="/sponsors">
+              <p className={location === "/sponsors" ? "navbar_link_text_bold" : "navbar_link_text"}>
+                Sponsors
+              </p>
+            </Link>
             <Link className="navbar_link" color='textPrimary' href="/prizes">
               <p className={location === "/prizes" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Prizes

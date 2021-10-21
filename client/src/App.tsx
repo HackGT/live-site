@@ -9,6 +9,8 @@ import ScheduleTab from './components/ScheduleTab';
 import InfoTab from './components/InfoTab'
 import TracksTab from './components/TracksTab';
 import PrizesTab from './components/PrizesTab'
+import MentorTab from './components/MentorTab';
+import SponsorTab from './components/SponsorTab'
 import Footer from './components/Footer';
 
 // a little bee ascii art 
@@ -33,6 +35,20 @@ const App: React.FC = () => {
               <div>
                 <Navbar />
                 <TracksTab />
+                <Footer />
+              </div>
+            } />
+            <Route path="/mentors" children={
+              <div>
+                <Navbar />
+                <MentorTab />
+                <Footer />
+              </div>
+            } />
+            <Route path="/sponsors" children={
+              <div>
+                <Navbar />
+                <SponsorTab />
                 <Footer />
               </div>
             } />

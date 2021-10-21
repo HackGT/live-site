@@ -94,7 +94,7 @@ const Home: React.FC = () => {
       let dateB = b.startDate;
       return dateA >= dateB ? 1 : -1;
     })
-    setUpcomingEvents(sortedUpcomingEvents.splice(0, 12));
+    setUpcomingEvents(sortedUpcomingEvents.splice(0, 9));
 
     let nextRefreshTime = minRefreshTime.getTime() - Date.now()
     if (nextRefreshTime > 0) {

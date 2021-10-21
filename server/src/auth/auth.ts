@@ -9,7 +9,6 @@ import { Strategy as GroundTruthStrategy } from "passport-ground-truth";
 import { app } from "../app";
 import { createNew } from "../entity/database";
 import { IUser, User } from "../entity/User";
-import { InteractionType } from '../utils/utils'
 
 dotenv.config();
 
