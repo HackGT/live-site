@@ -5,6 +5,8 @@ import ReactMarkdown from 'react-markdown'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
+import styles from './markdown_styles.module.css'
+
 type Props = {
   blocks: Array<any>;
   title: string;
@@ -25,7 +27,7 @@ const BlockCollection: React.FC<Props> = (props: Props) => {
                 <div className="block_card_title">
                   {block.name}
                 </div>
-                <ReactMarkdown className="block_card_text"> 
+                <ReactMarkdown className={styles.reactMarkDown}> 
                   {block.content}
                 </ReactMarkdown>
               </CardContent>
