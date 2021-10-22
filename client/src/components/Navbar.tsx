@@ -6,15 +6,33 @@ import Logo from './Logo'
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import MediaQuery from "react-responsive";
+import { withStyles } from '@material-ui/core/styles';
 import HamburgerNavbar from './HamburgerNavbar';
+import custom_theme from './Theme'
 
 const Navbar: React.FC = () => {
 
   let location: any = useLocation()?.pathname;
+
+  const StyledButton = withStyles({
+    root: {
+      background: custom_theme.palette.primary.main,
+      borderRadius: 5,
+      border: 0,
+      color: 'white',
+      height: 48,
+      fontSize: 16,
+      padding: '0 30px',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
+    label: {
+      textTransform: 'capitalize',
+    },
+  })(Button);
   
   return (
     <div>
-      <MediaQuery minWidth={900}>
+      <MediaQuery minWidth={1100}>
         <div className="navbar">
           <div>
             <Logo/>
@@ -56,12 +74,12 @@ const Navbar: React.FC = () => {
               </p>
             </Link>
             <div className="navbar_button">
-            <Button variant="outlined" color="primary"    href="https://join.hack.gt" target="_blank"  >Discord</Button>
+            <StyledButton variant="outlined" color="primary" href="https://join.hack.gt">Discord</StyledButton>
             </div>
           </div>
         </div>
       </MediaQuery>
-      <MediaQuery maxWidth={900}>
+      <MediaQuery maxWidth={1100}>
         <HamburgerNavbar />
       </MediaQuery>
     </div>
