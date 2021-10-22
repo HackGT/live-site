@@ -80,19 +80,16 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             }
             console.log(data)
             
-            const response = await fetch(`${url}/log/virtualinteraction`, {
-                method: 'POST',
-                headers: {
-                    "Authorization": "Bearer " + (process.env.VIRTUAL_CHECKIN_SECRET || "secret"),
-                    'Accept': 'application/json',
-                    "Content-Type": "application/json",
-                }, 
-                body: JSON.stringify(data)
-            });
+            // const response = await fetch(`${url}/log/virtualinteraction`, {
+            //     method: 'POST',
+            //     headers: {
+            //         "Authorization": "Bearer " + (process.env.VIRTUAL_CHECKIN_SECRET || "secret"),
+            //         'Accept': 'application/json',
+            //         "Content-Type": "application/json",
+            //     }, 
+            //     body: JSON.stringify(data)
+            // });
             // console.log('here pls')
-
-
-
 
             let interaction = await Interaction.findOne({uuid: user.uuid, 
                 eventID: event.id })
@@ -115,16 +112,16 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 await interaction.save();
             }
 
-            if (response.status >= 400) {
-                console.log(response)
-                return {
-                    success: false
-                }
-            }
+            // if (response.status >= 400) {
+            //     console.log(response)
+            //     return {
+            //         success: false
+            //     }
+            // }
 
-            const respJson = await response.json();
-            console.log('bdsdfdfdfsd')
-            console.log(respJson)
+            // const respJson = await response.json();
+            // console.log('bdsdfdfdfsd')
+            // console.log(respJson)
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
         }
         else if (event.url) {
