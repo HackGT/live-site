@@ -8,6 +8,7 @@ import YoutubeStage from './YoutubeStage';
 import DailyStage from './DailyStage'
 import InvalidEventStage from './InvalidEventStage'
 import VideoInformation from './VideoInformation';
+import CountDownEventStage from './CountDownEventStage'
 
 type Props = {
   event: EventInformation;
@@ -16,6 +17,7 @@ type Props = {
 
 const MainStage: React.FC<Props> = (props: Props) => {
   const [videoInformation, setVideoInformation] = useState<VideoInformation>()
+  const [startTime, setStartTime] = useState<number>(-1)
 
   function getTimeInMS(timebeforestart: any) {
     return ((timebeforestart.hours * 60 * 60 + timebeforestart.minutes * 60 + timebeforestart.seconds) * 1000);
@@ -52,6 +54,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
         videoID = ""
       }
       let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
+      setStartTime(timeTillStartMS)
       if (timeTillStartMS > 0) {
         setTimeout(updateVideoData, timeTillStartMS)
       }
@@ -91,9 +94,16 @@ const MainStage: React.FC<Props> = (props: Props) => {
         <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Event has ended!" />
       );
     } else if (videoInformation.status === "eventWithin24Hours") {
-      return (
-        <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Event hasn't started yet...come back later!" />
-      )
+      if (startTime !== -1) {
+        let timerDate = new Date(Date.now() + startTime)
+        return (
+          <CountDownEventStage event={props.event} startDate={timerDate}/>
+        );
+      } else {
+        return (
+          <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Event is starting soon!" />
+        );
+      }
     } else if (videoInformation.status==="eventNotWithin24Hours"){
       return (
         <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Event not in session!" />

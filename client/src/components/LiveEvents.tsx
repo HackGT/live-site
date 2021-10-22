@@ -22,6 +22,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => {
   return (
     <div className="live_events">
       <p className="live_event_title">Live Events</p>
+      <p className="live_event_tag">Click on a card to join the event!</p>
       <MediaQuery minWidth={900}>
         <div className="live_event_container">
           {

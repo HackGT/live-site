@@ -160,6 +160,14 @@
   font-family: "Roboto", sans-serif;
   font-size: 50px;
   color: black;
+  margin-bottom: 1px;
+  text-align: left;
+}
+
+.live_event_tag {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: black;
   margin-bottom: 10px;
   text-align: left;
 }

@@ -74,7 +74,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
           <colgroup>
               <col width="15%" />
               <col width="40%" />
-              <col width="8" />
+              {/* <col width="8" /> */}
               <col width="10%" />
               <col width="8%" />
               <col width="7%" />
@@ -84,7 +84,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
             <TableRow>
               <StyledTableCell align="left">Name</StyledTableCell>
               <StyledTableCell align="left">Description</StyledTableCell>
-              <StyledTableCell align="left">Link</StyledTableCell>
+              {/* <StyledTableCell align="left">Link</StyledTableCell> */}
               <StyledTableCell align="left">Location</StyledTableCell>
               <StyledTableCell align="left">Date</StyledTableCell>
               <StyledTableCell align="left">Start Time</StyledTableCell>
@@ -96,9 +96,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
               <TableRow key={row.name}>
                 <TableCell component="th" scope="row">{row.name}</TableCell>
                 <TableCell align="left">{row.description}</TableCell>
-                <TableCell align="left">
+                {/* <TableCell align="left">
                   <a href={row.url} target="_blank">{row.url ? ("Join Here!"):("")}</a>
-                </TableCell>
+                </TableCell> */}
                 <TableCell style={{width: 'max-content'}} align="left">{row.location.map((x: any) => x.name).join(", ")}</TableCell>
                 <TableCell style={{width: 'max-content'}} align="left">{getDayFromDate(row.startDate)}</TableCell>
                 <TableCell align="left">{formateDateString(row.startDate)}</TableCell>
