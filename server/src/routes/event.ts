@@ -73,30 +73,26 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             const url = process.env.VIRTUAL_CHECKIN_URL || "https://log.2021.hack.gt";
             ['uuid', 'eventID', 'eventType', 'virtualDuration']
             let data = {
-                'uuid': user.uuid,
-                'eventID':  event.id,
-                'eventType': event.name,
-                'virtualDuration': Math.min(differenceEndSeconds, differenceTotalDuration)
+                eventID:  event.id,
+                eventType: event.name,
+                virtualDuration: Math.min(differenceEndSeconds, differenceTotalDuration),
+                uuid: user.uuid
             }
-
+            console.log(data)
+            
             const response = await fetch(`${url}/log/virtualinteraction`, {
                 method: 'POST',
                 headers: {
-                    "Authorization": "Bearer " + (process.env.VIRTUAL_CHECKIN_SECRET || "secret"),
+                    "Authorization": "Bearer " + "dG9wb2Z0aGVtb3JuaW5ndG9wb2Z0aGVtb3JuaW5n",
+                    // "Authorization": "Bearer " + (process.env.VIRTUAL_CHECKIN_SECRET || "secret"),
+                    'Accept': 'application/json',
                     "Content-Type": "application/json",
-                    body: JSON.stringify(data)
                 }, 
+                body: JSON.stringify(data)
             });
+            // console.log('here pls')
 
-            if (response.status >= 400) {
-                return {
-                    success: false
-                }
-            }
 
-            const respJson = await response.json();
-            console.log('bdsdfdfdfsd')
-            console.log(respJson)
 
 
             let interaction = await Interaction.findOne({uuid: user.uuid, 
@@ -119,6 +115,17 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 })
                 await interaction.save();
             }
+
+            if (response.status >= 400) {
+                console.log(response)
+                return {
+                    success: false
+                }
+            }
+
+            const respJson = await response.json();
+            console.log('bdsdfdfdfsd')
+            console.log(respJson)
             return res.send({"name":event.name, "url": event.url, "timebeforestart":timebeforestart, "status": status})
         }
         else if (event.url) {
