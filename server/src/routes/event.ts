@@ -6,7 +6,6 @@ import { Interaction, IInteractionInstance, IInteraction} from "../entity/Intera
 
 import moment, {Moment} from "moment-timezone";
 import dotenv from "dotenv"
-import {Date} from "mongoose";
 dotenv.config();
 const fetch = require('node-fetch');
 

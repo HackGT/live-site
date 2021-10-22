@@ -103,10 +103,9 @@ passport.use(
 
         const variables = {
           search: profile.email,
-          // search: "pdodda6@gatech.edu",
         };
 
-        console.log(variables);
+      console.log(variables);
 
       console.log(process.env.GRAPHQLURL, process.env.GRAPHQL_AUTH)
       const res = await fetch(process.env.GRAPHQLURL || "https://registration.hack.gt/graphql", {
@@ -122,13 +121,8 @@ passport.use(
       });
 
       const data = await res.json();
-      console.log(data)
       let branch; 
-      if (!data || data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
-          branch = "notconfirmed"
-      } else {
-        branch = data.data.search_user.users[0].application.type
-      }
+      
       console.log(branch)
 
       let user = await User.findOne({ uuid: profile.uuid });

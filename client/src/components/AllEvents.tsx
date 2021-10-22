@@ -23,6 +23,7 @@ import placeholder_img from '../assets/blue_wide.png'
 
 type Props = {
   setEventCallback: any;
+  events:any;
 };
 
 const AllEvents: React.FC<Props> = (props: Props) => {
@@ -39,6 +40,9 @@ const AllEvents: React.FC<Props> = (props: Props) => {
     const getEvents = async () => {
       const data = await fetchAllEvents(false)
       const events = data.allEvents
+      // const events = props.events
+      
+      console.log('',events)
       setEvents(events);
       set_filtered_events(events.slice(0, 6))
 
