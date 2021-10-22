@@ -8,6 +8,7 @@
   text-align: center;
   background-color: #293C6F;
   min-width: 800px;
+  
 }
 
 
@@ -200,7 +201,7 @@
 }
 
 /* Lights, other css */
-.top-lights {
+/* .top-lights {
   width: 100%;
   min-height: 300px;
   max-height: 340px;
@@ -208,9 +209,9 @@
   position: absolute;
   top: 0;
   background: url(./assets/top_lights.png) no-repeat;
-}
+} */
 
-.middle-lights {
+/* .middle-lights {
   width: 100%;
   position: absolute;
   top: 50%;
@@ -218,12 +219,12 @@
   max-height: 219px;
   z-index: 0;
   background: url(./assets/mid_lights.png) no-repeat;
-}
+} */
 
-.app_main *:not(.top-lights):not(.middle-lights) {
+/* .app_main *:not(.top-lights):not(.middle-lights) {
   position: relative;
   z-index: 1;
-}
+} */
 
 .MuiInputBase-root {
   background-color: white;
