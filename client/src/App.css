@@ -6,7 +6,7 @@
 
 .app_main {
   text-align: center;
-  background-color: rgb(245, 245, 245);
+  background-color: #293C6F;
   min-width: 800px;
 }
 
@@ -23,13 +23,13 @@
   padding-left: 1rem;
   font-size: 1.9rem;
   user-select: none;
-  color: black;
+  color: white;
   font-weight: 500;
 }
 
 /* Navbar Styling */
 .navbar {
-  color: #ffffff;
+  color: #293C6F;
   font-size: 18px;
   padding: 10px 5%;
   display: grid;
@@ -56,12 +56,12 @@
 }
 
 .navbar_link_text {
-  color: black;
+  color: white;
   font-weight: 400;
 }
 
 .navbar_link_text_bold {
-  color: black;
+  color: white;
   font-weight: 500;
 }
 
@@ -159,7 +159,7 @@
 .live_event_title {
   font-family: "Roboto", sans-serif;
   font-size: 50px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -184,6 +184,40 @@
   margin-left: 2%;
   margin-right: 2%;
   margin-bottom: 20px;
+}
+
+/* Lights, other css */
+.top-lights {
+  width: 100%;
+  min-height: 300px;
+  max-height: 340px;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  background: url(./assets/top_lights.png) no-repeat;
+}
+
+.middle-lights {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  min-height: 200px;
+  max-height: 219px;
+  z-index: 0;
+  background: url(./assets/mid_lights.png) no-repeat;
+}
+
+.app_main *:not(.top-lights):not(.middle-lights) {
+  position: relative;
+  z-index: 1;
+}
+
+.MuiInputBase-root {
+  background-color: white;
+}
+
+.MuiFormLabel-root {
+  color: white !important;
 }
 
 @media (max-width: 900px) {
@@ -211,7 +245,7 @@
 .upcoming_events_title {
   font-family: "Roboto", sans-serif;
   font-size: 50px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -255,7 +289,7 @@
 .schedule_title {
   font-family: "Roboto", sans-serif;
   font-size: 50px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -275,7 +309,7 @@
 .all_events_title {
   font-family: "Roboto", sans-serif;
   font-size: 50px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -299,7 +333,7 @@
 .all_events_filter_text {
   font-family: "Roboto", sans-serif;
   font-size: 24px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -349,7 +383,7 @@
 .block_title {
   font-family: "Roboto", sans-serif;
   font-size: 32px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -401,7 +435,7 @@
 .prize_title {
   font-family: "Roboto", sans-serif;
   font-size: 36px;
-  color: black;
+  color: white;
   margin-bottom: 10px;
   text-align: left;
 }
@@ -426,14 +460,14 @@ footer {
 .footer_text_hex {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  color: black;
+  color: white;
   text-align: left;
 }
 
 .footer_text_mlh {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
-  color: black;
+  color: white;
   text-align: left;
   margin-bottom: 50px;
 }

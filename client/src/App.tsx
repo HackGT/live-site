@@ -41,6 +41,8 @@ const App: React.FC = () => {
   if (user.branch=='notconfirmed') {
     return (
       <div className="app_main">
+        <div className="top-lights"></div>
+        <div className="middle-lights"></div>
         <Router>
             <Switch>
               <Route path="/info" children={
@@ -99,6 +101,8 @@ const App: React.FC = () => {
   } else if (user.branch=="Participant-Emerging Virtual" ||  user.branch=="Participant-General Virtual") {
     return (
       <div className="app_main">
+        <div className="top-lights"></div>
+        <div className="middle-lights"></div>
         <Router>
             <Switch>
               <Route path="/info" children={
@@ -159,6 +163,8 @@ const App: React.FC = () => {
 
   return (
     <div className="app_main">
+      <div className="top-lights"></div>
+      <div className="middle-lights"></div>
       <Router>
           <Switch>
             <Route path="/info" children={
