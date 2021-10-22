@@ -24,50 +24,64 @@ const MainStage: React.FC<Props> = (props: Props) => {
   }
 
   async function updateVideoData() {
-    try {
-      let eventData = await getEventUrl(props.event.id);
-      let eventUrl: string = eventData.url;
-
-      let videoID: string = ""
-      let videoType: string = ""
-      let eventName: string = eventData.name;
-      let eventStatus: string = eventData.status;
-      
-      if (eventData.url) {
-        if (eventUrl.includes("youtube")) {
-          // For https://www.youtube.com/watch?v=... format
-          videoType = "youtube";
-          videoID = eventUrl.split("v=").slice(-1)[0];
-        } else if (eventUrl.includes("youtu.be")) {
-          // For https://youtu.be/... format
-          videoType = "youtube";
-          videoID = eventUrl.split("/").slice(-1)[0];
-        } else if (eventUrl.includes("daily")) {
-          videoType = "daily"
-          videoID = eventUrl
+    if (!props.event.id) {
+      console.log('hi')
+    } else {
+      try {
+        let eventData = await getEventUrl(props.event.id);
+        let eventUrl: string = eventData.url;
+  
+        let videoID: string = ""
+        let videoType: string = ""
+        let eventName: string = eventData.name;
+        let eventStatus: string = eventData.status;
+        
+        if (eventData.url) {
+          if (eventUrl.includes("youtube")) {
+            // For https://www.youtube.com/watch?v=... format
+            videoType = "youtube";
+            videoID = eventUrl.split("v=").slice(-1)[0];
+          } else if (eventUrl.includes("youtu.be")) {
+            // For https://youtu.be/... format
+            videoType = "youtube";
+            videoID = eventUrl.split("/").slice(-1)[0];
+          } else if (eventUrl.includes("daily")) {
+            videoType = "daily"
+            videoID = eventUrl
+          } else {
+            videoType = "none"
+            videoID = ""
+          }
+          let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
+          setStartTime(timeTillStartMS)
+          if (timeTillStartMS > 0) {
+            setTimeout(updateVideoData, timeTillStartMS)
+          }
         } else {
           videoType = "none"
           videoID = ""
         }
-      } else {
-        videoType = "none"
-        videoID = ""
+        setVideoInformation(new VideoInformation(videoType, videoID, eventStatus, eventName))
+      } catch (e) {
+        console.log(e);
       }
-      let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
-      setStartTime(timeTillStartMS)
-      if (timeTillStartMS > 0) {
-        setTimeout(updateVideoData, timeTillStartMS)
-      }
-      setVideoInformation(new VideoInformation(videoType, videoID, eventStatus, eventName))
-    } catch (e) {
-      console.log(e);
+
     }
+ 
   }
   
   useEffect(() => {
     updateVideoData()
   }, [props.event]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  console.log(props.event)
+  
+  if (props.event.title=='No Events are currently live!') {
+    
+    return (
+      <InvalidEventStage event={props.event} eventName={'No Events are currently live!'} errorText="Check the schedule to see when the next event will go live!" />
+    );
+  }
 
   if (videoInformation !== undefined && videoInformation !== null) {
     if (!props.confirmed) {
