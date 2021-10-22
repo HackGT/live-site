@@ -23,7 +23,7 @@ const HamburgerNavbar: React.FC = () => {
           <Logo/>
       </div>
       <div className="navbar_right">
-        <HamburgerMenu isOpen={state} menuClicked={handleHamburger} color="black" strokeWidth={3} />
+        <HamburgerMenu isOpen={state} menuClicked={handleHamburger} color="white" strokeWidth={3} />
       </div>
       {state && (
         <div className="hamNavbar">

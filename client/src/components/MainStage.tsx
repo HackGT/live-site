@@ -9,6 +9,7 @@ import DailyStage from './DailyStage'
 import InvalidEventStage from './InvalidEventStage'
 import VideoInformation from './VideoInformation';
 import CountDownEventStage from './CountDownEventStage'
+import DifferentURLEventStage from './DifferentURLEventStage'
 
 type Props = {
   event: EventInformation;
@@ -25,7 +26,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
 
   async function updateVideoData() {
     if (!props.event.id) {
-      console.log('hi')
+      
     } else {
       try {
         let eventData = await getEventUrl(props.event.id);
@@ -35,6 +36,9 @@ const MainStage: React.FC<Props> = (props: Props) => {
         let videoType: string = ""
         let eventName: string = eventData.name;
         let eventStatus: string = eventData.status;
+
+        let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
+        setStartTime(timeTillStartMS)
         
         if (eventData.url) {
           if (eventUrl.includes("youtube")) {
@@ -49,11 +53,9 @@ const MainStage: React.FC<Props> = (props: Props) => {
             videoType = "daily"
             videoID = eventUrl
           } else {
-            videoType = "none"
-            videoID = ""
+            videoType = "otherEvent"
+            videoID = eventUrl
           }
-          let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
-          setStartTime(timeTillStartMS)
           if (timeTillStartMS > 0) {
             setTimeout(updateVideoData, timeTillStartMS)
           }
@@ -73,22 +75,14 @@ const MainStage: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     updateVideoData()
   }, [props.event]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  console.log(props.event)
   
   if (props.event.title=='No Events are currently live!') {
-    
     return (
       <InvalidEventStage event={props.event} eventName={'No Events are currently live!'} errorText="Check the schedule to see when the next event will go live!" />
     );
   }
-
   if (videoInformation !== undefined && videoInformation !== null) {
-    if (!props.confirmed) {
-      return (
-        <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="You are not confirmed/registered for the event!" />
-      );
-    } else {
+     
     if (videoInformation.status === "eventInSession") {
       if (videoInformation.type === "youtube") {
         return (
@@ -98,11 +92,15 @@ const MainStage: React.FC<Props> = (props: Props) => {
         return (
           <DailyStage event={props.event} videoID={videoInformation.url} />
         )
-      } else {
+      } else if (videoInformation.url) {
         return (
-          <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Unable to Load Event!" />
+          <DifferentURLEventStage event={props.event} eventName={videoInformation.eventName}  />
         )
-      }
+      } else {
+      return (
+        <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Unable to Load Event!" />
+      )
+    }
     } else if (videoInformation.status === "eventEnded") {
       return (
         <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Event has ended!" />
@@ -127,7 +125,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
         <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="" />
       )
     } 
-  }
+  
   } else {
     return (
       <div/>
