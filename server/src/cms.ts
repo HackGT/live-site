@@ -98,6 +98,10 @@ export const getEndedEvents = async(minInterval) =>  {
     var i = 0
     while(allEvents.length > i) {
         let meetingurl = allEvents[i].url
+        if (!meetingurl || !meetingurl.includes('daily')) {
+            i++;
+            break;
+        }
         let id = meetingurl.split("/").slice(-1)[0];
         var url = "https://api.daily.co/v1/meetings/" + '?room=' + id;
         const meetingInfo = await fetch(url, {
