@@ -56,12 +56,13 @@ const Home: React.FC<Props> = (props: Props) => {
       // Then the next upcoming event
       const upcomingData = await fetchUpcomingEvents(true)
       const allUpcomingEvents = upcomingData.allEvents
-      
+
       for (let i = 0; i < allUpcomingEvents.length; i++) {
         if (allUpcomingEvents[i].url !== null) {
           setMainStageEvent(new EventInformation(allUpcomingEvents[i].id, allUpcomingEvents[i].url, allUpcomingEvents[i].name, allUpcomingEvents[i].tags, allUpcomingEvents[i].description))
+          console.log(allUpcomingEvents[i])
+          return
         }
-        return
       } 
       
       // If all else fails, a placeholder event
