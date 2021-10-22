@@ -58,7 +58,7 @@ export const getCMSEvent = async (eventId) => {
 export const getEndedEvents = async(minInterval) =>  {
     // var curr  = new Date("2021-09-29T06:45:00.000Z"); // this is the sample event ive been working with later on change this to new Date()
     var curr  = new Date();
-    var prev = new Date(curr.getTime() - 2 * minInterval * 60000);
+    var prev = new Date(curr.getTime() - minInterval * 60000);
     const queryEndEvents = 
         `query {
             allEvents  (where: {AND:[
@@ -122,7 +122,7 @@ export const getEndedEvents = async(minInterval) =>  {
                 if(sessionStartTime >= eventStartTime && sessionStartTime <= eventEndTime) {
                     const participants = sessionInfo.participants;
                     let map = new Map();
-                    
+
 
 
                     const startTime = moment(allEvents[i].startDate).tz("America/New_York");
