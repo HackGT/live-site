@@ -18,7 +18,7 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
     const user = await User.findById(reqUser._id);
 
     const event = await getCMSEvent(req.params.getEventID);
-    console.log(event)
+    // console.log(event)
     if (event && user && req.user && event.type) {
         const startTime = moment(event.startDate).tz("America/New_York");
         const endTime = moment(event.endDate).tz("America/New_York");
@@ -51,8 +51,7 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             timebeforestart.seconds = differenceOpenSeconds % 60
         } else {
             status = "eventNotWithin24Hours"
-        }
-        if (event.url && event.url.includes("daily") && status==="eventInSession") {
+        } if (event.url && event.url.includes("daily") && status==="eventInSession") {
             const fetch_url = 'https://api.daily.co/v1/meeting-tokens';
             const room_name = event.url.split('/')[event.url.split('/').length-1];
             const options = {
@@ -69,6 +68,37 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 .catch(err => console.error('error:' + err));
             return res.send({"name":event.name, "url": event.url + "?t=" + response.token, "timebeforestart":timebeforestart, "status": status}); 
         } else if(event.url && status==="eventInSession") {
+            console.log('any here???')
+
+            const url = process.env.VIRTUAL_CHECKIN_URL || "https://log.2021.hack.gt";
+            ['uuid', 'eventID', 'eventType', 'virtualDuration']
+            let data = {
+                'uuid': user.uuid,
+                'eventID':  event.id,
+                'eventType': event.name,
+                'virtualDuration': Math.min(differenceEndSeconds, differenceTotalDuration)
+            }
+
+            const response = await fetch(`${url}/log/virtualinteraction`, {
+                method: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + (process.env.VIRTUAL_CHECKIN_SECRET || "secret"),
+                    "Content-Type": "application/json",
+                    body: JSON.stringify(data)
+                }, 
+            });
+
+            if (response.status >= 400) {
+                return {
+                    success: false
+                }
+            }
+
+            const respJson = await response.json();
+            console.log('bdsdfdfdfsd')
+            console.log(respJson)
+
+
             let interaction = await Interaction.findOne({uuid: user.uuid, 
                 eventID: event.id })
             if (!interaction) {

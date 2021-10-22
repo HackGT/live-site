@@ -15,7 +15,7 @@ const DifferentURLEventStage: React.FC<Props> = (props: Props) => {
       <div>
           <div className="main_stage_container">
               <div style={{
-                    backgroundColor: '#808080',
+                    backgroundColor: '#0C1735',
                     width: '100%',
                     height: '100%',
                     padding: '25%',
@@ -33,12 +33,12 @@ const DifferentURLEventStage: React.FC<Props> = (props: Props) => {
     <div>
         <div className="main_stage_container">
             <div style={{
-                  backgroundColor: '#808080',
+                  backgroundColor: '#0C1735',
                   width: '100%',
-                  height: '100%',
+                  height: '90%',
                   padding: '25%',
                 }}>
-              <h1 style={{fontSize: '30px', color:'white'}}>Event will be held on a different webpage. Please click <a  className="hello" href={newval} target="_blank">here</a> </h1>
+              <h1 style={{fontSize: '35px', color:'white'}}>Event will be held on a different webpage. Please click <a  className="hello" href={newval} target="_blank">here</a> </h1>
             </div>
             <MainStageInformation event={props.event} />
         </div>
