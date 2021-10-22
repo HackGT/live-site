@@ -14,7 +14,11 @@ const CountDownEventStage: React.FC<Props> = (props: Props) => {
   const [timeLeft, setTimeLeft] = useState("")
 
   function updateTimer() {
-    let delta = new Date((props.startDate.getTime() - new Date().getTime()));
+    let now = new Date();
+    if (now >= props.startDate) {
+      window.location.reload();
+    }
+    let delta = new Date((props.startDate.getTime() - now.getTime()));
     setTimeLeft(String(delta.toISOString().substring(11, 19)))
   }
 
