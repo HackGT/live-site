@@ -19,7 +19,7 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
 
     const event = await getCMSEvent(req.params.getEventID);
     console.log(event)
-    if (event && user && req.user) {
+    if (event && user && req.user && event.type) {
         const startTime = moment(event.startDate).tz("America/New_York");
         const endTime = moment(event.endDate).tz("America/New_York");
         const now = moment.utc().tz("America/New_York");
