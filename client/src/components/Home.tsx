@@ -6,7 +6,7 @@ import { fetchLiveEvents, fetchUpcomingEvents } from '../services/cmsService';
 import EventInformation from './EventInformation';
 import MainStage from './MainStage';
 import LiveEvents from './LiveEvents'
-import Schedule from './Schedule'
+// import Schedule from './Schedule'
 import UpcomingEvents from './UpcomingEvents'
 import SeeFullScheduleButton from './SeeFullScheduleButton'
 import AllEvents from './AllEvents'
@@ -124,9 +124,10 @@ const Home: React.FC<Props> = (props: Props) => {
       <div>
           <MainStage event={mainStageEvent} confirmed={props.confirmed}/>
           <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
-          <Schedule tableLength={6} homepage={true} virtual={props.virtual}/>
-          <SeeFullScheduleButton />
+          {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
+          {/* <SeeFullScheduleButton /> */}
           <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+          <SeeFullScheduleButton />
           <AllEvents setEventCallback={updateMainStageEvent} />
       </div>
     )
@@ -135,9 +136,9 @@ const Home: React.FC<Props> = (props: Props) => {
 
     return (
       <div>
-          <Schedule tableLength={6} homepage={true} virtual={props.virtual}/>
-          <SeeFullScheduleButton />
+          {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
           <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+          <SeeFullScheduleButton />
           <MainStage event={mainStageEvent} confirmed={props.confirmed}/>
           <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
           <AllEvents setEventCallback={updateMainStageEvent} />

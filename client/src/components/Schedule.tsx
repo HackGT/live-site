@@ -72,13 +72,12 @@ const Schedule: React.FC<Props> = (props: Props) => {
           minWidth: "1100px", overflow: "auto"
         }}>
           <colgroup>
-              <col width="15%" />
+              <col width="13%" />
               <col width="40%" />
-              {/* <col width="8" /> */}
-              <col width="10%" />
+              <col width="11%" />
               <col width="8%" />
-              <col width="7%" />
-              <col width="7%" />
+              <col width="9%" />
+              <col width="9%" />
           </colgroup>
           <TableHead>
             <TableRow>
