@@ -151,6 +151,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
             id="tag-select-id"
             value={tagFilter}
             onChange={handleTagFilterChange}
+            placeholder="Tag"
           >
             {
               Array.from(tagFilters).map(function(obj: any) { 
@@ -166,6 +167,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
             id="event-select-id"
             value={locationFilter}
             onChange={handleEventFilterChange}
+            placeholder="Location"
           >
             {
               Array.from(locationFilters).map(function(obj: any) { 
