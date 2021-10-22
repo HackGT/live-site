@@ -10,6 +10,11 @@
   min-width: 800px;
 }
 
+
+.hello {
+  text-decoration: underline;
+}
+
 /* Logo Styling */
 .logo_container {
   width: fit-content;
@@ -159,6 +164,14 @@
 .live_event_title {
   font-family: "Roboto", sans-serif;
   font-size: 50px;
+  color: white;
+  margin-bottom: 1px;
+  text-align: left;
+}
+
+.live_event_tag {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
   color: white;
   margin-bottom: 10px;
   text-align: left;
@@ -395,14 +408,6 @@
   margin-left: 2%;
   margin-right: 2%;
   margin-bottom: 20px;
-}
-
-.block_card_text {
-  font-family: "Roboto", sans-serif;
-  font-size: 18px;
-  color: black;
-  margin: 10px;
-  text-align: left;
 }
 
 .block_card_title {

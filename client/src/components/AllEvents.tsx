@@ -18,8 +18,7 @@ import Select from '@material-ui/core/Select';
 import MediaQuery from "react-responsive";
 
 import { fetchAllEvents } from '../services/cmsService';
-
-import placeholder_img from '../assets/blue_wide.png'
+import get_random_card_image from './CardImg'
 
 type Props = {
   setEventCallback: any;
@@ -37,7 +36,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
   useEffect(() => {
 
     const getEvents = async () => {
-      const data = await fetchAllEvents(false)
+      const data = await fetchAllEvents(true)
       const events = data.allEvents
       setEvents(events);
       set_filtered_events(events.slice(0, 6))
@@ -186,11 +185,11 @@ const AllEvents: React.FC<Props> = (props: Props) => {
               <div className="all_events_card">
                 <CardMedia
                   component='img'
-                  image={placeholder_img}
+                  image={get_random_card_image()}
                   style={{
                     borderTopLeftRadius: '1.5%',
                     borderTopRightRadius: '1.5%',
-                    height: '100px',
+                    height: '130px',
                   }}
                 />
                 <Card>
