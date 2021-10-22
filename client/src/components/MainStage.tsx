@@ -9,6 +9,7 @@ import DailyStage from './DailyStage'
 import InvalidEventStage from './InvalidEventStage'
 import VideoInformation from './VideoInformation';
 import CountDownEventStage from './CountDownEventStage'
+import DifferentURLEventStage from './DifferentURLEventStage'
 
 type Props = {
   event: EventInformation;
@@ -28,6 +29,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
       console.log('hi')
     } else {
       try {
+        console.log(props.event.id)
         let eventData = await getEventUrl(props.event.id);
         let eventUrl: string = eventData.url;
   
@@ -49,8 +51,9 @@ const MainStage: React.FC<Props> = (props: Props) => {
             videoType = "daily"
             videoID = eventUrl
           } else {
-            videoType = "none"
-            videoID = ""
+            videoType = "otherEvent"
+            videoID = eventUrl
+            console.log('dsfsfsdfsdf', eventUrl)
           }
           let timeTillStartMS = getTimeInMS(eventData.timebeforestart)
           setStartTime(timeTillStartMS)
@@ -98,11 +101,15 @@ const MainStage: React.FC<Props> = (props: Props) => {
         return (
           <DailyStage event={props.event} videoID={videoInformation.url} />
         )
-      } else {
+      } else if (videoInformation.url) {
         return (
-          <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Unable to Load Event!" />
+          <DifferentURLEventStage event={props.event} eventName={videoInformation.eventName}  />
         )
-      }
+      } else {
+      return (
+        <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Unable to Load Event!" />
+      )
+    }
     } else if (videoInformation.status === "eventEnded") {
       return (
         <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="Event has ended!" />
