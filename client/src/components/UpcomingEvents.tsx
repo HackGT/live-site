@@ -11,7 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 import CardTag from './CardTag'
 import MediaQuery from "react-responsive";
-import placeholder_img from '../assets/blue_wide.png'
+import get_random_card_image from './CardImg'
+
 
 type Props = {
   setEventCallback: any;
@@ -49,7 +50,7 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => {
                     <CardActionArea onClick={() => props.setEventCallback(event)}>
                       <CardMedia
                         component='img'
-                        image={placeholder_img}
+                        image={get_random_card_image()}
                         style={{
                           borderTopLeftRadius: '1.5%',
                           borderTopRightRadius: '1.5%', 
