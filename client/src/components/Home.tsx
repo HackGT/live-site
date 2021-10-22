@@ -6,15 +6,23 @@ import { fetchLiveEvents, fetchUpcomingEvents } from '../services/cmsService';
 import EventInformation from './EventInformation';
 import MainStage from './MainStage';
 import LiveEvents from './LiveEvents'
-import Schedule from './Schedule'
+// import Schedule from './Schedule'
 import UpcomingEvents from './UpcomingEvents'
 import SeeFullScheduleButton from './SeeFullScheduleButton'
 import AllEvents from './AllEvents'
 
-const Home: React.FC = () => {
+
+type Props = {
+  virtual: boolean;
+  confirmed: boolean;
+};
+
+const Home: React.FC<Props> = (props: Props) => {
+
+// const Home: React.FC = () => {
 
   let [mainStageEvent, setMainStageEvent] = useState<EventInformation>(new EventInformation("", "", "", [], ""))
-
+  
   const updateMainStageEvent = (e: any) => {
     setMainStageEvent(new EventInformation(e.id, e.url, e.name, e.tags, e.description))
 
@@ -109,16 +117,38 @@ const Home: React.FC = () => {
     updateEvents();
   }, [])
 
-  return (
-    <div>
-        <MainStage event={mainStageEvent} />
-        <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
-        <Schedule tableLength={6} homepage={true} />
-        <SeeFullScheduleButton />
-        <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
-        <AllEvents setEventCallback={updateMainStageEvent} />
-    </div>
-  )
+
+  if (props.virtual) {
+
+    return (
+      <div>
+          <MainStage event={mainStageEvent} confirmed={props.confirmed}/>
+          <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
+          {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
+          {/* <SeeFullScheduleButton /> */}
+          <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+          <SeeFullScheduleButton />
+          <AllEvents setEventCallback={updateMainStageEvent} />
+      </div>
+    )
+
+  } else {
+
+    return (
+      <div>
+          {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
+          <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+          <SeeFullScheduleButton />
+          <MainStage event={mainStageEvent} confirmed={props.confirmed}/>
+          <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
+          <AllEvents setEventCallback={updateMainStageEvent} />
+      </div>
+    )
+
+  }
+
+
+ 
 }
 
 export default Home;
