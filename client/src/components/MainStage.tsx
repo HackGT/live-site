@@ -87,11 +87,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
   }
 
   if (videoInformation !== undefined && videoInformation !== null) {
-    if (!props.confirmed) {
-      return (
-        <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="You are not confirmed/registered for the event!" />
-      );
-    } else {
+     
     if (videoInformation.status === "eventInSession") {
       if (videoInformation.type === "youtube") {
         return (
@@ -134,7 +130,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
         <InvalidEventStage event={props.event} eventName={videoInformation.eventName} errorText="" />
       )
     } 
-  }
+  
   } else {
     return (
       <div/>
