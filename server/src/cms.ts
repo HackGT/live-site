@@ -114,12 +114,15 @@ export const getEndedEvents = async(minInterval) =>  {
         for(var k = 0; k < sessionInfo.length; k++) {
             if(sessionInfo != undefined) {
                 var sessionStartTime = new Date(sessionInfo[k]?.start_time * 1000);
+                var sessionEndTime = new Date(sessionInfo[k]?.end_time * 1000);
                 var eventStartTime = new Date(allEvents[i].startDate);
                 var eventEndTime = new Date(allEvents[i].endDate);
-                if(sessionStartTime < eventStartTime) { // break loop cause array is already sorted in reverse chronological order
+                if(sessionEndTime < eventStartTime) { // break loop cause array is already sorted in reverse chronological order
                     break;
                 }
-                if(sessionStartTime >= eventStartTime && sessionStartTime <= eventEndTime) {
+                // if(sessionStartTime >= eventStartTime && sessionStartTime <= eventEndTime) {
+                if (sessionStartTime <= eventEndTime && sessionEndTime >= eventStartTime) {
+
                     const participants = sessionInfo.participants;
                     let map = new Map();
 
