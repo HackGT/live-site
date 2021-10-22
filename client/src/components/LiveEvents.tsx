@@ -9,7 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardTag from './CardTag'
 
 import MediaQuery from "react-responsive";
-import placeholder_img from '../assets/blue.png'
+import get_random_card_image from './CardImg'
 
 type Props = {
   setEventCallback: any;
@@ -22,6 +22,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => {
   return (
     <div className="live_events">
       <p className="live_event_title">Live Events</p>
+      <p className="live_event_tag">Click on a card to join the event!</p>
       <MediaQuery minWidth={900}>
         <div className="live_event_container">
           {
@@ -29,7 +30,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => {
               <Card className="live_event_card">
                 <CardMedia
                   component='img'
-                  image={placeholder_img}
+                  image={get_random_card_image()}
                   style={{
                     borderTopLeftRadius: '1.5%',
                     borderBottomLeftRadius: '1.5%',
