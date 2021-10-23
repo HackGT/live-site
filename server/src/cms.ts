@@ -79,18 +79,22 @@ export const getEndedEvents = async(minInterval) =>  {
             }
         }
     `;
-
-    const res = await fetch(process.env.CMS_URL , {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            query: queryEndEvents,
-        })
-    });
-
+    
+        const res = await fetch(process.env.CMS_URL , {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                query: queryEndEvents,
+            })
+        }).catch(function(e) {
+            console.log(`cms error: ${e}`);
+        });
+        
+        
+        
     // then get the most relevant events
     const cmsData = await res.json();
     const allEvents = cmsData.data?.allEvents;
