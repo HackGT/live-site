@@ -35,6 +35,7 @@ const App: React.FC = () => {
 
   const user: User = data;
 
+
   console.log(art);
 
   if (user.branch=='notconfirmed') {
@@ -158,6 +159,8 @@ const App: React.FC = () => {
       </div>
     );
   } else {
+
+
   return (
     <div className="app_main">
       <div className="top-lights"></div>

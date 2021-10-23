@@ -1,8 +1,7 @@
 import '../App.css';
 
 import React, { useState, useEffect } from 'react';
-// import { fetchLiveEvents, fetchUpcomingEvents, fetchAllTypesEvents } from '../services/cmsService';
-import { fetchAllTypesEvents } from '../services/cmsService';
+import { fetchLiveEvents, fetchUpcomingEvents } from '../services/cmsService';
 
 import EventInformation from './EventInformation';
 import MainStage from './MainStage';
@@ -35,18 +34,12 @@ const Home: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     const getEvents = async () => {
-
-      const allTypesEvents = await fetchAllTypesEvents(true);
-      const allUpcomingEvents = allTypesEvents[2]
-      const allEvents = allTypesEvents[1]
-
-
-      // const data = await fetchLiveEvents(true);
-      // const allEvents = data.allEvents
+      const data = await fetchLiveEvents(true);
+      const allEvents = data.allEvents
       
       // Choose which event we want to show in the main stage first
       // Youtube livestreams if they exist
-
+      console.log(allEvents)
       for (let i = 0; i < allEvents.length; i++) {
         if (allEvents[i].url !== null && (allEvents[i].url.includes("youtube") || allEvents[i].url.includes("youtu.be") ) ){
           setMainStageEvent(new EventInformation(allEvents[i].id, allEvents[i].url, allEvents[i].name, allEvents[i].tags, allEvents[i].description))
@@ -61,12 +54,13 @@ const Home: React.FC<Props> = (props: Props) => {
       }
 
       // Then the next upcoming event
-      // const upcomingData = await fetchUpcomingEvents(true)
-      // const allUpcomingEvents = upcomingData.allEvents
+      const upcomingData = await fetchUpcomingEvents(true)
+      const allUpcomingEvents = upcomingData.allEvents
 
       for (let i = 0; i < allUpcomingEvents.length; i++) {
         if (allUpcomingEvents[i].url !== null) {
           setMainStageEvent(new EventInformation(allUpcomingEvents[i].id, allUpcomingEvents[i].url, allUpcomingEvents[i].name, allUpcomingEvents[i].tags, allUpcomingEvents[i].description))
+          console.log(allUpcomingEvents[i])
           return
         }
       } 
@@ -84,18 +78,11 @@ const Home: React.FC<Props> = (props: Props) => {
 
   // The time to refresh next, use the next Upcoming Event to time this.
   async function updateEvents() {
-    
-    // const upcomingEventDataRaw = await fetchUpcomingEvents(true);
-    // const liveEventDataRaw = await fetchLiveEvents(true);
+    const upcomingEventDataRaw = await fetchUpcomingEvents(true);
+    const liveEventDataRaw = await fetchLiveEvents(true);
 
-    // const upcomingEventData = upcomingEventDataRaw.allEvents
-    // const liveEventData = liveEventDataRaw.allEvents 
-
-    const allTypesEvents = await fetchAllTypesEvents(true);
-    const upcomingEventData = allTypesEvents[2]
-    const liveEventData = allTypesEvents[1]
-
-    
+    const upcomingEventData = upcomingEventDataRaw.allEvents
+    const liveEventData = liveEventDataRaw.allEvents 
 
     let minRefreshTime = new Date(Date.now() + 6000000)
     for (let i = 0; i < upcomingEventData.length; i++) {
