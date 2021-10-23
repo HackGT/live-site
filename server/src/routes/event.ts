@@ -14,10 +14,14 @@ export let virtualRoutes = express.Router();
 export let inpersonRoutes = express.Router();
 
 virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
+    // try {
     const reqUser = req.user as IUser;
     const user = await User.findById(reqUser._id);
-
     const event = await getCMSEvent(req.params.getEventID);
+     
+
+
+    // const event = await getCMSEvent(req.params.getEventID);
     // console.log(event)
     if (event && user && req.user && event.type) {
         const startTime = moment(event.startDate).tz("America/New_York");
@@ -30,6 +34,8 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
         const differenceOpen = startTime.diff(now,"minutes")-10;
         const differenceOpenSeconds = startTime.diff(now, "seconds")-60*10;
         const differenceTotalDuration = endTime.diff(startTime, "seconds");
+
+        console.log(req.params.getEventID, event)
 
         //console.log('start time:', startTime,event.startDate, endTime, event.endDate, now, UNSAFE_toUTC(event.startDate), UNSAFE_toUTC(event.endDate))
         console.log(startTime, endTime, differenceStart, differenceEnd)
