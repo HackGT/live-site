@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 
-const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://keystone.dev.hack.gt/admin/api"
-
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api"
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
@@ -112,7 +111,6 @@ let fetchUpcomingEvents = async (virtual:boolean)=> {
         {location_some: {name: "Virtual"} },
       ]}   , orderBy:"startDate") {
         id
-
         name
         startDate
         endDate
@@ -239,7 +237,6 @@ let fetchBlock = async (blockSlug: string)=> {
   `
   {
     allBlocks (where: 
-
       {AND:[
         { slug: "${blockSlug}" },
         {hackathon: {name: "HackGT 8"} }

@@ -14,7 +14,7 @@ const InvalidEventStage: React.FC<Props> = (props: Props) => {
     <div>
         <div className="main_stage_container">
             <div style={{
-                  backgroundColor: '#808080',
+                  backgroundColor: '#0C1735',
                   width: '100%',
                   height: '100%',
                   padding: '25%',

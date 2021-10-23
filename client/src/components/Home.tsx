@@ -106,12 +106,12 @@ const Home: React.FC<Props> = (props: Props) => {
     })
     setUpcomingEvents(sortedUpcomingEvents.splice(0, 9));
 
-    let nextRefreshTime = minRefreshTime.getTime() - Date.now()
-    if (nextRefreshTime > 0) {
-      setTimeout(updateEvents, nextRefreshTime);
-    } else {
-      setTimeout(updateEvents, 600000)
-    }
+    // let nextRefreshTime = minRefreshTime.getTime() - Date.now()
+    // if (nextRefreshTime > 0) {
+    //   setTimeout(updateEvents, nextRefreshTime);
+    // } else {
+    //   setTimeout(updateEvents, 600000)
+    // }
   }
 
   useEffect(()=>{
