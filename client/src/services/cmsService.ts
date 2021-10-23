@@ -7,7 +7,7 @@ const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
     const event = await axios.get('/virtual/virtualInteraction/' + eventId);
-    console.log(event)
+    // console.log(event)
     return event.data;
   } catch (e: any) {
     if (e.response) {
@@ -303,14 +303,11 @@ let fetchAllTypesEvents = async (virtual:boolean)=> {
   let allevents =  jsonResponse.data.allEvents;
   let liveevents:any = [];
   let upcomingevents:any = []
-  console.log(virtual)
   for (let i = 0; i < allevents.length; i++) {
     let starttime = new Date(allevents[i].startDate)
     let endtime = new Date(allevents[i].endDate)
-    // console.log(starttime, endtime, today)
     if (virtual) {
       if (starttime>today && endtime< today  && allevents[i].url) {
-        console.log(starttime, endtime, today, starttime>today, endtime>today)
         liveevents.push(allevents[i])
       } else if (starttime>today && allevents[i].url) {
         upcomingevents.push(allevents[i])

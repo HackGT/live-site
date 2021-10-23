@@ -39,14 +39,14 @@ const Home: React.FC<Props> = (props: Props) => {
       const allTypesEvents = await fetchAllTypesEvents(true);
       const allUpcomingEvents = allTypesEvents[2]
       const allEvents = allTypesEvents[1]
-      console.log('klerjelkjrekjlr', allTypesEvents)
+
 
       // const data = await fetchLiveEvents(true);
       // const allEvents = data.allEvents
       
       // Choose which event we want to show in the main stage first
       // Youtube livestreams if they exist
-      console.log(allEvents)
+
       for (let i = 0; i < allEvents.length; i++) {
         if (allEvents[i].url !== null && (allEvents[i].url.includes("youtube") || allEvents[i].url.includes("youtu.be") ) ){
           setMainStageEvent(new EventInformation(allEvents[i].id, allEvents[i].url, allEvents[i].name, allEvents[i].tags, allEvents[i].description))
@@ -67,7 +67,6 @@ const Home: React.FC<Props> = (props: Props) => {
       for (let i = 0; i < allUpcomingEvents.length; i++) {
         if (allUpcomingEvents[i].url !== null) {
           setMainStageEvent(new EventInformation(allUpcomingEvents[i].id, allUpcomingEvents[i].url, allUpcomingEvents[i].name, allUpcomingEvents[i].tags, allUpcomingEvents[i].description))
-          console.log(allUpcomingEvents[i])
           return
         }
       } 
