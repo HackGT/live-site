@@ -73,6 +73,11 @@ const Navbar: React.FC = () => {
                 Info
               </p>
             </Link>
+            <Link className="navbar_link" color='textPrimary' href="https://game.hack.gt/">
+              <p className={location === "/info" ? "navbar_link_text_bold" : "navbar_link_text"}>
+                Game
+              </p>
+            </Link>
             <div className="navbar_button">
             <StyledButton variant="outlined" color="primary" href="https://join.hack.gt">Discord</StyledButton>
             </div>

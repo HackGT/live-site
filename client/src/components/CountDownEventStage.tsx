@@ -3,6 +3,7 @@ import '../App.css';
 import MainStageInformation from './MainStageInformation';
 import EventInformation from './EventInformation';
 import React, { useState, useEffect } from 'react';
+import Link from '@material-ui/core/Link';
 
 type Props = {
   startDate: Date; 
@@ -37,6 +38,11 @@ const CountDownEventStage: React.FC<Props> = (props: Props) => {
                 }}>
               <h1 style={{fontSize: '24px', color:'white'}}>Event hasn't started yet...come back later!</h1>
               <h1 style={{fontSize: '64px', color:'white'}}>{timeLeft}</h1>
+              <Link className="navbar_link" color='textPrimary' href="https://game.hack.gt/">
+                <p style={{fontSize: '24px', color:'white'}}>
+                  Play a game while you wait!
+                </p>
+              </Link>
             </div>
             <MainStageInformation event={props.event} />
         </div>
