@@ -5,7 +5,7 @@ import compression from "compression";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
-import * as cron from 'node-cron'
+// import * as cron from 'node-cron'
 // import {Server} from "ws";
 import expressWs from 'express-ws';
 
@@ -125,11 +125,11 @@ app.listen(PORT, () => {
     console.log(`Virtual Check-in system v${VERSION_NUMBER} started on port ${PORT}`);
 });
 
-cron.schedule('*/5 * * * *', () => {
-   let minInterval = 5;
-   console.log('running a task every ' + minInterval + ' minute ' + new Date().toISOString());
-   getEndedEvents(minInterval);
- });
+// cron.schedule('*/5 * * * *', () => {
+//    let minInterval = 5;
+//    console.log('running a task every ' + minInterval + ' minute ' + new Date().toISOString());
+//    getEndedEvents(minInterval);
+//  });
 
 // app.use("/ws-stuff", router);
 
