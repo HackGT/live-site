@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api"
-
+console.log(REACT_APP_CMS_URL)
 
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
