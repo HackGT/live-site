@@ -6,7 +6,7 @@ const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/
 const getEventUrl = async (eventId: string): Promise<any> => {
   try {
     const event = await axios.get('/virtual/virtualInteraction/' + eventId);
-    console.log(event)
+    // console.log(event)
     return event.data;
   } catch (e: any) {
     if (e.response) {
@@ -233,6 +233,100 @@ let fetchAllEvents = async (virtual:boolean)=> {
   return jsonResponse.data;
 };
 
+
+
+
+let fetchAllTypesEvents = async (virtual:boolean)=> {
+  // if (virtual) {
+  //   var allEventsQuery =  
+  //   `{
+  //     allEvents  (where:   {AND:[
+  //       {location_some: {name: "Virtual"} },
+  //       {hackathon: {name: "HackGT 8"} }
+  //     ]},
+  //     orderBy:"startDate") {
+  //       id
+  //       name
+  //       startDate
+  //       endDate
+  //       description
+  //       type {
+  //           name
+  //           points
+  //       }
+  //       url
+  //       location {
+  //         name
+  //       }
+  //       tags {
+  //         name
+  //       }
+  //     }
+  //   }
+  //   `;
+  // } else {
+  var allEventsQuery =  
+  `{
+    allEvents  (where: {hackathon: {name: "HackGT 8"} }, orderBy:"startDate") {
+      id
+      name
+      startDate
+      endDate
+      description
+      type {
+          name
+          points
+      }
+      url
+      location {
+        name
+      }
+      tags {
+        name
+      }
+    }
+  }
+  `;
+
+  // }
+
+
+  var today = new Date();
+
+  var res = await fetch(REACT_APP_CMS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: allEventsQuery }),
+  });
+  var jsonResponse = await res.json();
+  let allevents =  jsonResponse.data.allEvents;
+  let liveevents:any = [];
+  let upcomingevents:any = []
+  for (let i = 0; i < allevents.length; i++) {
+    let starttime = new Date(allevents[i].startDate)
+    let endtime = new Date(allevents[i].endDate)
+    if (virtual) {
+      if (starttime>today && endtime< today  && allevents[i].url) {
+        liveevents.push(allevents[i])
+      } else if (starttime>today && allevents[i].url) {
+        upcomingevents.push(allevents[i])
+      }
+    } else {
+      if (starttime>today && endtime> today ) {
+        liveevents.push(allevents[i])
+      } else if (starttime>today) {
+        upcomingevents.push(allevents[i])
+      }
+    }
+  }
+  return [allevents, liveevents, upcomingevents]
+};
+
+
+
+
+
+
 let fetchBlock = async (blockSlug: string)=> {
   var blockQuery =  
   `
@@ -259,4 +353,4 @@ let fetchBlock = async (blockSlug: string)=> {
   return jsonResponse.data;
 };
 
-export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents, fetchBlock};
+export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents, fetchBlock, fetchAllTypesEvents};
