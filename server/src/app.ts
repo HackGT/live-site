@@ -6,8 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 // import * as cron from 'node-cron'
-// import {Server} from "ws";
-import expressWs from 'express-ws';
+
 
 import http from "http";
 
@@ -15,8 +14,10 @@ dotenv.config();
 
 const VERSION_NUMBER = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../package.json"), "utf8")).version;
 const PORT = process.env.PORT || 3000;
-// export let app = express();
-export const { app, getWss, applyTo } = expressWs(express());
+
+
+
+export let app = express();
 
 
 app.use(morgan("dev"));
@@ -77,21 +78,10 @@ app.use("/user", userRoutes);
 
 
 
-const router = express.Router() as expressWs.Router;
-// var router = express.Router();
-router.ws('/echo', (ws, req) => {
-        ws.on('connection', (ws => {
-            console.log('Client connected');
-        }))
-    console.log('hihi')
-    ws.on('message', (msg: String) => {
-        ws.send(msg);
-    });
-    ws.on('close', () => {
-        console.log('WebSocket was closed')
-    })
-});
-app.use("/ws-stuff", router);
+
+
+
+
 
 app.use(isAuthenticated, express.static(path.join(__dirname, "../../client/build")));
 
@@ -131,23 +121,8 @@ app.listen(PORT, () => {
 //    getEndedEvents(minInterval);
 //  });
 
-// app.use("/ws-stuff", router);
 
-// const wss = new Server({server: app, port: 8080});
-// wss.on('connection', (ws) => {
-//     console.log('Client connected');
-//     const start = Date.now();
-//     let delta;
-//     setInterval(function() {
-//         delta = Math.floor((Date.now() - start) / 1000);
-//     }, 1000);
-//     ws.on('close', () => {
-//         const time1: ITime = new Time({
-//             time: delta,
-//         });
-//         time1.save().then(() => console.log('websocket time saved'));
-//         console.log('Client disconnected')
-//     });
-// });
+
+
 
 app.disable('etag');
