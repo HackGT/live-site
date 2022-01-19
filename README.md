@@ -1,5 +1,7 @@
 # Virtual Checkin
 
+The HexLabs platform for hosting livestreams, virtual events, schedules, FAQs and more!
+
 Client Setup 
 1. Go to `/client`
 2. Copy `.env.example` to `client/.env` or create an new file `client/.env`
