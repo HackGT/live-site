@@ -111,7 +111,6 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 })
                 await interaction.save();
             }
-
             // if (response.status >= 400) {
  
             //     return {
