@@ -78,6 +78,7 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 virtualDuration: Math.min(differenceEndSeconds, differenceTotalDuration),
                 uuid: user.uuid
             }
+
             
             // const response = await fetch(`${url}/log/virtualinteraction`, {
             //     method: 'POST',
@@ -88,6 +89,7 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
             //     }, 
             //     body: JSON.stringify(data)
             // });
+
 
             let interaction = await Interaction.findOne({uuid: user.uuid, 
                 eventID: event.id })
@@ -110,7 +112,7 @@ virtualRoutes.route("/virtualInteraction/:getEventID").get(async (req, res) => {
                 await interaction.save();
             }
             // if (response.status >= 400) {
-            //     console.log(response)
+ 
             //     return {
             //         success: false
             //     }
