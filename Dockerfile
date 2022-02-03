@@ -5,10 +5,10 @@ WORKDIR /usr/src/virtual-checkin/
 COPY . /usr/src/virtual-checkin/
 
 WORKDIR /usr/src/virtual-checkin/server
-RUN npm install
+RUN yarn install
 
 WORKDIR /usr/src/virtual-checkin/client
-RUN npm install && npm run build
+RUN yarn install && yarn build
 
 # Runtime container
 FROM node:12-alpine
@@ -21,4 +21,4 @@ WORKDIR /usr/src/virtual-checkin/server/
 ENV TZ="America/New_York"
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

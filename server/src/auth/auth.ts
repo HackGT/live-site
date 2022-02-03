@@ -53,30 +53,33 @@ export function isAuthenticated(
   }
 }
 
-export function isAdmin(request: express.Request, response: express.Response, next: express.NextFunction): void {
-    const user = request.user as IUser;
-    const auth = request.headers.authorization;
-    if (auth && typeof auth === "string" && auth.includes(" ")) {
-        var origin = request.get('origin');
-        const key = auth.split(" ")[1];
-        if (key === process.env.ADMIN_SECRET) {
-            next();
-        } else {
-            response.status(401).send("Incorrect auth token");
-        }
-    }
-    else if (!request.isAuthenticated() || !user) {
-        if (request.session) {
-            request.session.returnTo = request.originalUrl;
-        }
-        response.redirect("/auth/login");
+export function isAdmin(
+  request: express.Request,
+  response: express.Response,
+  next: express.NextFunction
+): void {
+  const user = request.user as IUser;
+  const auth = request.headers.authorization;
+  if (auth && typeof auth === "string" && auth.includes(" ")) {
+    var origin = request.get("origin");
+    const key = auth.split(" ")[1];
+    if (key === process.env.ADMIN_SECRET) {
+      next();
     } else {
-        if (user['admin']==true) {
-            next();
-        } else {
-            response.redirect('/auth/login');
-        }
+      response.status(401).send("Incorrect auth token");
     }
+  } else if (!request.isAuthenticated() || !user) {
+    if (request.session) {
+      request.session.returnTo = request.originalUrl;
+    }
+    response.redirect("/auth/login");
+  } else {
+    if (user["admin"] == true) {
+      next();
+    } else {
+      response.redirect("/auth/login");
+    }
+  }
 }
 
 passport.use(
@@ -88,7 +91,7 @@ passport.use(
       callbackURL: "/auth/login/callback",
     },
     async (req, accessToken, refreshToken, profile, done) => {
-        const query = `
+      const query = `
                   query($search: String!) {
                       search_user(search: $search, offset: 0, n: 1) {
                           users {
@@ -101,48 +104,61 @@ passport.use(
                   }
               `;
 
-        const variables = {
-          search: profile.email,
-          // search: "pdodda6@gatech.edu",
-        };
+      const variables = {
+        search: profile.email,
+        // search: "pdodda6@gatech.edu",
+      };
 
-        console.log(variables);
+      console.log(variables);
 
-      console.log(process.env.GRAPHQLURL, process.env.GRAPHQL_AUTH)
-      const res = await fetch(process.env.GRAPHQLURL || "https://registration.hack.gt/graphql", {
-          method: 'POST',
-          headers: {
-              "Authorization": "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
+      let branch;
+
+      if (process.env.PRODUCTION === "true") {
+        console.log(process.env.GRAPHQLURL, process.env.GRAPHQL_AUTH);
+
+        const res = await fetch(
+          process.env.GRAPHQLURL || "https://registration.hack.gt/graphql",
+          {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + (process.env.GRAPHQL_AUTH || "secret"),
               "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+            },
+            body: JSON.stringify({
               query,
-              variables
-          })
-      });
+              variables,
+            }),
+          }
+        );
 
-      const data = await res.json();
-      console.log(data)
-      let branch; 
-      if (!data || data.data.search_user.users.length === 0 || !data.data.search_user.users[0].confirmed) {
-          branch = "notconfirmed"
+        const data = await res.json();
+
+        if (
+          !data ||
+          data.data.search_user.users.length === 0 ||
+          !data.data.search_user.users[0].confirmed
+        ) {
+          branch = "notconfirmed";
+        } else {
+          branch = data.data.search_user.users[0].application.type;
+        }
+
+        console.log(branch);
       } else {
-        branch = data.data.search_user.users[0].application.type
+        branch = "Staff Confirmation";
       }
-      console.log(branch)
 
       let user = await User.findOne({ uuid: profile.uuid });
-      
 
       if (!user) {
         user = createNew<IUser>(User, {
           ...profile,
           admin: false,
-          branch: branch
+          branch: branch,
         });
       } else {
         if (!user.branch) {
-          user.branch = branch
+          user.branch = branch;
         }
         user.token = accessToken;
       }
