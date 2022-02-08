@@ -1,31 +1,25 @@
 import { useLocation } from "react-router-dom";
 
 import Logo from "./Logo";
-import Link from "@material-ui/core/Link";
-import Button from "@material-ui/core/Button";
+import { Button, Link } from "@chakra-ui/react";
 import MediaQuery from "react-responsive";
-import { withStyles } from "@material-ui/core/styles";
 import HamburgerNavbar from "./HamburgerNavbar";
 import custom_theme from "../Theme";
 
 const Navbar: React.FC = () => {
   let location: any = useLocation()?.pathname;
 
-  const StyledButton = withStyles({
-    root: {
-      background: custom_theme.palette.primary.main,
-      borderRadius: 5,
-      border: 0,
-      color: "white",
-      height: 48,
-      fontSize: 16,
-      padding: "0 30px",
-      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    },
-    label: {
-      textTransform: "capitalize",
-    },
-  })(Button);
+  const ButtonStyle = {
+    background: custom_theme.palette.primary.main,
+    borderRadius: 5,
+    border: 0,
+    color: "white",
+    height: "48px",
+    fontSize: "16px",
+    padding: "0 30px",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    textTransform: "capitalize",
+  };
 
   return (
     <div>
@@ -128,13 +122,15 @@ const Navbar: React.FC = () => {
               </p>
             </Link>
             <div className="navbar_button">
-              <StyledButton
+              <Button
+                sx={ButtonStyle}
                 variant="outlined"
                 color="primary"
+                as={Link}
                 href="https://join.hack.gt"
               >
                 Discord
-              </StyledButton>
+              </Button>
             </div>
           </div>
         </div>
