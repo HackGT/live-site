@@ -5,12 +5,10 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
-
-// import Button from '@material-ui/core/Button';
 import MediaQuery from "react-responsive";
 
 import CardTag from "../../common/CardTag";
-import get_random_card_image from "../../common/CardImg";
+import { getRandomCardImage } from "../../common/CardImg";
 
 type Props = {
   setEventCallback: any;
@@ -20,7 +18,7 @@ type Props = {
 const UpcomingEvents: React.FC<Props> = (props: Props) => (
   // const StyledButton = withStyles({
   //   root: {
-  //     background: custom_theme.palette.primary.main,
+  //     background: theme.palette.primary.main,
   //     borderRadius: 5,
   //     border: 0,
   //     color: 'white',
@@ -44,7 +42,7 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => (
               <CardActionArea onClick={() => props.setEventCallback(event)}>
                 <CardMedia
                   component="img"
-                  image={get_random_card_image()}
+                  image={getRandomCardImage()}
                   style={{
                     borderTopLeftRadius: "1.5%",
                     borderTopRightRadius: "1.5%",

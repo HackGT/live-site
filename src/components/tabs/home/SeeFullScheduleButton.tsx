@@ -2,12 +2,12 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
-import custom_theme from "../../Theme";
+import theme from "../../Theme";
 
 const SeeFullScheduleButton: React.FC = () => {
   const StyledButton = withStyles({
     root: {
-      background: custom_theme.palette.primary.main,
+      background: theme.palette.primary.main,
       borderRadius: 5,
       border: 0,
       color: "white",

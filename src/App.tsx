@@ -43,7 +43,7 @@ const App: React.FC = () => {
     branch: "notconfirmed",
   };
 
-  if (user.branch == "notconfirmed") {
+  if (user.branch === "notconfirmed") {
     return (
       <div className="app_main">
         <div className="top-lights" />

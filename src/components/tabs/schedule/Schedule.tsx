@@ -9,7 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import custom_theme from "../../Theme";
 import { fetchAllEvents, fetchUpcomingEvents } from "../../../services/cmsService";
 
 type Props = {
@@ -46,7 +45,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
   const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
       head: {
-        backgroundColor: custom_theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
       },
       body: {

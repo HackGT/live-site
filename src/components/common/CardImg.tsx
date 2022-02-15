@@ -5,10 +5,8 @@ import cardimg5 from "../../assets/cardimg5.png";
 import cardimg6 from "../../assets/cardimg6.png";
 import cardimg7 from "../../assets/cardimg7.png";
 
-const possible_card_images = [cardimg1, cardimg2, cardimg3, cardimg5, cardimg6, cardimg7];
+const POSSIBLE_CARD_IMAGES = [cardimg1, cardimg2, cardimg3, cardimg5, cardimg6, cardimg7];
 
-function get_random_card_image() {
-  return possible_card_images[Math.floor(Math.random() * possible_card_images.length)];
+export function getRandomCardImage() {
+  return POSSIBLE_CARD_IMAGES[Math.floor(Math.random() * POSSIBLE_CARD_IMAGES.length)];
 }
-
-export default get_random_card_image;

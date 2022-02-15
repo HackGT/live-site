@@ -7,14 +7,14 @@ import { withStyles } from "@material-ui/core/styles";
 
 import Logo from "./Logo";
 import HamburgerNavbar from "./HamburgerNavbar";
-import custom_theme from "../Theme";
+import theme from "../Theme";
 
 const Navbar: React.FC = () => {
   const location: any = useLocation()?.pathname;
 
   const StyledButton = withStyles({
     root: {
-      background: custom_theme.palette.primary.main,
+      background: theme.palette.primary.main,
       borderRadius: 5,
       border: 0,
       color: "white",

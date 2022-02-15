@@ -14,9 +14,9 @@ import Select from "@material-ui/core/Select";
 import MediaQuery from "react-responsive";
 
 import CardTag from "../../common/CardTag";
-import custom_theme from "../../Theme";
+import theme from "../../Theme";
 import { fetchAllEvents } from "../../../services/cmsService";
-import get_random_card_image from "../../common/CardImg";
+import { getRandomCardImage } from "../../common/CardImg";
 
 type Props = {
   setEventCallback: any;
@@ -119,7 +119,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
 
   const StyledButton = withStyles({
     root: {
-      background: custom_theme.palette.primary.main,
+      background: theme.palette.primary.main,
       borderRadius: 5,
       border: 0,
       color: "white",
@@ -177,7 +177,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
             <div className="all_events_card">
               <CardMedia
                 component="img"
-                image={get_random_card_image()}
+                image={getRandomCardImage()}
                 style={{
                   borderTopLeftRadius: "1.5%",
                   borderTopRightRadius: "1.5%",

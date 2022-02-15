@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import MediaQuery from "react-responsive";
 
 import CardTag from "../../common/CardTag";
-import get_random_card_image from "../../common/CardImg";
+import { getRandomCardImage } from "../../common/CardImg";
 
 type Props = {
   setEventCallback: any;
@@ -25,7 +25,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => (
           <Card className="live_event_card">
             <CardMedia
               component="img"
-              image={get_random_card_image()}
+              image={getRandomCardImage()}
               style={{
                 borderTopLeftRadius: "1.5%",
                 borderBottomLeftRadius: "1.5%",
