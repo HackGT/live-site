@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import BlockCollection from "../../common/BlockCollection";
 
+import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
 const TracksTab: React.FC = () => {
-  let [tracks, setTracks] = useState<any[]>([]);
+  const [tracks, setTracks] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {

@@ -6,7 +6,7 @@ export type CMSEVent = {
   description: string;
 };
 
-// var query =  
+// var query =
 //   `{
 //     allEvents  (where: {AND:[
 //         {startDate_gt: "2021-03-13T00:00:00.000Z"},

@@ -1,9 +1,10 @@
 import React from "react";
 
 import "./App.css";
-import { User } from "./types/User";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import useAxios from "axios-hooks";
+
+import { User } from "./types/User";
 import Navbar from "./components/shared/Navbar";
 import Home from "./components/tabs/home/Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
@@ -13,7 +14,6 @@ import PrizesTab from "./components/tabs/prizes/PrizesTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
 import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import Footer from "./components/shared/Footer";
-import useAxios from "axios-hooks";
 
 // a little bee ascii art
 const art =
@@ -45,8 +45,8 @@ const App: React.FC = () => {
   if (user.branch == "notconfirmed") {
     return (
       <div className="app_main">
-        <div className="top-lights"></div>
-        <div className="middle-lights"></div>
+        <div className="top-lights" />
+        <div className="middle-lights" />
         <Router>
           <Navbar />
           <Switch>
@@ -55,69 +55,57 @@ const App: React.FC = () => {
             <Route path="/mentors" children={<MentorTab />} />
             <Route path="/sponsors" children={<SponsorTab />} />
             <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual={true} />} />
-            <Route
-              path="/"
-              children={<Home virtual={true} confirmed={false} />}
-            />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
-  } else if (
-    user.branch === "Participant-Emerging Virtual" ||
-    user.branch === "Participant-General Virtual"
-  ) {
-    return (
-      <div className="app_main">
-        <div className="top-lights"></div>
-        <div className="middle-lights"></div>
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual={true} />} />
-            <Route
-              path="/"
-              children={<Home virtual={true} confirmed={true} />}
-            />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
-  } else {
-    return (
-      <div className="app_main">
-        <div className="top-lights"></div>
-        <div className="middle-lights"></div>
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route
-              path="/schedule"
-              children={<ScheduleTab virtual={false} />}
-            />
-            <Route
-              path="/"
-              children={<Home virtual={true} confirmed={true} />}
-            />
+            <Route path="/schedule" children={<ScheduleTab virtual />} />
+            <Route path="/" children={<Home virtual confirmed={false} />} />
           </Switch>
           <Footer />
         </Router>
       </div>
     );
   }
+  if (
+    user.branch === "Participant-Emerging Virtual" ||
+    user.branch === "Participant-General Virtual"
+  ) {
+    return (
+      <div className="app_main">
+        <div className="top-lights" />
+        <div className="middle-lights" />
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route path="/info" children={<InfoTab />} />
+            <Route path="/tracks" children={<TracksTab />} />
+            <Route path="/mentors" children={<MentorTab />} />
+            <Route path="/sponsors" children={<SponsorTab />} />
+            <Route path="/prizes" children={<PrizesTab />} />
+            <Route path="/schedule" children={<ScheduleTab virtual />} />
+            <Route path="/" children={<Home virtual confirmed />} />
+          </Switch>
+          <Footer />
+        </Router>
+      </div>
+    );
+  }
+  return (
+    <div className="app_main">
+      <div className="top-lights" />
+      <div className="middle-lights" />
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/info" children={<InfoTab />} />
+          <Route path="/tracks" children={<TracksTab />} />
+          <Route path="/mentors" children={<MentorTab />} />
+          <Route path="/sponsors" children={<SponsorTab />} />
+          <Route path="/prizes" children={<PrizesTab />} />
+          <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
+          <Route path="/" children={<Home virtual confirmed />} />
+        </Switch>
+        <Footer />
+      </Router>
+    </div>
+  );
 };
 
 export default App;

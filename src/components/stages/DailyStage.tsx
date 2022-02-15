@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-
 import DailyIframe from "@daily-co/daily-js";
+
 import MainStageInformation from "./MainStageInformation";
 import EventInformation from "../EventInformation";
 
@@ -10,8 +10,8 @@ type Props = {
 };
 
 const DailyStage: React.FC<Props> = (props: Props) => {
-  let url = props.videoID.split("?t=")[0];
-  let token = props.videoID.split("?t=")[1];
+  const url = props.videoID.split("?t=")[0];
+  const token = props.videoID.split("?t=")[1];
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,10 +38,10 @@ const DailyStage: React.FC<Props> = (props: Props) => {
           },
         });
         await callFrame.join({
-          url: url,
-          token: token,
+          url,
+          token,
         });
-        callFrame.on("left-meeting", (_) => {
+        callFrame.on("left-meeting", _ => {
           if (containerRef != null) {
             if (containerRef.current != null) {
               containerRef.current.innerHTML = "";

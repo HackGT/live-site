@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  fetchLiveEvents,
-  fetchUpcomingEvents,
-} from "../../../services/cmsService";
 
+import { fetchLiveEvents, fetchUpcomingEvents } from "../../../services/cmsService";
 import EventInformation from "../../EventInformation";
 import MainStage from "../../stages/MainStage";
 import LiveEvents from "./LiveEvents";
@@ -20,14 +17,12 @@ type Props = {
 const Home: React.FC<Props> = (props: Props) => {
   // const Home: React.FC = () => {
 
-  let [mainStageEvent, setMainStageEvent] = useState<EventInformation>(
+  const [mainStageEvent, setMainStageEvent] = useState<EventInformation>(
     new EventInformation("", "", "", [], "")
   );
 
   const updateMainStageEvent = (e: any) => {
-    setMainStageEvent(
-      new EventInformation(e.id, e.url, e.name, e.tags, e.description)
-    );
+    setMainStageEvent(new EventInformation(e.id, e.url, e.name, e.tags, e.description));
 
     window.scrollTo({
       top: 0,
@@ -38,7 +33,7 @@ const Home: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     const getEvents = async () => {
       const data = await fetchLiveEvents(true);
-      const allEvents = data.allEvents;
+      const { allEvents } = data;
 
       // Choose which event we want to show in the main stage first
       // Youtube livestreams if they exist
@@ -46,8 +41,7 @@ const Home: React.FC<Props> = (props: Props) => {
       for (let i = 0; i < allEvents.length; i++) {
         if (
           allEvents[i].url !== null &&
-          (allEvents[i].url.includes("youtube") ||
-            allEvents[i].url.includes("youtu.be"))
+          (allEvents[i].url.includes("youtube") || allEvents[i].url.includes("youtu.be"))
         ) {
           setMainStageEvent(
             new EventInformation(
@@ -112,8 +106,8 @@ const Home: React.FC<Props> = (props: Props) => {
   }, []);
 
   // Logic for updating Upcoming and Live events
-  let [liveEvents, setLiveEvents] = useState<any[]>([]);
-  let [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
+  const [liveEvents, setLiveEvents] = useState<any[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
 
   // The time to refresh next, use the next Upcoming Event to time this.
   async function updateEvents() {
@@ -125,25 +119,22 @@ const Home: React.FC<Props> = (props: Props) => {
 
     let minRefreshTime = new Date(Date.now() + 6000000);
     for (let i = 0; i < upcomingEventData.length; i++) {
-      let event_start = new Date(upcomingEventData[i].startDate);
+      const event_start = new Date(upcomingEventData[i].startDate);
       if (event_start < minRefreshTime) {
         minRefreshTime = event_start;
       }
     }
     for (let i = 0; i < liveEventData.length; i++) {
-      let event_end = new Date(liveEventData[i].endDate);
+      const event_end = new Date(liveEventData[i].endDate);
       if (event_end < minRefreshTime) {
         minRefreshTime = event_end;
       }
     }
     setLiveEvents(liveEventData);
 
-    let sortedUpcomingEvents = upcomingEventData.sort(function (
-      a: any,
-      b: any
-    ) {
-      let dateA = a.startDate;
-      let dateB = b.startDate;
+    const sortedUpcomingEvents = upcomingEventData.sort((a: any, b: any) => {
+      const dateA = a.startDate;
+      const dateB = b.startDate;
       return dateA >= dateB ? 1 : -1;
     });
     setUpcomingEvents(sortedUpcomingEvents.splice(0, 9));
@@ -164,38 +155,25 @@ const Home: React.FC<Props> = (props: Props) => {
     return (
       <div>
         <MainStage event={mainStageEvent} confirmed={props.confirmed} />
-        <LiveEvents
-          setEventCallback={updateMainStageEvent}
-          events={liveEvents}
-        />
+        <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
         {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
         {/* <SeeFullScheduleButton /> */}
-        <UpcomingEvents
-          setEventCallback={updateMainStageEvent}
-          events={upcomingEvents}
-        />
+        <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
         <SeeFullScheduleButton />
-        <AllEvents setEventCallback={updateMainStageEvent} />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
-        <UpcomingEvents
-          setEventCallback={updateMainStageEvent}
-          events={upcomingEvents}
-        />
-        <SeeFullScheduleButton />
-        <MainStage event={mainStageEvent} confirmed={props.confirmed} />
-        <LiveEvents
-          setEventCallback={updateMainStageEvent}
-          events={liveEvents}
-        />
         <AllEvents setEventCallback={updateMainStageEvent} />
       </div>
     );
   }
+  return (
+    <div>
+      {/* <Schedule tableLength={6} homepage={true} virtual={props.virtual}/> */}
+      <UpcomingEvents setEventCallback={updateMainStageEvent} events={upcomingEvents} />
+      <SeeFullScheduleButton />
+      <MainStage event={mainStageEvent} confirmed={props.confirmed} />
+      <LiveEvents setEventCallback={updateMainStageEvent} events={liveEvents} />
+      <AllEvents setEventCallback={updateMainStageEvent} />
+    </div>
+  );
 };
 
 export default Home;

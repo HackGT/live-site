@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import BlockCollection from "../../common/BlockCollection";
 
+import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
 const PrizesTab: React.FC = () => {
-  let [generalPrizes, setGeneralPrizes] = useState<any[]>([]);
-  let [emerginPrizes, setEmergingPrizes] = useState<any[]>([]);
-  let [openSourcePrizes, setOpenSourcePrizes] = useState<any[]>([]);
+  const [generalPrizes, setGeneralPrizes] = useState<any[]>([]);
+  const [emerginPrizes, setEmergingPrizes] = useState<any[]>([]);
+  const [openSourcePrizes, setOpenSourcePrizes] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {

@@ -1,14 +1,13 @@
 /* General styling */
 @font-face {
-  font-family: "Roboto";
+  font-family: Roboto;
   src: url(./assets/Roboto-Regular.ttf);
 }
 
 .app_main {
-  text-align: center;
-  background-color: #293C6F;
   min-width: 800px;
-  
+  text-align: center;
+  background-color: #293c6f;
 }
 
 .hello {
@@ -17,30 +16,30 @@
 
 /* Logo Styling */
 .logo_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
   height: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .logo_title {
   padding-left: 1rem;
-  font-size: 1.9rem;
-  user-select: none;
   color: white;
   font-weight: 500;
+  font-size: 1.9rem;
+  user-select: none;
 }
 
 /* Navbar Styling */
 .navbar {
-  color: #293C6F;
-  font-size: 18px;
-  padding: 10px 5%;
   display: grid;
   grid-template-columns: 1fr auto;
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 8%);
   margin-bottom: 10px;
+  padding: 10px 5%;
+  color: #293c6f;
+  font-size: 18px;
+  box-shadow: 0 3px 4px 0 rgb(0 0 0 / 8%);
 }
 
 .hamNavbar {
@@ -79,17 +78,17 @@
 
 /* Main Stage */
 .main_stage_wrapper {
-  width: 100%;
   position: relative;
+  width: 100%;
   padding-bottom: 56.45%;
 }
 
 .main_stage_wrapper_youtube {
-  width: 100%;
   position: relative;
-  padding-bottom: 56.45%;
   display: flex;
   flex-direction: row;
+  width: 100%;
+  padding-bottom: 56.45%;
 }
 
 @media (max-width: 900px) {
@@ -99,13 +98,13 @@
 }
 
 .main_stage_container {
-  margin: 0 auto;
-  width: calc(60% + 300px);
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: calc(60% + 300px);
+  margin: 0 auto;
+  margin-top: 40px;
 }
 
 .youtubeStage {
@@ -133,76 +132,77 @@
 }
 
 .main_stage_placeholder {
-  background-color: #c4c4c4;
-  height: 600px;
   width: 100%;
+  height: 600px;
+  background-color: #c4c4c4;
 }
 
 .main_stage_content {
-  padding: 20px;
   width: 100%;
+  padding: 20px;
 }
 
 /* Card Tag */
 .card_tag {
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  color: black;
-  border: 1px black;
-  background-color: #e6e6e6;
   padding: 8px;
+  color: black;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  background-color: #e6e6e6;
+  border: 1px black;
   border-radius: 5px;
 }
 
 /* Card Img */
 .card_img {
-  object-fit: cover;
   max-width: 100%;
   max-height: 100%;
+  object-fit: cover;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
 /* Live Events List */
 .live_event_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 50px;
-  color: white;
   margin-bottom: 1px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
 .live_event_tag {
-  font-family: "Roboto", sans-serif;
-  font-size: 18px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
 .live_event_image {
-  height: 100%;
   width: auto;
+  height: 100%;
 }
 
 .live_event_container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
   align-content: flex-start;
+  justify-content: flex-start;
 }
 
 .live_event_card {
+  display: flex;
   width: 45%;
   height: 100%;
-  display: flex;
-  margin-left: 2%;
   margin-right: 2%;
   margin-bottom: 20px;
+  margin-left: 2%;
 }
 
 /* Lights, other css */
+
 /* .top-lights {
   width: 100%;
   min-height: 300px;
@@ -242,15 +242,16 @@
     align-content: center;
     width: 100%;
   }
+
   .live_event_card {
     width: 100%;
   }
 }
 
 .live_events {
-  margin-left: 10%;
-  margin-right: 10%;
   margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .live_event_card_actions {
@@ -259,10 +260,10 @@
 
 /* Live Events List */
 .upcoming_events_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 50px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
@@ -275,18 +276,18 @@
 }
 
 .upcoming_events_card {
-  width: 26%;
-  height: auto;
   display: flex;
   flex-direction: column;
+  width: 26%;
+  height: auto;
   margin-bottom: 20px;
 }
 
 .upcoming_events {
-  margin-left: 10%;
-  margin-right: 10%;
   margin-top: 60px;
+  margin-right: 10%;
   margin-bottom: 20px;
+  margin-left: 10%;
 }
 
 @media (max-width: 900px) {
@@ -297,16 +298,16 @@
 
 /* Schedule */
 .schedule {
-  margin-left: 10%;
-  margin-right: 10%;
   margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .schedule_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 50px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
@@ -316,17 +317,17 @@
 
 /* All events */
 .all_events {
-  margin-left: 10%;
-  margin-right: 10%;
   margin-top: 60px;
+  margin-right: 10%;
   margin-bottom: 20px;
+  margin-left: 10%;
 }
 
 .all_events_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 50px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
@@ -339,18 +340,18 @@
 }
 
 .all_events_card {
-  width: 26%;
-  height: auto;
   display: flex;
   flex-direction: column;
+  width: 26%;
+  height: auto;
   margin-bottom: 20px;
 }
 
 .all_events_filter_text {
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 24px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
@@ -373,17 +374,20 @@
     align-content: center;
     width: 100%;
   }
+
   .all_events_card {
     width: 65%;
   }
+
   .all_events_filter_dropdown {
     width: 50%;
-    padding-top: 10px;
     margin-top: 10px;
+    padding-top: 10px;
   }
+
   .all_events_filter_container {
-    align-items: center;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
   }
@@ -391,71 +395,71 @@
 
 /* Block Collection */
 .block_title_container {
-  margin-left: 5%;
-  margin-right: 10%;
   margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 5%;
 }
 
 .block_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 32px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 32px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
 .blocks_card {
+  display: flex;
   width: 75%;
   height: 100%;
-  display: flex;
-  margin-left: 2%;
   margin-right: 2%;
   margin-bottom: 20px;
+  margin-left: 2%;
 }
 
 .block_card_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: black;
   margin: 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
 .block_card_container {
-  margin-left: 5%;
-  margin-right: 5%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: flex-start;
   align-content: flex-start;
+  justify-content: flex-start;
+  margin-right: 5%;
+  margin-left: 5%;
 }
 
 /* Prizes */
 
 .prize_title_container {
-  margin-left: 5%;
-  margin-right: 10%;
   margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 5%;
 }
 
 .prize_title {
-  font-family: "Roboto", sans-serif;
-  font-size: 36px;
-  color: white;
   margin-bottom: 10px;
+  color: white;
+  font-size: 36px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
 /* Footer */
 
 footer {
-  color: #ffffff;
   margin: var(--base-unit-4);
-  box-shadow: 0 -3px 4px 0 rgba(0, 0, 0, 8%);
   margin-top: 100px;
   padding-bottom: 20px;
+  color: #fff;
+  box-shadow: 0 -3px 4px 0 rgb(0 0 0 / 8%);
 }
 
 .footer_socials {
@@ -466,29 +470,29 @@ footer {
 }
 
 .footer_text_hex {
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
   color: white;
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
   text-align: left;
 }
 
 .footer_text_mlh {
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  color: white;
-  text-align: left;
   margin-bottom: 50px;
+  color: white;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
 }
 
 .footer_container {
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding-top: 20px;
 }
 
 .footer_logo {
-  margin-left: 2px;
   margin-right: 2px;
+  margin-left: 2px;
 }

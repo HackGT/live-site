@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import BlockCollection from "../../common/BlockCollection";
 
+import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
 const ScheduleTab: React.FC = () => {
-  let [infoFaqs, setInfoFaqs] = useState<any[]>([]);
-  let [keyInfo, setKeyInfo] = useState<any[]>([]);
+  const [infoFaqs, setInfoFaqs] = useState<any[]>([]);
+  const [keyInfo, setKeyInfo] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {

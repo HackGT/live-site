@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import BlockCollection from "../../common/BlockCollection";
 
+import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
 const MentorTab: React.FC = () => {
-  let [mentor, setMentor] = useState<any[]>([]);
+  const [mentor, setMentor] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {

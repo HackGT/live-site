@@ -1,9 +1,8 @@
 import axios from "axios";
 
-const REACT_APP_CMS_URL =
-  process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api";
+const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api";
 
-const getEventUrl = async (eventId: string): Promise<any> => {
+const getEventUrl = async (eventId: string): Promise<any> =>
   // Temporarily remove this code while interaction backend is transferred over to new api repo
 
   // try {
@@ -18,13 +17,11 @@ const getEventUrl = async (eventId: string): Promise<any> => {
   //   }
   // }
 
-  return {
+  ({
     url: "",
-  };
-};
-
-let fetchLiveEvents = async (virtual: boolean) => {
-  var today = new Date().toISOString();
+  });
+const fetchLiveEvents = async (virtual: boolean) => {
+  const today = new Date().toISOString();
 
   if (virtual) {
     var liveEventsQuery = `{
@@ -87,17 +84,17 @@ let fetchLiveEvents = async (virtual: boolean) => {
     `;
   }
 
-  var res = await fetch(REACT_APP_CMS_URL, {
+  const res = await fetch(REACT_APP_CMS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: liveEventsQuery }),
   });
-  var jsonResponse = await res.json();
+  const jsonResponse = await res.json();
   return jsonResponse.data;
 };
 
-let fetchUpcomingEvents = async (virtual: boolean) => {
-  var today = new Date().toISOString();
+const fetchUpcomingEvents = async (virtual: boolean) => {
+  const today = new Date().toISOString();
 
   if (virtual) {
     var upcomingEventsQuery = `{
@@ -154,16 +151,16 @@ let fetchUpcomingEvents = async (virtual: boolean) => {
     `;
   }
 
-  var res = await fetch(REACT_APP_CMS_URL, {
+  const res = await fetch(REACT_APP_CMS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: upcomingEventsQuery }),
   });
-  var jsonResponse = await res.json();
+  const jsonResponse = await res.json();
   return jsonResponse.data;
 };
 
-let fetchAllEvents = async (virtual: boolean) => {
+const fetchAllEvents = async (virtual: boolean) => {
   if (virtual) {
     var allEventsQuery = `{
       allEvents  (where:   {AND:[
@@ -214,17 +211,17 @@ let fetchAllEvents = async (virtual: boolean) => {
     `;
   }
 
-  var res = await fetch(REACT_APP_CMS_URL, {
+  const res = await fetch(REACT_APP_CMS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: allEventsQuery }),
   });
-  var jsonResponse = await res.json();
+  const jsonResponse = await res.json();
   return jsonResponse.data;
 };
 
-let fetchBlock = async (blockSlug: string) => {
-  var blockQuery = `
+const fetchBlock = async (blockSlug: string) => {
+  const blockQuery = `
   {
     allBlocks (where: 
       {AND:[
@@ -238,19 +235,13 @@ let fetchBlock = async (blockSlug: string) => {
     }
   }
   `;
-  var res = await fetch(REACT_APP_CMS_URL, {
+  const res = await fetch(REACT_APP_CMS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: blockQuery }),
   });
-  var jsonResponse = await res.json();
+  const jsonResponse = await res.json();
   return jsonResponse.data;
 };
 
-export {
-  getEventUrl,
-  fetchAllEvents,
-  fetchLiveEvents,
-  fetchUpcomingEvents,
-  fetchBlock,
-};
+export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents, fetchBlock };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
-
 import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,11 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 import custom_theme from "../../Theme";
-
-import {
-  fetchAllEvents,
-  fetchUpcomingEvents,
-} from "../../../services/cmsService";
+import { fetchAllEvents, fetchUpcomingEvents } from "../../../services/cmsService";
 
 type Props = {
   tableLength: number;
@@ -24,7 +19,7 @@ type Props = {
 };
 
 const Schedule: React.FC<Props> = (props: Props) => {
-  let [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -34,9 +29,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
       } else {
         data = await fetchAllEvents(props.virtual);
       }
-      let sortedData = data.allEvents.sort(function (a: any, b: any) {
-        let dateA = a.startDate;
-        let dateB = b.startDate;
+      const sortedData = data.allEvents.sort((a: any, b: any) => {
+        const dateA = a.startDate;
+        const dateB = b.startDate;
         return dateA >= dateB ? 1 : -1;
       });
       setEvents(sortedData.slice(0, props.tableLength));
@@ -44,13 +39,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
     getEvents();
   }, []);
 
-  const formateDateString = (date: string) => {
-    return dateFormat(date, "h:MM TT Z");
-  };
+  const formateDateString = (date: string) => dateFormat(date, "h:MM TT Z");
 
-  const getDayFromDate = (date: string) => {
-    return dateFormat(date, "mmm dS");
-  };
+  const getDayFromDate = (date: string) => dateFormat(date, "mmm dS");
 
   const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -67,11 +58,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
   return (
     <div className="schedule">
       <p className="schedule_title">Schedule</p>
-      <TableContainer
-        className="schedule_table"
-        component={Paper}
-        style={{ maxHeight: 600 }}
-      >
+      <TableContainer className="schedule_table" component={Paper} style={{ maxHeight: 600 }}>
         <Table
           stickyHeader
           aria-label="simple table"
@@ -101,7 +88,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {events.map((row) => (
+            {events.map(row => (
               <TableRow key={row.name}>
                 <TableCell component="th" scope="row">
                   {row.name}
@@ -116,12 +103,8 @@ const Schedule: React.FC<Props> = (props: Props) => {
                 <TableCell style={{ width: "max-content" }} align="left">
                   {getDayFromDate(row.startDate)}
                 </TableCell>
-                <TableCell align="left">
-                  {formateDateString(row.startDate)}
-                </TableCell>
-                <TableCell align="left">
-                  {formateDateString(row.endDate)}
-                </TableCell>
+                <TableCell align="left">{formateDateString(row.startDate)}</TableCell>
+                <TableCell align="left">{formateDateString(row.endDate)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

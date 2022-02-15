@@ -1,4 +1,4 @@
-# Virtual Checkin
+# Live Site
 
 The HexLabs platform for hosting livestreams, virtual events, schedules, FAQs and more!
 
