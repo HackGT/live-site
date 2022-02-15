@@ -43,7 +43,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => (
                 </Typography>
                 <CardActions className="live_event_card_actions">
                   {event.tags.map((tag: any, index: number) => (
-                    <CardTag key={index} tag={tag.name} />
+                    <CardTag tag={tag.name} />
                   ))}
                 </CardActions>
               </CardContent>
@@ -66,7 +66,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => (
                 </Typography>
                 <CardActions className="live_event_card_actions">
                   {event.tags.map((tag: any, index: number) => (
-                    <CardTag key={index} tag={tag.name} />
+                    <CardTag tag={tag.name} />
                   ))}
                 </CardActions>
               </CardContent>

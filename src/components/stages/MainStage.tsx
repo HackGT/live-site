@@ -26,8 +26,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
   }
 
   async function updateVideoData() {
-    if (!props.event.id) {
-    } else {
+    if (props.event.id) {
       try {
         const eventData = await getEventUrl(props.event.id);
         const eventUrl: string = eventData.url;
@@ -44,11 +43,11 @@ const MainStage: React.FC<Props> = (props: Props) => {
           if (eventUrl.includes("youtube")) {
             // For https://www.youtube.com/watch?v=... format
             videoType = "youtube";
-            videoID = eventUrl.split("v=").slice(-1)[0];
+            [videoID] = eventUrl.split("v=").slice(-1);
           } else if (eventUrl.includes("youtu.be")) {
             // For https://youtu.be/... format
             videoType = "youtube";
-            videoID = eventUrl.split("/").slice(-1)[0];
+            [videoID] = eventUrl.split("/").slice(-1);
           } else if (eventUrl.includes("daily")) {
             videoType = "daily";
             videoID = eventUrl;
@@ -74,7 +73,7 @@ const MainStage: React.FC<Props> = (props: Props) => {
     updateVideoData();
   }, [props.event]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (props.event.title == "No Events are currently live!") {
+  if (props.event.title === "No Events are currently live!") {
     return (
       <InvalidEventStage
         event={props.event}

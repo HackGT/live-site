@@ -25,7 +25,7 @@ const MainStageInformation: React.FC<Props> = (props: Props) => (
     </CardContent>
     <CardActions>
       {props.event.tags.map((tag: any, index: number) => (
-        <CardTag key={index} tag={tag.name} />
+        <CardTag tag={tag.name} />
       ))}
     </CardActions>
   </Card>

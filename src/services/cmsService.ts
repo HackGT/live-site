@@ -23,8 +23,10 @@ const getEventUrl = async (eventId: string): Promise<any> =>
 const fetchLiveEvents = async (virtual: boolean) => {
   const today = new Date().toISOString();
 
+  let liveEventsQuery = "";
+
   if (virtual) {
-    var liveEventsQuery = `{
+    liveEventsQuery = `{
     allEvents  (where: {AND:[
         {AND:[
           {startDate_lt: "${today}"},
@@ -55,7 +57,7 @@ const fetchLiveEvents = async (virtual: boolean) => {
   }
   `;
   } else {
-    var liveEventsQuery = `{
+    liveEventsQuery = `{
       allEvents  (where: {AND:[
           {AND:[
             {startDate_lt: "${today}"},
@@ -96,8 +98,10 @@ const fetchLiveEvents = async (virtual: boolean) => {
 const fetchUpcomingEvents = async (virtual: boolean) => {
   const today = new Date().toISOString();
 
+  let upcomingEventsQuery = "";
+
   if (virtual) {
-    var upcomingEventsQuery = `{
+    upcomingEventsQuery = `{
       allEvents (where:  {AND:[
         {AND:[
           {startDate_gt: "${today}"},
@@ -125,7 +129,7 @@ const fetchUpcomingEvents = async (virtual: boolean) => {
     }
     `;
   } else {
-    var upcomingEventsQuery = `{
+    upcomingEventsQuery = `{
       allEvents (where:   {AND:[
         {startDate_gt: "${today}"},
         {hackathon: {name: "HackGT 8"} }
@@ -161,8 +165,10 @@ const fetchUpcomingEvents = async (virtual: boolean) => {
 };
 
 const fetchAllEvents = async (virtual: boolean) => {
+  let allEventsQuery = "";
+
   if (virtual) {
-    var allEventsQuery = `{
+    allEventsQuery = `{
       allEvents  (where:   {AND:[
         {location_some: {name: "Virtual"} },
         {hackathon: {name: "HackGT 8"} }
@@ -188,7 +194,7 @@ const fetchAllEvents = async (virtual: boolean) => {
     }
     `;
   } else {
-    var allEventsQuery = `{
+    allEventsQuery = `{
       allEvents  (where: {hackathon: {name: "HackGT 8"} }, orderBy:"startDate") {
         id
         name

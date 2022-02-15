@@ -60,7 +60,7 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => (
                   </Typography>
                   <CardActions>
                     {event.tags.map((tag: any, index: number) => (
-                      <CardTag key={index} tag={tag.name} />
+                      <CardTag tag={tag.name} />
                     ))}
                   </CardActions>
                 </CardContent>
@@ -83,7 +83,7 @@ const UpcomingEvents: React.FC<Props> = (props: Props) => (
                   </Typography>
                   <CardActions>
                     {event.tags.map((tag: any, index: number) => (
-                      <CardTag key={index} tag={tag.name} />
+                      <CardTag tag={tag.name} />
                     ))}
                   </CardActions>
                 </CardContent>

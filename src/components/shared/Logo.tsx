@@ -1,3 +1,5 @@
+import React from "react";
+
 const Logo: React.FC = () => (
   <div className="logo_container">
     <svg width="39" height="32" viewBox="0 0 39 32" fill="none" xmlns="http://www.w3.org/2000/svg">

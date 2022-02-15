@@ -10,9 +10,9 @@ const HamburgerNavbar: React.FC = () => {
   const location: any = useLocation()?.pathname;
   const [state, setState] = useState(false);
 
-  function handleHamburger() {
+  const handleHamburger = () => {
     setState(!state);
-  }
+  };
 
   return (
     <div className="navbar">

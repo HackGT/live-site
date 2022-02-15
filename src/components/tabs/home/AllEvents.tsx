@@ -85,10 +85,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
         if (locationFilter !== "None") {
           // If there is a location filter and no tag filter
           for (let j = 0; j < events[i].location.length; j++) {
-            if (
-              events[i].location[j].hasOwnProperty("name") &&
-              events[i].location[j].name === locationFilter
-            ) {
+            if (events[i].location[j]?.name === locationFilter) {
               location_filtered_set.add(events[i]);
               break;
             }
@@ -198,7 +195,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
                     </Typography>
                     <CardActions>
                       {event.tags.map((tag: any, index: number) => (
-                        <CardTag key={index} tag={tag.name} />
+                        <CardTag tag={tag.name} />
                       ))}
                     </CardActions>
                   </CardContent>
@@ -221,7 +218,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
                     </Typography>
                     <CardActions>
                       {event.tags.map((tag: any, index: number) => (
-                        <CardTag key={index} tag={tag.name} />
+                        <CardTag tag={tag.name} />
                       ))}
                     </CardActions>
                   </CardContent>
