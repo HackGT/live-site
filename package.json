@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "virtual-checkin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -37,12 +37,11 @@
     "websocket": "^1.0.33"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": [
       "react-app",

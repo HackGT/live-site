@@ -22,19 +22,25 @@ const art =
 // TODO: Add Hexlabs information at the bottom of the page
 
 const App: React.FC = () => {
-  const [{ data, loading, error }] = useAxios("/auth/check");
+  // Temporarily remove this code while login is switch to new system with api repo
 
-  if (loading) {
-    return null;
-  }
+  // const [{ data, loading, error }] = useAxios("/auth/check");
 
-  if (error || !data) {
-    return <h1>Error</h1>;
-  }
+  // if (loading) {
+  //   return null;
+  // }
 
-  const user: User = data;
+  // if (error || !data) {
+  //   return <h1>Error</h1>;
+  // }
 
-  console.log(art);
+  // const user: User = data;
+
+  // console.log(art);
+
+  const user = {
+    branch: "notconfirmed",
+  };
 
   if (user.branch == "notconfirmed") {
     return (
