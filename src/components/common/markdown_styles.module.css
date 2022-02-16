@@ -1,5 +1,10 @@
+.markdown code {
+  display: block;
+  white-space: pre-wrap;
+}
 .reactMarkDown a {
   text-decoration: underline;
+  .color: white;
 }
 
 .reactMarkDown p {
@@ -8,9 +13,15 @@
   font-size: 18px;
   font-family: Roboto, sans-serif;
   text-align: left;
+
+}
+
+.reactMarkdown div {
+  font-color: white;
 }
 
 .reactMarkDown li {
+  .color: white;
   margin-left: 50px;
   text-align: left;
 }
