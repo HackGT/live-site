@@ -1,0 +1,498 @@
+/* General styling */
+@font-face {
+  font-family: Roboto;
+  src: url(./assets/Roboto-Regular.ttf);
+}
+
+.app_main {
+  min-width: 800px;
+  text-align: center;
+  background-color: #293c6f;
+}
+
+.hello {
+  text-decoration: underline;
+}
+
+/* Logo Styling */
+.logo_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+}
+
+.logo_title {
+  padding-left: 1rem;
+  color: white;
+  font-weight: 500;
+  font-size: 1.9rem;
+  user-select: none;
+}
+
+/* Navbar Styling */
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-bottom: 10px;
+  padding: 10px 5%;
+  color: #293c6f;
+  font-size: 18px;
+  box-shadow: 0 3px 4px 0 rgb(0 0 0 / 8%);
+}
+
+.hamNavbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar_right {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.navbar_link {
+  padding-left: 40px;
+  text-decoration-color: white;
+}
+
+.navbar_link_text {
+  color: white;
+  font-weight: 400;
+  text-decoration-color: white;
+}
+
+.navbar_link_text_bold {
+  color: white;
+  font-weight: 500;
+  text-decoration-color: white;
+}
+
+.navbar_button {
+  margin-left: 40px;
+}
+
+/* Main Stage */
+.main_stage_wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.45%;
+}
+
+.main_stage_wrapper_youtube {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 56.45%;
+}
+
+@media (max-width: 900px) {
+  .main_stage_wrapper_youtube {
+    flex-direction: column;
+  }
+}
+
+.main_stage_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(60% + 300px);
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.youtubeStage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 300px);
+  height: 100%;
+}
+
+.youtubechat {
+  position: absolute;
+  top: 0;
+  left: calc(100% - 300px);
+  width: 300px;
+  height: 100%;
+}
+
+.dailyStage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.main_stage_placeholder {
+  width: 100%;
+  height: 600px;
+  background-color: #c4c4c4;
+}
+
+.main_stage_content {
+  width: 100%;
+  padding: 20px;
+}
+
+/* Card Tag */
+.card_tag {
+  padding: 8px;
+  color: black;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  background-color: #e6e6e6;
+  border: 1px black;
+  border-radius: 5px;
+}
+
+/* Card Img */
+.card_img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Live Events List */
+.live_event_title {
+  margin-bottom: 1px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.live_event_tag {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.live_event_image {
+  width: auto;
+  height: 100%;
+}
+
+.live_event_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
+.live_event_card {
+  display: flex;
+  width: 45%;
+  height: 100%;
+  margin-right: 2%;
+  margin-bottom: 20px;
+  margin-left: 2%;
+}
+
+/* Lights, other css */
+
+/* .top-lights {
+  width: 100%;
+  min-height: 300px;
+  max-height: 340px;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  background: url(./assets/top_lights.png) no-repeat;
+} */
+
+/* .middle-lights {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  min-height: 200px;
+  max-height: 219px;
+  z-index: 0;
+  background: url(./assets/mid_lights.png) no-repeat;
+} */
+
+/* .app_main *:not(.top-lights):not(.middle-lights) {
+  position: relative;
+  z-index: 1;
+} */
+
+.MuiInputBase-root {
+  background-color: white;
+}
+
+.MuiFormLabel-root {
+  color: white !important;
+}
+
+@media (max-width: 900px) {
+  .live_event_container {
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+  }
+
+  .live_event_card {
+    width: 100%;
+  }
+}
+
+.live_events {
+  margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.live_event_card_actions {
+  margin-top: 10px;
+}
+
+/* Live Events List */
+.upcoming_events_title {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.upcoming_events_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.upcoming_events_card {
+  display: flex;
+  flex-direction: column;
+  width: 26%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.upcoming_events {
+  margin-top: 60px;
+  margin-right: 10%;
+  margin-bottom: 20px;
+  margin-left: 10%;
+}
+
+@media (max-width: 900px) {
+  .upcoming_events_card {
+    width: 65%;
+  }
+}
+
+/* Schedule */
+.schedule {
+  margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.schedule_title {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.schedule_table {
+  margin-bottom: 30px;
+}
+
+/* All events */
+.all_events {
+  margin-top: 60px;
+  margin-right: 10%;
+  margin-bottom: 20px;
+  margin-left: 10%;
+}
+
+.all_events_title {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 50px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.all_events_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.all_events_card {
+  display: flex;
+  flex-direction: column;
+  width: 26%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.all_events_filter_text {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 24px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.all_events_filter_dropdown {
+  width: 20%;
+}
+
+.all_events_filter_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 900px) {
+  .all_events_container {
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+  }
+
+  .all_events_card {
+    width: 65%;
+  }
+
+  .all_events_filter_dropdown {
+    width: 50%;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .all_events_filter_container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+/* Block Collection */
+.block_title_container {
+  margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 5%;
+}
+
+.block_title {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 32px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.blocks_card {
+  display: flex;
+  width: 75%;
+  height: 100%;
+  margin-right: 2%;
+  margin-bottom: 20px;
+  margin-left: 2%;
+}
+
+.block_card_title {
+  margin: 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.block_card_container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+/* Prizes */
+
+.prize_title_container {
+  margin-top: 60px;
+  margin-right: 10%;
+  margin-left: 5%;
+}
+
+.prize_title {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 36px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+/* Footer */
+
+footer {
+  margin: var(--base-unit-4);
+  margin-top: 100px;
+  padding-bottom: 20px;
+  color: #fff;
+  box-shadow: 0 -3px 4px 0 rgb(0 0 0 / 8%);
+}
+
+.footer_socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.footer_text_hex {
+  color: white;
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.footer_text_mlh {
+  margin-bottom: 50px;
+  color: white;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.footer_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.footer_logo {
+  margin-right: 2px;
+  margin-left: 2px;
+}
