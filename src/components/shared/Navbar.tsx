@@ -15,11 +15,12 @@ const Navbar: React.FC = () => {
       bg: theme.palette.primary.main,
       borderRadius: 5,
       border: 0,
+      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
       color: "white",
       fontSize: "16px",
       padding: "16px 30px",
-      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
       textTransform: "capitalize",
+      margin: "1px"
     },
   })
 
@@ -86,8 +87,11 @@ const Navbar: React.FC = () => {
             <div className="navbar_button">
               <StyledButton
                 _hover={{
-                  bg: "#2f409f",
-                  boxShadow: "0px 3px 5px 2px rgba(0, 0, 0, 0.3)"
+                  bg: "#293b6e",
+                  border: "1px",
+                  borderColor: "#3f51b5",
+                  textDecoration: "none",
+                  margin: "0px"
                 }}
                 as={Link}
                 href="https://join.hack.gt"
