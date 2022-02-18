@@ -1,0 +1,16 @@
+.reactMarkDown a {
+  text-decoration: underline;
+}
+
+.reactMarkDown p {
+  margin: 10px;
+  color: black;
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
+.reactMarkDown li {
+  margin-left: 50px;
+  text-align: left;
+}
