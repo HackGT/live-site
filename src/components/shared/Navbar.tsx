@@ -23,6 +23,14 @@ const Navbar: React.FC = () => {
     },
   })
 
+  const StyledLink = chakra(Link, {
+    baseStyle: {
+      _focus: {
+        boxShadow: "0 0 0 0",
+      }
+    }
+  })
+
   return (
     <div>
       <MediaQuery minWidth={1100}>
@@ -31,50 +39,50 @@ const Navbar: React.FC = () => {
             <Logo />
           </div>
           <div className="navbar_right">
-            <Link className="navbar_link" color="textPrimary" href="/">
+            <StyledLink className="navbar_link" color="textPrimary" href="/">
               <p className={location === "/" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Home
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="/schedule">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="/schedule">
               <p
                 className={location === "/schedule" ? "navbar_link_text_bold" : "navbar_link_text"}
               >
                 Schedule
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="/tracks">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="/tracks">
               <p className={location === "/tracks" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Tracks
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="/mentors">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="/mentors">
               <p className={location === "/mentors" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Mentors
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="/sponsors">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="/sponsors">
               <p
                 className={location === "/sponsors" ? "navbar_link_text_bold" : "navbar_link_text"}
               >
                 Sponsors
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="/prizes">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="/prizes">
               <p className={location === "/prizes" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Prizes
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="/info">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="/info">
               <p className={location === "/info" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Info
               </p>
-            </Link>
-            <Link className="navbar_link" color="textPrimary" href="https://game.hack.gt/">
+            </StyledLink>
+            <StyledLink className="navbar_link" color="textPrimary" href="https://game.hack.gt/">
               <p className={location === "/info" ? "navbar_link_text_bold" : "navbar_link_text"}>
                 Game
               </p>
-            </Link>
+            </StyledLink>
             <div className="navbar_button">
               <StyledButton
                 _hover={{
