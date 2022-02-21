@@ -2,6 +2,7 @@
   display: block;
   white-space: pre-wrap;
 }
+
 .reactMarkDown a {
   text-decoration: underline;
   .color: white;
@@ -13,7 +14,6 @@
   font-size: 18px;
   font-family: Roboto, sans-serif;
   text-align: left;
-
 }
 
 .reactMarkdown div {

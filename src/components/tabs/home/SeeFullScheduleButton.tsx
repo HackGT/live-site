@@ -1,6 +1,5 @@
 import React from "react";
-import {Link as ReactRouterLink } from "react-router-dom"
-
+import { Link as ReactRouterLink } from "react-router-dom";
 import { chakra, Button } from "@chakra-ui/react";
 
 import theme from "../../Theme";
@@ -17,7 +16,7 @@ const SeeFullScheduleButton: React.FC = () => {
       boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
       textTransform: "capitalize",
     },
-  })
+  });
 
   return (
     <div>
@@ -25,7 +24,7 @@ const SeeFullScheduleButton: React.FC = () => {
         className="upcoming_events_button"
         _hover={{
           bg: "#2f409f",
-          boxShadow: "0px 3px 5px 2px rgba(0, 0, 0, 0.3)"
+          boxShadow: "0px 3px 5px 2px rgba(0, 0, 0, 0.3)",
         }}
         as={ReactRouterLink}
         to="/schedule"

@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-
-import Logo from "./Logo";
 import { chakra, Button, Link } from "@chakra-ui/react";
 import MediaQuery from "react-responsive";
+
+import Logo from "./Logo";
 import HamburgerNavbar from "./HamburgerNavbar";
 import theme from "../Theme";
 
@@ -20,17 +20,17 @@ const Navbar: React.FC = () => {
       fontSize: "16px",
       padding: "16px 30px",
       textTransform: "capitalize",
-      margin: "1px"
+      margin: "1px",
     },
-  })
+  });
 
   const StyledLink = chakra(Link, {
     baseStyle: {
       _focus: {
         boxShadow: "0 0 0 0",
-      }
-    }
-  })
+      },
+    },
+  });
 
   return (
     <div>
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
                   border: "1px",
                   borderColor: "#3f51b5",
                   textDecoration: "none",
-                  margin: "0px"
+                  margin: "0px",
                 }}
                 as={Link}
                 href="https://join.hack.gt"
