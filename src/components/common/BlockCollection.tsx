@@ -10,15 +10,17 @@ type Props = {
 };
 
 const BlockCollection: React.FC<Props> = (props: Props) => (
-  <Box mt="60px" mx="10%">
+  <Box mt="60px" mx="5%" fontFamily="Roboto, sans-serif">
     <Box alignItems="center">
-      <Text as="h2">{props.title}</Text>
+      <Text as="h2" fontSize="32px" fontWeight="bold" mb="20px">
+        {props.title}
+      </Text>
     </Box>
-    <Box className="block_card_container">
+    <Box display="flex" flexDir="column" gap="20px">
       {props.blocks.map((block: any) => (
-        <Box bg="white" textAlign="left" mx="2%" width="75%" display="flex">
+        <Box bg="white" textAlign="left" display="flex">
           <Box>
-            <Box color="black" fontSize="24px" fontFamily="Roboto, sans-serif" fontWeight="bold">
+            <Box color="black" fontSize="24px" fontWeight="bold">
               {block.name}
             </Box>
             <ReactMarkdown className={styles.reactMarkDown}>{block.content}</ReactMarkdown>

@@ -324,42 +324,6 @@
   }
 }
 
-/* Block Collection */
-.block_title {
-  margin-bottom: 10px;
-  font-size: 32px;
-  font-family: Roboto, sans-serif;
-  text-align: left;
-}
-
-.blocks_card {
-  display: flex;
-  width: 75%;
-  height: 100%;
-  margin-right: 2%;
-  margin-bottom: 20px;
-  margin-left: 2%;
-}
-
-.block_card_title {
-  margin: 10px;
-  color: black;
-  font-weight: bold;
-  font-size: 24px;
-  font-family: Roboto, sans-serif;
-  text-align: left;
-}
-
-.block_card_container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  justify-content: flex-start;
-  margin-right: 5%;
-  margin-left: 5%;
-}
-
 /* Prizes */
 
 .prize_title_container {
