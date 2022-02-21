@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 import styles from "./markdown_styles.module.css";
 
@@ -10,15 +10,17 @@ type Props = {
 };
 
 const BlockCollection: React.FC<Props> = (props: Props) => (
-  <Box>
-    <Box className="block_title_container" alignItems="center">
-      <p className="block_title">{props.title}</p>
+  <Box mt="60px" mx="10%">
+    <Box alignItems="center">
+      <Text as="h2">{props.title}</Text>
     </Box>
     <Box className="block_card_container">
       {props.blocks.map((block: any) => (
-        <Box className="blocks_card" bg="white">
+        <Box bg="white" textAlign="left" mx="2%" width="75%" display="flex">
           <Box>
-            <Box className="block_card_title">{block.name}</Box>
+            <Box color="black" fontSize="24px" fontFamily="Roboto, sans-serif" fontWeight="bold">
+              {block.name}
+            </Box>
             <ReactMarkdown className={styles.reactMarkDown}>{block.content}</ReactMarkdown>
           </Box>
         </Box>

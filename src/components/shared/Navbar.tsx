@@ -1,111 +1,68 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import { chakra, Button, Link } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useLocation, Link as RouterLink } from "react-router-dom";
+import { Box, Link } from "@chakra-ui/react";
 import MediaQuery from "react-responsive";
+import HamburgerMenu from "react-hamburger-menu";
 
 import Logo from "./Logo";
-import HamburgerNavbar from "./HamburgerNavbar";
-import theme from "../Theme";
+import { routes } from "./Navigation";
 
 const Navbar: React.FC = () => {
-  const location: any = useLocation()?.pathname;
-
-  const StyledButton = chakra(Button, {
-    baseStyle: {
-      bg: theme.palette.primary.main,
-      borderRadius: 5,
-      border: 0,
-      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-      color: "white",
-      fontSize: "16px",
-      padding: "16px 30px",
-      textTransform: "capitalize",
-      margin: "1px",
-    },
-  });
-
-  const StyledLink = chakra(Link, {
-    baseStyle: {
-      _focus: {
-        boxShadow: "0 0 0 0",
-      },
-    },
-  });
+  const location = useLocation()?.pathname;
+  const [showNavbar, setShowNavbar] = useState(false);
 
   return (
-    <div>
-      <MediaQuery minWidth={1100}>
-        <div className="navbar">
+    <Box>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        padding="10px 30px"
+        boxShadow="0 3px 4px 0 rgb(0 0 0 / 8%)"
+      >
+        <Logo />
+        <MediaQuery minWidth={1100}>
           <div>
-            <Logo />
+            {routes.map(route => (
+              <Link
+                as={RouterLink}
+                to={route.link}
+                color="textPrimary"
+                pl="40px"
+                _focus={{ boxShadow: "none" }}
+              >
+                {route.name}
+              </Link>
+            ))}
           </div>
-          <div className="navbar_right">
-            <StyledLink className="navbar_link" color="textPrimary" href="/">
-              <p className={location === "/" ? "navbar_link_text_bold" : "navbar_link_text"}>
-                Home
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="/schedule">
-              <p
-                className={location === "/schedule" ? "navbar_link_text_bold" : "navbar_link_text"}
-              >
-                Schedule
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="/tracks">
-              <p className={location === "/tracks" ? "navbar_link_text_bold" : "navbar_link_text"}>
-                Tracks
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="/mentors">
-              <p className={location === "/mentors" ? "navbar_link_text_bold" : "navbar_link_text"}>
-                Mentors
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="/sponsors">
-              <p
-                className={location === "/sponsors" ? "navbar_link_text_bold" : "navbar_link_text"}
-              >
-                Sponsors
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="/prizes">
-              <p className={location === "/prizes" ? "navbar_link_text_bold" : "navbar_link_text"}>
-                Prizes
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="/info">
-              <p className={location === "/info" ? "navbar_link_text_bold" : "navbar_link_text"}>
-                Info
-              </p>
-            </StyledLink>
-            <StyledLink className="navbar_link" color="textPrimary" href="https://game.hack.gt/">
-              <p className={location === "/info" ? "navbar_link_text_bold" : "navbar_link_text"}>
-                Game
-              </p>
-            </StyledLink>
-            <div className="navbar_button">
-              <StyledButton
-                _hover={{
-                  bg: "#293b6e",
-                  border: "1px",
-                  borderColor: "#3f51b5",
-                  textDecoration: "none",
-                  margin: "0px",
-                }}
-                as={Link}
-                href="https://join.hack.gt"
-              >
-                Discord
-              </StyledButton>
-            </div>
-          </div>
-        </div>
-      </MediaQuery>
-      <MediaQuery maxWidth={1100}>
-        <HamburgerNavbar />
-      </MediaQuery>
-    </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={1100}>
+          <Box>
+            <HamburgerMenu
+              isOpen={showNavbar}
+              menuClicked={() => setShowNavbar(!showNavbar)}
+              color="black"
+              strokeWidth={3}
+            />
+          </Box>
+        </MediaQuery>
+      </Box>
+      {showNavbar && (
+        <Box display="flex" flexDirection="column">
+          {routes.map(route => (
+            <Link
+              as={RouterLink}
+              to={route.link}
+              color="textPrimary"
+              _focus={{ boxShadow: "none" }}
+              mt="20px"
+            >
+              {route.name}
+            </Link>
+          ))}
+        </Box>
+      )}
+    </Box>
   );
 };
 

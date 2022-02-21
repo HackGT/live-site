@@ -7,73 +7,10 @@
 .app_main {
   min-width: 800px;
   text-align: center;
-  background-color: #293c6f;
 }
 
 .hello {
   text-decoration: underline;
-}
-
-/* Logo Styling */
-.logo_container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  height: fit-content;
-}
-
-.logo_title {
-  padding-left: 1rem;
-  color: white;
-  font-weight: 500;
-  font-size: 1.9rem;
-  user-select: none;
-}
-
-/* Navbar Styling */
-.navbar {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  margin-bottom: 10px;
-  padding: 10px 5%;
-  color: #293c6f;
-  font-size: 18px;
-  box-shadow: 0 3px 4px 0 rgb(0 0 0 / 8%);
-}
-
-.hamNavbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.navbar_right {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-}
-
-.navbar_link {
-  padding-left: 40px;
-  text-decoration-color: white;
-}
-
-.navbar_link_text {
-  color: white;
-  font-weight: 400;
-  text-decoration-color: white;
-}
-
-.navbar_link_text_bold {
-  color: white;
-  font-weight: 500;
-  text-decoration-color: white;
-}
-
-.navbar_button {
-  margin-left: 40px;
 }
 
 /* Main Stage */
@@ -165,7 +102,6 @@
 /* Live Events List */
 .live_event_title {
   margin-bottom: 1px;
-  color: white;
   font-size: 50px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -173,7 +109,6 @@
 
 .live_event_tag {
   margin-bottom: 10px;
-  color: white;
   font-size: 18px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -261,7 +196,6 @@
 /* Live Events List */
 .upcoming_events_title {
   margin-bottom: 10px;
-  color: white;
   font-size: 50px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -305,7 +239,6 @@
 
 .schedule_title {
   margin-bottom: 10px;
-  color: white;
   font-size: 50px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -325,7 +258,6 @@
 
 .all_events_title {
   margin-bottom: 10px;
-  color: white;
   font-size: 50px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -349,7 +281,6 @@
 
 .all_events_filter_text {
   margin-bottom: 10px;
-  color: white;
   font-size: 24px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -394,15 +325,8 @@
 }
 
 /* Block Collection */
-.block_title_container {
-  margin-top: 60px;
-  margin-right: 10%;
-  margin-left: 5%;
-}
-
 .block_title {
   margin-bottom: 10px;
-  color: white;
   font-size: 32px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -446,7 +370,6 @@
 
 .prize_title {
   margin-bottom: 10px;
-  color: white;
   font-size: 36px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -470,7 +393,6 @@ footer {
 }
 
 .footer_text_hex {
-  color: white;
   font-size: 16px;
   font-family: Roboto, sans-serif;
   text-align: left;
@@ -478,7 +400,6 @@ footer {
 
 .footer_text_mlh {
   margin-bottom: 50px;
-  color: white;
   font-size: 14px;
   font-family: Roboto, sans-serif;
   text-align: left;

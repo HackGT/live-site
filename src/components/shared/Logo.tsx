@@ -1,7 +1,8 @@
 import React from "react";
+import { Box, Text } from "@chakra-ui/react";
 
 const Logo: React.FC = () => (
-  <div className="logo_container">
+  <Box display="flex" alignItems="center" justifyContent="center" w="fit-content" h="fit-content">
     <svg width="39" height="32" viewBox="0 0 39 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M12.7433 18.2222H7.74285L3.4951 10.6667L7.74285 3.11111H16.234L20.4775 10.6667L14.4865 21.3333L20.4775 32H32.4681L38.459 21.3333L32.4681 10.6667H27.4677L25.7374 13.7778H30.7119L34.9596 21.3333L30.7119 28.8889H22.225L17.9816 21.3333L23.9769 10.6667L17.9816 0H5.9953L0 10.6667L5.9953 21.3333H10.9957L12.7433 18.2222Z"
@@ -21,8 +22,10 @@ const Logo: React.FC = () => (
         </linearGradient>
       </defs>
     </svg>
-    <p className="logo_title">hexlabs</p>
-  </div>
+    <Text pl="15px" fontWeight="500" fontSize="1.9rem" userSelect="none">
+      hexlabs
+    </Text>
+  </Box>
 );
 
 export default Logo;

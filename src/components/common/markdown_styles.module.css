@@ -5,7 +5,7 @@
 
 .reactMarkDown a {
   text-decoration: underline;
-  .color: white;
+  color: black;
 }
 
 .reactMarkDown p {
@@ -17,11 +17,11 @@
 }
 
 .reactMarkdown div {
-  font-color: white;
+  color: white;
 }
 
 .reactMarkDown li {
-  .color: white;
+  color: black;
   margin-left: 50px;
   text-align: left;
 }
