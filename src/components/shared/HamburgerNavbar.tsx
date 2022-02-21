@@ -1,70 +1,124 @@
 import React, { useState } from "react";
-import Link from "@material-ui/core/Link";
-import Button from "@material-ui/core/Button";
+
+import Logo from "./Logo";
 import HamburgerMenu from "react-hamburger-menu";
 import { useLocation } from "react-router-dom";
 
-import Logo from "./Logo";
+import { Box, Link, Button, Text} from '@chakra-ui/react'
 
 const HamburgerNavbar: React.FC = () => {
   const location: any = useLocation()?.pathname;
   const [state, setState] = useState(false);
 
-  const handleHamburger = () => {
-    setState(!state);
-  };
+
 
   return (
-    <div className="navbar">
-      <div>
+    <Box className="navbar">
+      <Box>
         <Logo />
-      </div>
-      <div className="navbar_right">
-        <HamburgerMenu isOpen={state} menuClicked={handleHamburger} color="white" strokeWidth={3} />
-      </div>
+      </Box>
+      <Box className="navbar_right">
+        <HamburgerMenu
+          isOpen={state}
+          menuClicked={() => setState(!state)}
+          color="white"
+          strokeWidth={3}
+        />
+      </Box>
       {state && (
-        <div className="hamNavbar">
-          <Link className="navbar_link" color="textPrimary" href="/">
-            <p className={location === "/" ? "navbar_link_text_bold" : "navbar_link_text"}>Home</p>
+        <Box className="hamNavbar">
+          <Link className="navbar_link" color="textPrimary" href='/'>
+            <p
+              className={
+                location === "/" ? "navbar_link_text_bold" : "navbar_link_text"
+              }
+            >
+              Home
+            </p>
           </Link>
           <Link className="navbar_link" color="textPrimary" href="/schedule">
-            <p className={location === "/schedule" ? "navbar_link_text_bold" : "navbar_link_text"}>
+            <p
+              className={
+                location === "/schedule"
+                  ? "navbar_link_text_bold"
+                  : "navbar_link_text"
+              }
+            >
               Schedule
             </p>
           </Link>
           <Link className="navbar_link" color="textPrimary" href="/tracks">
-            <p className={location === "/tracks" ? "navbar_link_text_bold" : "navbar_link_text"}>
+            <p
+              className={
+                location === "/tracks"
+                  ? "navbar_link_text_bold"
+                  : "navbar_link_text"
+              }
+            >
               Tracks
             </p>
           </Link>
           <Link className="navbar_link" color="textPrimary" href="/mentors">
-            <p className={location === "/mentors" ? "navbar_link_text_bold" : "navbar_link_text"}>
+            <p
+              className={
+                location === "/mentors"
+                  ? "navbar_link_text_bold"
+                  : "navbar_link_text"
+              }
+            >
               Mentors
             </p>
           </Link>
           <Link className="navbar_link" color="textPrimary" href="/sponsors">
-            <p className={location === "/sponsors" ? "navbar_link_text_bold" : "navbar_link_text"}>
+            <Text
+              className={
+                location === "/sponsors"
+                  ? "navbar_link_text_bold"
+                  : "navbar_link_text"
+              }
+            >
               Sponsors
-            </p>
+            </Text>
           </Link>
           <Link className="navbar_link" color="textPrimary" href="/prizes">
-            <p className={location === "/prizes" ? "navbar_link_text_bold" : "navbar_link_text"}>
+            <Button
+              className={
+                location === "/prizes"
+                  ? "navbar_link_text_bold"
+                  : "navbar_link_text"
+              }
+              variant="outlined"
+              colorScheme="red"
+            >
               Prizes
-            </p>
+            </Button>
           </Link>
           <Link className="navbar_link" color="textPrimary" href="/info">
-            <p className={location === "/info" ? "navbar_link_text_bold" : "navbar_link_text"}>
+            <Text
+              className={
+                location === "/info"
+                  ? "navbar_link_text_bold"
+                  : "navbar_link_text"
+              }
+            >
               Info
-            </p>
+            </Text>
           </Link>
-          <div className="navbar_button">
-            <Button variant="outlined" color="primary" href="https://join.hack.gt" target="_blank">
-              Discord
+          <Box className="navbar_button">
+            <Button
+              size='md'
+              height='48px'
+              width='200px'
+              border='2px'
+              borderColor='green.500'
+            >
+              <Link href="join.hack.gt">Game</Link>
+
             </Button>
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

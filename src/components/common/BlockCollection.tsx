@@ -1,9 +1,8 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 
 import styles from "./markdown_styles.module.css";
+import { Box} from '@chakra-ui/react';
 
 type Props = {
   blocks: Array<any>;
@@ -11,21 +10,24 @@ type Props = {
 };
 
 const BlockCollection: React.FC<Props> = (props: Props) => (
-  <div>
-    <div className="block_title_container">
-      <p className="block_title">{props.title}</p>
-    </div>
-    <div className="block_card_container">
-      {props.blocks.map((block: any) => (
-        <Card className="blocks_card">
-          <CardContent>
-            <div className="block_card_title">{block.name}</div>
-            <ReactMarkdown className={styles.reactMarkDown}>{block.content}</ReactMarkdown>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  </div>
+    <Box>
+      <Box className="block_title_container" alignItems="center">
+        <p className="block_title">{props.title}</p>
+      </Box>
+      <Box className="block_card_container">
+        {props.blocks.map((block: any) => (
+          <Box className="blocks_card"  bg='white'>
+            <Box>
+              <Box className="block_card_title">{block.name}</Box>
+              <ReactMarkdown className={styles.reactMarkDown}>
+                {block.content}
+              </ReactMarkdown>
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
 );
+
 
 export default BlockCollection;
