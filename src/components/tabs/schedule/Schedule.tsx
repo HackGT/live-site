@@ -43,7 +43,6 @@ const Schedule: React.FC<Props> = (props: Props) => {
       }
       elements.push(sortedData.slice(startIndex, data.length));
       setEvents([...elements]);
-      // setEvents(sortedData.slice(0, props.tableLength));
     };
     getEvents();
   }, []);
@@ -66,8 +65,8 @@ const Schedule: React.FC<Props> = (props: Props) => {
       borderImageSlice: 1,
       borderImageSource: "linear-gradient(to right, #33c2ff, #7b69ec)",
       bg: "white",
-      fontSize: "28px",
-      fontWeight: "bold"
+      fontSize: "32px",
+      textTransform: "uppercase"
     },
   })
 
@@ -106,45 +105,11 @@ const Schedule: React.FC<Props> = (props: Props) => {
       <p className="schedule_title">Schedule</p>
       <ScheduleTable className="schedule_table">
         {events.map((chunk: any, index: any, arr: any) => (
-        // {events.map((row: any, index: any) => (
-        //   <>
-        //   {
-        //     (index == 0 || getDayFromDate(events[index - 1].startDate) != getDayFromDate(row.startDate)) ? (
-        //       <>
-        //         {(index != 0) ? (
-        //           <Box height="40px"/>
-        //         ) : (null)}
-        //         <DateHeader>
-        //          {`${getDayFromDate(row.startDate)}`}
-        //        </DateHeader>
-        //       </>
-        //     ) : (null)
-        //   }
-        //   <EventRow key={row.id}>
-        //     <StyledBox1>
-        //       <Text marginBottom="15px" lineHeight="24px" fontWeight="semibold">
-        //         {`${formatDateString(row.startDate)} - ${formatDateString(row.endDate)}`}
-        //       </Text>
-        //       <Text>
-        //         {row.location.map((x: any) => x.name).join(", ")}
-        //       </Text>
-        //     </StyledBox1>
-        //     <StyledBox2>
-        //       <Text fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px">
-        //         {row.name}
-        //       </Text>
-        //       <Text>
-        //         {row.description}
-        //       </Text>
-        //     </StyledBox2>
-        //     {/* <TableCell align="left">
-        //       <a href={row.url} target="_blank">{row.url ? ("Join Here!"):("")}</a>
-        //     </TableCell> */}
-        //   </EventRow>
-        // </>
           <Box key={chunk[0].startDate}>
             <DateHeader>
+              <Text bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text">
                 {`${getDayFromDate(chunk[index].startDate)}`}
+              </Text>
             </DateHeader>
             {events[index].map((row: any) => (
               <EventRow key={row.id}>
