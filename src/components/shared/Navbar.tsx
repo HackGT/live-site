@@ -51,6 +51,7 @@ const Navbar: React.FC = () => {
         <Box display="flex" flexDirection="column">
           {routes.map(route => (
             <Link
+              key={route.name}
               as={RouterLink}
               to={route.link}
               color="textPrimary"
