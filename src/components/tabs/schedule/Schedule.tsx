@@ -50,13 +50,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   const ScheduleTable = chakra(Box, {
     baseStyle: {
-      borderRadius: "15px",
-      boxShadow: "0px 2.5px 5px grey",
       overflow: "auto",
       maxHeight: "600px",
       minWidth: "1100px",
-      paddingLeft: "25px",
-      paddingRight: "25px",
       textAlign: "left"
     }
   })
@@ -65,10 +61,10 @@ const Schedule: React.FC<Props> = (props: Props) => {
     baseStyle: {
       position: "sticky",
       top: 0,
-      paddingTop: "20px",
-      paddingBottom: "20px",
-      borderBottomWidth: "2px",
-      borderBottomColor: "black",
+      padding: "20px",
+      borderBottomWidth: "5px",
+      borderImageSlice: 1,
+      borderImageSource: "linear-gradient(to right, #33c2ff, #7b69ec)",
       bg: "white",
       fontSize: "28px",
       fontWeight: "bold"
@@ -78,6 +74,8 @@ const Schedule: React.FC<Props> = (props: Props) => {
   const EventRow = chakra(Box, {
     baseStyle: {
       minHeight: "120px",
+      paddingLeft: "15px",
+      paddingRight: "15px",
       borderBottomWidth: "1px",
       borderBottomColor: "rgba(175, 175, 175, 0.3)",
     }
@@ -85,17 +83,18 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   const StyledBox1 = chakra(Box, {
     baseStyle: {
-      width: "20%",
+      width: "25%",
       verticalAlign: "top",
-      padding: "25px",
-      fontSize: "13px",
+      paddingLeft: "25px",
+      paddingTop: "25px",
+      paddingBottom: "25px",
       display: "inline-block"
     },
   })
 
   const StyledBox2 = chakra(Box, {
     baseStyle: {
-      width: "80%",
+      width: "75%",
       paddingTop: "25px",
       paddingBottom: "25px",
       display: "inline-block",
@@ -145,15 +144,15 @@ const Schedule: React.FC<Props> = (props: Props) => {
         // </>
           <Box key={chunk[0].startDate}>
             <DateHeader>
-              {`${getDayFromDate(chunk[index].startDate)}`}
+                {`${getDayFromDate(chunk[index].startDate)}`}
             </DateHeader>
             {events[index].map((row: any) => (
               <EventRow key={row.id}>
                 <StyledBox1>
-                  <Text marginBottom="15px" lineHeight="24px" fontWeight="semibold">
+                  <Text fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px">
                     {`${formatDateString(row.startDate)} - ${formatDateString(row.endDate)}`}
                   </Text>
-                  <Text>
+                  <Text fontSize="14px">
                     {row.location.map((x: any) => x.name).join(", ")}
                   </Text>
                 </StyledBox1>
