@@ -3,10 +3,10 @@ import dateFormat from "dateformat";
 import {
   Box,
   chakra,
-  Text,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 import { fetchAllEvents, fetchUpcomingEvents } from "../../../services/cmsService";
+import { EventRow } from "./EventRow";
 
 type Props = {
   tableLength: number;
@@ -17,7 +17,6 @@ type Props = {
 const Schedule: React.FC<Props> = (props: Props) => {
   const [events, setEvents] = useState<any[]>([]);
 
-  const formatDateString = (date: string) => dateFormat(date, "h:MM TT");
   const getDayFromDate = (date: string) => dateFormat(date, "dddd, mmm dS");
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
         return dateA >= dateB ? 1 : -1;
       });
       for (let i = 0; i < sortedData.length - 1; i++) {
-        if (getDayFromDate(sortedData[i].startDate) != getDayFromDate(sortedData[i + 1].startDate)) {
+        if (getDayFromDate(sortedData[i].startDate) !== getDayFromDate(sortedData[i + 1].startDate)) {
           elements.push(sortedData.slice(startIndex, i + 1));
           startIndex = i + 1;
         }
@@ -66,38 +65,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
       borderImageSource: "linear-gradient(to right, #33c2ff, #7b69ec)",
       bg: "white",
       fontSize: "32px",
-      textTransform: "uppercase"
+      textTransform: "uppercase",
+      zIndex: "999"
     },
-  })
-
-  const EventRow = chakra(Box, {
-    baseStyle: {
-      minHeight: "120px",
-      paddingLeft: "15px",
-      paddingRight: "15px",
-      borderBottomWidth: "1px",
-      borderBottomColor: "rgba(175, 175, 175, 0.3)",
-    }
-  })
-
-  const StyledBox1 = chakra(Box, {
-    baseStyle: {
-      width: "25%",
-      verticalAlign: "top",
-      paddingLeft: "25px",
-      paddingTop: "25px",
-      paddingBottom: "25px",
-      display: "inline-block"
-    },
-  })
-
-  const StyledBox2 = chakra(Box, {
-    baseStyle: {
-      width: "75%",
-      paddingTop: "25px",
-      paddingBottom: "25px",
-      display: "inline-block",
-    }
   })
 
   return (
@@ -107,32 +77,12 @@ const Schedule: React.FC<Props> = (props: Props) => {
         {events.map((chunk: any, index: any, arr: any) => (
           <Box key={chunk[0].startDate}>
             <DateHeader>
-              <Text bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text">
+              <Box bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text">
                 {`${getDayFromDate(chunk[index].startDate)}`}
-              </Text>
+              </Box>
             </DateHeader>
             {events[index].map((row: any) => (
-              <EventRow key={row.id}>
-                <StyledBox1>
-                  <Text fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px">
-                    {`${formatDateString(row.startDate)} - ${formatDateString(row.endDate)}`}
-                  </Text>
-                  <Text fontSize="14px">
-                    {row.location.map((x: any) => x.name).join(", ")}
-                  </Text>
-                </StyledBox1>
-                <StyledBox2>
-                  <Text fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px">
-                    {row.name}
-                  </Text>
-                  <Text>
-                    {row.description}
-                  </Text>
-                </StyledBox2>
-                {/* <TableCell align="left">
-                  <a href={row.url} target="_blank">{row.url ? ("Join Here!"):("")}</a>
-                </TableCell> */}
-              </EventRow>
+              <EventRow row={row}/>
             ))}
             {(index !== arr.length) ? (
               <Box height="40px"/>

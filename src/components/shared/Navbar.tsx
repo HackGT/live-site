@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { Box, Link } from "@chakra-ui/react";
 import MediaQuery from "react-responsive";
 import HamburgerMenu from "react-hamburger-menu";
@@ -8,7 +8,6 @@ import Logo from "./Logo";
 import { routes } from "./Navigation";
 
 const Navbar: React.FC = () => {
-  const location = useLocation()?.pathname;
   const [showNavbar, setShowNavbar] = useState(false);
 
   return (
