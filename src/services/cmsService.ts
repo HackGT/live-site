@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const REACT_APP_CMS_URL = process.env.REACT_APP_CMS_URL || "https://cms.hack.gt/admin/api";
+const CMS_URL = String(process.env.REACT_APP_CMS_URL);
+const EVENT_NAME = String(process.env.REACT_APP_EVENT_NAME);
 
 const getEventUrl = async (eventId: string): Promise<any> =>
   // Temporarily remove this code while interaction backend is transferred over to new api repo
@@ -20,6 +21,15 @@ const getEventUrl = async (eventId: string): Promise<any> =>
   ({
     url: "",
   });
+
+const cmsRequest = async (query: string) => {
+  const response = await axios.post(CMS_URL, {
+    query,
+  });
+
+  return response.data.data;
+};
+
 const fetchLiveEvents = async (virtual: boolean) => {
   const today = new Date().toISOString();
 
@@ -30,7 +40,7 @@ const fetchLiveEvents = async (virtual: boolean) => {
     allEvents  (where: {AND:[
         {AND:[
           {startDate_lt: "${today}"},
-          {hackathon: {name: "HackGT 8"} }
+          {hackathon: {name: "${EVENT_NAME}"} }
         ]},
         {AND:[
           {location_some: {name: "Virtual"} },
@@ -61,7 +71,7 @@ const fetchLiveEvents = async (virtual: boolean) => {
       allEvents  (where: {AND:[
           {AND:[
             {startDate_lt: "${today}"},
-            {hackathon: {name: "HackGT 8"} }
+            {hackathon: {name: "${EVENT_NAME}"} }
           ]},
           {endDate_gt: "${today}"}
         ]}, orderBy:"startDate") {
@@ -86,13 +96,7 @@ const fetchLiveEvents = async (virtual: boolean) => {
     `;
   }
 
-  const res = await fetch(REACT_APP_CMS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: liveEventsQuery }),
-  });
-  const jsonResponse = await res.json();
-  return jsonResponse.data;
+  return await cmsRequest(liveEventsQuery);
 };
 
 const fetchUpcomingEvents = async (virtual: boolean) => {
@@ -105,7 +109,7 @@ const fetchUpcomingEvents = async (virtual: boolean) => {
       allEvents (where:  {AND:[
         {AND:[
           {startDate_gt: "${today}"},
-          {hackathon: {name: "HackGT 8"} }
+          {hackathon: {name: "${EVENT_NAME}"} }
         ]},
         {location_some: {name: "Virtual"} },
       ]}   , orderBy:"startDate") {
@@ -132,7 +136,7 @@ const fetchUpcomingEvents = async (virtual: boolean) => {
     upcomingEventsQuery = `{
       allEvents (where:   {AND:[
         {startDate_gt: "${today}"},
-        {hackathon: {name: "HackGT 8"} }
+        {hackathon: {name: "${EVENT_NAME}"} }
       ]}   , orderBy:"startDate") {
         id
         name
@@ -155,13 +159,7 @@ const fetchUpcomingEvents = async (virtual: boolean) => {
     `;
   }
 
-  const res = await fetch(REACT_APP_CMS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: upcomingEventsQuery }),
-  });
-  const jsonResponse = await res.json();
-  return jsonResponse.data;
+  return await cmsRequest(upcomingEventsQuery);
 };
 
 const fetchAllEvents = async (virtual: boolean) => {
@@ -171,7 +169,7 @@ const fetchAllEvents = async (virtual: boolean) => {
     allEventsQuery = `{
       allEvents  (where:   {AND:[
         {location_some: {name: "Virtual"} },
-        {hackathon: {name: "HackGT 8"} }
+        {hackathon: {name: "${EVENT_NAME}"} }
       ]},
       orderBy:"startDate") {
         id
@@ -195,7 +193,7 @@ const fetchAllEvents = async (virtual: boolean) => {
     `;
   } else {
     allEventsQuery = `{
-      allEvents  (where: {hackathon: {name: "HackGT 8"} }, orderBy:"startDate") {
+      allEvents  (where: {hackathon: {name: "${EVENT_NAME}"} }, orderBy:"startDate") {
         id
         name
         startDate
@@ -217,13 +215,7 @@ const fetchAllEvents = async (virtual: boolean) => {
     `;
   }
 
-  const res = await fetch(REACT_APP_CMS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: allEventsQuery }),
-  });
-  const jsonResponse = await res.json();
-  return jsonResponse.data;
+  return await cmsRequest(allEventsQuery);
 };
 
 const fetchBlock = async (blockSlug: string) => {
@@ -232,7 +224,7 @@ const fetchBlock = async (blockSlug: string) => {
     allBlocks (where: 
       {AND:[
         { slug: "${blockSlug}" },
-        {hackathon: {name: "HackGT 8"} }
+        {hackathon: {name: "${EVENT_NAME}"} }
       ]} 
       ) 
     {
@@ -241,13 +233,8 @@ const fetchBlock = async (blockSlug: string) => {
     }
   }
   `;
-  const res = await fetch(REACT_APP_CMS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: blockQuery }),
-  });
-  const jsonResponse = await res.json();
-  return jsonResponse.data;
+
+  return await cmsRequest(blockQuery);
 };
 
 export { getEventUrl, fetchAllEvents, fetchLiveEvents, fetchUpcomingEvents, fetchBlock };
