@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
-import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import {
+  Box,
+  chakra,
+} from "@chakra-ui/react";
 
 import { fetchAllEvents, fetchUpcomingEvents } from "../../../services/cmsService";
+import { EventRow } from "./EventRow";
 
 type Props = {
   tableLength: number;
@@ -20,9 +17,13 @@ type Props = {
 const Schedule: React.FC<Props> = (props: Props) => {
   const [events, setEvents] = useState<any[]>([]);
 
+  const getDayFromDate = (date: string) => dateFormat(date, "dddd, mmm dS");
+
   useEffect(() => {
     const getEvents = async () => {
       let data;
+      let startIndex = 0;
+      const elements = [];
       if (props.homepage) {
         data = await fetchUpcomingEvents(props.virtual);
       } else {
@@ -33,82 +34,62 @@ const Schedule: React.FC<Props> = (props: Props) => {
         const dateB = b.startDate;
         return dateA >= dateB ? 1 : -1;
       });
-      setEvents(sortedData.slice(0, props.tableLength));
+      for (let i = 0; i < sortedData.length - 1; i++) {
+        if (getDayFromDate(sortedData[i].startDate) !== getDayFromDate(sortedData[i + 1].startDate)) {
+          elements.push(sortedData.slice(startIndex, i + 1));
+          startIndex = i + 1;
+        }
+      }
+      elements.push(sortedData.slice(startIndex, data.length));
+      setEvents([...elements]);
     };
     getEvents();
   }, []);
 
-  const formateDateString = (date: string) => dateFormat(date, "h:MM TT Z");
+  const ScheduleTable = chakra(Box, {
+    baseStyle: {
+      overflow: "auto",
+      maxHeight: "600px",
+      minWidth: "1100px",
+      textAlign: "left"
+    }
+  })
 
-  const getDayFromDate = (date: string) => dateFormat(date, "mmm dS");
-
-  const StyledTableCell = withStyles((theme: Theme) =>
-    createStyles({
-      head: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-      },
-      body: {
-        fontSize: 14,
-      },
-    })
-  )(TableCell);
+  const DateHeader = chakra(Box, {
+    baseStyle: {
+      position: "sticky",
+      top: 0,
+      padding: "20px",
+      borderBottomWidth: "5px",
+      borderImageSlice: 1,
+      borderImageSource: "linear-gradient(to right, #33c2ff, #7b69ec)",
+      bg: "white",
+      fontSize: "32px",
+      textTransform: "uppercase",
+      zIndex: "999"
+    },
+  })
 
   return (
     <div className="schedule">
       <p className="schedule_title">Schedule</p>
-      <TableContainer className="schedule_table" component={Paper} style={{ maxHeight: 600 }}>
-        <Table
-          stickyHeader
-          aria-label="simple table"
-          style={{
-            tableLayout: "fixed",
-            minWidth: "1100px",
-            overflow: "auto",
-          }}
-        >
-          <colgroup>
-            <col width="13%" />
-            <col width="40%" />
-            <col width="11%" />
-            <col width="8%" />
-            <col width="9%" />
-            <col width="9%" />
-          </colgroup>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">Name</StyledTableCell>
-              <StyledTableCell align="left">Description</StyledTableCell>
-              {/* <StyledTableCell align="left">Link</StyledTableCell> */}
-              <StyledTableCell align="left">Location</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-              <StyledTableCell align="left">Start Time</StyledTableCell>
-              <StyledTableCell align="left">End Time</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {events.map(row => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="left">{row.description}</TableCell>
-                {/* <TableCell align="left">
-                  <a href={row.url} target="_blank">{row.url ? ("Join Here!"):("")}</a>
-                </TableCell> */}
-                <TableCell style={{ width: "max-content" }} align="left">
-                  {row.location.map((x: any) => x.name).join(", ")}
-                </TableCell>
-                <TableCell style={{ width: "max-content" }} align="left">
-                  {getDayFromDate(row.startDate)}
-                </TableCell>
-                <TableCell align="left">{formateDateString(row.startDate)}</TableCell>
-                <TableCell align="left">{formateDateString(row.endDate)}</TableCell>
-              </TableRow>
+      <ScheduleTable className="schedule_table">
+        {events.map((chunk: any, index: any, arr: any) => (
+          <Box key={chunk[0].startDate}>
+            <DateHeader>
+              <Box bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text">
+                {`${getDayFromDate(chunk[index].startDate)}`}
+              </Box>
+            </DateHeader>
+            {events[index].map((row: any) => (
+              <EventRow row={row}/>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            {(index !== arr.length) ? (
+              <Box height="40px"/>
+            ) : (null)}
+          </Box>
+        ))}
+      </ScheduleTable>
     </div>
   );
 };
