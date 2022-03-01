@@ -10,18 +10,18 @@ import dateFormat from "dateformat";
 
 const Column1 = chakra(Box, {
   baseStyle: {
-    width: "23%",
+    width: "25%",
     verticalAlign: "top",
-    paddingLeft: "25px",
+    px: "15px",
     py: "25px",
     display: "inline-block",
-    fontSize: "14px"
+    fontSize: "14px",
   },
 })
 
 const Column2 = chakra(Box, {
   baseStyle: {
-    width: "72%",
+    width: "70%",
     verticalAlign: "top",
     py: "25px",
     display: "inline-block",
@@ -58,9 +58,10 @@ export const EventRow = (props: any) => {
   const widthRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = widthRef.current!;
-    if(el.offsetHeight < el.scrollHeight){
-      setExpandable(true);
+    if (widthRef.current !== null) {
+      if(widthRef.current.offsetHeight < widthRef.current.scrollHeight){
+        setExpandable(true);
+      }
     }
   }, []);
 

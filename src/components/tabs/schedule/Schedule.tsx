@@ -48,10 +48,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   const ScheduleTable = chakra(Box, {
     baseStyle: {
-      overflow: "auto",
-      maxHeight: "600px",
-      minWidth: "1100px",
-      textAlign: "left"
+      maxWidth: "1100px",
+      textAlign: "left",
+      margin: "auto"
     }
   })
 
