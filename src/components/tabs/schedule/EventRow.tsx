@@ -58,9 +58,10 @@ export const EventRow = (props: any) => {
   const widthRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = widthRef.current!;
-    if(el.offsetHeight < el.scrollHeight){
-      setExpandable(true);
+    if (widthRef.current !== null) {
+      if(widthRef.current.offsetHeight < widthRef.current.scrollHeight){
+        setExpandable(true);
+      }
     }
   }, []);
 
