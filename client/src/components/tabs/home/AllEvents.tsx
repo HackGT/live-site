@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import custom_theme from "../../Theme";
-import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+import { Image, Box, Text, Select, FormControl, Button } from '@chakra-ui/react';
 import CardTag from "../../common/CardTag";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import MediaQuery from "react-responsive";
 
 import { fetchAllEvents } from "../../../services/cmsService";
@@ -124,144 +115,163 @@ const AllEvents: React.FC<Props> = (props: Props) => {
     }
   };
 
-  const StyledButton = withStyles({
-    root: {
-      background: custom_theme.palette.primary.main,
-      borderRadius: 5,
-      border: 0,
-      color: "white",
-      height: 48,
-      fontSize: 16,
-      padding: "0 30px",
-      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-      marginTop: "20px",
-    },
-    label: {
-      textTransform: "capitalize",
-    },
-  })(Button);
 
   return (
     <div className="all_events">
       <p className="all_events_title">All Events</p>
       <div className="all_events_filter_container">
         <p className="all_events_filter_text">Filter by: </p>
+        <Box id="tag-select">
         <FormControl className="all_events_filter_dropdown">
-          <InputLabel id="tag-select-input">Tag</InputLabel>
+        <Text color="white">Tag</Text>
           <Select
             labelId="tag-select-label"
             id="tag-select-id"
             value={tagFilter}
             onChange={handleTagFilterChange}
             placeholder="Tag"
+            bg="white"
           >
             {Array.from(tagFilters).map(function (obj: any) {
-              return <MenuItem value={obj}>{obj}</MenuItem>;
+              return <option value={obj}>{obj}</option>;
             })}
           </Select>
         </FormControl>
+        </Box>
+        <Box id="event-select">
         <FormControl className="all_events_filter_dropdown">
-          <InputLabel id="event-select-label">Location</InputLabel>
+          <div>
+            <Text color="white">Location</Text>
           <Select
             labelId="event-select-label"
             id="event-select-id"
             value={locationFilter}
             onChange={handleEventFilterChange}
             placeholder="Location"
+            bg="white"
           >
             {Array.from(locationFilters).map(function (obj: any) {
-              return <MenuItem value={obj}>{obj}</MenuItem>;
+              return <option value={obj}>{obj}</option>;
             })}
           </Select>
+          </div>
         </FormControl>
-        <StyledButton
+        </Box>
+
+        <Button
           variant="contained"
           onClick={handle_filter_button}
           color="primary"
+          bg={custom_theme.palette.primary.main}
+          borderRadius={5}
+          border={0}
+          textColor="white"
+          fontSize={16}
+          padding={"0 30px"}
+          boxShadow={"0 3px 5px 2px rgba(255, 105, 135, .3)"}
+          marginTop={"20px"}
         >
           Filter
-        </StyledButton>
+        </Button>
       </div>
       <div className="all_events_container">
         <MediaQuery minWidth={900}>
           {filtered_events.map((event) => (
             <div className="all_events_card">
-              <CardMedia
-                component="img"
-                image={get_random_card_image()}
-                style={{
-                  borderTopLeftRadius: "1.5%",
-                  borderTopRightRadius: "1.5%",
-                  height: "130px",
-                }}
+              <Image
+              src={get_random_card_image()}
+              htmlHeight={130}
+              style={{
+                borderTopLeftRadius: "1.5%",
+                borderTopRightRadius: "1.5%",
+                height: "130px",
+              }}
               />
-              <Card>
+              <Box
+              bg='white'
+              style={{
+                borderBottomLeftRadius: "1.5%",
+                borderBottomRightRadius: "1.5%"
+              }}
+              >
                 <CardActionArea onClick={() => props.setEventCallback(event)}>
-                  <CardContent>
-                    <Typography
-                      align="left"
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
+                    <Text
+                    as='h6'
+                    fontSize={"25px"}
+                    align="left"
                     >
                       {event.name}
-                    </Typography>
-                    <Typography
+                    </Text>
+                    <Text
                       align="left"
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
+                      as='p'
+                      fontSize={"12px"}
+                      color="gray"
                     >
                       {event.description}
-                    </Typography>
+                    </Text>
                     <CardActions>
                       {event.tags.map((tag: any, index: number) => (
                         <CardTag key={index} tag={tag.name} />
                       ))}
                     </CardActions>
-                  </CardContent>
                 </CardActionArea>
-              </Card>
+              </Box>
             </div>
           ))}
         </MediaQuery>
         <MediaQuery maxWidth={900}>
           {filtered_events.map((event) => (
             <div className="all_events_card">
-              <Card>
+              <Box
+              bg='white'
+              style={{
+                borderBottomLeftRadius: "1.5%",
+                borderBottomRightRadius: "1.5%"
+              }}
+              >
                 <CardActionArea onClick={() => props.setEventCallback(event)}>
-                  <CardContent>
-                    <Typography
-                      align="left"
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
+                  <Text
+                    as='h6'
+                    fontSize={"25px"}
+                    align="left"
                     >
                       {event.name}
-                    </Typography>
-                    <Typography
+                    </Text>
+                    <Text
                       align="left"
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
+                      as='p'
+                      fontSize={"12px"}
+                      color="gray"
                     >
                       {event.description}
-                    </Typography>
+                    </Text>
                     <CardActions>
                       {event.tags.map((tag: any, index: number) => (
                         <CardTag key={index} tag={tag.name} />
                       ))}
                     </CardActions>
-                  </CardContent>
                 </CardActionArea>
-              </Card>
+              </Box>
             </div>
           ))}
         </MediaQuery>
       </div>
-      <StyledButton variant="contained" href="/schedule" color="primary">
-        Check Full Schedule
-      </StyledButton>
+      <Button
+          variant="contained"
+          href="/schedule"
+          onClick={handle_filter_button}
+          color="primary"
+          bg={custom_theme.palette.primary.main}
+          borderRadius={5}
+          border={0}
+          textColor="white"
+          fontSize={16}
+          padding={"0 30px"}
+          boxShadow={"0 3px 5px 2px rgba(255, 105, 135, .3)"}
+          marginTop={"20px"}
+        >Check Full Schedule</Button> 
+       
     </div>
   );
 };

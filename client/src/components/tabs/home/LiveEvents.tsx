@@ -1,9 +1,7 @@
-import Card from "@material-ui/core/Card";
+import {Box, Text, Image } from '@chakra-ui/react';
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent"; //
 import CardTag from "../../common/CardTag";
 
 import MediaQuery from "react-responsive";
@@ -14,6 +12,7 @@ type Props = {
   events: any;
 };
 
+
 const LiveEvents: React.FC<Props> = (props: Props) => {
   return (
     <div className="live_events">
@@ -22,68 +21,74 @@ const LiveEvents: React.FC<Props> = (props: Props) => {
       <MediaQuery minWidth={900}>
         <div className="live_event_container">
           {props.events.map((event: any) => (
-            <Card className="live_event_card">
-              <CardMedia
-                component="img"
-                image={get_random_card_image()}
-                style={{
-                  borderTopLeftRadius: "1.5%",
-                  borderBottomLeftRadius: "1.5%",
-                  width: 175,
-                  objectFit: "cover",
-                }}
+            <Box
+            className="live_event_card"
+            bg='white'
+            style={{
+              borderTopRightRadius: "1.5%",
+              borderBottomRightRadius: "1.5%"
+            }}
+            >
+              <Image
+              src={get_random_card_image()}
+              maxW={175}
+              objectFit='cover'
               />
               <CardActionArea onClick={() => props.setEventCallback(event)}>
-                <CardContent>
-                  <Typography
+                <Text
+                    as='h6'
+                    fontSize={"25px"}
                     align="left"
-                    gutterBottom
-                    variant="h5"
-                    component="h2"
-                  >
+                    >
                     {event.name}
-                  </Typography>
-                  <Typography
-                    align="left"
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
+                  </Text>
+                  <Text
+                      align="left"
+                      as='p'
+                      fontSize={"12px"}
+                      color="gray"
+                    >
                     {event.description}
-                  </Typography>
+                  </Text>
                   <CardActions className="live_event_card_actions">
                     {event.tags.map((tag: any, index: number) => (
                       <CardTag key={index} tag={tag.name} />
                     ))}
                   </CardActions>
-                </CardContent>
               </CardActionArea>
-            </Card>
+            </Box>
           ))}
         </div>
       </MediaQuery>
       <MediaQuery maxWidth={900}>
         <div className="live_event_container">
           {props.events.map((event: any) => (
-            <Card className="live_event_card">
+            <Box 
+            className="live_event_card"
+            bg='white'
+            style={{
+              borderTopRightRadius: "1.5%",
+              borderBottomRightRadius: "1.5%",
+              borderTopLeftRadius: "1.5%",
+              borderBottomLeftRadius: "1.5%",
+            }}>
               <CardActionArea onClick={() => props.setEventCallback(event)}>
                 <CardContent>
-                  <Typography
+                  <Text
+                    as='h6'
+                    fontSize={"25px"}
                     align="left"
-                    gutterBottom
-                    variant="h5"
-                    component="h2"
-                  >
+                    >
                     {event.name}
-                  </Typography>
-                  <Typography
-                    align="left"
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
+                  </Text>
+                  <Text
+                      align="left"
+                      as='p'
+                      fontSize={"12px"}
+                      color="gray"
+                    >
                     {event.description}
-                  </Typography>
+                  </Text>
                   <CardActions className="live_event_card_actions">
                     {event.tags.map((tag: any, index: number) => (
                       <CardTag key={index} tag={tag.name} />
@@ -91,7 +96,7 @@ const LiveEvents: React.FC<Props> = (props: Props) => {
                   </CardActions>
                 </CardContent>
               </CardActionArea>
-            </Card>
+            </Box>
           ))}
         </div>
       </MediaQuery>

@@ -229,6 +229,7 @@ let fetchAllEvents = async (virtual:boolean)=> {
       body: JSON.stringify({ query: allEventsQuery }),
   });
   var jsonResponse = await res.json();
+  console.log(jsonResponse.data.allEvents)
   return jsonResponse.data;
 };
 
