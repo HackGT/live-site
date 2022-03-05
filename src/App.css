@@ -1,3 +1,8 @@
+/* https://github.com/facebook/create-react-app/issues/11773 */
+iframe {
+  pointer-events: none;
+}
+
 /* General styling */
 @font-face {
   font-family: Roboto;

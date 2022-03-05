@@ -154,7 +154,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
               />
               <Box>
                 <Box onClick={() => props.setEventCallback(event)}>
-                  <Box borderWidth='12px' borderRadius='1px' borderStyle='outset'>
+                  <Box borderWidth='3px' borderRadius='1px'>
                     <Text align="center" fontSize='lg'>
                       {event.name}
                     </Text>
