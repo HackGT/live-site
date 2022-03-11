@@ -2,7 +2,7 @@
 import React from "react";
 
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import useAxios from "axios-hooks";
 
 import { User } from "./types/User";
@@ -40,54 +40,8 @@ const App: React.FC = () => {
   // console.log(art);
 
   const user = {
-    branch: "notconfirmed",
+    branch: "Horizons",
   };
-
-  if (user.branch === "notconfirmed") {
-    return (
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
-            <Route path="/" children={<Home virtual={false} confirmed={false} />} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
-  }
-  if (
-    user.branch === "Participant-Emerging Virtual" ||
-    user.branch === "Participant-General Virtual"
-  ) {
-    return (
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual />} />
-            <Route path="/" children={<Home virtual confirmed />} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
-  }
   return (
     <div className="app_main">
       <div className="top-lights" />
@@ -97,11 +51,11 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/info" children={<InfoTab />} />
           <Route path="/tracks" children={<TracksTab />} />
-          <Route path="/mentors" children={<MentorTab />} />
-          <Route path="/sponsors" children={<SponsorTab />} />
           <Route path="/prizes" children={<PrizesTab />} />
           <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
-          <Route path="/" children={<Home virtual confirmed />} />
+          <Route exact path="/">
+            <Redirect to="/schedule" />
+          </Route>
         </Switch>
         <Footer />
       </Router>
