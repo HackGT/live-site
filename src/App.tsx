@@ -56,8 +56,8 @@ const App: React.FC = () => {
             <Route path="/mentors" children={<MentorTab />} />
             <Route path="/sponsors" children={<SponsorTab />} />
             <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual />} />
-            <Route path="/" children={<Home virtual confirmed={false} />} />
+            <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
+            <Route path="/" children={<Home virtual={false} confirmed={false} />} />
           </Switch>
           <Footer />
         </Router>

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
-import {
-  Box,
-  chakra,
-} from "@chakra-ui/react";
+import { Box, chakra } from "@chakra-ui/react";
 
 import { fetchAllEvents, fetchUpcomingEvents } from "../../../services/cmsService";
 import { EventRow } from "./EventRow";
@@ -35,7 +32,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
         return dateA >= dateB ? 1 : -1;
       });
       for (let i = 0; i < sortedData.length - 1; i++) {
-        if (getDayFromDate(sortedData[i].startDate) !== getDayFromDate(sortedData[i + 1].startDate)) {
+        if (
+          getDayFromDate(sortedData[i].startDate) !== getDayFromDate(sortedData[i + 1].startDate)
+        ) {
           elements.push(sortedData.slice(startIndex, i + 1));
           startIndex = i + 1;
         }
@@ -50,9 +49,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
     baseStyle: {
       maxWidth: "1100px",
       textAlign: "left",
-      margin: "auto"
-    }
-  })
+      margin: "auto",
+    },
+  });
 
   const DateHeader = chakra(Box, {
     baseStyle: {
@@ -65,9 +64,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
       bg: "white",
       fontSize: "32px",
       textTransform: "uppercase",
-      zIndex: "999"
+      zIndex: "999",
     },
-  })
+  });
 
   return (
     <div className="schedule">
@@ -81,11 +80,9 @@ const Schedule: React.FC<Props> = (props: Props) => {
               </Box>
             </DateHeader>
             {events[index].map((row: any) => (
-              <EventRow row={row}/>
+              <EventRow row={row} />
             ))}
-            {(index !== arr.length) ? (
-              <Box height="40px"/>
-            ) : (null)}
+            {index !== arr.length ? <Box height="40px" /> : null}
           </Box>
         ))}
       </ScheduleTable>
