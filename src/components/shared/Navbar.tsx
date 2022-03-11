@@ -9,7 +9,6 @@ import { routes } from "./Navigation";
 
 const Navbar: React.FC = () => {
   const [showNavbar, setShowNavbar] = useState(false);
-  const [showHam, setShowHam] = useState(false);
 
   return (
     <Box>
