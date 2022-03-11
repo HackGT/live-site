@@ -8,7 +8,7 @@ const TracksTab: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const trackdata = await fetchBlock("tracks");
+      const trackdata = await fetchBlock("tracks and challenges");
       setTracks(trackdata.allBlocks);
     };
     getEvents();
@@ -17,7 +17,7 @@ const TracksTab: React.FC = () => {
   return (
     <div>
       <div>
-        <BlockCollection title="Tracks" blocks={tracks} />
+        <BlockCollection title="Tracks and Challenges" blocks={tracks} />
       </div>
     </div>
   );

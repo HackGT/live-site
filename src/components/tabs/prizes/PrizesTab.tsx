@@ -4,20 +4,12 @@ import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
 const PrizesTab: React.FC = () => {
-  const [generalPrizes, setGeneralPrizes] = useState<any[]>([]);
-  const [emerginPrizes, setEmergingPrizes] = useState<any[]>([]);
-  const [openSourcePrizes, setOpenSourcePrizes] = useState<any[]>([]);
+  const [horizonsPrizes, setHorizonsPrizes] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
-      const generalData = await fetchBlock("prize-general");
-      setGeneralPrizes(generalData.allBlocks);
-
-      const emergingData = await fetchBlock("prize-emerging");
-      setEmergingPrizes(emergingData.allBlocks);
-
-      const openSourceData = await fetchBlock("prize-open");
-      setOpenSourcePrizes(openSourceData.allBlocks);
+      const horizonsData = await fetchBlock("prizes");
+      setHorizonsPrizes(horizonsData.allBlocks);
     };
     getEvents();
   }, []);
@@ -28,9 +20,7 @@ const PrizesTab: React.FC = () => {
         <h1 className="prize_title">Prizes</h1>
       </div>
       <div>
-        <BlockCollection title="General Track" blocks={generalPrizes} />
-        <BlockCollection title="Emerging Track" blocks={emerginPrizes} />
-        <BlockCollection title="Open Source Track" blocks={openSourcePrizes} />
+        <BlockCollection title="Horizons Awards" blocks={horizonsPrizes} />
       </div>
     </div>
   );
