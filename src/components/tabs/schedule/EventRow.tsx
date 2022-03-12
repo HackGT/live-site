@@ -10,7 +10,6 @@ import dateFormat from "dateformat";
 
 const Column1 = chakra(Box, {
   baseStyle: {
-    width: "25%",
     verticalAlign: "top",
     px: "15px",
     py: "25px",
@@ -21,8 +20,8 @@ const Column1 = chakra(Box, {
 
 const Column2 = chakra(Box, {
   baseStyle: {
-    width: "70%",
     verticalAlign: "top",
+    px: "15px",
     py: "25px",
     display: "inline-block",
   }
@@ -30,7 +29,6 @@ const Column2 = chakra(Box, {
 
 const Column3 = chakra(Box, {
   baseStyle: {
-    width: "5%",
     marginTop: "50px",
     display: "inline-block",
     textAlign: "center",
@@ -76,17 +74,33 @@ export const EventRow = (props: any) => {
       }}
       key={props.row.id}
     >
-      <Column1>
-        <Box marginBottom="15px" lineHeight="24px">
+      <Column1 w={{
+        base: '100%',
+        md: '25%'
+      }}>
+        <Box
+          marginBottom="15px"
+          lineHeight="24px"
+          display={{ base: "inline-block" }}
+          w={{base: '50%', md: '100%'}}
+          textAlign={{ base: 'center', md: 'left' }}
+        >
           <TimeIcon fontSize="18px" marginRight="15px"/>
           {`${formatDateString(props.row.startDate)} - ${formatDateString(props.row.endDate)}`}
         </Box>
-        <Box>
+        <Box
+          display={{ base: "inline-block" }}
+          w={{base: '50%', md: '100%'}}
+          textAlign={{ base: 'center', md: 'left' }}
+        >
           <LocationIcon fontSize="18px" marginRight="15px"/>
           {props.row.location.map((x: any) => x.name).join(", ")}
         </Box>
       </Column1>
-      <Column2>
+      <Column2 w={{
+        base: '90%',
+        md: '70%'
+      }}>
         <Box fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px" noOfLines={!expanded ? 1 : undefined}>
           {props.row.name}
         </Box>
@@ -96,7 +110,10 @@ export const EventRow = (props: any) => {
       </Column2>
       {
         expandable ? (
-          <Column3>
+          <Column3 w={{
+            base: '10%',
+            md: '5%'
+          }}>
             <IconButton
               isRound
               bg="none"
