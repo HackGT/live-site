@@ -30,7 +30,6 @@ const Column2 = chakra(Box, {
 const Column3 = chakra(Box, {
   baseStyle: {
     verticalAlign: "top",
-    marginTop: "50px",
     display: "inline-block",
     textAlign: "center",
   }
@@ -83,7 +82,7 @@ export const EventRow = (props: any) => {
     >
       <Column1
         w={{ base: "100%", md: "25%"}}
-        paddingBottom={{ sm: "10px", md: "25px"}}
+        paddingBottom={{ base: "10px", md: "25px"}}
       >
         <Box
           marginBottom="15px"
@@ -105,11 +104,10 @@ export const EventRow = (props: any) => {
         </Box>
       </Column1>
       <Column2
-        w={{ base: "100%", md: "75%"}}
+        w={{ base: "100%", md: "70%"}}
         paddingTop={{ base: "5px", md: "25px" }}
       >
         <Box
-          w="100%"
           fontSize={{ base: "16px", md: "20px" }}
           fontWeight="semibold"
           marginBottom="15px"
@@ -120,17 +118,15 @@ export const EventRow = (props: any) => {
           {props.row.name}
         </Box>
         <Box
-          w={!expandable ? "95%" : "100%"}
           fontSize={{ base: "14px", md: "16px" }}
           noOfLines={!expanded ? 2 : undefined}
-          display="inline-block"
           ref={widthRef}
         >
           {props.row.description}
         </Box>
         {
           expandable ? (
-            <Column3 w="5%">
+            <Column3 w="0">
               <IconButton
                 isRound
                 bg="none"
