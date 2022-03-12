@@ -12,6 +12,7 @@ class Page {
 
 export const routes = [
   new Page("Schedule", "/schedule"),
+  new Page("Events", "/events"),
   new Page("Tracks", "/tracks"),
   new Page("Prizes", "/prizes"),
   new Page("Info", "/info"),

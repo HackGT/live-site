@@ -5,11 +5,14 @@ import { fetchBlock } from "../../../services/cmsService";
 
 const TracksTab: React.FC = () => {
   const [tracks, setTracks] = useState<any[]>([]);
+  const [judging, setJudging] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
       const trackdata = await fetchBlock("tracks and challenges");
       setTracks(trackdata.allBlocks);
+      const judgingdata = await fetchBlock("judging");
+      setJudging(judgingdata.allBlocks);
     };
     getEvents();
   }, []);
@@ -18,6 +21,7 @@ const TracksTab: React.FC = () => {
     <div>
       <div>
         <BlockCollection title="Tracks and Challenges" blocks={tracks} />
+        <BlockCollection title="Judging" blocks={judging} />
       </div>
     </div>
   );

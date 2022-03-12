@@ -7,13 +7,11 @@ import useAxios from "axios-hooks";
 
 import { User } from "./types/User";
 import Navbar from "./components/shared/Navbar";
-import Home from "./components/tabs/home/Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import InfoTab from "./components/tabs/info/InfoTab";
 import TracksTab from "./components/tabs/tracks/TracksTab";
 import PrizesTab from "./components/tabs/prizes/PrizesTab";
-import MentorTab from "./components/tabs/mentor/MentorTab";
-import SponsorTab from "./components/tabs/sponsor/SponsorTab";
+import EventsTab from "./components/tabs/events/EventsTab";
 import Footer from "./components/shared/Footer";
 
 // a little bee ascii art
@@ -52,6 +50,7 @@ const App: React.FC = () => {
           <Route path="/info" children={<InfoTab />} />
           <Route path="/tracks" children={<TracksTab />} />
           <Route path="/prizes" children={<PrizesTab />} />
+          <Route path="/events" children={<EventsTab />} />
           <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
           <Route exact path="/">
             <Redirect to="/schedule" />
