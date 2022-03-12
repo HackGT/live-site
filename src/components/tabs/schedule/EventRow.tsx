@@ -29,6 +29,7 @@ const Column2 = chakra(Box, {
 
 const Column3 = chakra(Box, {
   baseStyle: {
+    verticalAlign: "top",
     marginTop: "50px",
     display: "inline-block",
     textAlign: "center",
@@ -82,7 +83,7 @@ export const EventRow = (props: any) => {
     >
       <Column1
         w={{ base: "100%", md: "25%"}}
-        paddingBottom={{ sm: "7.5px", md: "25px"}}
+        paddingBottom={{ sm: "10px", md: "25px"}}
       >
         <Box
           marginBottom="15px"
@@ -104,11 +105,12 @@ export const EventRow = (props: any) => {
         </Box>
       </Column1>
       <Column2
-        w={{ base: !expanded ? "90%" : "100%", md: "70%"}}
-        paddingTop={{ base: "5px", md: "25px"}}
+        w={{ base: "100%", md: "75%"}}
+        paddingTop={{ base: "5px", md: "25px" }}
       >
         <Box
-          fontSize={{ base: "10px", md: "20px" }}
+          w="100%"
+          fontSize={{ base: "16px", md: "20px" }}
           fontWeight="semibold"
           marginBottom="15px"
           lineHeight="24px"
@@ -117,28 +119,31 @@ export const EventRow = (props: any) => {
         >
           {props.row.name}
         </Box>
-        <Box fontSize={{ base: "14px", md: "16px" }} noOfLines={!expanded ? 2 : undefined} ref={widthRef}>
+        <Box
+          w={!expandable ? "95%" : "100%"}
+          fontSize={{ base: "14px", md: "16px" }}
+          noOfLines={!expanded ? 2 : undefined}
+          display="inline-block"
+          ref={widthRef}
+        >
           {props.row.description}
         </Box>
+        {
+          expandable ? (
+            <Column3 w="5%">
+              <IconButton
+                isRound
+                bg="none"
+                aria-label="Expand Description"
+                icon={expanded ? <ChevronUpIcon/> : <ChevronDownIcon/>}
+                onClick={() => {
+                  setExpanded(!expanded);
+                }}
+              />
+            </Column3>
+          ) : null
+        }
       </Column2>
-      {
-        expandable ? (
-          <Column3 w={{
-            base: "10%",
-            md: "5%"
-          }}>
-            <IconButton
-              isRound
-              bg="none"
-              aria-label="Expand Description"
-              icon={expanded ? <ChevronUpIcon/> : <ChevronDownIcon/>}
-              onClick={() => {
-                setExpanded(!expanded);
-              }}
-            />
-          </Column3>
-        ) : null
-      }
     </Box>
   )
 }
