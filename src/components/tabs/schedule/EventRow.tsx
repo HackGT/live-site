@@ -12,7 +12,7 @@ const Column1 = chakra(Box, {
   baseStyle: {
     verticalAlign: "top",
     px: "15px",
-    py: "25px",
+    paddingTop: "25px",
     display: "inline-block",
     fontSize: "14px",
   },
@@ -22,7 +22,7 @@ const Column2 = chakra(Box, {
   baseStyle: {
     verticalAlign: "top",
     px: "15px",
-    py: "25px",
+    paddingBottom: "25px",
     display: "inline-block",
   }
 })
@@ -36,14 +36,14 @@ const Column3 = chakra(Box, {
 })
 
 const LocationIcon = (props: any) => (
-  <Icon viewBox='0 0 297 297' {...props}>
+  <Icon viewBox="0 0 297 297" {...props}>
     <path
-      fill='currentColor'
-      d='M148.5,0C87.43,0,37.747,49.703,37.747,110.797c0,91.026,99.729,179.905,103.976,183.645   c1.936,1.705,4.356,2.559,6.777,2.559c2.421,0,4.841-0.853,6.778-2.559c4.245-3.739,103.975-92.618,103.975-183.645   C259.253,49.703,209.57,0,148.5,0z M148.5,272.689c-22.049-21.366-90.243-93.029-90.243-161.892   c0-49.784,40.483-90.287,90.243-90.287s90.243,40.503,90.243,90.287C238.743,179.659,170.549,251.322,148.5,272.689z'
+      fill="currentColor"
+      d="M148.5,0C87.43,0,37.747,49.703,37.747,110.797c0,91.026,99.729,179.905,103.976,183.645   c1.936,1.705,4.356,2.559,6.777,2.559c2.421,0,4.841-0.853,6.778-2.559c4.245-3.739,103.975-92.618,103.975-183.645   C259.253,49.703,209.57,0,148.5,0z M148.5,272.689c-22.049-21.366-90.243-93.029-90.243-161.892   c0-49.784,40.483-90.287,90.243-90.287s90.243,40.503,90.243,90.287C238.743,179.659,170.549,251.322,148.5,272.689z"
     />
     <path
-      fill='currentColor'
-      d='M148.5,59.183c-28.273,0-51.274,23.154-51.274,51.614c0,28.461,23.001,51.614,51.274,51.614   c28.273,0,51.274-23.153,51.274-51.614C199.774,82.337,176.773,59.183,148.5,59.183z M148.5,141.901   c-16.964,0-30.765-13.953-30.765-31.104c0-17.15,13.801-31.104,30.765-31.104c16.964,0,30.765,13.953,30.765,31.104   C179.265,127.948,165.464,141.901,148.5,141.901z'
+      fill="currentColor"
+      d="M148.5,59.183c-28.273,0-51.274,23.154-51.274,51.614c0,28.461,23.001,51.614,51.274,51.614   c28.273,0,51.274-23.153,51.274-51.614C199.774,82.337,176.773,59.183,148.5,59.183z M148.5,141.901   c-16.964,0-30.765-13.953-30.765-31.104c0-17.15,13.801-31.104,30.765-31.104c16.964,0,30.765,13.953,30.765,31.104   C179.265,127.948,165.464,141.901,148.5,141.901z"
     />
   </Icon>
 )
@@ -55,13 +55,19 @@ export const EventRow = (props: any) => {
   const [expanded, setExpanded] = useState(false);
   const widthRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const checkTextOverflow = () => {
     if (widthRef.current !== null) {
-      if(widthRef.current.offsetHeight < widthRef.current.scrollHeight){
-        setExpandable(true);
-      }
+      setExpandable(widthRef.current.offsetHeight < widthRef.current.scrollHeight);
     }
+  }
+
+  useEffect(() => {
+    checkTextOverflow();
   }, []);
+
+  window.addEventListener("resize", () => {
+    checkTextOverflow();
+  })
 
   return (
     <Box
@@ -74,33 +80,33 @@ export const EventRow = (props: any) => {
       }}
       key={props.row.id}
     >
-      <Column1 w={{
-        base: '100%',
-        md: '25%'
-      }}>
+      <Column1
+        w={{ base: "100%", md: "25%"}}
+        paddingBottom={{ base: "7.5px", md: "25px"}}
+      >
         <Box
           marginBottom="15px"
           lineHeight="24px"
           display={{ base: "inline-block" }}
-          w={{base: '50%', md: '100%'}}
-          textAlign={{ base: 'center', md: 'left' }}
+          w={{ base: "50%", md: "100%" }}
+          textAlign={{ base: "center", md: "left" }}
         >
           <TimeIcon fontSize="18px" marginRight="15px"/>
           {`${formatDateString(props.row.startDate)} - ${formatDateString(props.row.endDate)}`}
         </Box>
         <Box
           display={{ base: "inline-block" }}
-          w={{base: '50%', md: '100%'}}
-          textAlign={{ base: 'center', md: 'left' }}
+          w={{base: "50%", md: "100%"}}
+          textAlign={{ base: "center", md: "left" }}
         >
           <LocationIcon fontSize="18px" marginRight="15px"/>
           {props.row.location.map((x: any) => x.name).join(", ")}
         </Box>
       </Column1>
-      <Column2 w={{
-        base: '90%',
-        md: '70%'
-      }}>
+      <Column2
+        w={{ base: "90%", md: "70%"}}
+        paddingTop={{ base: "7.5px", md: "25px"}}
+      >
         <Box fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px" noOfLines={!expanded ? 1 : undefined}>
           {props.row.name}
         </Box>
@@ -111,13 +117,13 @@ export const EventRow = (props: any) => {
       {
         expandable ? (
           <Column3 w={{
-            base: '10%',
-            md: '5%'
+            base: "10%",
+            md: "5%"
           }}>
             <IconButton
               isRound
               bg="none"
-              aria-label='Expand Description'
+              aria-label="Expand Description"
               icon={expanded ? <ChevronUpIcon/> : <ChevronDownIcon/>}
               onClick={() => {
                 setExpanded(!expanded);
