@@ -62,7 +62,6 @@ const Schedule: React.FC<Props> = (props: Props) => {
       borderImageSlice: 1,
       borderImageSource: "linear-gradient(to right, #33c2ff, #7b69ec)",
       bg: "white",
-      fontSize: "32px",
       textTransform: "uppercase",
       zIndex: "999",
     },
@@ -70,12 +69,14 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   return (
     <div className="schedule">
-      <p className="schedule_title">Schedule</p>
+      <Box className="schedule_title" fontSize={{base: "36px", md: "50px"}}>
+        Schedule
+      </Box>
       <ScheduleTable className="schedule_table">
         {events.map((chunk: any, index: any, arr: any) => (
           <Box key={chunk[0].startDate}>
             <DateHeader>
-              <Box bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text">
+              <Box bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text" fontSize={{base: "24px", md: "32px"}}>
                 {`${getDayFromDate(chunk[index].startDate)}`}
               </Box>
             </DateHeader>
