@@ -82,24 +82,20 @@ export const EventRow = (props: any) => {
     >
       <Column1
         w={{ base: "100%", md: "25%"}}
-        paddingBottom={{ base: "7.5px", md: "25px"}}
+        paddingBottom={{ sm: "7.5px", md: "25px"}}
       >
         <Box
           marginBottom="15px"
           lineHeight="24px"
-          display={{ base: "inline-block" }}
-          w={{ base: "60%", md: "100%" }}
           textAlign={{ base: "center", md: "left" }}
         >
-          <TimeIcon fontSize="18px" marginRight="15px"/>
+          <TimeIcon fontSize="16px" marginRight="15px"/>
           {`${formatDateString(props.row.startDate)} - ${formatDateString(props.row.endDate)}`}
         </Box>
         <Box
-          display={{ base: "inline-block" }}
-          w={{base: "40%", md: "100%"}}
           textAlign={{ base: "center", md: "left" }}
         >
-          {props.row.location ? (
+          {props.row.location.length != 0 ? (
             <>
               <LocationIcon fontSize="18px" marginRight="15px"/>
               {props.row.location.map((x: any) => x.name).join(", ")}
@@ -108,13 +104,20 @@ export const EventRow = (props: any) => {
         </Box>
       </Column1>
       <Column2
-        w={{ base: "90%", md: "70%"}}
-        paddingTop={{ base: "7.5px", md: "25px"}}
+        w={{ base: !expanded ? "90%" : "100%", md: "70%"}}
+        paddingTop={{ base: "5px", md: "25px"}}
       >
-        <Box fontSize="20px" fontWeight="semibold" marginBottom="15px" lineHeight="24px" noOfLines={!expanded ? 1 : undefined}>
+        <Box
+          fontSize={{ base: "10px", md: "20px" }}
+          fontWeight="semibold"
+          marginBottom="15px"
+          lineHeight="24px"
+          noOfLines={!expanded ? 1 : undefined}
+          textAlign={{ base: "center", md: "left" }}
+        >
           {props.row.name}
         </Box>
-        <Box noOfLines={!expanded ? 2 : undefined} ref={widthRef}>
+        <Box fontSize={{ base: "14px", md: "16px" }} noOfLines={!expanded ? 2 : undefined} ref={widthRef}>
           {props.row.description}
         </Box>
       </Column2>
