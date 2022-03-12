@@ -117,16 +117,18 @@ export const EventRow = (props: any) => {
         >
           {props.row.name}
         </Box>
-        <Box
-          fontSize={{ base: "14px", md: "16px" }}
-          noOfLines={!expanded ? 2 : undefined}
-          ref={widthRef}
-        >
-          {props.row.description}
+        <Box w={expandable ? "93%" : "100%"} display="inline-block">
+          <Box
+            fontSize={{ base: "14px", md: "16px" }}
+            noOfLines={!expanded ? 2 : undefined}
+            ref={widthRef}
+          >
+            {props.row.description}
+          </Box>
         </Box>
         {
           expandable ? (
-            <Column3 w="0">
+            <Column3 w="7%">
               <IconButton
                 isRound
                 bg="none"
