@@ -88,7 +88,7 @@ export const EventRow = (props: any) => {
           marginBottom="15px"
           lineHeight="24px"
           display={{ base: "inline-block" }}
-          w={{ base: "50%", md: "100%" }}
+          w={{ base: "60%", md: "100%" }}
           textAlign={{ base: "center", md: "left" }}
         >
           <TimeIcon fontSize="18px" marginRight="15px"/>
@@ -96,11 +96,15 @@ export const EventRow = (props: any) => {
         </Box>
         <Box
           display={{ base: "inline-block" }}
-          w={{base: "50%", md: "100%"}}
+          w={{base: "40%", md: "100%"}}
           textAlign={{ base: "center", md: "left" }}
         >
-          <LocationIcon fontSize="18px" marginRight="15px"/>
-          {props.row.location.map((x: any) => x.name).join(", ")}
+          {props.row.location ? (
+            <>
+              <LocationIcon fontSize="18px" marginRight="15px"/>
+              {props.row.location.map((x: any) => x.name).join(", ")}
+            </>
+          ) : null}
         </Box>
       </Column1>
       <Column2
