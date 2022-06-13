@@ -9,6 +9,7 @@ import { routes } from "./Navigation";
 
 const Navbar: React.FC = () => {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [showHam, setShowHam] = useState(false);
 
   return (
     <Box>
@@ -46,22 +47,26 @@ const Navbar: React.FC = () => {
           </Box>
         </MediaQuery>
       </Box>
-      {showNavbar && (
-        <Box display="flex" flexDirection="column">
-          {routes.map(route => (
-            <Link
-              key={route.name}
-              as={RouterLink}
-              to={route.link}
-              color="textPrimary"
-              _focus={{ boxShadow: "none" }}
-              mt="20px"
-            >
-              {route.name}
-            </Link>
-          ))}
-        </Box>
-      )}
+      <MediaQuery maxWidth={1100}>
+        <div>
+          {showNavbar && (
+            <Box display="flex" flexDirection="column">
+              {routes.map(route => (
+                <Link
+                  key={route.name}
+                  as={RouterLink}
+                  to={route.link}
+                  color="textPrimary"
+                  _focus={{ boxShadow: "none" }}
+                  mt="20px"
+                >
+                  {route.name}
+                </Link>
+              ))}
+            </Box>
+          )}
+        </div>
+      </MediaQuery>
     </Box>
   );
 };
