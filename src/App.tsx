@@ -2,7 +2,12 @@
 import React from "react";
 
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import axios from "axios";
+import { initializeApp } from "firebase/app";
+import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
+import { useLogin, LoadingScreen, AuthProvider, ErrorScreen } from "@hex-labs/core";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
@@ -19,48 +24,59 @@ import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 const art =
   ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
 
-// TODO: Add Hexlabs information at the bottom of the page
+// Initialized the Firebase app through the credentials provided
+export const app = initializeApp({
+  apiKey: "AIzaSyCsukUZtMkI5FD_etGfefO4Sr7fHkZM7Rg",
+  authDomain: "auth.hexlabs.org",
+});
+// Sets the Firebase persistence to in memory since we use cookies for session
+// management. These cookies are set by the backend on login/logout.
+setPersistence(getAuth(app), inMemoryPersistence);
 
-const App: React.FC = () => {
-  // Temporarily remove this code while login is switch to new system with api repo
+// By default sends axios requests with user session cookies so that the backend
+// can verify the user's identity.
+axios.defaults.withCredentials = true;
 
-  // const [{ data, loading, error }] = useAxios("/auth/check");
+export const App = () => {
+  // Retrieves the user's login state. This hook will also make requests to log
+  // the user in
+  const [loading, loggedIn] = useLogin(app);
 
-  // if (loading) {
-  //   return null;
-  // }
+  // If loading, show a loading screen
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
-  // if (error || !data) {
-  //   return <h1>Error</h1>;
-  // }
+  // If the user is not logged in, redirect to the login frontend with a redirect
+  // param so that the user can login and come back to the page they were on.
+  if (!loggedIn) {
+    window.location.href = `https://login.hexlabs.org?redirect=${window.location.href}`;
+    return <LoadingScreen />;
+  }
 
-  // const user: User = data;
-
-  // console.log(art);
-
-  const user = {
-    branch: "notconfirmed",
-  };
-
+  // Sets up the AuthProvider so that any part of the application can use the
+  // useAuth hook to retrieve the user's login details.
   return (
-    <div className="app_main">
-      <div className="top-lights" />
-      <div className="middle-lights" />
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path="/tracks-challenges" children={<TracksTab />} />
-          <Route path="/mentors" children={<MentorTab />} />
-          <Route path="/swag" children={<SwagTab />} />
-          <Route path="/workshops" children={<WorkshopTab />} />
-          <Route path="/hardware-makerspace" children={<HardwareMakerspaceTab />} />
-          <Route path="/sponsor" children={<SponsorTab />} />
-          <Route path="/accomodations" children={<AccommodationsTab />} />
-          <Route path="/" children={<HackGT9HomeTab />} />
-        </Switch>
-        <Footer />
-      </Router>
-    </div>
+    <AuthProvider app={app}>
+      <div className="app_main">
+        <div className="top-lights" />
+        <div className="middle-lights" />
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/tracks-challenges" children={<TracksTab />} />
+            <Route path="/mentors" children={<MentorTab />} />
+            <Route path="/swag" children={<SwagTab />} />
+            <Route path="/workshops" children={<WorkshopTab />} />
+            <Route path="/hardware-makerspace" children={<HardwareMakerspaceTab />} />
+            <Route path="/sponsor" children={<SponsorTab />} />
+            <Route path="/accomodations" children={<AccommodationsTab />} />
+            <Route path="/" children={<HackGT9HomeTab />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </div>
+    </AuthProvider>
   );
 };
 

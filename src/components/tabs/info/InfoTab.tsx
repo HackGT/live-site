@@ -25,8 +25,8 @@ const ScheduleTab: React.FC = () => {
   return (
     <div>
       <div>
-        <BlockCollection title="Welcome to the Live Site!" blocks={welcome} />
-        <BlockCollection title="Key Information" blocks={keyInfo} />
+        <BlockCollection title="" blocks={welcome} />
+        <BlockCollection title="" blocks={keyInfo} />
         <BlockCollection title="Frequently Asked Questions" blocks={infoFaqs} />
       </div>
     </div>

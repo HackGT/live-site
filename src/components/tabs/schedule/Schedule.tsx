@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import dateFormat from "dateformat";
 import { Box, chakra } from "@chakra-ui/react";
+import axios from "axios";
 
-import { fetchAllEvents, fetchUpcomingEvents } from "../../../services/cmsService";
 import { EventRow } from "./EventRow";
+import { apiUrl, Service } from "@hex-labs/core";
 
 type Props = {
   tableLength: number;
@@ -11,22 +12,38 @@ type Props = {
   virtual: boolean;
 };
 
+const HEXATHON_URL = String(process.env.REACT_APP_HEXATHON_URL);
+const HEXATHON_ID = String(process.env.REACT_APP_HEXATHON_ID);
+
 const Schedule: React.FC<Props> = (props: Props) => {
   const [events, setEvents] = useState<any[]>([]);
 
   const getDayFromDate = (date: string) => dateFormat(date, "dddd, mmm dS");
 
+  const pullEvents = async (query: string) => {
+    const eRes = await axios.get(apiUrl(Service.HEXATHONS, "/events/"), {
+      params: {
+        hexathon: query,
+      },
+    });
+    return eRes.data;
+  };
+
   useEffect(() => {
     const getEvents = async () => {
       let data;
+      let res;
       let startIndex = 0;
       const elements = [];
       if (props.homepage) {
-        data = await fetchUpcomingEvents(props.virtual);
+        res = await pullEvents(HEXATHON_ID);
+        // data = await fetchUpcomingEvents(props.virtual);
       } else {
-        data = await fetchAllEvents(props.virtual);
+        res = await pullEvents(HEXATHON_ID);
+        data = res.data;
+        // data = await fetchAllEvents(props.virtual);
       }
-      const sortedData = data.allEvents.sort((a: any, b: any) => {
+      const sortedData = data.sort((a: any, b: any) => {
         const dateA = a.startDate;
         const dateB = b.startDate;
         return dateA >= dateB ? 1 : -1;
@@ -41,6 +58,8 @@ const Schedule: React.FC<Props> = (props: Props) => {
       }
       elements.push(sortedData.slice(startIndex, data.length));
       setEvents([...elements]);
+      console.log(data);
+      console.log("is this working");
     };
     getEvents();
   }, []);
@@ -69,14 +88,18 @@ const Schedule: React.FC<Props> = (props: Props) => {
 
   return (
     <div className="schedule">
-      <Box className="schedule_title" fontSize={{base: "36px", md: "50px"}}>
+      <Box className="schedule_title" fontSize={{ base: "36px", md: "50px" }}>
         Schedule
       </Box>
       <ScheduleTable className="schedule_table">
         {events.map((chunk: any, index: any, arr: any) => (
           <Box key={chunk[0].startDate}>
             <DateHeader>
-              <Box bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)" bgClip="text" fontSize={{base: "24px", md: "32px"}}>
+              <Box
+                bgGradient="linear(to-r, #33c2ff, #7b69ec 30%)"
+                bgClip="text"
+                fontSize={{ base: "24px", md: "32px" }}
+              >
                 {`${getDayFromDate(chunk[index].startDate)}`}
               </Box>
             </DateHeader>
