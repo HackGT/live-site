@@ -6,9 +6,13 @@ import { fetchBlock } from "../../../services/cmsService";
 const ScheduleTab: React.FC = () => {
   const [infoFaqs, setInfoFaqs] = useState<any[]>([]);
   const [keyInfo, setKeyInfo] = useState<any[]>([]);
+  const [welcome, setWelcome] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
+      const welcomeData = await fetchBlock("info-welcome");
+      setWelcome(welcomeData.allBlocks);
+
       const faqdata = await fetchBlock("info-faq");
       setInfoFaqs(faqdata.allBlocks);
 
@@ -21,6 +25,7 @@ const ScheduleTab: React.FC = () => {
   return (
     <div>
       <div>
+        <BlockCollection title="Welcome to the Live Site!" blocks={welcome} />
         <BlockCollection title="Key Information" blocks={keyInfo} />
         <BlockCollection title="Frequently Asked Questions" blocks={infoFaqs} />
       </div>

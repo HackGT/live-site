@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
         boxShadow="0 3px 4px 0 rgb(0 0 0 / 8%)"
       >
         <Logo />
-        <MediaQuery minWidth={1100}>
+        <MediaQuery minWidth={1300}>
           <div>
             {routes.map(route => (
               <Link
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
             ))}
           </div>
         </MediaQuery>
-        <MediaQuery maxWidth={1100}>
+        <MediaQuery maxWidth={1300}>
           <Box>
             <HamburgerMenu
               isOpen={showNavbar}
@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
           </Box>
         </MediaQuery>
       </Box>
-      <MediaQuery maxWidth={1100}>
+      <MediaQuery maxWidth={1300}>
         <div>
           {showNavbar && (
             <Box display="flex" flexDirection="column">

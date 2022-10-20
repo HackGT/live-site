@@ -3,18 +3,17 @@ import React from "react";
 
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import useAxios from "axios-hooks";
 
-import { User } from "./types/User";
 import Navbar from "./components/shared/Navbar";
-import Home from "./components/tabs/home/Home";
-import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
-import InfoTab from "./components/tabs/info/InfoTab";
 import TracksTab from "./components/tabs/tracks/TracksTab";
-import PrizesTab from "./components/tabs/prizes/PrizesTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
-import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import Footer from "./components/shared/Footer";
+import SwagTab from "./components/tabs/swag/SwagTab";
+import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
+import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
+import SponsorTab from "./components/tabs/sponsor/SponsorTab";
+import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
+import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 
 // a little bee ascii art
 const art =
@@ -43,51 +42,6 @@ const App: React.FC = () => {
     branch: "notconfirmed",
   };
 
-  if (user.branch === "notconfirmed") {
-    return (
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
-            <Route path="/" children={<Home virtual={false} confirmed={false} />} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
-  }
-  if (
-    user.branch === "Participant-Emerging Virtual" ||
-    user.branch === "Participant-General Virtual"
-  ) {
-    return (
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual />} />
-            <Route path="/" children={<Home virtual confirmed />} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
-  }
   return (
     <div className="app_main">
       <div className="top-lights" />
@@ -95,13 +49,14 @@ const App: React.FC = () => {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/info" children={<InfoTab />} />
-          <Route path="/tracks" children={<TracksTab />} />
+          <Route path="/tracks-challenges" children={<TracksTab />} />
           <Route path="/mentors" children={<MentorTab />} />
-          <Route path="/sponsors" children={<SponsorTab />} />
-          <Route path="/prizes" children={<PrizesTab />} />
-          <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
-          <Route path="/" children={<Home virtual confirmed />} />
+          <Route path="/swag" children={<SwagTab />} />
+          <Route path="/workshops" children={<WorkshopTab />} />
+          <Route path="/hardware-makerspace" children={<HardwareMakerspaceTab />} />
+          <Route path="/sponsor" children={<SponsorTab />} />
+          <Route path="/accomodations" children={<AccommodationsTab />} />
+          <Route path="/" children={<HackGT9HomeTab />} />
         </Switch>
         <Footer />
       </Router>

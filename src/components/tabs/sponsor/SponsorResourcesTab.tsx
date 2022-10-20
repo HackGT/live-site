@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
-const SponsorTab: React.FC = () => {
-  const [sponsorChallenges, setSponsorChallenges] = useState<any[]>([]);
+const SponsorResourcesTab: React.FC = () => {
+  const [sponsorResources, setSponsorResources] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
-      const data = await fetchBlock("sponsor-challenges");
-      setSponsorChallenges(data.allBlocks);
+      const data = await fetchBlock("sponsor-resources");
+      setSponsorResources(data.allBlocks);
     };
     getEvents();
   }, []);
@@ -17,10 +17,10 @@ const SponsorTab: React.FC = () => {
   return (
     <div>
       <div>
-        <BlockCollection title="" blocks={sponsorChallenges} />
+        <BlockCollection title="" blocks={sponsorResources} />
       </div>
     </div>
   );
 };
 
-export default SponsorTab;
+export default SponsorResourcesTab;
