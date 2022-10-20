@@ -61,20 +61,18 @@ export const App = () => {
       <div className="app_main">
         <div className="top-lights" />
         <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/tracks-challenges" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/swag" children={<SwagTab />} />
-            <Route path="/workshops" children={<WorkshopTab />} />
-            <Route path="/hardware-makerspace" children={<HardwareMakerspaceTab />} />
-            <Route path="/sponsor" children={<SponsorTab />} />
-            <Route path="/accomodations" children={<AccommodationsTab />} />
-            <Route path="/" children={<HackGT9HomeTab />} />
-          </Routes>
-          <Footer />
-        </Router>
+        <Navbar />
+        <Routes>
+          <Route path="/tracks-challenges" element={<TracksTab />} />
+          <Route path="/mentors" element={<MentorTab />} />
+          <Route path="/swag" element={<SwagTab />} />
+          <Route path="/workshops" element={<WorkshopTab />} />
+          <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} />
+          <Route path="/sponsor" element={<SponsorTab />} />
+          <Route path="/accomodations" element={<AccommodationsTab />} />
+          <Route path="/" element={<HackGT9HomeTab />} />
+        </Routes>
+        <Footer />
       </div>
     </AuthProvider>
   );
