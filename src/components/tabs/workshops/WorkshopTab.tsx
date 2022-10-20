@@ -8,7 +8,7 @@ const WorkshopTab: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const emergingWorkshopData = await fetchBlock("workshop");
+      const emergingWorkshopData = await fetchBlock("workshops");
       setEmergingWorkshops(emergingWorkshopData.allBlocks);
     };
     getEvents();

@@ -4,23 +4,19 @@ import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
 const HardwareMakerspaceTab: React.FC = () => {
-  const [hardwareInfo, setHardwareInfo] = useState<any[]>([]);
-  const [makerspaceInfo, setMakerspaceInfo] = useState<any[]>([]);
+  const [hardwareMakerspaceInfo, sethardwareMakerspaceInfo] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
-      const makerspaceData = await fetchBlock("makerspace");
-      setMakerspaceInfo(makerspaceData.allBlocks);
-      const hardwareData = await fetchBlock("hardware");
-      setHardwareInfo(hardwareData.allBlocks);
+      const data = await fetchBlock("hardware-makerspace");
+      sethardwareMakerspaceInfo(data.allBlocks);
     };
     getEvents();
   }, []);
 
   return (
     <div>
-      <BlockCollection title="Makerspaces" blocks={makerspaceInfo} />
-      <BlockCollection title="Hardware" blocks={hardwareInfo} />
+      <BlockCollection title="" blocks={hardwareMakerspaceInfo} />
     </div>
   );
 };

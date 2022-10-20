@@ -8,7 +8,7 @@ const AccommodationsTab: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const data = await fetchBlock("accomodation");
+      const data = await fetchBlock("accomodations-showers");
       setAccomodations(data.allBlocks);
     };
     getEvents();
