@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
-const ScheduleTab: React.FC = () => {
+const InfoTab: React.FC = () => {
   const [infoFaqs, setInfoFaqs] = useState<any[]>([]);
   const [keyInfo, setKeyInfo] = useState<any[]>([]);
   const [welcome, setWelcome] = useState<any[]>([]);
@@ -33,4 +33,4 @@ const ScheduleTab: React.FC = () => {
   );
 };
 
-export default ScheduleTab;
+export default InfoTab;

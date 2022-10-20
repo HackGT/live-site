@@ -2508,7 +2508,7 @@
   resolved "https://registry.yarnpkg.com/@hex-labs/core/-/core-1.0.51.tgz#ed60b25ff14cfdee12c1506c823d56ceb4308620"
   integrity sha512-6ID8Pel1MKP/tNUhJsSHqgspsb8DygGK6NsRFL+qTyxPyHSC4cFemaad3xwpjI1H0UJtJVDwcN25oYQpZkZ4jw==
 
-"@hex-labs/eslint-config-react@^1.2.3":
+"@hex-labs/eslint-config-react@^1.2.9":
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/@hex-labs/eslint-config-react/-/eslint-config-react-1.2.9.tgz#7096aae5097ca4512f201a52507538cc9bd6eb62"
   integrity sha512-FQt0FuP3hbuEZq/EBgIjGUYTK5nDHRB9vczRdJFCjVcZLO5hufZsougZmz9TE63qHCsqxfySKaJrPhAlBvc8ew==
@@ -2524,12 +2524,12 @@
     eslint-plugin-react "^7.28.0"
     eslint-plugin-react-hooks "^4.3.0"
 
-"@hex-labs/prettier-config@^1.2.4":
+"@hex-labs/prettier-config@^1.2.9":
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/@hex-labs/prettier-config/-/prettier-config-1.2.9.tgz#7a1da1e9029583423fa3957adc217d4d70dc04ea"
   integrity sha512-QkjMJTqCCyIOyY2jrPVCn83U+ek3amC78u5aP2QmWcDhff9BaSSg44x1hVy3ka+ZFiPBkrNLx3M/GPS7tTtwGw==
 
-"@hex-labs/stylelint-config@^1.2.0":
+"@hex-labs/stylelint-config@^1.2.9":
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/@hex-labs/stylelint-config/-/stylelint-config-1.2.9.tgz#41cc6b3cfed7f7423b38b04a2b2d50396e3d73d8"
   integrity sha512-Lv5wI2uoH3hTbsmrNlRfBsejoE2vEEmS/NsYRKCVUfWre8qK3YegvgcN0vTUN7nVuY2br98yDtvnxKNGR8fF5Q==

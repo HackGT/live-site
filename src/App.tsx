@@ -19,6 +19,7 @@ import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/Hardwar
 import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
 import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
+import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 
 // a little bee ascii art
 const art =
@@ -64,6 +65,7 @@ export const App = () => {
         <Navbar />
         <Routes>
           <Route path="/tracks-challenges" element={<TracksTab />} />
+          <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
           <Route path="/mentors" element={<MentorTab />} />
           <Route path="/swag" element={<SwagTab />} />
           <Route path="/workshops" element={<WorkshopTab />} />
