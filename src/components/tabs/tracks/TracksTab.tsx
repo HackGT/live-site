@@ -26,8 +26,8 @@ const TracksTab: React.FC = () => {
     <div>
       <div>
         <BlockCollection title="Tracks" blocks={tracks} />
-        <BlockCollection title="" blocks={emergingDescription} />
-        <BlockCollection title="Emerging Challenges" blocks={emergingChallenges} />
+        <BlockCollection title="Emerging Challenges" blocks={emergingDescription} />
+        <BlockCollection title="" blocks={emergingChallenges} />
       </div>
     </div>
   );
