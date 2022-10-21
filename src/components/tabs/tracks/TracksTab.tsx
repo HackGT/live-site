@@ -5,13 +5,14 @@ import { fetchBlock } from "../../../services/cmsService";
 
 const TracksTab: React.FC = () => {
   const [tracks, setTracks] = useState<any[]>([]);
+  const [tracksDescription, setTracksDescription] = useState<any[]>([]);
   const [emergingChallenges, setEmergingChallenges] = useState<any[]>([]);
   const [emergingDescription, setEmergingDescription] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
       const trackDescriptionData = await fetchBlock("tracks-description");
-      setTracks(trackDescriptionData.allBlocks);
+      setTracksDescription(trackDescriptionData.allBlocks);
 
       const trackData = await fetchBlock("tracks");
       setTracks(trackData.allBlocks);
@@ -28,7 +29,8 @@ const TracksTab: React.FC = () => {
   return (
     <div>
       <div>
-        <BlockCollection title="Tracks" blocks={tracks} />
+        <BlockCollection title="Tracks" blocks={tracksDescription} />
+        <BlockCollection title="" blocks={tracks} />
         <BlockCollection title="Emerging Challenges" blocks={emergingDescription} />
         <BlockCollection title="" blocks={emergingChallenges} />
       </div>
