@@ -3,12 +3,16 @@ import React, { useState, useEffect } from "react";
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
-const ScheduleTab: React.FC = () => {
+const InfoTab: React.FC = () => {
   const [infoFaqs, setInfoFaqs] = useState<any[]>([]);
   const [keyInfo, setKeyInfo] = useState<any[]>([]);
+  const [welcome, setWelcome] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
+      const welcomeData = await fetchBlock("info-welcome");
+      setWelcome(welcomeData.allBlocks);
+
       const faqdata = await fetchBlock("info-faq");
       setInfoFaqs(faqdata.allBlocks);
 
@@ -21,11 +25,12 @@ const ScheduleTab: React.FC = () => {
   return (
     <div>
       <div>
-        <BlockCollection title="Key Information" blocks={keyInfo} />
+        <BlockCollection title="" blocks={welcome} />
+        <BlockCollection title="" blocks={keyInfo} />
         <BlockCollection title="Frequently Asked Questions" blocks={infoFaqs} />
       </div>
     </div>
   );
 };
 
-export default ScheduleTab;
+export default InfoTab;

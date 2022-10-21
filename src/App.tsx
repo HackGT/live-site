@@ -2,110 +2,81 @@
 import React from "react";
 
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import useAxios from "axios-hooks";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { User } from "./types/User";
+import axios from "axios";
+import { initializeApp } from "firebase/app";
+import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
+import { useLogin, LoadingScreen, AuthProvider, ErrorScreen } from "@hex-labs/core";
+
 import Navbar from "./components/shared/Navbar";
-import Home from "./components/tabs/home/Home";
-import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
-import InfoTab from "./components/tabs/info/InfoTab";
 import TracksTab from "./components/tabs/tracks/TracksTab";
-import PrizesTab from "./components/tabs/prizes/PrizesTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
-import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import Footer from "./components/shared/Footer";
+import SwagTab from "./components/tabs/swag/SwagTab";
+import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
+import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
+import SponsorTab from "./components/tabs/sponsor/SponsorTab";
+import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
+import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
+import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 
 // a little bee ascii art
 const art =
   ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
 
-// TODO: Add Hexlabs information at the bottom of the page
+// Initialized the Firebase app through the credentials provided
+export const app = initializeApp({
+  apiKey: "AIzaSyCsukUZtMkI5FD_etGfefO4Sr7fHkZM7Rg",
+  authDomain: "auth.hexlabs.org",
+});
+// Sets the Firebase persistence to in memory since we use cookies for session
+// management. These cookies are set by the backend on login/logout.
+setPersistence(getAuth(app), inMemoryPersistence);
 
-const App: React.FC = () => {
-  // Temporarily remove this code while login is switch to new system with api repo
+// By default sends axios requests with user session cookies so that the backend
+// can verify the user's identity.
+axios.defaults.withCredentials = true;
 
-  // const [{ data, loading, error }] = useAxios("/auth/check");
+export const App = () => {
+  // Retrieves the user's login state. This hook will also make requests to log
+  // the user in
+  const [loading, loggedIn] = useLogin(app);
 
-  // if (loading) {
-  //   return null;
-  // }
-
-  // if (error || !data) {
-  //   return <h1>Error</h1>;
-  // }
-
-  // const user: User = data;
-
-  // console.log(art);
-
-  const user = {
-    branch: "notconfirmed",
-  };
-
-  if (user.branch === "notconfirmed") {
-    return (
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
-            <Route path="/" children={<Home virtual={false} confirmed={false} />} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
+  // If loading, show a loading screen
+  if (loading) {
+    return <LoadingScreen />;
   }
-  if (
-    user.branch === "Participant-Emerging Virtual" ||
-    user.branch === "Participant-General Virtual"
-  ) {
-    return (
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path="/info" children={<InfoTab />} />
-            <Route path="/tracks" children={<TracksTab />} />
-            <Route path="/mentors" children={<MentorTab />} />
-            <Route path="/sponsors" children={<SponsorTab />} />
-            <Route path="/prizes" children={<PrizesTab />} />
-            <Route path="/schedule" children={<ScheduleTab virtual />} />
-            <Route path="/" children={<Home virtual confirmed />} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
-    );
+
+  // If the user is not logged in, redirect to the login frontend with a redirect
+  // param so that the user can login and come back to the page they were on.
+  if (!loggedIn) {
+    window.location.href = `https://login.hexlabs.org?redirect=${window.location.href}`;
+    return <LoadingScreen />;
   }
+
+  // Sets up the AuthProvider so that any part of the application can use the
+  // useAuth hook to retrieve the user's login details.
   return (
-    <div className="app_main">
-      <div className="top-lights" />
-      <div className="middle-lights" />
-      <Router>
+    <AuthProvider app={app}>
+      <div className="app_main">
+        <div className="top-lights" />
+        <div className="middle-lights" />
         <Navbar />
-        <Switch>
-          <Route path="/info" children={<InfoTab />} />
-          <Route path="/tracks" children={<TracksTab />} />
-          <Route path="/mentors" children={<MentorTab />} />
-          <Route path="/sponsors" children={<SponsorTab />} />
-          <Route path="/prizes" children={<PrizesTab />} />
-          <Route path="/schedule" children={<ScheduleTab virtual={false} />} />
-          <Route path="/" children={<Home virtual confirmed />} />
-        </Switch>
+        <Routes>
+          <Route path="/tracks-challenges" element={<TracksTab />} />
+          <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
+          <Route path="/mentors" element={<MentorTab />} />
+          <Route path="/swag" element={<SwagTab />} />
+          <Route path="/workshops" element={<WorkshopTab />} />
+          <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} />
+          <Route path="/sponsor" element={<SponsorTab />} />
+          <Route path="/accomodations" element={<AccommodationsTab />} />
+          <Route path="/" element={<HackGT9HomeTab />} />
+        </Routes>
         <Footer />
-      </Router>
-    </div>
+      </div>
+    </AuthProvider>
   );
 };
 

@@ -3,24 +3,22 @@ import React, { useState, useEffect } from "react";
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
 
-const MentorTab: React.FC = () => {
-  const [mentor, setMentor] = useState<any[]>([]);
+const SwagTab: React.FC = () => {
+  const [swagInfo, setSwagInfo] = useState<any[]>([]);
 
   useEffect(() => {
     const getEvents = async () => {
-      const data = await fetchBlock("mentor");
-      setMentor(data.allBlocks);
+      const swagData = await fetchBlock("swag");
+      setSwagInfo(swagData.allBlocks);
     };
     getEvents();
   }, []);
 
   return (
     <div>
-      <div>
-        <BlockCollection title="Mentors" blocks={mentor} />
-      </div>
+      <BlockCollection title="Swag Economy" blocks={swagInfo} />
     </div>
   );
 };
 
-export default MentorTab;
+export default SwagTab;
