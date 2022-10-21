@@ -17,7 +17,7 @@ const HackGT9HomeTab: React.FC = () => {
   return (
     <div>
       <div>
-        <BlockCollection title="" blocks={home} />
+        <BlockCollection title="Home" blocks={home} />
       </div>
     </div>
   );
