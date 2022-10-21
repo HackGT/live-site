@@ -8,7 +8,7 @@ const MentorTab: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const data = await fetchBlock("mentor");
+      const data = await fetchBlock("admissions-mentors");
       setMentor(data.allBlocks);
     };
     getEvents();

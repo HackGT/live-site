@@ -10,8 +10,11 @@ const TracksTab: React.FC = () => {
 
   useEffect(() => {
     const getEvents = async () => {
-      const trackdata = await fetchBlock("tracks");
-      setTracks(trackdata.allBlocks);
+      const trackDescriptionData = await fetchBlock("tracks-description");
+      setTracks(trackDescriptionData.allBlocks);
+
+      const trackData = await fetchBlock("tracks");
+      setTracks(trackData.allBlocks);
 
       const emergingDescriptionData = await fetchBlock("emerging-challenge-description");
       setEmergingDescription(emergingDescriptionData.allBlocks);
