@@ -3,16 +3,13 @@ import React from "react";
 
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
-import { useLogin, LoadingScreen, AuthProvider, ErrorScreen } from "@hex-labs/core";
+import { useLogin, LoadingScreen, AuthProvider, Footer } from "@hex-labs/core";
 
-import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
-import Footer from "./components/shared/Footer";
 import SwagTab from "./components/tabs/swag/SwagTab";
 import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
 import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
@@ -20,6 +17,7 @@ import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
 import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
+import Navigation from "./components/shared/Navigation";
 
 // a little bee ascii art
 const art =
@@ -62,7 +60,7 @@ export const App = () => {
       <div className="app_main">
         <div className="top-lights" />
         <div className="middle-lights" />
-        <Navbar />
+        <Navigation />
         <Routes>
           <Route path="/tracks-challenges" element={<TracksTab />} />
           <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
