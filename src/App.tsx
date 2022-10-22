@@ -19,6 +19,7 @@ import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
 import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
+import { Box } from "@chakra-ui/react";
 
 // a little bee ascii art
 const art =
@@ -73,8 +74,8 @@ export const App = () => {
           <Route path="/accomodations" element={<AccommodationsTab />} />
           <Route path="/" element={<HackGT9HomeTab />} />
         </Routes>
-        <Footer />
       </div>
+      <Footer />
     </AuthProvider>
   );
 };

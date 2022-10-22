@@ -70,14 +70,14 @@ const Schedule: React.FC<Props> = (props: Props) => {
   const DateHeader = chakra(Box, {
     baseStyle: {
       position: "sticky",
-      top: 0,
+      top: "64px",
       padding: "20px",
       borderBottomWidth: "5px",
       borderImageSlice: 1,
       borderImageSource: "linear-gradient(to right, #33c2ff, #7b69ec)",
       bg: "white",
       textTransform: "uppercase",
-      zIndex: "999",
+      zIndex: "1",
     },
   });
 
