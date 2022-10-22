@@ -8,7 +8,7 @@ const Navbar: React.FC = () => (
   <Header>
     {
       routes.map((route: any) => (
-        <Link to={`/${route.link}`}>
+        <Link to={`${route.link}`}>
           <HeaderItem>{route.name}</HeaderItem>
         </Link>
       ))
