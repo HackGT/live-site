@@ -7,12 +7,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
-import { useLogin, LoadingScreen, AuthProvider, ErrorScreen } from "@hex-labs/core";
+import { useLogin, LoadingScreen, AuthProvider, Footer, ErrorScreen } from "@hex-labs/core";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
-import Footer from "./components/shared/Footer";
 import SwagTab from "./components/tabs/swag/SwagTab";
 import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
 import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
