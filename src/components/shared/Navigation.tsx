@@ -20,4 +20,5 @@ export const routes = [
   new Page("Workshops", "/workshops"),
   new Page("Hardware", "/hardware-makerspace"),
   new Page("Accomodations", "/accomodations"),
+  new Page("Judging", "/judging"),
 ];
