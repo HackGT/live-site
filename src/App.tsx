@@ -19,6 +19,7 @@ import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
 import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
+import AdminTab from "./components/tabs/admin/AdminTab";
 import { Box } from "@chakra-ui/react";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 
@@ -74,6 +75,7 @@ export const App = () => {
           <Route path="/sponsor" element={<SponsorTab />} />
           <Route path="/accomodations" element={<AccommodationsTab />} />
           <Route path="/judging" element={<JudgingTab />} />
+          <Route path="/admin" element={<AdminTab />} />
           <Route path="/" element={<HackGT9HomeTab />} />
         </Routes>
       </div>
