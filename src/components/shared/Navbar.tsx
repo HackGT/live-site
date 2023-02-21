@@ -4,7 +4,7 @@ import { Header, HeaderItem, Footer } from "@hex-labs/core";
 
 import { routes } from "./Navigation";
 
-const Navbar: React.FC = () => (
+const Navbar: React.FC = ({ showAdmin }) => (
   <Header>
     {
       routes.map((route: any) => (
@@ -13,6 +13,10 @@ const Navbar: React.FC = () => (
         </Link>
       ))
     }
+    {props.showAdmin &&
+      <Link to={`${"/admin"}`}>
+        <HeaderItem>Admin</HeaderItem>
+      </Link>}
   </Header>
 );
 

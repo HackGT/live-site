@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
-import { useLogin, LoadingScreen, AuthProvider, Footer, ErrorScreen } from "@hex-labs/core";
+import { useLogin, LoadingScreen, AuthProvider, useAuth, Footer, ErrorScreen } from "@hex-labs/core";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
@@ -44,6 +44,9 @@ export const App = () => {
   // the user in
   const [loading, loggedIn] = useLogin(app);
 
+  const { user } = useAuth();
+  let isMember;
+
   // If loading, show a loading screen
   if (loading) {
     return <LoadingScreen />;
@@ -56,6 +59,12 @@ export const App = () => {
     return <LoadingScreen />;
   }
 
+  fetch('https://auth.api.hexlabs.org/permissions/{user.uid}')
+    .then(response => response.json())
+    .then(data => {
+      isMember = data.roles.member;
+    });
+
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
   return (
@@ -63,7 +72,7 @@ export const App = () => {
       <div className="app_main">
         <div className="top-lights" />
         <div className="middle-lights" />
-        <Navbar />
+        <Navbar showAdmin = {isMember} />
         <Routes>
           <Route path="/tracks-challenges" element={<TracksTab />} />
           <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
@@ -74,8 +83,8 @@ export const App = () => {
           <Route path="/sponsor" element={<SponsorTab />} />
           <Route path="/accomodations" element={<AccommodationsTab />} />
           <Route path="/judging" element={<JudgingTab />} />
-          <Route path="/admin" element={<AdminTab />} />
           <Route path="/" element={<HackGT9HomeTab />} />
+          {isMember && <Route path="/admin" element={<AdminTab />} />}
         </Routes>
       </div>
       <Footer />
