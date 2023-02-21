@@ -45,7 +45,7 @@ export const App = () => {
   const [loading, loggedIn] = useLogin(app);
 
   const { user } = useAuth();
-  let isMember;
+  let isMember = false;
 
   // If loading, show a loading screen
   if (loading) {
