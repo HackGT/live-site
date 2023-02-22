@@ -4,6 +4,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
+import useAxios from "axios-hooks"
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
 import { useLogin, LoadingScreen, AuthProvider, useAuth, Footer, ErrorScreen } from "@hex-labs/core";
@@ -45,7 +46,23 @@ export const App = () => {
   const [loading, loggedIn] = useLogin(app);
 
   const { user } = useAuth();
-  let isMember = false;
+  const userId = user?.uid;
+
+  const [ isMember, setIsMember ] = React.useState(false);
+
+  const [{ data: roles }] = useAxios(
+    {
+      url: `https://auth.api.hexlabs.org/permissions/${userId}`,
+      method: "GET",
+      params: {
+        userId: user?.uid,
+      },
+    }
+  );
+
+  if (userId) {
+    setIsMember(roles.roles.member || roles.roles.exec || roles.roles.member);
+  }
 
   // If loading, show a loading screen
   if (loading) {
@@ -59,11 +76,7 @@ export const App = () => {
     return <LoadingScreen />;
   }
 
-  fetch('https://auth.api.hexlabs.org/permissions/{user.uid}')
-    .then(response => response.json())
-    .then(data => {
-      isMember = data.roles.member;
-    });
+  
 
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
