@@ -1,9 +1,7 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Box, Text } from "@chakra-ui/react";
 
-import styles from "./markdown_styles.module.css";
+import Block from "./Block";
 
 type Props = {
   blocks: Array<any>;
@@ -19,16 +17,7 @@ const BlockCollection: React.FC<Props> = (props: Props) => (
     </Box>
     <Box display="flex" flexDir="column" gap="20px">
       {props.blocks.map((block: any) => (
-        <Box bg="white" textAlign="left" display="flex">
-          <Box>
-            <Box color="black" fontSize="24px" fontWeight="bold">
-              {block.name}
-            </Box>
-            <ReactMarkdown className={styles.reactMarkDown} remarkPlugins={[remarkGfm]}>
-              {block.content}
-            </ReactMarkdown>
-          </Box>
-        </Box>
+        <Block block={block} />
       ))}
     </Box>
   </Box>
