@@ -12,7 +12,6 @@ import {
   Heading,
   HStack,
   IconButton,
-  Link as ChakraLink,
   Menu,
   MenuButton,
   MenuItemOption,
@@ -24,19 +23,13 @@ import {
 } from "@chakra-ui/react"
 import { AddIcon, CloseIcon, ViewIcon } from "@chakra-ui/icons";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import Columns from "./Columns";
 import EventFormInput from "./FormInputs/EventFormInput";
 
-
-interface Props {
- // name: string;
-}
-
 const name = "Events";
 
-const EventsTable: React.FC<Props> = (props) => {
+const EventsTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState<any[]>([]);
@@ -45,14 +38,10 @@ const EventsTable: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const getData = async() => {
-      document.title = name.concat(" – HexLabs Schedule");
-
       let hexathonRes: any = null;
 
       try {
-       
-        hexathonRes = await axios.get(apiUrl(Service.HEXATHONS, "/hexathons"));
-        
+        hexathonRes = await axios.get(apiUrl(Service.HEXATHONS, `/hexathons/${String(process.env.REACT_APP_HEXATHON_ID)}`));
 
         const res = await axios.get(
           apiUrl(Service.HEXATHONS, `/${name.toLowerCase()}`),
@@ -63,11 +52,9 @@ const EventsTable: React.FC<Props> = (props) => {
         res.data.forEach((entry: any) => {
           temp.push({
             ...entry,
-            hexathon: hexathonRes?.data.filter((hexathon: any) => hexathon.id === entry.hexathon)[0].name,
-            location: entry.location?.map((location: any, index: number) => (
-              <>
-               <Text>{location.name}</Text>
-              </>
+            hexathon: hexathonRes?.name,
+            location: entry.location?.map((location: any) => (
+              <Text>{location.name}</Text>
             )),
           })
         })
@@ -81,7 +68,7 @@ const EventsTable: React.FC<Props> = (props) => {
     }
 
     getData();
-  }, [isOpen, name, searchText]);
+  }, [isOpen, searchText]);
 
   if (error) {
     return <ErrorScreen error={error} />;

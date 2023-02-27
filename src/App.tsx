@@ -21,8 +21,8 @@ import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import { Box } from "@chakra-ui/react";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
-import EventsTab from "./components/tabs/adminevents/EventsTable"
-import EditEntry from "./components/tabs/adminevents/EditEntry"
+import EventsTab from "./components/tabs/admin/events/EventsTable"
+import EditEntry from "./components/tabs/admin/events/EditEntry"
 
 // a little bee ascii art
 const art =
