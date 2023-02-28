@@ -7,7 +7,7 @@ import axios from "axios";
 import useAxios from "axios-hooks"
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
-import { useLogin, LoadingScreen, AuthProvider, useAuth, Footer, ErrorScreen } from "@hex-labs/core";
+import { useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
@@ -46,26 +46,18 @@ export const App = () => {
   const [loading, loggedIn] = useLogin(app);
 
   const { user } = useAuth();
-  const userId = user?.uid;
 
   const [ isMember, setIsMember ] = React.useState(false);
 
-  const [{ data: roles }] = useAxios(
+  const [{ data: roles, loading: userLoading }] = useAxios(
     {
-      url: `https://auth.api.hexlabs.org/permissions/${userId}`,
+      url: apiUrl(Service.USERS, `/permissions/${user?.uid}`),
       method: "GET",
-      params: {
-        userId: user?.uid,
-      },
     }
   );
 
-  if (userId) {
-    setIsMember(roles.roles.member || roles.roles.exec || roles.roles.member);
-  }
-
   // If loading, show a loading screen
-  if (loading) {
+  if (loading || userLoading) {
     return <LoadingScreen />;
   }
 
@@ -76,7 +68,9 @@ export const App = () => {
     return <LoadingScreen />;
   }
 
-  
+  if (user?.uid) {
+    setIsMember(roles.roles.member || roles.roles.exec || roles.roles.admin);
+  }
 
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
