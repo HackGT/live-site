@@ -45,19 +45,6 @@ export const App = () => {
   // the user in
   const [loading, loggedIn] = useLogin(app);
 
-  
-
-  // setIsMember(role.member || role.exec || role.admin);
-
-  /* const [ isMember, setIsMember ] = React.useState(false);
-
-  const [{ data: roles, loading: userLoading }] = useAxios(
-    {
-      url: apiUrl(Service.USERS, `/permissions/${user?.uid}`),
-      method: "GET",
-    }
-  ); */
-
   // If loading, show a loading screen
   if (loading) {
     return <LoadingScreen />;

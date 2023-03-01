@@ -17,7 +17,6 @@ const AdminControlsHome: React.FC = () => {
 
   React.useEffect(() => {
     const getRoles = async () => {
-      console.log("In the getRoles function")
       if (user?.uid) {
         const response = await axios.get(apiUrl(Service.USERS, `/users/${user?.uid}`));
         setRoles({ ...response.data.roles });
