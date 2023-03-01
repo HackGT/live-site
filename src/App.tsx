@@ -45,19 +45,21 @@ export const App = () => {
   // the user in
   const [loading, loggedIn] = useLogin(app);
 
-  const { user } = useAuth();
+  
 
-  const [ isMember, setIsMember ] = React.useState(false);
+  // setIsMember(role.member || role.exec || role.admin);
+
+  /* const [ isMember, setIsMember ] = React.useState(false);
 
   const [{ data: roles, loading: userLoading }] = useAxios(
     {
       url: apiUrl(Service.USERS, `/permissions/${user?.uid}`),
       method: "GET",
     }
-  );
+  ); */
 
   // If loading, show a loading screen
-  if (loading || userLoading) {
+  if (loading) {
     return <LoadingScreen />;
   }
 
@@ -68,10 +70,6 @@ export const App = () => {
     return <LoadingScreen />;
   }
 
-  if (user?.uid) {
-    setIsMember(roles.roles.member || roles.roles.exec || roles.roles.admin);
-  }
-
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
   return (
@@ -79,7 +77,7 @@ export const App = () => {
       <div className="app_main">
         <div className="top-lights" />
         <div className="middle-lights" />
-        <Navbar showAdmin = {isMember} />
+        <Navbar />
         <Routes>
           <Route path="/tracks-challenges" element={<TracksTab />} />
           <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
@@ -91,7 +89,7 @@ export const App = () => {
           <Route path="/accomodations" element={<AccommodationsTab />} />
           <Route path="/judging" element={<JudgingTab />} />
           <Route path="/" element={<HackGT9HomeTab />} />
-          {isMember && <Route path="/admin" element={<AdminTab />} />}
+          <Route path="/admin" element={<AdminTab />} />
         </Routes>
       </div>
       <Footer />
