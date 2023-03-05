@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
+import SwagShop from "../../swag/SwagShop";
 
 const SwagTab: React.FC = () => {
   const [swagInfo, setSwagInfo] = useState<any[]>([]);
@@ -17,6 +18,7 @@ const SwagTab: React.FC = () => {
   return (
     <div>
       <BlockCollection title="Swag Economy" blocks={swagInfo} />
+      <SwagShop />
     </div>
   );
 };

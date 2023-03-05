@@ -1,0 +1,44 @@
+.prizePics {
+    display: inline-block;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
+    width: 200px;
+    vertical-align:text-top;
+}
+
+.itemInfo {
+    display: inline-block;
+    /* margin: auto; */
+    /* padding: 10px; */
+    margin-top: 10px;
+    width: 15rem;
+    vertical-align:text-top;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.itemInfo > .button {
+    width: 15rem;
+    font-size: 2rem !important;
+}
+
+.glowingItem {
+    background: #bcbaf7 no-repeat center fixed; /* itemContainer color*/
+    box-shadow: 0 0 8px 2px rgb(124, 120, 237);
+    font-size: 1.10rem;
+    border-radius: 30px;
+    color: rgb(23, 18, 161);
+    padding: 1rem;
+    margin: 1rem;
+    width: inherit;
+    overflow-y: visible;
+}
+
+.itemButton {
+    width: 70% !important;
+}
+
+.itemDescription {
+    text-align: left;
+}
