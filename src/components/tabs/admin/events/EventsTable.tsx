@@ -37,6 +37,7 @@ const EventsTable: React.FC = () => {
   const [columns, setColumns] = useState(Columns[name].filter((column: any) => column.enabled))
 
   useEffect(() => {
+    console.log("here")
     const getData = async() => {
       let hexathonRes: any = null;
 

@@ -160,7 +160,7 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
     let res = null;
     try {
       if (id) {
-        res = await axios.put(apiUrl(Service.HEXATHONS, `/events/${id}`), payload)
+        res = await axios.patch(apiUrl(Service.HEXATHONS, `/events/${id}`), payload)
       } else {
         res = await axios.post(apiUrl(Service.HEXATHONS, "/events"), payload);
       }

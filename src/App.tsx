@@ -25,6 +25,7 @@ import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
+import EditBlock from "./components/tabs/admin/blocks/EditEntry"
 
 // a little bee ascii art
 const art =
@@ -83,6 +84,7 @@ export const App = () => {
           <Route path="/" element={<HackGT9HomeTab />} />
           <Route path="/admin" element={<AdminTab />} />
           <Route path="/admin/blocks" element={<BlocksTab />} />
+          <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
         </Routes>
       </div>
       <Footer />
