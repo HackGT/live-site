@@ -24,6 +24,7 @@ import { Box } from "@chakra-ui/react";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
+import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 
 // a little bee ascii art
 const art =
@@ -81,6 +82,7 @@ export const App = () => {
           <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
           <Route path="/" element={<HackGT9HomeTab />} />
           <Route path="/admin" element={<AdminTab />} />
+          <Route path="/admin/blocks" element={<BlocksTab />} />
         </Routes>
       </div>
       <Footer />
