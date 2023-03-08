@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, Stack, Heading } from "@chakra-ui/react";
-import { Header, HeaderItem, useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
+import { useAuth, Service, apiUrl } from "@hex-labs/core";
 import axios from "axios";
 
 import AdminWidget from "./AdminWidget";

@@ -1,13 +1,10 @@
-/* eslint-disable react/no-children-prop */
 import React from "react";
-
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-import useAxios from "axios-hooks"
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
-import { useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
+import { useLogin, LoadingScreen, AuthProvider, Footer } from "@hex-labs/core";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
@@ -20,7 +17,6 @@ import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTa
 import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import AdminTab from "./components/tabs/admin/AdminTab";
-import { Box } from "@chakra-ui/react";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
@@ -28,8 +24,8 @@ import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry"
 
 // a little bee ascii art
-const art =
-  ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
+// const art =
+//   ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
 
 // Initialized the Firebase app through the credentials provided
 export const app = initializeApp({
