@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
+import { apiUrl, Service } from "@hex-labs/core";
+import axios from "axios";
 
-const HackGT9HomeTab: React.FC = () => {
+const HexathonHomeTab: React.FC = () => {
   const [home, setHome] = useState<any[]>([]);
 
   useEffect(() => {
-    const getEvents = async () => {
-      const data = await fetchBlock("home-screen");
-      setHome(data.allBlocks);
+    const getBlocks = async () => {
+      const data = await axios.get(apiUrl(Service.HEXATHONS, `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=home`));
+      setHome(data.data);
     };
-    getEvents();
+    getBlocks();
   }, []);
 
   return (
@@ -23,4 +25,4 @@ const HackGT9HomeTab: React.FC = () => {
   );
 };
 
-export default HackGT9HomeTab;
+export default HexathonHomeTab;

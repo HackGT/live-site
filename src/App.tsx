@@ -14,7 +14,7 @@ import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
 import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
 import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
-import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
+import HexathonHomeTab from "./components/tabs/home/HexathonHome";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
@@ -77,7 +77,7 @@ export const App = () => {
           <Route path="/judging" element={<JudgingTab />} />
           <Route path="/admin/events" element={<EventsTab />} />
           <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
-          <Route path="/" element={<HackGT9HomeTab />} />
+          <Route path="/" element={<HexathonHomeTab />} />
           <Route path="/admin" element={<AdminTab />} />
           <Route path="/admin/blocks" element={<BlocksTab />} />
           <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
