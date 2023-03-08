@@ -1,10 +1,3 @@
-/* eslint-disable */
-import React, { useEffect, useState } from "react";
-import ItemContainer from "./ItemContainer";
-import { Item } from "./Item";
-// import "react-responsive-carousel/lib/styles/carousel.min.css";
-import "./SwagShop.css";
-import { Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
 import {
   Service,
   useAuth,
@@ -12,37 +5,45 @@ import {
   LoadingScreen,
   ErrorScreen,
 } from "@hex-labs/core";
+import React, { useState } from "react";
+import ItemContainer from "./ItemContainer";
+import useAsyncEffect from "use-async-effect";
 import axios from "axios";
 import useAxios from "axios-hooks";
+import { Item } from "./Item";
+import { Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
+import { useEffect } from "react";
 
-const SwagShop: React.FC = (props) => {
-  //defining variables
+interface Props {
+  uid: string;
+}
+
+const ItemPickup: React.FC<Props> = (props) => {
+  const uid = props.uid;
+  const user = useAuth();
   const [points, setPoints] = useState(0);
-  const MAX_POINTS_ATTAINABLE = 1000;
-  const breakPt = useBreakpointValue({ base: "base", md: "md" });
-
-  const { user } = useAuth();
+  const [isMember, setIsMember] = useState<boolean>(false);
   const hexathonID = "62d9ed68d0a69b88c06bdfb2";
 
-  //doing the post request to create the user
   useEffect(() => {
-    const getPoints = async () => {
+    const getAdmin = async () => {
       if (user) {
-        const pointsResp = await axios.get(
+        const isMemberResponse = await axios.get(
           apiUrl(
             Service.HEXATHONS,
-            `/hexathon-users/${hexathonID}/users/${user?.uid}`
+            `hexathon-users/${hexathonID}/users/${user.user!.uid}`
           )
         );
+        setIsMember(isMemberResponse.data.isMember);
 
-        const p = pointsResp.data.points;
-        console.log(p);
-        const pts = p.currentTotal;
-        setPoints(pts);
+        const response = await axios.get(
+          apiUrl(Service.USERS, `/users/${user.user!.uid}`)
+        );
+        setPoints(response.data.points);
       }
     };
 
-    getPoints();
+    getAdmin();
   }, [user]);
 
   const [{ data: items, loading, error }] = useAxios(
@@ -50,13 +51,11 @@ const SwagShop: React.FC = (props) => {
       url: apiUrl(Service.HEXATHONS, "/swag-items"),
       method: "GET",
       params: {
-        hexathon: "62d9ed68d0a69b88c06bdfb2",
+        hexathon: hexathonID,
       },
     },
     { useCache: false }
   );
-
-  //more site loading procedures
   if (loading) {
     return <LoadingScreen />;
   }
@@ -65,15 +64,11 @@ const SwagShop: React.FC = (props) => {
   if (items == null) {
     return null;
   }
-
-  //loading item grid
   const itemGroup: Item[][] = [];
   for (let i = 0; i < items.length; i++) {
     if (i % 2 === 0) itemGroup.push([]);
     itemGroup[itemGroup.length - 1].push(items[i]);
   }
-
-  //more loading item grid
   const itemGrid = () => {
     return (
       <Wrap spacing="30px" justify="center">
@@ -83,7 +78,7 @@ const SwagShop: React.FC = (props) => {
               key={item.id}
               item={item}
               points={points}
-              showBuyButton={true}
+              showBuyButton={false}
             />
           );
         })}
@@ -93,7 +88,10 @@ const SwagShop: React.FC = (props) => {
 
   return (
     <div id="swag-shop">
-      <Text id="pointIndicator">You have {points} points.</Text>
+      <Text margin="rem" fontSize="2xl">
+        You have {points} points.
+      </Text>
+      <br />
       <Flex flexDirection="column" alignItems="center">
         {itemGrid()}
       </Flex>
@@ -101,4 +99,4 @@ const SwagShop: React.FC = (props) => {
   );
 };
 
-export default SwagShop;
+export default ItemPickup;

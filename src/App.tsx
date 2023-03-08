@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop */
+/* eslint-disable */
 import React from "react";
 
 import "./App.css";
@@ -24,6 +24,7 @@ import { Box } from "@chakra-ui/react";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
+import UsersTable from "./components/swag/UsersTable"
 
 // a little bee ascii art
 const art =
@@ -34,6 +35,7 @@ export const app = initializeApp({
   apiKey: "AIzaSyCsukUZtMkI5FD_etGfefO4Sr7fHkZM7Rg",
   authDomain: "auth.hexlabs.org",
 });
+export const HEXATHON_ID = "62d9ed68d0a69b88c06bdfb2";
 // Sets the Firebase persistence to in memory since we use cookies for session
 // management. These cookies are set by the backend on login/logout.
 setPersistence(getAuth(app), inMemoryPersistence);
@@ -81,6 +83,7 @@ export const App = () => {
           <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
           <Route path="/" element={<HackGT9HomeTab />} />
           <Route path="/admin" element={<AdminTab />} />
+          <Route path="/swag/item-checkout" element={<UsersTable />} />
         </Routes>
       </div>
       <Footer />
