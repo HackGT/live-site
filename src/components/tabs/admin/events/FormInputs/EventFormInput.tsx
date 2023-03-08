@@ -8,7 +8,8 @@ import {
   Input,
   Select,
   Spacer,
-  Textarea
+  Textarea,
+  useToast
 } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
 import axios from "axios";
@@ -28,7 +29,6 @@ interface Props {
 
 const EventFormInput: React.FC<Props> = ({id, onClose}) => {
   const navigate = useNavigate();
-  const [hexathons, setHexathons] = useState<any[]>([]);
   const [locations, setLocations] = useState<any[]>([]);
   const [error, setError] = useState();
   const [errors, setErrors] = useState<{[field: string]: any}>({});
@@ -41,15 +41,14 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
   } = useForm<EventFormValues>({
     resolver: eventResolver,
   });
+  const toast = useToast();
 
   useEffect(() => {
     const getData = async() => {
       try {
         const res = await axios.get(apiUrl(Service.HEXATHONS, "/events"));
         const data = res.data.filter((entry: any) => entry.id === id)[0];
-        
-        const hexathonRes = await axios.get(apiUrl(Service.HEXATHONS, "/hexathons"));
-        setHexathons(hexathonRes.data);
+
         const locationsRes = await axios.get(apiUrl(Service.HEXATHONS, "/locations"));
         setLocations(locationsRes.data);
 
@@ -73,17 +72,12 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
     getData();
   }, [id, reset]);
 
-  const hexathon = watch("hexathon");
   const name = watch("name");
   const description = watch("description");
   const selectedLocations = watch("location");
   
   const findMissingField = (data: any) => {
     const missingRequiredFieldError = {
-      hexathon: (!data.hexathon || data.hexathon.length === 0) ? ({
-        type: "required",
-        message: "Please select a hexathon."
-      }) : undefined,
       name: (!data.name || data.name.length === 0) ? ({
         type: "required",
         message: "Event name is required."
@@ -118,8 +112,7 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
       }) : undefined,
     }
 
-    const missingRequired = (!data.hexathon || data.hexathon.length === 0)
-      || (!data.name || data.name.length === 0)
+    const missingRequired = (!data.name || data.name.length === 0)
       || (!data.type || data.type.length === 0)
       || (!data.description || data.description.length === 0)
       || (!data.startDate || data.startDate.length === 0)
@@ -138,6 +131,7 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
   const submit = async (data: any) => {   
     const payload: {[name: string]: any} = {
       ...data,
+      hexathon: String(process.env.REACT_APP_HEXATHON_ID),
       location: data.location.map((location: any) => location.id),
       startDate: new Date(data.startDate.concat(" ", data.startTime, " ", data.startTimeMarker)),
       endDate: new Date(data.endDate.concat(" ", data.endTime, " ", data.endTimeMarker)),
@@ -166,14 +160,23 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
     let res = null;
     try {
       if (id) {
-        res = await axios.put(apiUrl(Service.HEXATHONS, `/events/${id}`), payload)
+        res = await axios.patch(apiUrl(Service.HEXATHONS, `/events/${id}`), payload)
       } else {
         res = await axios.post(apiUrl(Service.HEXATHONS, "/events"), payload);
       }
       
       if (res.status >= 200) {
-        if (onClose) onClose();
+        if (onClose) {
+          onClose();
+        }
         else navigate(-1);
+        toast({
+          title: "Success",
+          description: "Event saved successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     } catch(e: any) {
       setErrors({ request: JSON.parse(e.request.response) })
@@ -191,6 +194,13 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
       if (onClose) onClose();
       else navigate(-1);
     }
+    toast({
+      title: "Success",
+      description: "Event deleted successfully!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
   }
 
   if (error) {
@@ -199,28 +209,6 @@ const EventFormInput: React.FC<Props> = ({id, onClose}) => {
 
   return (
     <form>
-      <FormControl
-        isInvalid={errors.hexathon}
-        marginBottom={errors.hexathon ? "12px" : "42px"}
-      >
-        <FormLabel>Hexathon</FormLabel>
-        <Select
-          id='hexathon'
-          placeholder="Select Hexathon"
-          {...register("hexathon")}
-          onChange={(e) => {
-            setValue("hexathon", e.target.value);
-         
-          }}
-        >
-          {hexathons.map((hex: any) => (
-            <option key={hex.id} value={hex.id}>{hex.name}</option>
-          ))}
-        </Select>
-        <Box marginTop="6px" color="red">
-          {errors.hexathon && errors.hexathon.message}
-        </Box>
-      </FormControl>
       <FormControl
         isInvalid={errors.name}
         marginBottom={errors.name ? "12px" : "42px"}
