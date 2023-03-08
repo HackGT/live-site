@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-import BlockCollection from "../../common/BlockCollection";
-import { fetchBlock } from "../../../services/cmsService";
 import { apiUrl, Service } from "@hex-labs/core";
 import axios from "axios";
+
+import BlockCollection from "../../common/BlockCollection";
 
 const HexathonHomeTab: React.FC = () => {
   const [home, setHome] = useState<any[]>([]);
@@ -13,6 +12,7 @@ const HexathonHomeTab: React.FC = () => {
       const data = await axios.get(apiUrl(Service.HEXATHONS, `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=home`));
       setHome(data.data);
     };
+    document.title = "Hexlabs Live"
     getBlocks();
   }, []);
 
