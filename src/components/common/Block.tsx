@@ -13,7 +13,7 @@ const Block: React.FC<Props> = (props: Props) => (
   <Box bg="white" textAlign="left" display="flex">
     <Box>
       <Box color="black" fontSize="24px" fontWeight="bold">
-        {props.block.name}
+        {props.block.title}
       </Box>
       <ReactMarkdown className={styles.reactMarkDown} remarkPlugins={[remarkGfm]}>
         {props.block.content}
