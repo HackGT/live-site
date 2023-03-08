@@ -61,28 +61,24 @@ export const App = () => {
   // useAuth hook to retrieve the user's login details.
   return (
     <AuthProvider app={app}>
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Navbar />
-        <Routes>
-          <Route path="/tracks-challenges" element={<TracksTab />} />
-          <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
-          <Route path="/mentors" element={<MentorTab />} />
-          <Route path="/swag" element={<SwagTab />} />
-          <Route path="/workshops" element={<WorkshopTab />} />
-          <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} />
-          <Route path="/sponsor" element={<SponsorTab />} />
-          <Route path="/accomodations" element={<AccommodationsTab />} />
-          <Route path="/judging" element={<JudgingTab />} />
-          <Route path="/admin/events" element={<EventsTab />} />
-          <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
-          <Route path="/" element={<HexathonHomeTab />} />
-          <Route path="/admin" element={<AdminTab />} />
-          <Route path="/admin/blocks" element={<BlocksTab />} />
-          <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
-        </Routes>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/tracks-challenges" element={<TracksTab />} />
+        <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
+        <Route path="/mentors" element={<MentorTab />} />
+        <Route path="/swag" element={<SwagTab />} />
+        <Route path="/workshops" element={<WorkshopTab />} />
+        <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} />
+        <Route path="/sponsor" element={<SponsorTab />} />
+        <Route path="/accomodations" element={<AccommodationsTab />} />
+        <Route path="/judging" element={<JudgingTab />} />
+        <Route path="/admin/events" element={<EventsTab />} />
+        <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
+        <Route path="/" element={<HexathonHomeTab />} />
+        <Route path="/admin" element={<AdminTab />} />
+        <Route path="/admin/blocks" element={<BlocksTab />} />
+        <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
+      </Routes>
       <Footer />
     </AuthProvider>
   );
