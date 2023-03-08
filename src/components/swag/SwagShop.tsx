@@ -22,7 +22,7 @@ const SwagShop: React.FC = (props) => {
   const breakPt = useBreakpointValue({ base: "base", md: "md" });
 
   const { user } = useAuth();
-  const hexathonID = "62d9ed68d0a69b88c06bdfb2";
+  const hexathonID = String(process.env.REACT_APP_HEXATHON_ID);
 
   //doing the post request to create the user
   useEffect(() => {
