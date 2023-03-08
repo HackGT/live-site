@@ -1,7 +1,7 @@
 import { SearchableTable,apiUrl, Service, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
     Box,
     Button,
@@ -18,7 +18,8 @@ import {
     useDisclosure,
     Link as ChakraLink
   } from "@chakra-ui/react"
-import { AddIcon, CloseIcon, ViewIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+
 import BlockFormInput from "./FormInputs/BlockFormInput";
 
 const limit = 50;
@@ -130,16 +131,16 @@ if (error) {
             </HStack>
           </HStack>
           <SearchableTable
-                title="Blocks"
-                data={data}
-                columns={columns}
-                searchText={searchText}
-                onSearchTextChange={onSearchTextChange}
-                onPreviousClicked={onPreviousClicked}
-                onNextClicked={onNextClicked}
-                offset={offset}
-                total={data.length}
-            />
+            title="Blocks"
+            data={data}
+            columns={columns}
+            searchText={searchText}
+            onSearchTextChange={onSearchTextChange}
+            onPreviousClicked={onPreviousClicked}
+            onNextClicked={onNextClicked}
+            offset={offset}
+            total={data.length}
+          />
         </Box>
         <Drawer
           isOpen={isOpen}
