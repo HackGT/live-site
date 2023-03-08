@@ -14,7 +14,6 @@ const EditEntry: React.FC<Props> = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log(props)
     document.title = "Edit ".concat(props.name.substring(0, props.name.length - 1), " – HexLabs Schedule")
   }, [])
 

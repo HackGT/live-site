@@ -72,7 +72,6 @@ const BlocksTable: React.FC = () => {
                     { params: {hexathon: String(process.env.REACT_APP_HEXATHON_ID), search: searchText} }
                   );
                 setData(res.data) 
-                console.log(searchText)
             } catch(e: any) {
            setError(e);
             } 
