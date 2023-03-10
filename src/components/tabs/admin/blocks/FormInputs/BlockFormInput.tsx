@@ -68,7 +68,7 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
   
   const findMissingField = (data: any) => {
     const missingRequiredFieldError = {
-      title: (!data.title || data.title.length === 0) ? ({
+      title: (!data.title || data.title.trim().length === 0) ? ({
         type: "required",
         message: "Block title is required."
       }) : undefined,
@@ -83,7 +83,7 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
     }
 
     const missingRequired = 
-       (!data.title || data.title.length === 0)
+       (!data.title || data.title.trim().length === 0)
       || (!data.slug|| data.slug.length === 0)
       || (!data.content || data.content.length === 0)
 
@@ -98,8 +98,8 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
   const submit = async (data: any) => {   
     const payload: {[name: string]: any} = {
       hexathon: String(process.env.REACT_APP_HEXATHON_ID),
-      title: data.title,
-      slug: data.slug,
+      title: data.title.trim(),
+      slug: data.slug.trim(),
       content: data.content,
     }
 

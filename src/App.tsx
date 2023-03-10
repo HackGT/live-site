@@ -64,13 +64,13 @@ export const App = () => {
       <Navbar />
       <Routes>
         <Route path="/tracks-challenges" element={<TracksTab />} />
-        <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
-        <Route path="/mentors" element={<MentorTab />} />
-        <Route path="/swag" element={<SwagTab />} />
-        <Route path="/workshops" element={<WorkshopTab />} />
-        <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} />
-        <Route path="/sponsor" element={<SponsorTab />} />
-        <Route path="/accomodations" element={<AccommodationsTab />} />
+        {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
+        {/* <Route path="/mentors" element={<MentorTab />} /> */}
+        {/* <Route path="/swag" element={<SwagTab />} /> */}
+        {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
+        {/* <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} /> */}
+        {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
+        {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
         <Route path="/judging" element={<JudgingTab />} />
         <Route path="/admin/events" element={<EventsTab />} />
         <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
