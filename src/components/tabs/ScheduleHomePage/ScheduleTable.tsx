@@ -72,8 +72,6 @@ const Schedule: React.FC = () => {
   useEffect(() => {
     const refreshData = setInterval(() => {
       const curDate = new Date((new Date()).valueOf());
-      console.log(curDate)
-      // console.log((new Date("10/22/2022 08:29 AM")).valueOf() - (new Date()).valueOf());
       const temp = [...upcomingEvents];
       setUpcomingEvents(data => data.filter((event: any) => new Date(event.startDate) > curDate));
       setOngoingEvents(data => data.filter((event: any) => new Date(event.endDate) >= curDate)
