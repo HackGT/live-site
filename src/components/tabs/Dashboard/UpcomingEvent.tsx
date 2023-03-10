@@ -14,6 +14,7 @@ interface Props {
   date: Date;
 }
 
+
 const UpcomingEventsForDate: React.FC<Props> = ({events, date}) => (
   <>
     <HStack width="100%" marginBottom="10px">

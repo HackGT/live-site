@@ -3,18 +3,16 @@ import axios from "axios";
 import {
   Heading,
   HStack,
-  Select,
   Spacer,
   Stack,
 } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
-
 import OngoingEventsView from "./OngoingEventsView";
 import UpcomingEventsView from "./UpcomingEventsView";
 
-const Dashboard: React.FC = () => {
-  const [curHexathon, setCurHexathon] = useState<string>("");
-  const [hexathons, setHexathons] = useState<any[]>([]);
+const Schedule: React.FC = () => {
+  
+  const curHexathon = process.env.REACT_APP_HEXATHON_ID
   const [ongoingEvents, setOngoingEvents] = useState<any[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [error, setError] = useState();
@@ -24,8 +22,7 @@ const Dashboard: React.FC = () => {
    
     
     const getData = async() => {
-      const hexathonRes = await axios.get(apiUrl(Service.HEXATHONS, "/hexathons"));
-      setHexathons(hexathonRes.data);
+
       try {
         const res = await axios.get(apiUrl(Service.HEXATHONS, "/events"), { params: { hexathon: curHexathon } });
 
@@ -53,10 +50,6 @@ const Dashboard: React.FC = () => {
             }
             return -1;
           })
-
-          if (!curHexathon) {
-            setCurHexathon(sortedData[0].hexathon)
-          }
 
           const filteredData = sortedData.filter((event: any) => new Date(event.endDate) >= curDate);
           const ongoing = filteredData.filter((event: any) => new Date(event.startDate) <= curDate);
@@ -105,21 +98,8 @@ const Dashboard: React.FC = () => {
           md: "80%"
         }}
       >
-        <Heading>
-          Schedule
-        </Heading>
+    
         <Spacer/>
-        <Select
-          width="225px"
-          value={curHexathon}
-          onChange={(e) => setCurHexathon(e.target.value)}
-        >
-          {
-            hexathons.map((hexathon: any) => (
-              <option key={hexathon.id} value={hexathon.id}>{hexathon.name}</option>
-            ))
-          }
-        </Select>
       </HStack>
       <Stack
         margin="auto"
@@ -144,4 +124,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Schedule;
