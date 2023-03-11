@@ -57,7 +57,7 @@ const Block: React.FC<Props> = (props: Props) => {
         </Box>
         {showAdmin && props.block.title !== "Quick Links" && (
           <Button onClick={editBlock} size="sm" backgroundColor="red.200">
-            <EditIcon />
+           `` <EditIcon />
           </Button>
         )}
       </Stack>
