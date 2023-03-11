@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  Heading,
   HStack,
   Spacer,
   Stack,
 } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
+
 import OngoingEventsView from "./OngoingEventsView";
 import UpcomingEventsView from "./UpcomingEventsView";
 

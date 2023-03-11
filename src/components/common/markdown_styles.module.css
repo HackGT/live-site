@@ -3,17 +3,42 @@
   white-space: pre-wrap;
 }
 
+.reactMarkDown {
+  border-radius: 5px;
+  padding: 5px;
+  color: black;
+  font-family: Roboto, sans-serif;
+  text-align: left;
+}
+
 .reactMarkDown a {
   text-decoration: underline;
   color: black;
 }
 
+.reactMarkDown h1 {
+  font-size: 32px;
+}
+
+.reactMarkDown h2 {
+  font-size: 26px;
+}
+
+.reactMarkDown h3 {
+  font-size: 22px;
+}
+
+.reactMarkDown h4 {
+  font-size: 20px;
+}
+
 .reactMarkDown p {
-  margin: 10px;
   color: black;
-  font-size: 18px;
   font-family: Roboto, sans-serif;
   text-align: left;
+  font-size: 18px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .reactMarkdown div {
@@ -22,6 +47,6 @@
 
 .reactMarkDown li {
   color: black;
-  margin-left: 50px;
+  margin-left: 25px;
   text-align: left;
 }

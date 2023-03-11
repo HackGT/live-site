@@ -55,7 +55,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
       setEvents([...elements]);
     };
     getEvents();
-  }, []);
+  }, [props.homepage]);
 
   const ScheduleTable = chakra(Box, {
     baseStyle: {

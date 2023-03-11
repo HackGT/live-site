@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Header, HeaderItem, useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
+import { Header, HeaderItem, useAuth, Service, apiUrl } from "@hex-labs/core";
 import axios from "axios";
 
 import { routes } from "./Navigation";
