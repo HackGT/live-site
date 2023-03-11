@@ -25,7 +25,6 @@ const Schedule: React.FC<Props> = (props: Props) => {
         hexathon: query,
       },
     });
-    console.log(eRes.data);
     return eRes.data;
   };
 
@@ -39,7 +38,6 @@ const Schedule: React.FC<Props> = (props: Props) => {
       } else {
         data = await pullEvents(HEXATHON_ID);
       }
-      console.log(data);
       const sortedData = data.sort((a: any, b: any) => {
         const dateA = a.startDate;
         const dateB = b.startDate;
@@ -57,7 +55,7 @@ const Schedule: React.FC<Props> = (props: Props) => {
       setEvents([...elements]);
     };
     getEvents();
-  }, []);
+  }, [props.homepage]);
 
   const ScheduleTable = chakra(Box, {
     baseStyle: {

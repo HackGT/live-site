@@ -95,7 +95,7 @@ export const EventRow = (props: any) => {
         <Box
           textAlign={{ base: "center", md: "left" }}
         >
-          {props.row.location.length != 0 ? (
+          {props.row.location.length !== 0 ? (
             <>
               <LocationIcon fontSize="18px" marginRight="15px"/>
               {props.row.location.map((x: any) => x.name).join(", ")}

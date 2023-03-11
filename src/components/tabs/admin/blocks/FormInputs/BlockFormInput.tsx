@@ -7,15 +7,21 @@ import {
   HStack,
   Input,
   Spacer,
+  Stack,
   Textarea,
-  useToast
+  useToast,
+  VStack
 } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 import { blockResolver } from "../Resolvers";
 import { BlockFormValues } from "../FormValues";
+import styles from "../../../../common/markdown_styles.module.css";
 
 interface Props {
   id?: string;
@@ -36,6 +42,8 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
     resolver: blockResolver,
   });
   const toast = useToast();
+
+  const editBoxHeight = "420px";
 
   useEffect(() => {
     const getData = async() => {
@@ -60,24 +68,24 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
   
   const findMissingField = (data: any) => {
     const missingRequiredFieldError = {
-      title: (!data.title || data.title.length === 0) ? ({
+      title: (!data.title || data.title.trim().length === 0) ? ({
         type: "required",
         message: "Block title is required."
-      }) : undefined,
-      content: (!data.content || data.content.length === 0) ? ({
-        type: "required",
-        message: "Content cannot be empty."
       }) : undefined,
       slug: (!data.slug|| data.slug.length === 0) ? ({
         type: "required",
         message: "Slug cannot be empty."
       }) : undefined,
+      content: (!data.content || data.content.length === 0) ? ({
+        type: "required",
+        message: "Content cannot be empty."
+      }) : undefined,
     }
 
     const missingRequired = 
-       (!data.title || data.title.length === 0)
-      || (!data.content || data.content.length === 0)
+       (!data.title || data.title.trim().length === 0)
       || (!data.slug|| data.slug.length === 0)
+      || (!data.content || data.content.length === 0)
 
     if (missingRequired) {
         
@@ -90,9 +98,9 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
   const submit = async (data: any) => {   
     const payload: {[name: string]: any} = {
       hexathon: String(process.env.REACT_APP_HEXATHON_ID),
-      title: data.title,
+      title: data.title.trim(),
+      slug: data.slug.trim(),
       content: data.content,
-      slug: data.slug,
     }
 
     let res = null;
@@ -148,97 +156,106 @@ const BlockFormInput: React.FC<Props> = ({id, onClose}) => {
 
   return (
     <form>
-      <FormControl
-        isInvalid={errors.title}
-        marginBottom={errors.title ? "12px" : "42px"}
+      <Stack
+        width={{ base: "100%", md: "100%" }}
       >
-        <FormLabel>Title</FormLabel>
-        <Input
-          id='title'
-          placeholder="Block Title"
-          {...register("title")}
-          onChange={(e) => {
-            if (e.target.value.length <= 50 || e.target.value.length <= title.length)
-              setValue("title", e.target.value);
-          }}
-          value={title}
-        />
-        <Box
-          width="98%"
-          textAlign="right"
-          fontSize="12px"
-          position="absolute"
-          color="#B3B3B3"
-        >
-          {title?.length}/50 character limit
+        <Box>
+          <FormControl
+            isInvalid={errors.title}
+            marginBottom={errors.title ? "4px" : "8px"}
+          >
+            <FormLabel>Title</FormLabel>
+            <Input
+              id='title'
+              placeholder="Block Title"
+              {...register("title")}
+              onChange={(e) => {
+                if (e.target.value.length <= 50 || e.target.value.length <= title.length)
+                  setValue("title", e.target.value);
+              }}
+              value={title}
+            />
+            <Box
+              width="98%"
+              textAlign="right"
+              fontSize="12px"
+              position="absolute"
+              color="#B3B3B3"
+            >
+              {title?.length}/50 character limit
+            </Box>
+            <Box marginTop="2px" color="red">
+              {(errors.title ? errors.title.message : null)}
+            </Box>
+          </FormControl>
+          <FormControl
+            isInvalid={errors.slug}
+            marginBottom={errors.slug ? "4px" : "12px"}
+          >
+            <FormLabel>Slug</FormLabel>
+            <Input
+              id='slug'
+              placeholder="Write slug for the block"
+              {...register("slug")}
+              onChange={(e) => {
+                if (e.target.value.length <= 200 || e.target.value.length <= slug.length)
+                  setValue("slug", e.target.value);
+              }}
+              value={slug}
+            />
+            <Box
+              width="98%"
+              textAlign="right"
+              fontSize="12px"
+              position="absolute"
+              color="#B3B3B3"
+            >
+              {slug?.length}/50 character limit
+            </Box>
+            <Box marginTop="2px" color="red">
+              {errors.slug && errors.slug.message}
+            </Box>
+          </FormControl>
         </Box>
-        <Box marginTop="6px" color="red">
-          {(errors.title ? errors.title.message : null)}
-        </Box>
-      </FormControl>
-      <FormControl
-        isInvalid={errors.content}
-        marginBottom={errors.content ? "12px" : "42px"}
-      >
-        <FormLabel>Content</FormLabel>
-        <Textarea
-          id='content'
-          placeholder="Write content for the block"
-          {...register("content")}
-          onChange={(e) => {
-            if (e.target.value.length <= 200 || e.target.value.length <= content.length)
-              setValue("content", e.target.value);
-          }}
-          value={content}
-        />
-        <Box
-          width="98%"
-          textAlign="right"
-          fontSize="12px"
-          position="absolute"
-          color="#B3B3B3"
-        >
-          {content?.length}/200 character limit
-        </Box>
-        <Box marginTop="6px" color="red">
-          {errors.content && errors.content.message}
-        </Box>
-      </FormControl>
-      <FormControl
-        isInvalid={errors.slug}
-        marginBottom={errors.slug ? "12px" : "42px"}
-      >
-        <FormLabel>Slug</FormLabel>
-        <Textarea
-          id='slug'
-          placeholder="Write slug for the block"
-          {...register("slug")}
-          onChange={(e) => {
-            if (e.target.value.length <= 200 || e.target.value.length <= slug.length)
-              setValue("slug", e.target.value);
-          }}
-          value={slug}
-        />
-        <Box
-          width="98%"
-          textAlign="right"
-          fontSize="12px"
-          position="absolute"
-          color="#B3B3B3"
-        >
-          {slug?.length}/200 character limit
-        </Box>
-        <Box marginTop="6px" color="red">
-          {errors.slug && errors.slug.message}
-        </Box>
-      </FormControl>
-      <Box height="48px" paddingY="12px" color="red">
-        {errors.request && errors.request.message}
-      </Box>
+        <Stack direction="row" width="full">
+          <VStack width="full">
+            <FormControl
+              isInvalid={errors.content}
+              marginBottom={errors.content ? "4px" : "0px"}
+            >
+              <FormLabel>Content</FormLabel>
+              <Textarea
+                id='content'
+                placeholder="Write content for the block..."
+                {...register("content")}
+                onChange={(e) => {
+                  setValue("content", e.target.value);
+                }}
+                value={content}
+                height={editBoxHeight}
+              />
+              <Box color="red">
+                {errors.content && errors.content.message}
+              </Box>
+            </FormControl>
+            
+            <Box height="48px" paddingY="12px" color="red">
+              {errors.request && errors.request.message}
+            </Box>
+          </VStack>
+          <Box width="full">
+            <FormLabel>Preview</FormLabel>
+            <Box height={editBoxHeight} overflow="scroll" backgroundColor="#f5f5f5">
+              <ReactMarkdown className={styles.reactMarkDown} remarkPlugins={[remarkGfm]}>
+              {content}
+              </ReactMarkdown>
+            </Box>
+          </Box>
+        </Stack>
+      </Stack>
       <HStack
         width="100%"
         bg="white"
-        marginBottom="20px"
       >
         <Button
           onClick={() => { if (findMissingField(getValues())) submit(getValues()) }}

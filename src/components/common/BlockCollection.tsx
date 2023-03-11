@@ -1,10 +1,8 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Box, Text } from "@chakra-ui/react";
 import LinksNav from "./LinksNav";
 
-import styles from "./markdown_styles.module.css";
+import Block from "./Block";
 
 type Props = {
   blocks: Array<any>;

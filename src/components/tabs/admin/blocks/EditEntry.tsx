@@ -14,20 +14,20 @@ const EditEntry: React.FC<Props> = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    document.title = "Edit ".concat(props.name.substring(0, props.name.length - 1), " – HexLabs Schedule")
-  }, [])
+    document.title = `Edit ${props.name.substring(0, props.name.length - 1)}`; // eslint-disable-line no-param-reassign
+  }, [props.name])
 
   return (
     <Box 
       margin="auto"
       marginTop="20px"
       width={{
-        base: "90%",
+        base: "100%",
         md: "80%"
       }}
-      maxWidth="600px"
+      maxWidth="80%"
     >
-      <Heading marginBottom="20px">
+      <Heading marginBottom="20px" textAlign="left">
         Update {props.name.substring(0, props.name.length - 1)}
         
       </Heading>

@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Flex, Stack, Heading } from "@chakra-ui/react";
-import { Header, HeaderItem, useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
+import { useAuth, Service, apiUrl } from "@hex-labs/core";
 import axios from "axios";
 
 import AdminWidget from "./AdminWidget";
-import HackGT9HomeTab from "../home/HackGT9Home";
+import HexathonHomeTab from "../home/HexathonHome";
 
 const AdminControlsHome: React.FC = () => {
   const { user } = useAuth();
@@ -28,7 +28,7 @@ const AdminControlsHome: React.FC = () => {
   const showAdmin = role.member || role.admin || role.exec;
 
   if (!showAdmin) {
-    return <HackGT9HomeTab />;
+    return <HexathonHomeTab />;
   }
 
   return (
