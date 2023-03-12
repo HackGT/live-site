@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import { Header, HeaderItem, useAuth, Service, apiUrl } from "@hex-labs/core";
 import axios from "axios";
 
@@ -35,6 +36,9 @@ const Navbar: React.FC = () => {
           </Link>
         ))
       }
+      <ChakraLink href="https://expo.hexlabs.org/" isExternal>
+        <HeaderItem>Expo</HeaderItem>
+      </ChakraLink>
       {showAdmin &&
         <Link to={`${"/admin"}`}>
           <HeaderItem>Admin</HeaderItem>

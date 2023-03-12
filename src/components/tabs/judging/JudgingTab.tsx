@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-import BlockCollection from "../../common/BlockCollection";
-import { fetchBlock } from "../../../services/cmsService";
 import { apiUrl, Service } from "@hex-labs/core";
 import axios from "axios";
+
+import BlockCollection from "../../common/BlockCollection";
 
 const JudgingTab: React.FC = () => {
   const [judging, setJudging] = useState<any[]>([]);
