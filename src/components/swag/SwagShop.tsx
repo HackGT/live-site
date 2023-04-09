@@ -50,7 +50,7 @@ const SwagShop: React.FC = (props) => {
       url: apiUrl(Service.HEXATHONS, "/swag-items"),
       method: "GET",
       params: {
-        hexathon: "62d9ed68d0a69b88c06bdfb2",
+        hexathon: String(process.env.REACT_APP_HEXATHON_ID),
       },
     },
     { useCache: false }
