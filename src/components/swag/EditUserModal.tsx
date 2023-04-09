@@ -124,7 +124,7 @@ const EditUserModal: React.FC<Props> = (props) => {
               <AlertDescription>
                 Only use this to manually update points if really needed.
                 Usually, you can reconcile people's points by scanning their
-                badge for an event they said they went to.
+                badge for an event they said they went to. 
               </AlertDescription>
             </Box>
           </Alert>
@@ -140,6 +140,14 @@ const EditUserModal: React.FC<Props> = (props) => {
                 <FormLabel>Additional Points Given</FormLabel>
                 <Input {...register("numAdditional")} type="number" />
               </FormControl>
+              <Box>
+                  <Alert status='info'>
+                  <AlertIcon />
+                  To add additional points,
+                      add the amount of points you want to add to the number of additional points
+                      already given.
+                  </Alert>
+                </Box>
               <Button
                 colorScheme="purple"
                 isLoading={isSubmitting}
