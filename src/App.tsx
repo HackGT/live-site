@@ -35,7 +35,7 @@ export const app = initializeApp({
   apiKey: "AIzaSyCsukUZtMkI5FD_etGfefO4Sr7fHkZM7Rg",
   authDomain: "auth.hexlabs.org",
 });
-export const HEXATHON_ID = "62d9ed68d0a69b88c06bdfb2";
+export const HEXATHON_ID = String(process.env.REACT_APP_HEXATHON_ID);
 // Sets the Firebase persistence to in memory since we use cookies for session
 // management. These cookies are set by the backend on login/logout.
 setPersistence(getAuth(app), inMemoryPersistence);
