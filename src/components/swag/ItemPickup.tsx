@@ -23,7 +23,7 @@ const ItemPickup: React.FC<Props> = (props) => {
   const user = useAuth();
   const [points, setPoints] = useState(0);
   const [isMember, setIsMember] = useState<boolean>(false);
-  const hexathonID = "62d9ed68d0a69b88c06bdfb2";
+  const hexathonID = String(process.env.REACT_APP_HEXATHON_ID);
 
   useEffect(() => {
     const getAdmin = async () => {
