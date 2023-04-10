@@ -42,6 +42,7 @@ const EditUserModal: React.FC<Props> = (props) => {
 
   const [user, setUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(false);
+  const [userAdditionalPoints, setUserAdditionalPoints] = useState(0);
 
   useEffect(() => {
     const getUserDetailInfo = async () => {
@@ -63,10 +64,11 @@ const EditUserModal: React.FC<Props> = (props) => {
         });
         setUser(response.data);
         setLoadingUser(false);
+        setUserAdditionalPoints(response.data.points.numAdditional);
 
         reset({
           numSpent: response.data.points.numSpent,
-          numAdditional: response.data.points.numAdditional,
+          numAdditional: 0,
         });
       } catch (error: any) {
         handleAxiosError(error);
@@ -94,7 +96,7 @@ const EditUserModal: React.FC<Props> = (props) => {
         ),
         {
           numSpent: values.numSpent,
-          numAdditional: values.numAdditional,
+          numAdditional: parseInt(values.numAdditional) + userAdditionalPoints,
         }
       );
       toast({
@@ -137,17 +139,9 @@ const EditUserModal: React.FC<Props> = (props) => {
                 <Input {...register("numSpent")} type="number" />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>Additional Points Given</FormLabel>
+                <FormLabel>Add/Remove Points</FormLabel>
                 <Input {...register("numAdditional")} type="number" />
               </FormControl>
-              <Box>
-                  <Alert status='info'>
-                  <AlertIcon />
-                  To add additional points,
-                      add the amount of points you want to add to the number of additional points
-                      already given.
-                  </Alert>
-                </Box>
               <Button
                 colorScheme="purple"
                 isLoading={isSubmitting}
