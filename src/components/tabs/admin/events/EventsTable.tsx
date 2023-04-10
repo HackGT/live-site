@@ -45,7 +45,7 @@ const EventsTable: React.FC = () => {
 
         const res = await axios.get(
           apiUrl(Service.HEXATHONS, `/${name.toLowerCase()}`),
-          { params: { search: searchText } }
+          { params: { hexathon: String(process.env.REACT_APP_HEXATHON_ID), search: searchText } }
         );
 
         const temp: any[] = []

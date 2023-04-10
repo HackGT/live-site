@@ -1,13 +1,11 @@
 /* eslint-disable */
 import React from "react";
-
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-import useAxios from "axios-hooks"
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
-import { useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
+import { useLogin, LoadingScreen, AuthProvider, Footer } from "@hex-labs/core";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
@@ -17,18 +15,19 @@ import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
 import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
 import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
-import HackGT9HomeTab from "./components/tabs/home/HackGT9Home";
+import HexathonHomeTab from "./components/tabs/home/HexathonHome";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import AdminTab from "./components/tabs/admin/AdminTab";
-import { Box } from "@chakra-ui/react";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
 import UsersTable from "./components/swag/UsersTable"
+import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
+import EditBlock from "./components/tabs/admin/blocks/EditEntry"
 
 // a little bee ascii art
-const art =
-  ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
+// const art =
+//   ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
 
 // Initialized the Firebase app through the credentials provided
 export const app = initializeApp({
@@ -65,27 +64,25 @@ export const App = () => {
   // useAuth hook to retrieve the user's login details.
   return (
     <AuthProvider app={app}>
-      <div className="app_main">
-        <div className="top-lights" />
-        <div className="middle-lights" />
-        <Navbar />
-        <Routes>
-          <Route path="/tracks-challenges" element={<TracksTab />} />
-          <Route path="/schedule" element={<ScheduleTab virtual={false} />} />
-          <Route path="/mentors" element={<MentorTab />} />
-          <Route path="/swag" element={<SwagTab />} />
-          <Route path="/workshops" element={<WorkshopTab />} />
-          <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} />
-          <Route path="/sponsor" element={<SponsorTab />} />
-          <Route path="/accomodations" element={<AccommodationsTab />} />
-          <Route path="/judging" element={<JudgingTab />} />
-          <Route path="/admin/events" element={<EventsTab />} />
-          <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
-          <Route path="/" element={<HackGT9HomeTab />} />
-          <Route path="/admin" element={<AdminTab />} />
-          <Route path="/swag/item-checkout" element={<UsersTable />} />
-        </Routes>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/tracks-challenges" element={<TracksTab />} />
+        {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
+        {/* <Route path="/mentors" element={<MentorTab />} /> */}
+        <Route path="/swag" element={<SwagTab />} />
+        {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
+        {/* <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} /> */}
+        {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
+        {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
+        <Route path="/judging" element={<JudgingTab />} />
+        <Route path="/admin/events" element={<EventsTab />} />
+        <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
+        <Route path="/" element={<HexathonHomeTab />} />
+        <Route path="/admin" element={<AdminTab />} />
+        <Route path="/admin/blocks" element={<BlocksTab />} />
+        <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
+        <Route path="/swag/item-checkout" element={<UsersTable />} />
+      </Routes>
       <Footer />
     </AuthProvider>
   );

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Box, Heading } from "@chakra-ui/react"
 import { useParams } from "react-router-dom";
 
-import EventFormInput from "./FormInputs/EventFormInput";
+import BlockFormInput from "./FormInputs/BlockFormInput";
 
 
 interface Props {
@@ -14,7 +14,7 @@ const EditEntry: React.FC<Props> = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    document.title = `Edit ${props.name.substring(0, props.name.length - 1)} - Hexlabs Schedule`; // eslint-disable-line no-param-reassign
+    document.title = `Edit ${props.name.substring(0, props.name.length - 1)}`; // eslint-disable-line no-param-reassign
   }, [props.name])
 
   return (
@@ -22,17 +22,19 @@ const EditEntry: React.FC<Props> = (props) => {
       margin="auto"
       marginTop="20px"
       width={{
-        base: "90%",
+        base: "100%",
         md: "80%"
       }}
-      maxWidth="1200px"
+      maxWidth="80%"
     >
-      <Heading marginBottom="20px">
+      <Heading marginBottom="20px" textAlign="left">
         Update {props.name.substring(0, props.name.length - 1)}
+        
       </Heading>
       {
-        (props.name === "Events") ? (
-          <EventFormInput id={id}/>
+        (props.name === "Blocks") ? (
+         
+          <BlockFormInput id={id}/>
         ) : null
       }
     </Box>
