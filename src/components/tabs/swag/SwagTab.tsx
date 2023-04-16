@@ -34,6 +34,7 @@ const SwagTab: React.FC = () => {
     description="Checkout swag items for participants!"
     href="item-checkout"
     /> : <div />
+
   useEffect(() => {
     const getEvents = async () => {
       const swagData = await fetchBlock("swag");
