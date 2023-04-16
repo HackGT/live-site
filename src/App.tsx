@@ -18,6 +18,7 @@ import HexathonHomeTab from "./components/tabs/home/HexathonHome";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
+import EditProfileTab from "./components/tabs/profile/EditProfileTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
@@ -72,6 +73,7 @@ export const App = () => {
         {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
         {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
         <Route path="/judging" element={<JudgingTab />} />
+        <Route path="/profile" element={<EditProfileTab />} /> {/* ??? is <RequireAuth> required?? */}
         <Route path="/admin/events" element={<EventsTab />} />
         <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
         <Route path="/" element={<HexathonHomeTab />} />

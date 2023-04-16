@@ -12,6 +12,7 @@ class Page {
 
 export const routes = [
   new Page("Home", "/"),
+  new Page("Profile", "/profile"),
   // new Page("Schedule", "/schedule"),
   // new Page("Tracks & Challenges", "/tracks-challenges"),
   // new Page("Mentors", "/mentors"),
