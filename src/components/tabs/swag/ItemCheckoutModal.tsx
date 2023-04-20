@@ -20,7 +20,7 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import { apiUrl, handleAxiosError, Service } from "@hex-labs/core";
-import { HEXATHON_ID } from "../../App";
+import { HEXATHON_ID } from "../../../App";
 import { Select } from "chakra-react-select";
 
 interface Props {

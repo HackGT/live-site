@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { apiUrl, handleAxiosError, Service } from "@hex-labs/core";
-import { HEXATHON_ID } from "../../App";
+import { HEXATHON_ID } from "../../../App";
 import axios from "axios";
 
 interface Props {

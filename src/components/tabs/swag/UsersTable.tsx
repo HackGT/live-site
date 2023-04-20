@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { apiUrl, SearchableTable, Service } from "@hex-labs/core";
 import useAxios from "axios-hooks";
-import { HEXATHON_ID } from "../../App";
+import { HEXATHON_ID } from "../../../App";
 import ItemCheckoutModal from "./ItemCheckoutModal";
 import EditUserModal from "./EditUserModal";
 import PointDataModal from "./InteractionDataModal";

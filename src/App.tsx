@@ -21,7 +21,7 @@ import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
-import UsersTable from "./components/swag/UsersTable"
+import UsersTable from "./components/tabs/swag/UsersTable"
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry"
 

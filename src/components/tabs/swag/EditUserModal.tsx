@@ -23,7 +23,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { apiUrl, handleAxiosError, Service } from "@hex-labs/core";
-import { HEXATHON_ID } from "../../App";
+import { HEXATHON_ID } from "../../../App";
 
 interface Props {
   userId?: string | null;

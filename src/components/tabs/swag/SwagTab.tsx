@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Flex, Stack, Heading } from "@chakra-ui/react";
 import BlockCollection from "../../common/BlockCollection";
 import { fetchBlock } from "../../../services/cmsService";
-import SwagShop from "../../swag/SwagShop";
+import SwagShop from "./SwagShop";
 import AdminWidget from "../admin/AdminWidget";
 import { Header, HeaderItem, useLogin, LoadingScreen, AuthProvider, useAuth, Service, apiUrl, Footer, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
@@ -52,7 +52,6 @@ const SwagTab: React.FC = () => {
           maxWidth="1000px"
         >
           <Stack spacing={4} marginX={{ base: 4, md: 0 }}>
-            <BlockCollection title="Swag Economy" blocks={swagInfo} />
             {item_checkout}
           </Stack>
         </Flex> 
