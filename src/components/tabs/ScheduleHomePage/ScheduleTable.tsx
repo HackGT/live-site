@@ -12,6 +12,7 @@ import OngoingEventsView from "./OngoingEventsView";
 import UpcomingEventsView from "./UpcomingEventsView";
 import OneSignal from 'react-onesignal';
 import * as OneSignalAPI from '@onesignal/node-onesignal';
+import { time } from "console";
 
 const configuration = OneSignalAPI.createConfiguration({
   userKey: 'NjYyMDlmYWQtOTMwMy00NTA3LTk4MjItOTQ5OGYzODA3MDc2',
@@ -106,8 +107,10 @@ const Schedule: React.FC = () => {
                                     .concat(temp.filter((event: any) => new Date(event.startDate) <= curDate)));
                 
                                                         
-      ongoingEvents.forEach((ev) => {
-          if (Math.abs(new Date(ev.startDate).getTime() - curDate.getTime())/1000 < 2) {
+      upcomingEvents.forEach((ev) => {
+          const timeDif = (new Date(ev.startDate).getTime() - curDate.getTime())/1000;
+          console.log(timeDif);
+          if (timeDif <= 1 && timeDif >= 0) {
               createNotifOneSignal(ev.name);
           }
       });
