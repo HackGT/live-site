@@ -54,7 +54,6 @@ const Schedule: React.FC = () => {
 
         if (res.data) {
           const curDate = new Date();
-          console.log(curDate);
           const sortedData = res.data.sort((a: any, b: any) => {
             const startDateA = new Date(a.startDate);
             const startDateB = new Date(b.startDate);
@@ -77,12 +76,9 @@ const Schedule: React.FC = () => {
             }
             return -1;
           })
-          console.log(sortedData);
           const filteredData = sortedData.filter((event: any) => new Date(event.endDate) >= curDate);
-          console.log(filteredData);
           const ongoing = filteredData.filter((event: any) => new Date(event.startDate) <= curDate);
           const upcoming = filteredData.filter((event: any) => new Date(event.startDate) > curDate);
-          console.log(upcoming);
            
           setOngoingEvents(ongoing);
           setUpcomingEvents(upcoming);
@@ -109,7 +105,6 @@ const Schedule: React.FC = () => {
                                                         
       upcomingEvents.forEach((ev) => {
           const timeDif = (new Date(ev.startDate).getTime() - curDate.getTime())/1000;
-          console.log(timeDif);
           if (timeDif <= 1 && timeDif >= 0) {
               createNotifOneSignal(ev.name);
           }
