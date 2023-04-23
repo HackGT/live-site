@@ -20,11 +20,20 @@ import {
   Box,
   Text,
   Flex,
-} from "@chakra-ui/react";
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 import { QRCodeSVG } from "qrcode.react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ErrorScreen, LoadingScreen, Service, apiUrl, useAuth } from "@hex-labs/core";
 import axios from "axios";
+import { Profile } from "../../../types/Profile";
 
 const phoneNumberFormat = (val: any) => {
   if (!val || val.length === 0) {
@@ -47,7 +56,7 @@ const phoneNumberFormat = (val: any) => {
 
 const EditProfileTab: React.FC = () => {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<Profile>();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -61,7 +70,6 @@ const EditProfileTab: React.FC = () => {
   }, []);
 
   useMemo(() => {
-    // console.log("get");
     const getProfile = async () => {
       if (user?.uid) {
         const response = await axios.get(apiUrl(Service.USERS, `/users/${user?.uid}`));
@@ -69,7 +77,7 @@ const EditProfileTab: React.FC = () => {
       }
     };
     getProfile();
-  }, [user?.uid]);
+  }, [user]);
   /**
    * Generates initial default user profile based on current user profile.
    */
@@ -100,17 +108,18 @@ const EditProfileTab: React.FC = () => {
     return updatedProfile;
 
   }, [user, profile]);
-
+  // console.log("DEFAULT");
+  // console.log(defaultUserProfile);
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const {
     handleSubmit,
     register,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: defaultUserProfile,
-  });
+  } = useForm();
 
   const onSubmit = async (values: any) => {
+    // console.log(values);
     const phoneNumber = getValues("phoneNumber")?.replace(/[- )(]/g, "");
     try {
       !profile || Object.keys(profile).length === 0
@@ -148,89 +157,97 @@ const EditProfileTab: React.FC = () => {
           style={{ alignSelf: "center" }}
         />
       </VStack>
-      <VStack spacing="8" justify="center" marginY="24px">
-        <Heading size="lg">
-          {user ? "Edit Profile" : "Create Profile"}
-        </Heading>
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle>Delete Profile</AlertTitle>
-          <AlertDescription>
-            If you wish to delete your profile, please email us at hello@hexlabs.org with your name.
-          </AlertDescription>
-        </Alert>
-        <form 
-        onSubmit={handleSubmit(onSubmit)}
-        >
-          <Stack spacing="6">
-            <Stack spacing="5">
-              <FormControl isRequired>
-                <FormLabel>First Name</FormLabel>
-                <Input id="firstName" type="text" 
-                {...register("name.first")} 
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Middle Name</FormLabel>
-                <Input
-                  id="name.middle"
-                  type="text"
-                  {...register("name.middle")}
-                />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel>Last Name</FormLabel>
-                <Input id="name.last" type="text" 
-                {...register("name.last")} 
-                />
-              </FormControl>
-              <FormControl isInvalid={Boolean(errors.phoneNumber)} isRequired>
-                <FormLabel>Phone Number</FormLabel>
-                <NumberInput
-                  format={phoneNumberFormat}
-                  parse={(e) => e.replace(/[- )(]/g, "")}
-                  pattern="^([(]\d+[)]\s\d+[-])?\d+$"
-                  inputMode="tel"
-                  clampValueOnBlur={false}
-                >
-                  <NumberInputField
-                    id="phoneNumber"
-                    {...register("phoneNumber", {
-                      minLength: {
-                        value: 14,
-                        message: "Please enter a valid phone number",
-                      },
-                      maxLength: {
-                        value: 14,
-                        message: "Please enter a valid phone number",
-                      },
-                    })}
+      <Flex justifyContent="center">
+        <Button onClick={onOpen}>{user ? "Edit Profile" : "Create Profile"}</Button>
+      </Flex>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+        <Flex justifyContent="center">
+          <ModalHeader fontWeight="bold" fontSize="2xl" minW="fit-content">{user ? "Edit Profile" : "Create Profile"}</ModalHeader>
+          <ModalCloseButton />
+        </Flex>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ModalBody>
+            <Alert status="error" mb="10">
+              <AlertIcon />
+              <AlertTitle>Delete Profile</AlertTitle>
+              <AlertDescription>
+                If you wish to delete your profile, please email us at hello@hexlabs.org with your name.
+              </AlertDescription>
+            </Alert>
+            <Flex justifyContent="center">
+              <Stack spacing="5">
+                <FormControl isRequired>
+                  <FormLabel>First Name</FormLabel>
+                  <Input id="firstName" type="text" 
+                  defaultValue={defaultUserProfile.name.first}
+                  {...register("name.first")} 
                   />
-                </NumberInput>
-                {/* <FormErrorMessage>
-                  {errors.phoneNumber && errors.phoneNumber.message}
-                </FormErrorMessage> */}
-              </FormControl>
-            </Stack>
-            <HStack
-              spacing={user ? "16" : "0"}
-              justify="center"
-              // type="cancel"
-            >
-              <Button
-                hidden={!user}
-                type="reset"
-                onClick={() => navigate("/dashboard")}
-              >
-                Cancel
-              </Button>
-              <Button type="submit">
-                Save
-              </Button>
-            </HStack>
-          </Stack>
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Middle Name</FormLabel>
+                  <Input
+                    id="name.middle"
+                    type="text"
+                    defaultValue={defaultUserProfile.name.middle}
+                    {...register("name.middle")}
+                  />
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Last Name</FormLabel>
+                  <Input id="name.last" type="text" 
+                    defaultValue={defaultUserProfile.name.last}
+                    {...register("name.last")} 
+                  />
+                </FormControl>
+                <FormControl isInvalid={Boolean(errors.phoneNumber)} isRequired>
+                  <FormLabel>Phone Number</FormLabel>
+                  <NumberInput
+                    format={phoneNumberFormat}
+                    parse={(e) => e.replace(/[- )(]/g, "")}
+                    pattern="^([(]\d+[)]\s\d+[-])?\d+$"
+                    inputMode="tel"
+                    clampValueOnBlur={false}
+                    defaultValue={defaultUserProfile.phoneNumber.replace(/[- )(]/g, "")}
+                  >
+                    <NumberInputField
+                      id="phoneNumber"
+                      {...register("phoneNumber", {
+                        minLength: {
+                          value: 14,
+                          message: "Please enter a valid phone number",
+                        },
+                        maxLength: {
+                          value: 14,
+                          message: "Please enter a valid phone number",
+                        },
+                      })}
+                    />
+                  </NumberInput>
+                  {/* <FormErrorMessage>
+                    {errors.phoneNumber && errors.phoneNumber.message}
+                  </FormErrorMessage> */}
+                </FormControl>
+              </Stack>
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+          <Button
+            hidden={!user}
+            type="reset"
+            onClick={onClose}
+            mr="10"
+          >
+            Cancel
+          </Button>
+          <Button type="submit">
+            Save
+          </Button>
+          </ModalFooter>
         </form>
-      </VStack>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 };
