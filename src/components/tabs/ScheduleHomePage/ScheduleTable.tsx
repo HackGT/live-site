@@ -16,7 +16,7 @@ import { time } from "console";
 
 const configuration = OneSignalAPI.createConfiguration({
   userKey: 'NjYyMDlmYWQtOTMwMy00NTA3LTk4MjItOTQ5OGYzODA3MDc2',
-  appKey: 'NmQzNjRlMjctNDA1My00MDJkLWEzZWMtZDY2OWM2YWMzNWI1',
+  appKey: 'OWRjMzIxMTktYmNlMi00MjE0LTk5NWQtYTdhYTdjYWU2YTBi',
 });
 
 const client = new OneSignalAPI.DefaultApi(configuration);
@@ -25,7 +25,7 @@ const client = new OneSignalAPI.DefaultApi(configuration);
 export async function createNotifOneSignal(name:any) {
 
   const notification = new OneSignalAPI.Notification();
-  notification.app_id = '83386926-da8c-47ac-95e2-694f5e13e903';
+  notification.app_id = 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb';
 
   notification.contents = {
     en:  `${name} is starting right now!`
