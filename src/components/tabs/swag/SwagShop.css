@@ -1,0 +1,31 @@
+.carousel {
+    height: 75%;
+  }
+  
+  #swag-shop {
+    overflow: visible;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  
+  @media only screen and (min-width: 401px) {
+    .carousel .slider-wrapper {
+      width: 55%;
+    }
+  }
+  
+  @media only screen and (max-width: 400px) {
+    .carousel .slider-wrapper {
+      width: 100%;
+    }
+  }
+
+  #pointIndicator {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    color: rgb(188, 147, 242);
+    font-weight: bolder;
+    text-align: center;
+  }
+  

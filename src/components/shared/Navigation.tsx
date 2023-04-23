@@ -16,7 +16,7 @@ export const routes = [
   // new Page("Tracks & Challenges", "/tracks-challenges"),
   // new Page("Mentors", "/mentors"),
   // new Page("Sponsors", "/sponsor"),
-  // new Page("Swag", "/swag"),
+  new Page("Swag", "/swag"),
   // new Page("Workshops", "/workshops"),
   // new Page("Hardware", "/hardware-makerspace"),
   // new Page("Showers", "/accomodations"),
