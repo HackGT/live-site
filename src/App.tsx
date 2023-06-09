@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
@@ -20,6 +21,7 @@ import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable"
 import EditEntry from "./components/tabs/admin/events/EditEntry"
+import UsersTable from "./components/tabs/swag/UsersTable"
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry"
 
@@ -35,6 +37,7 @@ export const app = initializeApp({
   apiKey: "AIzaSyCsukUZtMkI5FD_etGfefO4Sr7fHkZM7Rg",
   authDomain: "auth.hexlabs.org",
 });
+export const HEXATHON_ID = String(process.env.REACT_APP_HEXATHON_ID);
 // Sets the Firebase persistence to in memory since we use cookies for session
 // management. These cookies are set by the backend on login/logout.
 setPersistence(getAuth(app), inMemoryPersistence);
@@ -80,7 +83,7 @@ export const App = () => {
         <Route path="/tracks-challenges" element={<TracksTab />} />
         {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
         {/* <Route path="/mentors" element={<MentorTab />} /> */}
-        {/* <Route path="/swag" element={<SwagTab />} /> */}
+        <Route path="/swag" element={<SwagTab />} />
         {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
         {/* <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} /> */}
         {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
@@ -92,6 +95,7 @@ export const App = () => {
         <Route path="/admin" element={<AdminTab />} />
         <Route path="/admin/blocks" element={<BlocksTab />} />
         <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
+        <Route path="/swag/item-checkout" element={<UsersTable />} />
       </Routes>
       <Footer />
     </AuthProvider>
