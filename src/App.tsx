@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
@@ -25,6 +25,9 @@ import UsersTable from "./components/tabs/swag/UsersTable"
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry"
 
+import OneSignal from 'react-onesignal';
+import * as OneSignalAPI from '@onesignal/node-onesignal';
+
 // a little bee ascii art
 // const art =
 //   ".' '.                             buzz buzz\n.        .   .           (__\\ \n .         .         . -{{_(|8)\n   ' .  . ' ' .  . '     (__/";
@@ -43,11 +46,22 @@ setPersistence(getAuth(app), inMemoryPersistence);
 // can verify the user's identity.
 axios.defaults.withCredentials = true;
 
+export async function runOneSignal() {
+  await OneSignal.init({ appId: 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb' });
+  OneSignal.showSlidedownPrompt();
+}
+
 export const App = () => {
   // Retrieves the user's login state. This hook will also make requests to log
   // the user in
+  
   const [loading, loggedIn] = useLogin(app);
 
+  useEffect(() => {
+    runOneSignal();
+  })
+  
+  
   // If loading, show a loading screen
   if (loading) {
     return <LoadingScreen />;
@@ -59,7 +73,7 @@ export const App = () => {
     window.location.href = `https://login.hexlabs.org?redirect=${window.location.href}`;
     return <LoadingScreen />;
   }
-
+  
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
   return (

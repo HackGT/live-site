@@ -4,11 +4,40 @@ import {
   HStack,
   Spacer,
   Stack,
+  filter,
 } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
 
 import OngoingEventsView from "./OngoingEventsView";
 import UpcomingEventsView from "./UpcomingEventsView";
+import OneSignal from 'react-onesignal';
+import * as OneSignalAPI from '@onesignal/node-onesignal';
+import { time } from "console";
+
+const configuration = OneSignalAPI.createConfiguration({
+  userKey: 'NjYyMDlmYWQtOTMwMy00NTA3LTk4MjItOTQ5OGYzODA3MDc2',
+  appKey: 'OWRjMzIxMTktYmNlMi00MjE0LTk5NWQtYTdhYTdjYWU2YTBi',
+});
+
+const client = new OneSignalAPI.DefaultApi(configuration);
+
+
+export async function createNotifOneSignal(name:any) {
+
+  const notification = new OneSignalAPI.Notification();
+  notification.app_id = 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb';
+
+  notification.contents = {
+    en:  `${name} is starting right now!`
+  }
+  notification.included_segments = ['Subscribed Users'];
+
+  notification.headings = {
+    en: "Event Starting!"
+  }
+  await client.createNotification(notification);
+}
+
 
 const Schedule: React.FC = () => {
   
@@ -17,12 +46,9 @@ const Schedule: React.FC = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-   
-    
+  
+  useEffect(() => {  
     const getData = async() => {
-
       try {
         const res = await axios.get(apiUrl(Service.HEXATHONS, "/events"), { params: { hexathon: curHexathon } });
 
@@ -50,11 +76,10 @@ const Schedule: React.FC = () => {
             }
             return -1;
           })
-
           const filteredData = sortedData.filter((event: any) => new Date(event.endDate) >= curDate);
           const ongoing = filteredData.filter((event: any) => new Date(event.startDate) <= curDate);
           const upcoming = filteredData.filter((event: any) => new Date(event.startDate) > curDate);
-
+           
           setOngoingEvents(ongoing);
           setUpcomingEvents(upcoming);
         }
@@ -76,10 +101,20 @@ const Schedule: React.FC = () => {
       setUpcomingEvents(data => data.filter((event: any) => new Date(event.startDate) > curDate));
       setOngoingEvents(data => data.filter((event: any) => new Date(event.endDate) >= curDate)
                                     .concat(temp.filter((event: any) => new Date(event.startDate) <= curDate)));
+                
+                                                        
+      upcomingEvents.forEach((ev) => {
+          const timeDif = (new Date(ev.startDate).getTime() - curDate.getTime())/1000;
+          if (timeDif <= 1 && timeDif >= 0) {
+              createNotifOneSignal(ev.name);
+          }
+      });
+
     }, 1000)
 
     return () => clearInterval(refreshData);
   }, [ongoingEvents, upcomingEvents]);
+
   
   if (error) {
     return <ErrorScreen error={error} />
