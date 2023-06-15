@@ -47,7 +47,7 @@ setPersistence(getAuth(app), inMemoryPersistence);
 axios.defaults.withCredentials = true;
 
 export async function runOneSignal() {
-  await OneSignal.init({ appId: 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb3' });
+  await OneSignal.init({ appId: 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb' });
   OneSignal.showSlidedownPrompt();
 }
 
