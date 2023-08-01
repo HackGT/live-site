@@ -30,22 +30,22 @@ const Navbar: React.FC = () => {
     backgroundColor: "#f0f0f0",
   };
   const hexathonNameStyle = {
-    fontSize: "20px", // You can adjust the font size as desired
+    fontSize: "20px",
     fontWeight: "bold",
-    color: "#8a2be2", // You can use any color you prefer
+    color: "#8a2be2",
   };
 
   const [hexathons, setHexathons] = React.useState<any[]>([]);
 
   const calculateTimeRemaining = (endTime: string): any => {
-    const updateInterval = 1000; // Update every 1 second (1000 milliseconds)
+    const updateInterval = 1000; 
     const endDateTime = new Date(endTime).getTime();
   
     const updateTimer = () => {
       const now = new Date().getTime();
       const timeRemaining = endDateTime - now;
   
-      // Calculate days, hours, minutes, and seconds
+  
       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
@@ -58,14 +58,14 @@ const Navbar: React.FC = () => {
       return `${days}d ${hours}h ${minutes}m ${seconds}s`;
     };
   
-    // Initial update
+ 
     let timeRemaining = updateTimer();
-    const remainingTimeElement = document.getElementById("remaining-time"); // Replace "remaining-time" with the ID of the element to display the remaining time
+    const remainingTimeElement = document.getElementById("remaining-time"); 
     if (remainingTimeElement) {
       remainingTimeElement.textContent = timeRemaining;
     }
   
-    // Periodically update the timer
+    
     setInterval(() => {
       timeRemaining = updateTimer();
       if (remainingTimeElement) {
