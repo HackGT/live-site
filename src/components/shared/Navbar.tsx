@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, chakra, Text } from "@chakra-ui/react";
+import { Link, chakra, Text, Box } from "@chakra-ui/react";
 import { Header, HeaderItem, useAuth, Service, apiUrl } from "@hex-labs/core";
 import axios from "axios";
 
@@ -14,14 +14,45 @@ const ChakraLink = chakra(Link, {
   },
 });
 
-const Navbar: React.FC = () => {
-  const { user } = useAuth();
+const calculateTimeRemaining = (endTime: string): any => {
+  const updateInterval = 1000;
+  const endDateTime = new Date(endTime).getTime();
 
-  const [role, setRoles] = React.useState<any>({
-    member: false,
-    exec: false,
-    admin: false,
-  });
+  const updateTimer = () => {
+    const now = new Date().getTime();
+    const timeRemaining = endDateTime - now;
+
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    if (timeRemaining <= 0) {
+      return "Complete";
+    }
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
+
+  let timeRemaining = updateTimer();
+  const remainingTimeElement = document.getElementById("remaining-time");
+  if (remainingTimeElement) {
+    remainingTimeElement.textContent = timeRemaining;
+  }
+
+  setInterval(() => {
+    timeRemaining = updateTimer();
+    if (remainingTimeElement) {
+      remainingTimeElement.textContent = timeRemaining;
+    }
+  }, updateInterval);
+};
+
+interface timerProps {
+  activeHexathons: any[];
+}
+
+const Timer = (props: timerProps) => {
   const countdownTimerStyle = {
     fontFamily: "monospace",
     padding: "5px",
@@ -35,44 +66,34 @@ const Navbar: React.FC = () => {
     color: "#8a2be2",
   };
 
+  return (
+    <>
+      {props.activeHexathons.map((hexathon: any) => (
+        <HeaderItem key={hexathon.id}>
+          <Box display="block">
+            <Text style={hexathonNameStyle}>{hexathon.name}</Text>
+            <Text textAlign="right">
+              <span id="remaining-time" style={countdownTimerStyle}>
+                {calculateTimeRemaining(hexathon.endDate)}
+              </span>
+            </Text>
+          </Box>
+        </HeaderItem>
+      ))}
+    </>
+  );
+};
+
+const Navbar: React.FC = () => {
+  const { user } = useAuth();
+
+  const [role, setRoles] = React.useState<any>({
+    member: false,
+    exec: false,
+    admin: false,
+  });
+
   const [hexathons, setHexathons] = React.useState<any[]>([]);
-
-  const calculateTimeRemaining = (endTime: string): any => {
-    const updateInterval = 1000; 
-    const endDateTime = new Date(endTime).getTime();
-  
-    const updateTimer = () => {
-      const now = new Date().getTime();
-      const timeRemaining = endDateTime - now;
-  
-  
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-  
-      if (timeRemaining <= 0) {
-        return "Complete";
-      }
-
-      return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    };
-  
- 
-    let timeRemaining = updateTimer();
-    const remainingTimeElement = document.getElementById("remaining-time"); 
-    if (remainingTimeElement) {
-      remainingTimeElement.textContent = timeRemaining;
-    }
-  
-    
-    setInterval(() => {
-      timeRemaining = updateTimer();
-      if (remainingTimeElement) {
-        remainingTimeElement.textContent = timeRemaining;
-      }
-    }, updateInterval);
-  };
 
   React.useEffect(() => {
     const getRoles = async () => {
@@ -87,28 +108,28 @@ const Navbar: React.FC = () => {
   React.useEffect(() => {
     const getHexathons = async () => {
       try {
-        const response = await axios.get(apiUrl(Service.HEXATHONS, '/hexathons'));
+        const response = await axios.get(apiUrl(Service.HEXATHONS, "/hexathons"));
         setHexathons(response.data);
       } catch (error) {
         console.error("Error fetching hexathons:", error);
       }
     };
     getHexathons();
-    console.log(hexathons)
+    console.log(hexathons);
   }, []);
 
-  const activeHexathons = hexathons.filter((hexathon: any) => {
+  const activeHexathons: any[] = hexathons.filter((hexathon: any) => {
     const now = new Date().getTime();
     const startDate = new Date(hexathon.startDate).getTime();
     const endDate = new Date(hexathon.endDate).getTime();
-    console.log(hexathon)
+    console.log(hexathon);
     return hexathon.isActive && now >= startDate && now <= endDate;
   });
 
   const showAdmin = role.member || role.admin || role.exec;
 
   return (
-    <Header>
+    <Header rightItem={<Timer activeHexathons={activeHexathons} />}>
       {routes.map((route: any) => (
         <ChakraLink href={`${route.link}`}>
           <HeaderItem>{route.name}</HeaderItem>
@@ -128,14 +149,6 @@ const Navbar: React.FC = () => {
           <HeaderItem>Admin</HeaderItem>
         </ChakraLink>
       )}
-      {activeHexathons.map((hexathon: any) => (
-      <div key={hexathon.id}>
-        <Text style={hexathonNameStyle}>{hexathon.name}</Text>
-        <Text>
-          <span id="remaining-time" style={countdownTimerStyle}>{calculateTimeRemaining(hexathon.endDate)}</span>
-        </Text>
-      </div>
-      ))}
     </Header>
   );
 };
