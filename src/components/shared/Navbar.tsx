@@ -115,14 +115,12 @@ const Navbar: React.FC = () => {
       }
     };
     getHexathons();
-    console.log(hexathons);
   }, []);
 
   const activeHexathons: any[] = hexathons.filter((hexathon: any) => {
     const now = new Date().getTime();
     const startDate = new Date(hexathon.startDate).getTime();
     const endDate = new Date(hexathon.endDate).getTime();
-    console.log(hexathon);
     return hexathon.isActive && now >= startDate && now <= endDate;
   });
 
