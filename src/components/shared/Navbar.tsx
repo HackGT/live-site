@@ -66,6 +66,19 @@ const Timer = (props: timerProps) => {
     color: "#8a2be2",
   };
 
+  const [isTimerReady, setTimerReady] = React.useState(false);
+
+  React.useEffect(() => {
+    const activeHexathonIds = props.activeHexathons.map((hexathon) => hexathon.id);
+    if (activeHexathonIds.length > 0) {
+      setTimerReady(true);
+    }
+  }, [props.activeHexathons]);
+
+  if (!isTimerReady) {
+    return null;
+  }
+
   return (
     <>
       {props.activeHexathons.map((hexathon: any) => (
