@@ -2,9 +2,8 @@ import React from "react";
 import { Link, chakra, Text, Box } from "@chakra-ui/react";
 import { Header, HeaderItem, useAuth, Service, apiUrl } from "@hex-labs/core";
 import axios from "axios";
-
-import { routes } from "./Navigation";
 import { HEXATHON_ID } from "../../App";
+import { routes } from "./Navigation";
 
 const ChakraLink = chakra(Link, {
   baseStyle: {
@@ -49,7 +48,7 @@ const calculateTimeRemaining = (endTime: string): any => {
 };
 
 interface timerProps {
-  activeHexathons: any[];
+  activeHexathon: any;
 }
 
 const Timer = (props: timerProps) => {
@@ -69,11 +68,10 @@ const Timer = (props: timerProps) => {
   const [isTimerReady, setTimerReady] = React.useState(false);
 
   React.useEffect(() => {
-    const activeHexathonIds = props.activeHexathons.map((hexathon) => hexathon.id);
-    if (activeHexathonIds.length > 0) {
+    if (props.activeHexathon && props.activeHexathon.id) {
       setTimerReady(true);
     }
-  }, [props.activeHexathons]);
+  }, [props.activeHexathon]);
 
   if (!isTimerReady) {
     return null;
@@ -81,18 +79,16 @@ const Timer = (props: timerProps) => {
 
   return (
     <>
-      {props.activeHexathons.map((hexathon: any) => (
-        <HeaderItem key={hexathon.id}>
+        <HeaderItem key={props.activeHexathon.id}>
           <Box display="block">
-            <Text style={hexathonNameStyle}>{hexathon.name}</Text>
+            <Text style={hexathonNameStyle}>{props.activeHexathon.name}</Text>
             <Text textAlign="right">
               <span id="remaining-time" style={countdownTimerStyle}>
-                {calculateTimeRemaining(hexathon.endDate)}
+                {calculateTimeRemaining(props.activeHexathon.endDate)}
               </span>
             </Text>
           </Box>
         </HeaderItem>
-      ))}
     </>
   );
 };
@@ -107,6 +103,7 @@ const Navbar: React.FC = () => {
   });
 
   const [hexathons, setHexathons] = React.useState<any[]>([]);
+  const [activeHexathon, setActiveHexathons] = React.useState<any[]>();
 
   React.useEffect(() => {
     const getRoles = async () => {
@@ -119,28 +116,21 @@ const Navbar: React.FC = () => {
   }, [user?.uid]);
 
   React.useEffect(() => {
-    const getHexathons = async () => {
+    const getActiveHexathon = async () => {
       try {
-        const response = await axios.get(apiUrl(Service.HEXATHONS, "/hexathons"));
-        setHexathons(response.data);
+        const response = await axios.get(apiUrl(Service.HEXATHONS, `/hexathons/${HEXATHON_ID}`));
+        setActiveHexathons(response.data)
       } catch (error) {
         console.error("Error fetching hexathons:", error);
       }
     };
-    getHexathons();
+    getActiveHexathon();
   }, []);
-
-  const activeHexathons: any[] = hexathons.filter((hexathon: any) => {
-    const now = new Date().getTime();
-    const startDate = new Date(hexathon.startDate).getTime();
-    const endDate = new Date(hexathon.endDate).getTime();
-    return hexathon.isActive && now >= startDate && now <= endDate;
-  });
 
   const showAdmin = role.member || role.admin || role.exec;
 
   return (
-    <Header rightItem={<Timer activeHexathons={activeHexathons} />}>
+    <Header rightItem={<Timer activeHexathon={activeHexathon} />}>
       {routes.map((route: any) => (
         <ChakraLink href={`${route.link}`}>
           <HeaderItem>{route.name}</HeaderItem>
