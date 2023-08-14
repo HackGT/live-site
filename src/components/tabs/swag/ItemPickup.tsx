@@ -1,25 +1,19 @@
-import {
-  Service,
-  useAuth,
-  apiUrl,
-  LoadingScreen,
-  ErrorScreen,
-} from "@hex-labs/core";
-import React, { useState } from "react";
-import ItemContainer from "./ItemContainer";
+import { Service, useAuth, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
+import React, { useState, useEffect } from "react";
 import useAsyncEffect from "use-async-effect";
 import axios from "axios";
 import useAxios from "axios-hooks";
-import { Item } from "./Item";
 import { Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
-import { useEffect } from "react";
+
+import { Item } from "./Item";
+import ItemContainer from "./ItemContainer";
 
 interface Props {
   uid: string;
 }
 
-const ItemPickup: React.FC<Props> = (props) => {
-  const uid = props.uid;
+const ItemPickup: React.FC<Props> = props => {
+  const { uid } = props;
   const user = useAuth();
   const [points, setPoints] = useState(0);
   const [isMember, setIsMember] = useState<boolean>(false);
@@ -29,16 +23,11 @@ const ItemPickup: React.FC<Props> = (props) => {
     const getAdmin = async () => {
       if (user) {
         const isMemberResponse = await axios.get(
-          apiUrl(
-            Service.HEXATHONS,
-            `hexathon-users/${hexathonID}/users/${user.user!.uid}`
-          )
+          apiUrl(Service.HEXATHONS, `hexathon-users/${hexathonID}/users/${user.user!.uid}`)
         );
         setIsMember(isMemberResponse.data.isMember);
 
-        const response = await axios.get(
-          apiUrl(Service.USERS, `/users/${user.user!.uid}`)
-        );
+        const response = await axios.get(apiUrl(Service.USERS, `/users/${user.user!.uid}`));
         setPoints(response.data.points);
       }
     };
@@ -69,22 +58,13 @@ const ItemPickup: React.FC<Props> = (props) => {
     if (i % 2 === 0) itemGroup.push([]);
     itemGroup[itemGroup.length - 1].push(items[i]);
   }
-  const itemGrid = () => {
-    return (
-      <Wrap spacing="30px" justify="center">
-        {items.map((item: any) => {
-          return (
-            <ItemContainer
-              key={item.id}
-              item={item}
-              points={points}
-              showBuyButton={false}
-            />
-          );
-        })}
-      </Wrap>
-    );
-  };
+  const itemGrid = () => (
+    <Wrap spacing="30px" justify="center">
+      {items.map((item: any) => (
+        <ItemContainer key={item.id} item={item} points={points} showBuyButton={false} />
+      ))}
+    </Wrap>
+  );
 
   return (
     <div id="swag-shop">

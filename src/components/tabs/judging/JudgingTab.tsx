@@ -9,7 +9,12 @@ const JudgingTab: React.FC = () => {
 
   useEffect(() => {
     const getBlocks = async () => {
-      const data = await axios.get(apiUrl(Service.HEXATHONS, `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=judging`));
+      const data = await axios.get(
+        apiUrl(
+          Service.HEXATHONS,
+          `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=judging`
+        )
+      );
       setJudging(data.data);
     };
     getBlocks();

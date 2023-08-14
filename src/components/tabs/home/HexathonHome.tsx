@@ -11,10 +11,15 @@ const HexathonHomeTab: React.FC = () => {
 
   useEffect(() => {
     const getBlocks = async () => {
-      const data = await axios.get(apiUrl(Service.HEXATHONS, `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=home`));
+      const data = await axios.get(
+        apiUrl(
+          Service.HEXATHONS,
+          `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=home`
+        )
+      );
       setHome(data.data);
     };
-    document.title = "Hexlabs Live"
+    document.title = "Hexlabs Live";
     getBlocks();
   }, []);
 
@@ -23,8 +28,10 @@ const HexathonHomeTab: React.FC = () => {
       <div>
         <BlockCollection title="" blocks={home} />
       </div>
-      <Divider/>
-      <div><Schedule/></div>
+      <Divider />
+      <div>
+        <Schedule />
+      </div>
     </div>
   );
 };

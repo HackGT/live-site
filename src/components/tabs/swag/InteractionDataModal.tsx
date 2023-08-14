@@ -21,7 +21,7 @@ interface Props {
   onClose: () => void;
 }
 
-const InteractionDataModal: React.FC<Props> = (props) => {
+const InteractionDataModal: React.FC<Props> = props => {
   const [interactions, setInteractions] = useState<any>(null);
   const [loadingInteractions, setLoadingInteractions] = useState(false);
 

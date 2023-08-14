@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import MediaQuery from "react-responsive";
-import { Image, ComponentStyleConfig, Input, Select, FormControl, Button, Box, Text } from '@chakra-ui/react'
+import {
+  Image,
+  ComponentStyleConfig,
+  Input,
+  Select,
+  FormControl,
+  Button,
+  Box,
+  Text,
+} from "@chakra-ui/react";
+
 import CardTag from "../../common/CardTag";
 import theme from "../../Theme";
 import { fetchAllEvents } from "../../../services/cmsService";
@@ -123,9 +133,7 @@ const AllEvents: React.FC<Props> = (props: Props) => {
           </Select>
         </FormControl>
         <FormControl className="all_events_filter_dropdown">
-
           <Select
-
             id="event-select-id"
             value={locationFilter}
             onChange={handleEventFilterChange}
@@ -136,7 +144,13 @@ const AllEvents: React.FC<Props> = (props: Props) => {
             ))}
           </Select>
         </FormControl>
-        <Button onClick={handle_filter_button} color="primary" borderRadius="5" loadingText='Submitting' size='md'>
+        <Button
+          onClick={handle_filter_button}
+          color="primary"
+          borderRadius="5"
+          loadingText="Submitting"
+          size="md"
+        >
           Filter
         </Button>
       </div>
@@ -154,11 +168,11 @@ const AllEvents: React.FC<Props> = (props: Props) => {
               />
               <Box>
                 <Box onClick={() => props.setEventCallback(event)}>
-                  <Box borderWidth='3px' borderRadius='1px'>
-                    <Text align="center" fontSize='lg'>
+                  <Box borderWidth="3px" borderRadius="1px">
+                    <Text align="center" fontSize="lg">
                       {event.name}
                     </Text>
-                    <Text align="left" fontSize='lg' padding="10px">
+                    <Text align="left" fontSize="lg" padding="10px">
                       {event.description}
                     </Text>
                     <Box>
@@ -178,10 +192,10 @@ const AllEvents: React.FC<Props> = (props: Props) => {
               <Box>
                 <Box onClick={() => props.setEventCallback(event)}>
                   <Box>
-                    <Text align="left" fontSize = 'lg'>
+                    <Text align="left" fontSize="lg">
                       {event.name}
                     </Text>
-                    <Text align="left" fontSize = 'md'>
+                    <Text align="left" fontSize="md">
                       {event.description}
                     </Text>
                     <Box>
@@ -197,11 +211,8 @@ const AllEvents: React.FC<Props> = (props: Props) => {
         </MediaQuery>
       </div>
       <Button>
-        <a href="\schedule">
-          Check Full Schedule
-        </a>
+        <a href="\schedule">Check Full Schedule</a>
       </Button>
-
     </div>
   );
 };

@@ -5,17 +5,11 @@ import { Item } from "./Item";
 // import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./SwagShop.css";
 import { Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
-import {
-  Service,
-  useAuth,
-  apiUrl,
-  LoadingScreen,
-  ErrorScreen,
-} from "@hex-labs/core";
+import { Service, useAuth, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
 import useAxios from "axios-hooks";
 
-const SwagShop: React.FC = (props) => {
+const SwagShop: React.FC = props => {
   //defining variables
   const [points, setPoints] = useState(0);
   const MAX_POINTS_ATTAINABLE = 1000;
@@ -29,10 +23,7 @@ const SwagShop: React.FC = (props) => {
     const getPoints = async () => {
       if (user) {
         const pointsResp = await axios.get(
-          apiUrl(
-            Service.HEXATHONS,
-            `/hexathon-users/${hexathonID}/users/${user?.uid}`
-          )
+          apiUrl(Service.HEXATHONS, `/hexathon-users/${hexathonID}/users/${user?.uid}`)
         );
 
         const p = pointsResp.data.points;
@@ -78,14 +69,7 @@ const SwagShop: React.FC = (props) => {
     return (
       <Wrap spacing="30px" justify="center">
         {items.map((item: any) => {
-          return (
-            <ItemContainer
-              key={item.id}
-              item={item}
-              points={points}
-              showBuyButton={true}
-            />
-          );
+          return <ItemContainer key={item.id} item={item} points={points} showBuyButton={true} />;
         })}
       </Wrap>
     );

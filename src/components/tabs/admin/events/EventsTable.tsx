@@ -19,8 +19,8 @@ import {
   MenuOptionGroup,
   Spacer,
   Text,
-  useDisclosure
-} from "@chakra-ui/react"
+  useDisclosure,
+} from "@chakra-ui/react";
 import { AddIcon, CloseIcon, ViewIcon } from "@chakra-ui/icons";
 import axios from "axios";
 
@@ -34,38 +34,37 @@ const EventsTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState();
-  const [columns, setColumns] = useState(Columns[name].filter((column: any) => column.enabled))
+  const [columns, setColumns] = useState(Columns[name].filter((column: any) => column.enabled));
 
   useEffect(() => {
-    const getData = async() => {
+    const getData = async () => {
       let hexathonRes: any = null;
 
       try {
-        hexathonRes = await axios.get(apiUrl(Service.HEXATHONS, `/hexathons/${String(process.env.REACT_APP_HEXATHON_ID)}`));
-
-        const res = await axios.get(
-          apiUrl(Service.HEXATHONS, `/${name.toLowerCase()}`),
-          { params: { hexathon: String(process.env.REACT_APP_HEXATHON_ID), search: searchText } }
+        hexathonRes = await axios.get(
+          apiUrl(Service.HEXATHONS, `/hexathons/${String(process.env.REACT_APP_HEXATHON_ID)}`)
         );
 
-        const temp: any[] = []
+        const res = await axios.get(apiUrl(Service.HEXATHONS, `/${name.toLowerCase()}`), {
+          params: { hexathon: String(process.env.REACT_APP_HEXATHON_ID), search: searchText },
+        });
+
+        const temp: any[] = [];
         res.data.forEach((entry: any) => {
           temp.push({
             ...entry,
             hexathon: hexathonRes?.name,
-            location: entry.location?.map((location: any) => (
-              <Text>{location.name}</Text>
-            )),
-          })
-        })
+            location: entry.location?.map((location: any) => <Text>{location.name}</Text>),
+          });
+        });
 
         setData(temp);
-      } catch(e: any) {
+      } catch (e: any) {
         setError(e);
       }
-      
+
       setColumns(Columns[name].filter((column: any) => column.enabled));
-    }
+    };
 
     getData();
   }, [isOpen, searchText]);
@@ -74,7 +73,7 @@ const EventsTable: React.FC = () => {
     return <ErrorScreen error={error} />;
   }
 
-  const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     setSearchText(e.target.value);
   };
 
@@ -85,48 +84,44 @@ const EventsTable: React.FC = () => {
         marginTop="20px"
         width={{
           base: "90%",
-          md: "80%"
+          md: "80%",
         }}
       >
         <HStack>
-          <Heading>
-            {name}
-          </Heading>
-          <Spacer/>
+          <Heading>{name}</Heading>
+          <Spacer />
           <HStack spacing="5px">
-            {
-              name === "Events" ? (
-                <Menu
-                  closeOnSelect={false}
+            {name === "Events" ? (
+              <Menu closeOnSelect={false}>
+                <MenuButton
+                  marginRight="10px"
+                  as={IconButton}
+                  bg="transparent"
+                  minWidth="48px"
+                  height="48px"
+                  isRound
+                  padding="0px"
+                  textAlign="center"
+                  verticalAlign="center"
                 >
-                  <MenuButton
-                    marginRight="10px"
-                    as={IconButton}
-                    bg="transparent"
-                    minWidth="48px"
-                    height="48px"
-                    isRound
-                    padding="0px"
-                    textAlign="center"
-                    verticalAlign="center"
+                  <ViewIcon width="1.5em" height="1.5em" />
+                </MenuButton>
+                <MenuList zIndex="999">
+                  <MenuOptionGroup
+                    width="100%"
+                    type="checkbox"
+                    onChange={(e: any) => setColumns(e.sort((a: any, b: any) => a.key - b.key))}
+                    value={columns}
                   >
-                    <ViewIcon width="1.5em" height="1.5em"/>
-                  </MenuButton>
-                  <MenuList zIndex="999">
-                    <MenuOptionGroup
-                      width="100%"
-                      type='checkbox'
-                      onChange={(e: any) => setColumns(e.sort((a: any, b: any) => a.key - b.key))}
-                      value={columns}
-                    >
-                      {Columns[name].map((column: any) => (
-                        <MenuItemOption key={column.key} value={column}>{column.header}</MenuItemOption>
-                      ))}
-                    </MenuOptionGroup>
-                  </MenuList>
-                </Menu>
-              ) : null
-            }
+                    {Columns[name].map((column: any) => (
+                      <MenuItemOption key={column.key} value={column}>
+                        {column.header}
+                      </MenuItemOption>
+                    ))}
+                  </MenuOptionGroup>
+                </MenuList>
+              </Menu>
+            ) : null}
             <Button
               width={{
                 base: "48px",
@@ -135,19 +130,21 @@ const EventsTable: React.FC = () => {
               height="48px"
               borderRadius={{
                 base: "24px",
-                md: "0.375rem"
+                md: "0.375rem",
               }}
               onClick={onOpen}
             >
-              <HStack spacing={{
-                base: "0px",
-                md: "5px"
-              }}>
-                <AddIcon width="0.8em" height="0.8em"/>
+              <HStack
+                spacing={{
+                  base: "0px",
+                  md: "5px",
+                }}
+              >
+                <AddIcon width="0.8em" height="0.8em" />
                 <Text
                   display={{
                     base: "none",
-                    md: "block"
+                    md: "block",
                   }}
                 >
                   Create {name.substring(0, name.length - 1)}
@@ -174,30 +171,30 @@ const EventsTable: React.FC = () => {
         closeOnOverlayClick
         closeOnEsc
       >
-        <DrawerOverlay display='none'/>
+        <DrawerOverlay display="none" />
         <DrawerContent>
           <DrawerHeader borderBottom="2px" borderColor="rgba(23, 43, 77, 0.12)">
             <HStack>
               <Heading marginTop="10px" fontSize="24px">
                 Create {name.substring(0, name.length - 1)}
               </Heading>
-              <Spacer/>
+              <Spacer />
               <IconButton
                 aria-label="Close Button"
                 isRound
-                icon={<CloseIcon width="0.75em" height="0.75em"/>}
+                icon={<CloseIcon width="0.75em" height="0.75em" />}
                 bg="transparent"
                 onClick={onClose}
               />
             </HStack>
           </DrawerHeader>
           <DrawerBody paddingTop="20px">
-            <EventFormInput onClose={onClose}/>
-          </DrawerBody> 
+            <EventFormInput onClose={onClose} />
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
   );
-}
+};
 
 export default EventsTable;

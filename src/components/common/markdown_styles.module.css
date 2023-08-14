@@ -4,16 +4,16 @@
 }
 
 .reactMarkDown {
-  border-radius: 5px;
   padding: 5px;
   color: black;
   font-family: Roboto, sans-serif;
   text-align: left;
+  border-radius: 5px;
 }
 
 .reactMarkDown a {
-  text-decoration: underline;
   color: black;
+  text-decoration: underline;
 }
 
 .reactMarkDown h1 {
@@ -33,12 +33,12 @@
 }
 
 .reactMarkDown p {
-  color: black;
-  font-family: Roboto, sans-serif;
-  text-align: left;
-  font-size: 18px;
   margin-top: 8px;
   margin-bottom: 8px;
+  color: black;
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
+  text-align: left;
 }
 
 .reactMarkdown div {
@@ -46,7 +46,7 @@
 }
 
 .reactMarkDown li {
-  color: black;
   margin-left: 25px;
+  color: black;
   text-align: left;
 }

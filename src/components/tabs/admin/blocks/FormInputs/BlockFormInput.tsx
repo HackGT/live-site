@@ -222,7 +222,7 @@ const BlockFormInput: React.FC<Props> = ({ id, onClose }) => {
               }}
               value={display}
             >
-              {(Object.keys(DisplayType) as Array<DisplayType>).map((displayType) => (
+              {(Object.keys(DisplayType) as Array<DisplayType>).map(displayType => (
                 <option key={displayType} value={displayType}>
                   {displayType}
                 </option>

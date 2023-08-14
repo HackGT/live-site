@@ -1,10 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import {
-  Box,
-  chakra,
-  Icon,
-  IconButton
-} from "@chakra-ui/react";
+import { Box, chakra, Icon, IconButton } from "@chakra-ui/react";
 import { TimeIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import dateFormat from "dateformat";
 
@@ -16,7 +11,7 @@ const Column1 = chakra(Box, {
     display: "inline-block",
     fontSize: "14px",
   },
-})
+});
 
 const Column2 = chakra(Box, {
   baseStyle: {
@@ -24,16 +19,16 @@ const Column2 = chakra(Box, {
     px: "15px",
     paddingBottom: "25px",
     display: "inline-block",
-  }
-})
+  },
+});
 
 const Column3 = chakra(Box, {
   baseStyle: {
     verticalAlign: "top",
     display: "inline-block",
     textAlign: "center",
-  }
-})
+  },
+});
 
 const LocationIcon = (props: any) => (
   <Icon viewBox="0 0 297 297" {...props}>
@@ -46,7 +41,7 @@ const LocationIcon = (props: any) => (
       d="M148.5,59.183c-28.273,0-51.274,23.154-51.274,51.614c0,28.461,23.001,51.614,51.274,51.614   c28.273,0,51.274-23.153,51.274-51.614C199.774,82.337,176.773,59.183,148.5,59.183z M148.5,141.901   c-16.964,0-30.765-13.953-30.765-31.104c0-17.15,13.801-31.104,30.765-31.104c16.964,0,30.765,13.953,30.765,31.104   C179.265,127.948,165.464,141.901,148.5,141.901z"
     />
   </Icon>
-)
+);
 
 const formatDateString = (date: string) => dateFormat(date, "h:MM TT");
 
@@ -59,7 +54,7 @@ export const EventRow = (props: any) => {
     if (widthRef.current !== null) {
       setExpandable(widthRef.current.offsetHeight < widthRef.current.scrollHeight);
     }
-  }
+  };
 
   useEffect(() => {
     checkTextOverflow();
@@ -67,7 +62,7 @@ export const EventRow = (props: any) => {
 
   window.addEventListener("resize", () => {
     checkTextOverflow();
-  })
+  });
 
   return (
     <Box
@@ -80,33 +75,21 @@ export const EventRow = (props: any) => {
       }}
       key={props.row.id}
     >
-      <Column1
-        w={{ base: "100%", md: "25%"}}
-        paddingBottom={{ base: "10px", md: "25px"}}
-      >
-        <Box
-          marginBottom="15px"
-          lineHeight="24px"
-          textAlign={{ base: "center", md: "left" }}
-        >
-          <TimeIcon fontSize="16px" marginRight="15px"/>
+      <Column1 w={{ base: "100%", md: "25%" }} paddingBottom={{ base: "10px", md: "25px" }}>
+        <Box marginBottom="15px" lineHeight="24px" textAlign={{ base: "center", md: "left" }}>
+          <TimeIcon fontSize="16px" marginRight="15px" />
           {`${formatDateString(props.row.startDate)} - ${formatDateString(props.row.endDate)}`}
         </Box>
-        <Box
-          textAlign={{ base: "center", md: "left" }}
-        >
+        <Box textAlign={{ base: "center", md: "left" }}>
           {props.row.location.length !== 0 ? (
             <>
-              <LocationIcon fontSize="18px" marginRight="15px"/>
+              <LocationIcon fontSize="18px" marginRight="15px" />
               {props.row.location.map((x: any) => x.name).join(", ")}
             </>
           ) : null}
         </Box>
       </Column1>
-      <Column2
-        w={{ base: "100%", md: "70%"}}
-        paddingTop={{ base: "5px", md: "25px" }}
-      >
+      <Column2 w={{ base: "100%", md: "70%" }} paddingTop={{ base: "5px", md: "25px" }}>
         <Box
           fontSize={{ base: "16px", md: "20px" }}
           fontWeight="semibold"
@@ -126,22 +109,20 @@ export const EventRow = (props: any) => {
             {props.row.description}
           </Box>
         </Box>
-        {
-          expandable ? (
-            <Column3 w="7%">
-              <IconButton
-                isRound
-                bg="none"
-                aria-label="Expand Description"
-                icon={expanded ? <ChevronUpIcon/> : <ChevronDownIcon/>}
-                onClick={() => {
-                  setExpanded(!expanded);
-                }}
-              />
-            </Column3>
-          ) : null
-        }
+        {expandable ? (
+          <Column3 w="7%">
+            <IconButton
+              isRound
+              bg="none"
+              aria-label="Expand Description"
+              icon={expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+              onClick={() => {
+                setExpanded(!expanded);
+              }}
+            />
+          </Column3>
+        ) : null}
       </Column2>
     </Box>
-  )
-}
+  );
+};

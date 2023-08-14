@@ -20,8 +20,9 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import { apiUrl, handleAxiosError, Service } from "@hex-labs/core";
-import { HEXATHON_ID } from "../../../App";
 import { Select } from "chakra-react-select";
+
+import { HEXATHON_ID } from "../../../App";
 
 interface Props {
   userId?: string | null;
@@ -30,7 +31,7 @@ interface Props {
   swagItems: any;
 }
 
-const ItemCheckoutModal: React.FC<Props> = (props) => {
+const ItemCheckoutModal: React.FC<Props> = props => {
   const toast = useToast();
   const {
     register,
@@ -53,10 +54,7 @@ const ItemCheckoutModal: React.FC<Props> = (props) => {
       try {
         const response = await axios.request({
           method: "GET",
-          url: apiUrl(
-            Service.HEXATHONS,
-            `/hexathon-users/${HEXATHON_ID}/users/${props.userId}`
-          ),
+          url: apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${props.userId}`),
           params: {
             hexathon: HEXATHON_ID,
           },
@@ -136,9 +134,7 @@ const ItemCheckoutModal: React.FC<Props> = (props) => {
                         value: swagItem.id,
                       }))}
                     />
-                    <FormErrorMessage>
-                      {fieldError && fieldError.message}
-                    </FormErrorMessage>
+                    <FormErrorMessage>{fieldError && fieldError.message}</FormErrorMessage>
                   </FormControl>
                 )}
               />
@@ -146,11 +142,7 @@ const ItemCheckoutModal: React.FC<Props> = (props) => {
                 <FormLabel>Quantity</FormLabel>
                 <Input {...register("quantity")} type="number" />
               </FormControl>
-              <Button
-                colorScheme="purple"
-                isLoading={isSubmitting}
-                type="submit"
-              >
+              <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
                 Checkout
               </Button>
             </VStack>

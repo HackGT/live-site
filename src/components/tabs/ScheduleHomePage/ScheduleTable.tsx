@@ -1,56 +1,49 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  HStack,
-  Spacer,
-  Stack,
-  filter,
-} from "@chakra-ui/react";
+import { HStack, Spacer, Stack, filter } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
-
-import OngoingEventsView from "./OngoingEventsView";
-import UpcomingEventsView from "./UpcomingEventsView";
-import OneSignal from 'react-onesignal';
-import * as OneSignalAPI from '@onesignal/node-onesignal';
+import OneSignal from "react-onesignal";
+import * as OneSignalAPI from "@onesignal/node-onesignal";
 import { time } from "console";
 
+import UpcomingEventsView from "./UpcomingEventsView";
+import OngoingEventsView from "./OngoingEventsView";
+
 const configuration = OneSignalAPI.createConfiguration({
-  userKey: 'NjYyMDlmYWQtOTMwMy00NTA3LTk4MjItOTQ5OGYzODA3MDc2',
-  appKey: 'OWRjMzIxMTktYmNlMi00MjE0LTk5NWQtYTdhYTdjYWU2YTBi',
+  userKey: "NjYyMDlmYWQtOTMwMy00NTA3LTk4MjItOTQ5OGYzODA3MDc2",
+  appKey: "OWRjMzIxMTktYmNlMi00MjE0LTk5NWQtYTdhYTdjYWU2YTBi",
 });
 
 const client = new OneSignalAPI.DefaultApi(configuration);
 
-
-export async function createNotifOneSignal(name:any) {
-
+export async function createNotifOneSignal(name: any) {
   const notification = new OneSignalAPI.Notification();
-  notification.app_id = 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb';
+  notification.app_id = "cd086e3e-0229-49b9-9cde-bfc98fb3fccb";
 
   notification.contents = {
-    en:  `${name} is starting right now!`
-  }
-  notification.included_segments = ['Subscribed Users'];
+    en: `${name} is starting right now!`,
+  };
+  notification.included_segments = ["Subscribed Users"];
 
   notification.headings = {
-    en: "Event Starting!"
-  }
+    en: "Event Starting!",
+  };
   await client.createNotification(notification);
 }
 
-
 const Schedule: React.FC = () => {
-  
-  const curHexathon = process.env.REACT_APP_HEXATHON_ID
+  const curHexathon = process.env.REACT_APP_HEXATHON_ID;
   const [ongoingEvents, setOngoingEvents] = useState<any[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {  
-    const getData = async() => {
+
+  useEffect(() => {
+    const getData = async () => {
       try {
-        const res = await axios.get(apiUrl(Service.HEXATHONS, "/events"), { params: { hexathon: curHexathon } });
+        const res = await axios.get(apiUrl(Service.HEXATHONS, "/events"), {
+          params: { hexathon: curHexathon },
+        });
 
         if (res.data) {
           const curDate = new Date();
@@ -59,12 +52,12 @@ const Schedule: React.FC = () => {
             const startDateB = new Date(b.startDate);
             const endDateA = new Date(a.endDate);
             const endDateB = new Date(b.endDate);
-            if (startDateA > startDateB ) {
+            if (startDateA > startDateB) {
               return 1;
             }
             if (startDateA < startDateB) {
               return -1;
-            } 
+            }
             if (endDateA > endDateB) {
               return 1;
             }
@@ -75,49 +68,51 @@ const Schedule: React.FC = () => {
               return 1;
             }
             return -1;
-          })
-          const filteredData = sortedData.filter((event: any) => new Date(event.endDate) >= curDate);
+          });
+          const filteredData = sortedData.filter(
+            (event: any) => new Date(event.endDate) >= curDate
+          );
           const ongoing = filteredData.filter((event: any) => new Date(event.startDate) <= curDate);
           const upcoming = filteredData.filter((event: any) => new Date(event.startDate) > curDate);
-           
+
           setOngoingEvents(ongoing);
           setUpcomingEvents(upcoming);
         }
-      } catch(e: any) {
+      } catch (e: any) {
         setError(e);
       }
       setLoading(false);
-    }
+    };
 
     document.title = "HexLabs Schedule";
     setLoading(true);
     getData();
-  }, [ curHexathon ]);
+  }, [curHexathon]);
 
   useEffect(() => {
     const refreshData = setInterval(() => {
-      const curDate = new Date((new Date()).valueOf());
+      const curDate = new Date(new Date().valueOf());
       const temp = [...upcomingEvents];
       setUpcomingEvents(data => data.filter((event: any) => new Date(event.startDate) > curDate));
-      setOngoingEvents(data => data.filter((event: any) => new Date(event.endDate) >= curDate)
-                                    .concat(temp.filter((event: any) => new Date(event.startDate) <= curDate)));
-                
-                                                        
-      upcomingEvents.forEach((ev) => {
-          const timeDif = (new Date(ev.startDate).getTime() - curDate.getTime())/1000;
-          if (timeDif <= 1 && timeDif >= 0) {
-              createNotifOneSignal(ev.name);
-          }
-      });
+      setOngoingEvents(data =>
+        data
+          .filter((event: any) => new Date(event.endDate) >= curDate)
+          .concat(temp.filter((event: any) => new Date(event.startDate) <= curDate))
+      );
 
-    }, 1000)
+      upcomingEvents.forEach(ev => {
+        const timeDif = (new Date(ev.startDate).getTime() - curDate.getTime()) / 1000;
+        if (timeDif <= 1 && timeDif >= 0) {
+          createNotifOneSignal(ev.name);
+        }
+      });
+    }, 1000);
 
     return () => clearInterval(refreshData);
   }, [ongoingEvents, upcomingEvents]);
 
-  
   if (error) {
-    return <ErrorScreen error={error} />
+    return <ErrorScreen error={error} />;
   }
 
   return (
@@ -128,11 +123,10 @@ const Schedule: React.FC = () => {
         marginBottom="20px"
         width={{
           base: "90%",
-          md: "80%"
+          md: "80%",
         }}
       >
-    
-        <Spacer/>
+        <Spacer />
       </HStack>
       <Stack
         margin="auto"
@@ -140,18 +134,12 @@ const Schedule: React.FC = () => {
         paddingY="15px"
         width={{
           base: "95%",
-          md: "85%"
+          md: "85%",
         }}
         bg="#F5F6FA"
       >
-        <OngoingEventsView
-          events={ongoingEvents}
-          loading={loading}
-        />
-        <UpcomingEventsView
-          events={upcomingEvents}
-          loading={loading}
-        />
+        <OngoingEventsView events={ongoingEvents} loading={loading} />
+        <UpcomingEventsView events={upcomingEvents} loading={loading} />
       </Stack>
     </>
   );

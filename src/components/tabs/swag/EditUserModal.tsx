@@ -23,6 +23,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { apiUrl, handleAxiosError, Service } from "@hex-labs/core";
+
 import { HEXATHON_ID } from "../../../App";
 
 interface Props {
@@ -31,7 +32,7 @@ interface Props {
   onClose: () => void;
 }
 
-const EditUserModal: React.FC<Props> = (props) => {
+const EditUserModal: React.FC<Props> = props => {
   const toast = useToast();
   const {
     register,
@@ -54,10 +55,7 @@ const EditUserModal: React.FC<Props> = (props) => {
       try {
         const response = await axios.request({
           method: "GET",
-          url: apiUrl(
-            Service.HEXATHONS,
-            `/hexathon-users/${HEXATHON_ID}/users/${props.userId}`
-          ),
+          url: apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${props.userId}`),
           params: {
             hexathon: HEXATHON_ID,
           },
@@ -124,9 +122,8 @@ const EditUserModal: React.FC<Props> = (props) => {
             <Box>
               <AlertTitle>Warning</AlertTitle>
               <AlertDescription>
-                Only use this to manually update points if really needed.
-                Usually, you can reconcile people's points by scanning their
-                badge for an event they said they went to. 
+                Only use this to manually update points if really needed. Usually, you can reconcile
+                people's points by scanning their badge for an event they said they went to.
               </AlertDescription>
             </Box>
           </Alert>
@@ -142,11 +139,7 @@ const EditUserModal: React.FC<Props> = (props) => {
                 <FormLabel>Add/Remove Points</FormLabel>
                 <Input {...register("numAdditional")} type="number" />
               </FormControl>
-              <Button
-                colorScheme="purple"
-                isLoading={isSubmitting}
-                type="submit"
-              >
+              <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
                 Checkout
               </Button>
             </VStack>

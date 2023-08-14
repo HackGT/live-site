@@ -19,14 +19,14 @@ import HexathonHomeTab from "./components/tabs/home/HexathonHome";
 import ScheduleTab from "./components/tabs/schedule/ScheduleTab";
 import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
-import EventsTab from "./components/tabs/admin/events/EventsTable"
-import EditEntry from "./components/tabs/admin/events/EditEntry"
-import UsersTable from "./components/tabs/swag/UsersTable"
+import EventsTab from "./components/tabs/admin/events/EventsTable";
+import EditEntry from "./components/tabs/admin/events/EditEntry";
+import UsersTable from "./components/tabs/swag/UsersTable";
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
-import EditBlock from "./components/tabs/admin/blocks/EditEntry"
+import EditBlock from "./components/tabs/admin/blocks/EditEntry";
 
-import OneSignal from 'react-onesignal';
-import * as OneSignalAPI from '@onesignal/node-onesignal';
+import OneSignal from "react-onesignal";
+import * as OneSignalAPI from "@onesignal/node-onesignal";
 
 // a little bee ascii art
 // const art =
@@ -47,21 +47,20 @@ setPersistence(getAuth(app), inMemoryPersistence);
 axios.defaults.withCredentials = true;
 
 export async function runOneSignal() {
-  await OneSignal.init({ appId: 'cd086e3e-0229-49b9-9cde-bfc98fb3fccb' });
+  await OneSignal.init({ appId: "cd086e3e-0229-49b9-9cde-bfc98fb3fccb" });
   OneSignal.showSlidedownPrompt();
 }
 
 export const App = () => {
   // Retrieves the user's login state. This hook will also make requests to log
   // the user in
-  
+
   const [loading, loggedIn] = useLogin(app);
 
   useEffect(() => {
     runOneSignal();
-  })
-  
-  
+  });
+
   // If loading, show a loading screen
   if (loading) {
     return <LoadingScreen />;
@@ -73,7 +72,7 @@ export const App = () => {
     window.location.href = `https://login.hexlabs.org?redirect=${window.location.href}`;
     return <LoadingScreen />;
   }
-  
+
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
   return (
@@ -90,11 +89,11 @@ export const App = () => {
         {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
         <Route path="/judging" element={<JudgingTab />} />
         <Route path="/admin/events" element={<EventsTab />} />
-        <Route path="admin/events/:id" element={<EditEntry name="Events"/>} />
+        <Route path="admin/events/:id" element={<EditEntry name="Events" />} />
         <Route path="/" element={<HexathonHomeTab />} />
         <Route path="/admin" element={<AdminTab />} />
         <Route path="/admin/blocks" element={<BlocksTab />} />
-        <Route path="admin/blocks/:id" element={<EditBlock name="Blocks"/>} />
+        <Route path="admin/blocks/:id" element={<EditBlock name="Blocks" />} />
         <Route path="/swag/item-checkout" element={<UsersTable />} />
       </Routes>
       <Footer />

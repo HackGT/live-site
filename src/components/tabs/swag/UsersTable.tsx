@@ -100,9 +100,7 @@ const UsersTable: React.FC = () => {
         <ButtonGroup>
           <Button onClick={() => openCheckoutModal(row)}>Buy Item</Button>
           <Button onClick={() => openEditUserModal(row)}>Edit Points</Button>
-          <Button onClick={() => openPointDataModal(row)}>
-            View Interaction Data
-          </Button>
+          <Button onClick={() => openPointDataModal(row)}>View Interaction Data</Button>
         </ButtonGroup>
       ),
     },
@@ -129,22 +127,14 @@ const UsersTable: React.FC = () => {
         onClose={closeCheckoutModal}
         swagItems={swagItems}
       />
-      <EditUserModal
-        userId={modalUserId}
-        isOpen={editUserIsOpen}
-        onClose={closeEditUserModal}
-      />
-      <PointDataModal
-        userId={modalUserId}
-        isOpen={pointDataIsOpen}
-        onClose={closePointDataModal}
-      />
+      <EditUserModal userId={modalUserId} isOpen={editUserIsOpen} onClose={closeEditUserModal} />
+      <PointDataModal userId={modalUserId} isOpen={pointDataIsOpen} onClose={closePointDataModal} />
       <Alert status="info">
         <AlertIcon />
         <AlertTitle>How to Use</AlertTitle>
         <AlertDescription>
-          Search for a participants name and then you'll be able to select the
-          prize and quantity for them to buy.
+          Search for a participants name and then you'll be able to select the prize and quantity
+          for them to buy.
         </AlertDescription>
       </Alert>
       <SearchableTable

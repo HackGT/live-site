@@ -3,7 +3,7 @@ import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 
-export const Types: {[key: string]: string} = {
+export const Types: { [key: string]: string } = {
   "food": "Food",
   "workshop": "Workshop",
   "ceremony": "Ceremony",
@@ -12,7 +12,7 @@ export const Types: {[key: string]: string} = {
   "important": "Important",
   "speaker": "Speaker",
   "mini-challenge": "Mini Challenge",
-}
+};
 
 const eventColumns = [
   {
@@ -20,7 +20,11 @@ const eventColumns = [
     enabled: true,
     header: "Name",
     field: "name",
-    accessor: (row: any) => <ChakraLink as={Link} to={`/admin/events/${row.id}`}>{row.name}</ChakraLink>,
+    accessor: (row: any) => (
+      <ChakraLink as={Link} to={`/admin/events/${row.id}`}>
+        {row.name}
+      </ChakraLink>
+    ),
   },
   {
     key: 1,
@@ -73,15 +77,12 @@ const eventColumns = [
   },
 ];
 
-
-
-
-type StringToArray = { 
-  [name: string]: any[] 
+type StringToArray = {
+  [name: string]: any[];
 };
 
 const Columns: StringToArray = {
-  "Events": eventColumns,
-}
+  Events: eventColumns,
+};
 
 export default Columns;
