@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import {
   Box,
   Button,
+  Checkbox,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -51,6 +52,7 @@ const BlocksTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState();
   const [data, setData] = useState<any[]>([]);
+  const [checked, setChecked] = useState(false);
 
   const onPreviousClicked = () => {
     setOffset(offset - limit);
@@ -68,7 +70,13 @@ const BlocksTable: React.FC = () => {
     const getData = async () => {
       try {
         const res = await axios.get(apiUrl(Service.HEXATHONS, `/blocks`), {
-          params: { hexathon: String(process.env.REACT_APP_HEXATHON_ID), search: searchText },
+          params: {
+            hexathon: String(process.env.REACT_APP_HEXATHON_ID),
+            search: searchText,
+            offset,
+            limit,
+            display: checked ? "mobile" : "",
+          },
         });
         console.log(res.data);
         setData(res.data);
@@ -77,7 +85,7 @@ const BlocksTable: React.FC = () => {
       }
     };
     getData();
-  }, [searchText, isOpen]);
+  }, [searchText, isOpen, checked]);
   if (error) {
     return <ErrorScreen error={error} />;
   }
@@ -95,6 +103,9 @@ const BlocksTable: React.FC = () => {
         <HStack>
           <Heading>{name}</Heading>
           <Spacer />
+          <Checkbox checked={checked} onChange={() => setChecked(!checked)} pr="3">
+            Mobile?
+          </Checkbox>
           <HStack spacing="5px">
             <Button
               width={{
