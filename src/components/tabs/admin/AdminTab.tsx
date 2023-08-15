@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Flex, Stack, Heading } from "@chakra-ui/react";
-import { useAuth, Service, apiUrl } from "@hex-labs/core";
+import { useAuth, Service, apiUrl, LoadingScreen } from "@hex-labs/core";
 import axios from "axios";
 
 import AdminWidget from "./AdminWidget";
 import HexathonHomeTab from "../home/HexathonHome";
 
 const AdminControlsHome: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const [roleLoading, setRoleLoading] = React.useState<boolean>(true);
 
   const [role, setRoles] = React.useState<any>({
     member: false,
@@ -15,18 +16,23 @@ const AdminControlsHome: React.FC = () => {
     admin: false,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getRoles = async () => {
       if (user?.uid) {
         const response = await axios.get(apiUrl(Service.USERS, `/users/${user?.uid}`));
         setRoles({ ...response.data.roles });
+        setRoleLoading(false);
       }
     };
+
     getRoles();
-  }, [user?.uid]);
+  }, [user?.uid, roleLoading]);
+
+  if (loading || roleLoading) {
+    return <LoadingScreen />;
+  }
 
   const showAdmin = role.member || role.admin || role.exec;
-
   if (!showAdmin) {
     return <HexathonHomeTab />;
   }

@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
         <HeaderItem>Edit Profile</HeaderItem>
       </ChakraLink>
       {showAdmin && (
-        <ChakraLink href={`${"/admin"}`}>
+        <ChakraLink href='/admin'>
           <HeaderItem>Admin</HeaderItem>
         </ChakraLink>
       )}
