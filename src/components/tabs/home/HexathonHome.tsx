@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { apiUrl, Service } from "@hex-labs/core";
 import axios from "axios";
-import { Divider } from "@chakra-ui/react";
 
 import BlockCollection from "../../common/BlockCollection";
 import Schedule from "../ScheduleHomePage/ScheduleTable";
@@ -25,13 +24,8 @@ const HexathonHomeTab: React.FC = () => {
 
   return (
     <div>
-      <div>
-        <BlockCollection title="" blocks={home} />
-      </div>
-      <Divider />
-      <div>
-        <Schedule />
-      </div>
+      <BlockCollection title="" blocks={home} />
+      <Schedule />
     </div>
   );
 };
