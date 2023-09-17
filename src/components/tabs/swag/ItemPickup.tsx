@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   Service,
   useAuth,
