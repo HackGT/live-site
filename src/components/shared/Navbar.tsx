@@ -1,7 +1,9 @@
+/* eslint-disable */
 import React from "react";
 import { Link, chakra, Text, Box } from "@chakra-ui/react";
-import { Header, HeaderItem, useAuth, Service, apiUrl } from "@hex-labs/core";
+import { Header, HeaderItem, useAuth, Service, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
+import useAxios from "axios-hooks";
 import { HEXATHON_ID } from "../../App";
 import { routes } from "./Navigation";
 
@@ -29,7 +31,6 @@ const calculateTimeRemaining = (endTime: string): any => {
     if (timeRemaining <= 0) {
       return "Complete";
     }
-
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
 
@@ -65,18 +66,6 @@ const Timer = (props: timerProps) => {
     color: "#8a2be2",
   };
 
-  const [isTimerReady, setTimerReady] = React.useState(false);
-
-  React.useEffect(() => {
-    if (props.activeHexathon && props.activeHexathon.id) {
-      setTimerReady(true);
-    }
-  }, [props.activeHexathon]);
-
-  if (!isTimerReady) {
-    return null;
-  }
-
   return (
     <>
         <HeaderItem key={props.activeHexathon.id}>
@@ -103,7 +92,6 @@ const Navbar: React.FC = () => {
   });
 
   const [hexathons, setHexathons] = React.useState<any[]>([]);
-  const [activeHexathon, setActiveHexathons] = React.useState<any[]>();
 
   React.useEffect(() => {
     const getRoles = async () => {
@@ -115,17 +103,23 @@ const Navbar: React.FC = () => {
     getRoles();
   }, [user?.uid]);
 
-  React.useEffect(() => {
-    const getActiveHexathon = async () => {
-      try {
-        const response = await axios.get(apiUrl(Service.HEXATHONS, `/hexathons/${HEXATHON_ID}`));
-        setActiveHexathons(response.data)
-      } catch (error) {
-        console.error("Error fetching hexathons:", error);
-      }
-    };
-    getActiveHexathon();
-  }, []);
+  const [{ data: activeHexathon, loading: hexathonLoading, error: hexathonError }] = useAxios(
+    {
+      url: apiUrl(Service.HEXATHONS, `/hexathons/${HEXATHON_ID}`),
+      method: "GET",
+      params: {
+        hexathon: HEXATHON_ID,
+      },
+    },
+    { useCache: false }
+  );
+  console.log(activeHexathon)
+  if (hexathonLoading) {
+    return <LoadingScreen />;
+  }
+  if (hexathonError) {
+    return <ErrorScreen error={hexathonError} />;
+  }
 
   const showAdmin = role.member || role.admin || role.exec;
 
