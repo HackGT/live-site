@@ -18,7 +18,7 @@ const HexathonHomeTab: React.FC = () => {
       );
       setHome(data.data);
     };
-    document.title = "Hexlabs Live";
+    document.title = "HexLabs Live";
     getBlocks();
   }, []);
 
