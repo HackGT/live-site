@@ -15,11 +15,10 @@ const ChakraLink = chakra(Link, {
   },
 });
 
-const calculateTimeRemaining = (endTime: string): any => {
-  const updateInterval = 1000;
+const calculateTimeRemaining = (endTime: string): string => {
   const endDateTime = new Date(endTime).getTime();
 
-  const updateTimer = () => {
+  const updateTimer = (): string => {
     const now = new Date().getTime();
     const timeRemaining = endDateTime - now;
 
@@ -31,21 +30,11 @@ const calculateTimeRemaining = (endTime: string): any => {
     if (timeRemaining <= 0) {
       return "Complete";
     }
+
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
 
-  let timeRemaining = updateTimer();
-  const remainingTimeElement = document.getElementById("remaining-time");
-  if (remainingTimeElement) {
-    remainingTimeElement.textContent = timeRemaining;
-  }
-
-  setInterval(() => {
-    timeRemaining = updateTimer();
-    if (remainingTimeElement) {
-      remainingTimeElement.textContent = timeRemaining;
-    }
-  }, updateInterval);
+  return updateTimer();
 };
 
 interface timerProps {
@@ -65,6 +54,22 @@ const Timer = (props: timerProps) => {
     fontWeight: "bold",
     color: "#8a2be2",
   };
+  const [remainingTime, setRemainingTime] = React.useState(calculateTimeRemaining(props.activeHexathon.endDate));
+
+  React.useEffect(() => {
+    const updateInterval = setInterval(() => {
+      const newRemainingTime = calculateTimeRemaining(props.activeHexathon.endDate);
+      setRemainingTime(newRemainingTime);
+
+      if (newRemainingTime === "Complete") {
+        clearInterval(updateInterval);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(updateInterval);
+    };
+  }, [props.activeHexathon.endDate]);
 
   return (
     <>
@@ -73,7 +78,7 @@ const Timer = (props: timerProps) => {
             <Text style={hexathonNameStyle}>{props.activeHexathon.name}</Text>
             <Text textAlign="right">
               <span id="remaining-time" style={countdownTimerStyle}>
-                {calculateTimeRemaining(props.activeHexathon.endDate)}
+                {remainingTime}
               </span>
             </Text>
           </Box>
@@ -91,7 +96,6 @@ const Navbar: React.FC = () => {
     admin: false,
   });
 
-  const [hexathons, setHexathons] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     const getRoles = async () => {
