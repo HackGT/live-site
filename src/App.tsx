@@ -6,13 +6,15 @@ import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { setPersistence, getAuth, inMemoryPersistence } from "firebase/auth";
 import { useLogin, LoadingScreen, AuthProvider, Footer } from "@hex-labs/core";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import OneSignal from "react-onesignal";
+import * as OneSignalAPI from "@onesignal/node-onesignal";
 
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
 import SwagTab from "./components/tabs/swag/SwagTab";
 import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
-import HardwareMakerspaceTab from "./components/tabs/hardware-makerspace/HardwareMakerspaceTab";
 import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
 import HexathonHomeTab from "./components/tabs/home/HexathonHome";
@@ -24,9 +26,8 @@ import EditEntry from "./components/tabs/admin/events/EditEntry";
 import UsersTable from "./components/tabs/swag/UsersTable";
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry";
-
-import OneSignal from "react-onesignal";
-import * as OneSignalAPI from "@onesignal/node-onesignal";
+import HardwareCheckout from "./components/tabs/hardware/HardwareCheckout";
+import CreateItem from "./components/tabs/hardware/CreateItem";
 
 // a little bee ascii art
 // const art =
@@ -56,6 +57,7 @@ export const App = () => {
   // the user in
 
   const [loading, loggedIn] = useLogin(app);
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     runOneSignal();
@@ -76,28 +78,34 @@ export const App = () => {
   // Sets up the AuthProvider so that any part of the application can use the
   // useAuth hook to retrieve the user's login details.
   return (
-    <AuthProvider app={app}>
-      <Navbar />
-      <Routes>
-        <Route path="/tracks-challenges" element={<TracksTab />} />
-        {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
-        {/* <Route path="/mentors" element={<MentorTab />} /> */}
-        <Route path="/swag" element={<SwagTab />} />
-        {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
-        {/* <Route path="/hardware-makerspace" element={<HardwareMakerspaceTab />} /> */}
-        {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
-        {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
-        <Route path="/judging" element={<JudgingTab />} />
-        <Route path="/admin/events" element={<EventsTab />} />
-        <Route path="admin/events/:id" element={<EditEntry name="Events" />} />
-        <Route path="/" element={<HexathonHomeTab />} />
-        <Route path="/admin" element={<AdminTab />} />
-        <Route path="/admin/blocks" element={<BlocksTab />} />
-        <Route path="admin/blocks/:id" element={<EditBlock name="Blocks" />} />
-        <Route path="/swag/item-checkout" element={<UsersTable />} />
-      </Routes>
-      <Footer />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider app={app}>
+        <Navbar />
+        <Routes>
+          <Route index element={<HexathonHomeTab />} />
+          <Route path="/tracks-challenges" element={<TracksTab />} />
+          {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
+          {/* <Route path="/mentors" element={<MentorTab />} /> */}
+          <Route path="/swag" element={<SwagTab />}/>
+          <Route path="/swag/item-checkout" element={<UsersTable />} />
+          {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
+          // TODO: Change the Create Item route to be /admin/items/new after adding in an admin page
+          to view all items
+          <Route path="/hardware" element={<HardwareCheckout />}/>
+          <Route path="/hardware/items/new" element={<CreateItem />} />
+          {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
+          {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
+          <Route path="/judging" element={<JudgingTab />} />
+          <Route path="/admin" element={<AdminTab />}>
+            <Route path="/admin/blocks" element={<BlocksTab />} />
+            <Route path="/admin/blocks/:id" element={<EditBlock name="Blocks" />} />
+            <Route path="/admin/events" element={<EventsTab />} />
+            <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

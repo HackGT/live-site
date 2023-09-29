@@ -117,7 +117,7 @@ const Navbar: React.FC = () => {
     },
     { useCache: false }
   );
-  console.log(activeHexathon)
+
   if (hexathonLoading) {
     return <LoadingScreen />;
   }
@@ -130,7 +130,7 @@ const Navbar: React.FC = () => {
   return (
     <Header rightItem={<Timer activeHexathon={activeHexathon} />}>
       {routes.map((route: any) => (
-        <ChakraLink href={`${route.link}`}>
+        <ChakraLink key={route.name} href={`${route.link}`}>
           <HeaderItem>{route.name}</HeaderItem>
         </ChakraLink>
       ))}
