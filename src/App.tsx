@@ -96,12 +96,11 @@ export const App = () => {
           {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
           {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
           <Route path="/judging" element={<JudgingTab />} />
-          <Route path="/admin" element={<AdminTab />}>
-            <Route path="/admin/blocks" element={<BlocksTab />} />
-            <Route path="/admin/blocks/:id" element={<EditBlock name="Blocks" />} />
-            <Route path="/admin/events" element={<EventsTab />} />
-            <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
-          </Route>
+          <Route path="/admin" element={<AdminTab />} />
+          <Route path="/admin/blocks" element={<BlocksTab />} />
+          <Route path="/admin/blocks/:id" element={<EditBlock name="Blocks" />} />
+          <Route path="/admin/events" element={<EventsTab />} />
+          <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
         </Routes>
         <Footer />
       </AuthProvider>
