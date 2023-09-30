@@ -69,6 +69,11 @@ const AdminControlsHome: React.FC = () => {
       <Stack spacing={4} marginX={{ base: 4, md: 0 }}>
         <AdminWidget title="Events" description="View information about events" href="events" />
         <AdminWidget title="Blocks" description="View information about blocks" href="blocks" />
+        <AdminWidget
+          title="Item Checkout"
+          description="Checkout swag items for participants!"
+          href="item-checkout"
+        />
       </Stack>
     </Flex>
   );
