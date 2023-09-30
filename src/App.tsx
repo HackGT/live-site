@@ -13,7 +13,7 @@ import * as OneSignalAPI from "@onesignal/node-onesignal";
 import Navbar from "./components/shared/Navbar";
 import TracksTab from "./components/tabs/tracks/TracksTab";
 import MentorTab from "./components/tabs/mentor/MentorTab";
-import SwagTab from "./components/tabs/swag/SwagTab";
+import SwagShop from "./components/tabs/swag/SwagShop";
 import WorkshopTab from "./components/tabs/workshops/WorkshopTab";
 import SponsorTab from "./components/tabs/sponsor/SponsorTab";
 import AccommodationsTab from "./components/tabs/accommodations/AccommodationsTab";
@@ -23,7 +23,7 @@ import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable";
 import EditEntry from "./components/tabs/admin/events/EditEntry";
-import UsersTable from "./components/tabs/swag/UsersTable";
+import RedeemSwag from "./components/tabs/swag/RedeemSwag";
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry";
 import HardwareCheckout from "./components/tabs/hardware/HardwareCheckout";
@@ -86,11 +86,9 @@ export const App = () => {
           <Route path="/tracks-challenges" element={<TracksTab />} />
           {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
           {/* <Route path="/mentors" element={<MentorTab />} /> */}
-          <Route path="/swag" element={<SwagTab />}/>
-          <Route path="/swag/item-checkout" element={<UsersTable />} />
+          <Route path="/swag" element={<SwagShop />}/>
           {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
-          // TODO: Change the Create Item route to be /admin/items/new after adding in an admin page
-          to view all items
+          // TODO: Change the Create Item route to be /admin/items/new after adding in an admin page to view all items
           <Route path="/hardware" element={<HardwareCheckout />}/>
           <Route path="/hardware/items/new" element={<CreateItem />} />
           {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
@@ -101,6 +99,7 @@ export const App = () => {
           <Route path="/admin/blocks/:id" element={<EditBlock name="Blocks" />} />
           <Route path="/admin/events" element={<EventsTab />} />
           <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
+          <Route path="/admin/item-checkout" element={<RedeemSwag />} />
         </Routes>
         <Footer />
       </AuthProvider>

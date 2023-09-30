@@ -9,7 +9,7 @@ import {
   Button,
   ButtonGroup,
 } from "@chakra-ui/react";
-import { apiUrl, SearchableTable, Service } from "@hex-labs/core";
+import { apiUrl, ErrorScreen, LoadingScreen, SearchableTable, Service } from "@hex-labs/core";
 import useAxios from "axios-hooks";
 import { HEXATHON_ID } from "../../../App";
 import ItemCheckoutModal from "./ItemCheckoutModal";
@@ -18,7 +18,7 @@ import PointDataModal from "./InteractionDataModal";
 
 const limit = 50;
 
-const UsersTable: React.FC = () => {
+const RedeemSwag: React.FC = () => {
   const [offset, setOffset] = useState(0);
   const [searchText, setSearchText] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,7 +35,7 @@ const UsersTable: React.FC = () => {
 
   const [modalUserId, setModalUserId] = useState(null);
 
-  const [{ data, error }] = useAxios({
+  const [{ data, loading: usersLoading, error }] = useAxios({
     method: "GET",
     url: apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users`),
     params: {
@@ -44,7 +44,7 @@ const UsersTable: React.FC = () => {
     },
   });
 
-  const [{ data: swagItems, error: swagItemsError }] = useAxios({
+  const [{ data: swagItems, loading: swagLoading, error: swagItemsError }] = useAxios({
     method: "GET",
     url: apiUrl(Service.HEXATHONS, "/swag-items"),
     params: {
@@ -119,6 +119,14 @@ const UsersTable: React.FC = () => {
     setOffset(0);
   };
 
+  if (usersLoading || swagLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (error || swagItemsError) {
+    return <ErrorScreen error={error || (swagItemsError as Error)} />;
+  }
+
   return (
     <>
       <ItemCheckoutModal
@@ -152,4 +160,4 @@ const UsersTable: React.FC = () => {
   );
 };
 
-export default UsersTable;
+export default RedeemSwag;
