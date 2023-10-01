@@ -1,13 +1,14 @@
 /* eslint-disable */
 import React from "react";
-import { Link, chakra, Text, Box } from "@chakra-ui/react";
+import { Link as chakraLink, chakra, Text, Box } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { Header, HeaderItem, useAuth, Service, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
 import useAxios from "axios-hooks";
 import { HEXATHON_ID } from "../../App";
 import { routes } from "./Navigation";
 
-const ChakraLink = chakra(Link, {
+const ChakraLink = chakra(chakraLink, {
   baseStyle: {
     _hover: {
       textDecoration: "none",
@@ -130,9 +131,9 @@ const Navbar: React.FC = () => {
   return (
     <Header rightItem={<Timer activeHexathon={activeHexathon} />}>
       {routes.map((route: any) => (
-        <ChakraLink key={route.name} href={`${route.link}`}>
+        <Link key={route.name} to={`${route.link}`}>
           <HeaderItem>{route.name}</HeaderItem>
-        </ChakraLink>
+        </Link>
       ))}
       <ChakraLink href="https://expo.hexlabs.org/" isExternal>
         <HeaderItem>Expo</HeaderItem>
@@ -144,9 +145,9 @@ const Navbar: React.FC = () => {
         <HeaderItem>Edit Profile</HeaderItem>
       </ChakraLink>
       {showAdmin && (
-        <ChakraLink href='/admin'>
+        <Link to='/admin'>
           <HeaderItem>Admin</HeaderItem>
-        </ChakraLink>
+        </Link>
       )}
     </Header>
   );
