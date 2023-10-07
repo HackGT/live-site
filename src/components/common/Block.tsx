@@ -16,13 +16,13 @@ type Props = {
 const links = [
   [
     "Event Slack",
-    "https://join.slack.com/t/horizons-xux6929/shared_invite/zt-1qhc3lyj7-6CeeTEzvI79kL8~EeTgypQ",
+    "tinyurl.com/hackgtx",
   ],
   ["Event App (iOS)", "https://apps.apple.com/us/app/hexlabs/id1478268737"],
   ["Event App (Android)", "https://play.google.com/store/apps/details?id=com.appgt&hl=en&gl=US"],
-  ["Horizons Website", "https://horizons.hexlabs.org/"],
-  ["Devpost", "https://horizons-2023.devpost.com/"],
-  ["Event Packet", "https://www.notion.so/b3040e44a9334c899d93403042745dda"],
+  ["HackGT Website", "https://hack.gt/"],
+  ["Devpost", "https://hackgt-x.devpost.com/"],
+  ["Event Packet", "https://www.notion.so/hexlabs/HackGT-X-Pre-Event-Packet-10f8e4017ab44603a6a23124803b3cf8?pvs=4"],
 ];
 
 const Block: React.FC<Props> = (props: Props) => {
