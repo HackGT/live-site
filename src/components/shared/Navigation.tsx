@@ -20,5 +20,5 @@ export const routes = [
   // new Page("Workshops", "/workshops"),
   // new Page("Showers", "/accomodations"),
   new Page("Judging", "/judging"),
-  new Page("Hardware", "/hardware"),
+  // new Page("Hardware", "/hardware"),
 ];
