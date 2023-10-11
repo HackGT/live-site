@@ -8,6 +8,8 @@ const Map = (props: { links: any }) => {
     setActiveTab(index);
   };
 
+  if (!props.links) return null;
+
   return (
     <Box width="70%" margin="auto" marginY="20px" backgroundColor="">
       <HStack marginBottom="5px">
@@ -21,7 +23,7 @@ const Map = (props: { links: any }) => {
         ))}
       </HStack>
       <Box>
-        <Image src={props.links[activeTab].url} alt={`Image ${activeTab}`} />
+        <Image src={props.links[activeTab]?.url} alt={`Image ${activeTab}`} />
       </Box>
     </Box>
   );
