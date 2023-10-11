@@ -4,19 +4,28 @@ import ItemContainer from "./ItemContainer";
 import { Item } from "./Item";
 // import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./SwagShop.css";
-import { Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
+import { Button, Center, Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
 import { Service, useAuth, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
 import useAxios from "axios-hooks";
+import CreateSwagModal from "./CreateSwagModal";
 
 const SwagShop: React.FC = props => {
   //defining variables
   const [points, setPoints] = useState(0);
+  const [createSwagModalIsOpen, setCreateSwagModalIsOpen] = useState(false);
   const MAX_POINTS_ATTAINABLE = 1000;
   const breakPt = useBreakpointValue({ base: "base", md: "md" });
 
   const { user } = useAuth();
   const hexathonID = String(process.env.REACT_APP_HEXATHON_ID);
+
+  const openCreateSwagModal = () => {
+    setCreateSwagModalIsOpen(true);
+  }
+  const closeCreateSwagModa = () => {
+    setCreateSwagModalIsOpen(false);
+  }
 
   //doing the post request to create the user
   useEffect(() => {
@@ -47,6 +56,7 @@ const SwagShop: React.FC = props => {
     { useCache: false }
   );
 
+
   //more site loading procedures
   if (loading) {
     return <LoadingScreen />;
@@ -76,8 +86,12 @@ const SwagShop: React.FC = props => {
   };
 
   return (
-    <div id="swag-shop">
+    <div id="swag-shop">  
       <Text id="pointIndicator">You have {points} points.</Text>
+      <Center h="10vh">
+        <Button onClick={openCreateSwagModal} colorScheme="teal">Add New Swag</Button>
+      </Center>
+      {createSwagModalIsOpen && <CreateSwagModal isOpen={createSwagModalIsOpen} onClose={closeCreateSwagModa} />}
       <Flex flexDirection="column" alignItems="center">
         {itemGrid()}
       </Flex>

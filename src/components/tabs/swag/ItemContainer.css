@@ -30,11 +30,11 @@
   margin: 1rem;
   padding: 1rem;
   overflow-y: visible;
-  color: rgb(23 18 161);
+  color: white;
   font-size: 1.1rem;
-  background: #bcbaf7 no-repeat center fixed; /* itemContainer color */
+  background: #7FC2AE no-repeat center fixed; 
   border-radius: 30px;
-  box-shadow: 0 0 8px 2px rgb(124 120 237);
+  box-shadow: 0 0 8px 2px #B2E2D8;
 }
 
 .itemButton {
