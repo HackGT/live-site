@@ -78,7 +78,6 @@ const BlocksTable: React.FC = () => {
             display: checked ? "mobile" : "",
           },
         });
-        console.log(res.data);
         setData(res.data);
       } catch (e: any) {
         setError(e);

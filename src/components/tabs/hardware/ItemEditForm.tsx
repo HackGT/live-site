@@ -66,7 +66,6 @@ const ItemEditForm = () => {
   }
 
   async function onSubmit(values: any) {
-    console.log(values);
     await axios.post(apiUrl(Service.HARDWARE, "/items"), values);
     navigate("/");
   }

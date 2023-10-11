@@ -3,10 +3,12 @@ import { apiUrl, Service } from "@hex-labs/core";
 import axios from "axios";
 
 import BlockCollection from "../../common/BlockCollection";
+import Map from "./Map";
 import Schedule from "../ScheduleHomePage/ScheduleTable";
 
 const HexathonHomeTab: React.FC = () => {
   const [home, setHome] = useState<any[]>([]);
+  const [mapLinks, setMapLinks] = useState<string[]>([]);
 
   useEffect(() => {
     const getBlocks = async () => {
@@ -16,7 +18,11 @@ const HexathonHomeTab: React.FC = () => {
           `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=home`
         )
       );
-      setHome(data.data);
+      setHome(data.data.filter((block: any) => block.title !== "Map Links"));
+
+      let links = data.data.filter((block: any) => block.title === "Map Links");
+      links = JSON.parse(links[0].content);
+      setMapLinks(links);
     };
     document.title = "HexLabs Live";
     getBlocks();
@@ -25,6 +31,7 @@ const HexathonHomeTab: React.FC = () => {
   return (
     <div>
       <BlockCollection title="" blocks={home} />
+      <Map links={mapLinks}/>
       <Schedule />
     </div>
   );
