@@ -50,7 +50,10 @@ const ItemContainer: React.FC<Props> = (props: Props) => {
         </Box>
         <Box>
           <div className="itemInfo itemDescription">
-            <h2>{props.item.name}</h2>
+            <span>
+              <b>{props.item.name}</b>
+              <br></br><br></br>
+            </span>
             <span>
               <b>Description: </b>
               {props.item.description}
@@ -59,7 +62,9 @@ const ItemContainer: React.FC<Props> = (props: Props) => {
             {props.item.capacity > 0 && (
               <span>
                 <b>Status: </b>{" "}
-                {props.item.purchased < props.item.capacity ? "In stock" : "Out of stock"}
+                {
+                  (!props.item.purchased) || (props.item.purchased < props.item.capacity) ? "In stock" : "Out of stock"
+                }
               </span>
             )}
             <br />
@@ -67,7 +72,8 @@ const ItemContainer: React.FC<Props> = (props: Props) => {
               <b>Points Required: </b>
               {props.item.points}
             </span>
-            <Flex justify="space-between">
+            <br></br>
+            <Flex justify="space-between" mt={1}>
               <IconButton
                 icon={<EditIcon />}
                 onClick={openUpdateSwagModal}

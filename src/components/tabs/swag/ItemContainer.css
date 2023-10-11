@@ -9,12 +9,12 @@
 
 .itemInfo {
   display: inline-block;
-  width: 15rem;
+  width: 10rem;
 
   /* margin: auto; */
 
   /* padding: 10px; */
-  margin-top: 10px;
+  margin-top: 5px;
   padding-top: 1rem;
   padding-bottom: 1rem;
   vertical-align: text-top;
@@ -31,6 +31,7 @@
   padding: 1rem;
   overflow-y: visible;
   color: white;
+  /* color: #295749; */
   font-size: 1.1rem;
   background: #7FC2AE no-repeat center fixed; 
   border-radius: 30px;

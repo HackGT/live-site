@@ -22,9 +22,18 @@
 
 #pointIndicator {
   margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #F2C6DE;
   font-weight: bolder;
-  font-size: 3rem;
+  font-size: 4rem;
+  text-align: center;
+}
+
+#pointCategory {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #A9CFEE;
+  font-weight: bolder;
+  font-size: 2rem;
   text-align: center;
 }

@@ -23,7 +23,7 @@ const SwagShop: React.FC = props => {
   const openCreateSwagModal = () => {
     setCreateSwagModalIsOpen(true);
   }
-  const closeCreateSwagModa = () => {
+  const closeCreateSwagModal = () => {
     setCreateSwagModalIsOpen(false);
   }
 
@@ -68,17 +68,18 @@ const SwagShop: React.FC = props => {
   }
 
   //loading item grid
-  const itemGroup: Item[][] = [];
-  for (let i = 0; i < items.length; i++) {
-    if (i % 2 === 0) itemGroup.push([]);
-    itemGroup[itemGroup.length - 1].push(items[i]);
-  }
+  // const itemGroup: Item[][] = [];
+  // for (let i = 0; i < items.length; i++) {
+  //   if (i % 2 === 0) itemGroup.push([]);
+  //   itemGroup[itemGroup.length - 1].push(items[i]);
+  // }
 
+  // console.log(items.filter((item: Item) => item.points === 150));
   //more loading item grid
-  const itemGrid = () => {
+  const itemGrid = (numPoints:number) => {
     return (
       <Wrap spacing="30px" justify="center">
-        {items.map((item: any) => {
+        {items.filter((item: Item) => item.points === numPoints).map((item: Item) => {
           return <ItemContainer key={item.id} item={item} points={points} showBuyButton={true} />;
         })}
       </Wrap>
@@ -91,9 +92,16 @@ const SwagShop: React.FC = props => {
       <Center h="10vh">
         <Button onClick={openCreateSwagModal} colorScheme="teal">Add New Swag</Button>
       </Center>
-      {createSwagModalIsOpen && <CreateSwagModal isOpen={createSwagModalIsOpen} onClose={closeCreateSwagModa} />}
+      {createSwagModalIsOpen && <CreateSwagModal isOpen={createSwagModalIsOpen} onClose={closeCreateSwagModal} />}
       <Flex flexDirection="column" alignItems="center">
-        {itemGrid()}
+        <Text id="pointCategory">Tier 1 (150 Points)</Text>
+        {itemGrid(150)}
+        <Text id="pointCategory">Tier 2 (100 Points)</Text>
+        {itemGrid(100)}
+        <Text id="pointCategory">Tier 3 (50 Points)</Text>
+        {itemGrid(50)}
+        <Text id="pointCategory">Tier 4 (10 Points)</Text>
+        {itemGrid(10)}
       </Flex>
     </div>
   );
