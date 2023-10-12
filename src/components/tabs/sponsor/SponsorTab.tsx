@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl, Service } from "@hex-labs/core";
+import axios from "axios";
 
 import BlockCollection from "../../common/BlockCollection";
-import { fetchBlock } from "../../../services/cmsService";
 
 const SponsorTab: React.FC = () => {
-  const [sponsorChallenges, setSponsorChallenges] = useState<any[]>([]);
+  const [sponsor, setSponsor] = useState<any[]>([]);
 
   useEffect(() => {
-    const getEvents = async () => {
-      const data = await fetchBlock("sponsor-challenges");
-      setSponsorChallenges(data.allBlocks);
+    const getBlocks = async () => {
+      const data = await axios.get(
+        apiUrl(
+          Service.HEXATHONS,
+          `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=sponsor`
+        )
+      );
+      setSponsor(data.data);
     };
-    getEvents();
+    getBlocks();
   }, []);
 
   return (
     <div>
-      <div>
-        <BlockCollection title="" blocks={sponsorChallenges} />
-      </div>
+      <BlockCollection title="Sponsor" blocks={sponsor} />
     </div>
   );
 };

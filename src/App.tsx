@@ -91,7 +91,7 @@ export const App = () => {
           // TODO: Change the Create Item route to be /admin/items/new after adding in an admin page to view all items
           <Route path="/hardware" element={<HardwareCheckout />}/>
           <Route path="/hardware/items/new" element={<CreateItem />} />
-          {/* <Route path="/sponsor" element={<SponsorTab />} /> */}
+          <Route path="/sponsor" element={<SponsorTab />} />
           {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
           <Route path="/judging" element={<JudgingTab />} />
           <Route path="/admin" element={<AdminTab />} />

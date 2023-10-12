@@ -1,12 +1,21 @@
 /* eslint-disable */
 import React from "react";
-import { Link as chakraLink, chakra, Text, Box } from "@chakra-ui/react";
+import { Link as chakraLink, chakra, Text, Box, HStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { Header, HeaderItem, useAuth, Service, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
+import {
+  Header,
+  HeaderItem,
+  useAuth,
+  Service,
+  apiUrl,
+  LoadingScreen,
+  ErrorScreen,
+} from "@hex-labs/core";
 import axios from "axios";
 import useAxios from "axios-hooks";
 import { HEXATHON_ID } from "../../App";
 import { routes } from "./Navigation";
+import { LockIcon } from "@chakra-ui/icons";
 
 const ChakraLink = chakra(chakraLink, {
   baseStyle: {
@@ -55,7 +64,9 @@ const Timer = (props: timerProps) => {
     fontWeight: "bold",
     color: "#8a2be2",
   };
-  const [remainingTime, setRemainingTime] = React.useState(calculateTimeRemaining(props.activeHexathon.endDate));
+  const [remainingTime, setRemainingTime] = React.useState(
+    calculateTimeRemaining(props.activeHexathon.endDate)
+  );
 
   React.useEffect(() => {
     const updateInterval = setInterval(() => {
@@ -74,16 +85,16 @@ const Timer = (props: timerProps) => {
 
   return (
     <>
-        <HeaderItem key={props.activeHexathon.id}>
-          <Box display="block">
-            <Text style={hexathonNameStyle}>{props.activeHexathon.name}</Text>
-            <Text textAlign="right">
-              <span id="remaining-time" style={countdownTimerStyle}>
-                {remainingTime}
-              </span>
-            </Text>
-          </Box>
-        </HeaderItem>
+      <HeaderItem key={props.activeHexathon.id}>
+        <Box display="block">
+          <Text style={hexathonNameStyle}>{props.activeHexathon.name}</Text>
+          <Text textAlign="right">
+            <span id="remaining-time" style={countdownTimerStyle}>
+              {remainingTime}
+            </span>
+          </Text>
+        </Box>
+      </HeaderItem>
     </>
   );
 };
@@ -96,7 +107,6 @@ const Navbar: React.FC = () => {
     exec: false,
     admin: false,
   });
-
 
   React.useEffect(() => {
     const getRoles = async () => {
@@ -141,12 +151,18 @@ const Navbar: React.FC = () => {
       <ChakraLink href={`https://registration.hexlabs.org/${HEXATHON_ID}`} isExternal>
         <HeaderItem>Registration</HeaderItem>
       </ChakraLink>
+      <ChakraLink href="https://match.hexlabs.org/" isExternal>
+        <HeaderItem>Match</HeaderItem>
+      </ChakraLink>
       <ChakraLink href="https://login.hexlabs.org/profile" isExternal>
         <HeaderItem>Edit Profile</HeaderItem>
       </ChakraLink>
       {showAdmin && (
-        <Link to='/admin'>
-          <HeaderItem>Admin</HeaderItem>
+        <Link to="/admin">
+          <HStack spacing="-1">
+            <HeaderItem color="red">Admin</HeaderItem>
+            <LockIcon color="red" />
+          </HStack>
         </Link>
       )}
     </Header>

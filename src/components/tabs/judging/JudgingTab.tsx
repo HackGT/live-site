@@ -22,9 +22,7 @@ const JudgingTab: React.FC = () => {
 
   return (
     <div>
-      <div>
-        <BlockCollection title="Judging" blocks={judging} />
-      </div>
+      <BlockCollection title="Judging" blocks={judging} />
     </div>
   );
 };
