@@ -30,9 +30,9 @@ const HexathonHomeTab: React.FC = () => {
 
   return (
     <div>
+      <Schedule />
       <BlockCollection title="" blocks={home} />
       <Map links={mapLinks}/>
-      <Schedule />
     </div>
   );
 };
