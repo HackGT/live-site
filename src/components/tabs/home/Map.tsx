@@ -10,7 +10,7 @@ const Map = (props: { links: any }) => {
 
   if (!props.links) return null;
 
-  // map each link to the imageID
+  // map each link to the image ID
   props.links.map((obj: any) => {
     if (obj.url.includes("/")) {
       const imageID = obj.url.split("/")[5];
