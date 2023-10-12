@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Box, Image, HStack } from "@chakra-ui/react";
+import { Button, Box, Image, HStack, ButtonGroup } from "@chakra-ui/react";
 
 const Map = (props: { links: any }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -10,20 +10,38 @@ const Map = (props: { links: any }) => {
 
   if (!props.links) return null;
 
+  // map each link to the imageID
+  props.links.map((obj: any) => {
+    if (obj.url.includes("/")) {
+      const imageID = obj.url.split("/")[5];
+      obj.url = imageID;
+    }
+  });
+
   return (
-    <Box width="70%" margin="auto" marginY="20px" backgroundColor="">
+    <Box
+      width={{ base: "90%", md: "75%", lg: "65%"}}
+      margin="auto"
+      marginTop="20px"
+    >
       <HStack marginBottom="5px">
-        {props.links.map((link: any, index: number) => (
-          <Button
-            onClick={() => handleTabClick(index)}
-            colorScheme={activeTab === index ? "blue" : "gray"}
-          >
-            {link.title}
-          </Button>
-        ))}
+        <ButtonGroup>
+          {props.links.map((link: any, index: number) => (
+            <Button
+              size={{ base: "xs", lg: "md" }}
+              onClick={() => handleTabClick(index)}
+              colorScheme={activeTab === index ? "blue" : "gray"}
+            >
+              {link.title}
+            </Button>
+          ))}
+        </ButtonGroup>
       </HStack>
       <Box>
-        <Image src={props.links[activeTab]?.url} alt={`Image ${activeTab}`} />
+        <Image
+          src={`https://drive.google.com/uc?export=view&id=${props.links[activeTab]?.url}`}
+          alt={`Image ${activeTab}`}
+        />
       </Box>
     </Box>
   );
