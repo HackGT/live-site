@@ -24,6 +24,7 @@ const links = [
     "https://www.notion.so/hexlabs/HackGT-X-Pre-Event-Packet-10f8e4017ab44603a6a23124803b3cf8?pvs=4",
   ],
   ["Greyhat CTF", "https://wreckctf.com"],
+  ["NSA Landing Page", "https://nsa.hexlabs.org/"],
 ];
 
 const Block: React.FC<Props> = (props: Props) => {
