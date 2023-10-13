@@ -60,8 +60,10 @@ const UpdateSwagModal: React.FC<UpdateSwagModalProps> = props => {
         duration: 3000,
         isClosable: true,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       props.onClose();
-      window.location.reload();
     } catch (e: any) {
       handleAxiosError(e);
     }
