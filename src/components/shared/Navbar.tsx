@@ -25,23 +25,33 @@ const ChakraLink = chakra(chakraLink, {
   },
 });
 
-const calculateTimeRemaining = (endTime: string): string => {
+const calculateTimeRemaining = (startTime: string, endTime: string): string => {
+  const startDateTime = new Date(startTime).getTime();
   const endDateTime = new Date(endTime).getTime();
+
+  const getDetailedTime = (time: number): string => {
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
 
   const updateTimer = (): string => {
     const now = new Date().getTime();
+    const timeTillEvent = startDateTime - now;
     const timeRemaining = endDateTime - now;
-
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
     if (timeRemaining <= 0) {
       return "Complete";
     }
 
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    if (timeTillEvent <= 0) {
+      return "Ends in " + getDetailedTime(timeRemaining);
+    }
+
+    return getDetailedTime(timeTillEvent);
   };
 
   return updateTimer();
@@ -65,12 +75,15 @@ const Timer = (props: timerProps) => {
     color: "#8a2be2",
   };
   const [remainingTime, setRemainingTime] = React.useState(
-    calculateTimeRemaining(props.activeHexathon.endDate)
+    calculateTimeRemaining(props.activeHexathon.startDate, props.activeHexathon.endDate)
   );
 
   React.useEffect(() => {
     const updateInterval = setInterval(() => {
-      const newRemainingTime = calculateTimeRemaining(props.activeHexathon.endDate);
+      const newRemainingTime = calculateTimeRemaining(
+        props.activeHexathon.startDate,
+        props.activeHexathon.endDate
+      );
       setRemainingTime(newRemainingTime);
 
       if (newRemainingTime === "Complete") {
@@ -86,7 +99,7 @@ const Timer = (props: timerProps) => {
   return (
     <>
       <HeaderItem key={props.activeHexathon.id}>
-        <Box display="block">
+      <Box display="block">
           <Text style={hexathonNameStyle}>{props.activeHexathon.name}</Text>
           <Text textAlign="right">
             <span id="remaining-time" style={countdownTimerStyle}>
