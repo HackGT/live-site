@@ -25,6 +25,7 @@ const links = [
   ],
   ["Greyhat CTF", "https://wreckctf.com"],
   ["NSA Landing Page", "https://nsa.hexlabs.org/"],
+  ["MLH APIs", "https://hack.mlh.io/hackgt-x/software"],
 ];
 
 const Block: React.FC<Props> = (props: Props) => {
