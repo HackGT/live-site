@@ -92,7 +92,7 @@ export const App = () => {
           <Route path="/hardware" element={<HardwareCheckout />}/>
           <Route path="/hardware/items/new" element={<CreateItem />} />
           <Route path="/sponsor" element={<SponsorTab />} />
-          {/* <Route path="/accomodations" element={<AccommodationsTab />} /> */}
+          <Route path="/accomodations" element={<AccommodationsTab />} />
           <Route path="/judging" element={<JudgingTab />} />
           <Route path="/admin" element={<AdminTab />} />
           <Route path="/admin/blocks" element={<BlocksTab />} />

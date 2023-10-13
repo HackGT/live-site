@@ -17,7 +17,7 @@ export const routes = [
   // new Page("Mentors", "/mentors"),
   new Page("Swag", "/swag"),
   // new Page("Workshops", "/workshops"),
-  // new Page("Showers", "/accomodations"),
+  new Page("Accomodations", "/accomodations"),
   new Page("Judging", "/judging"),
   new Page("Sponsors", "/sponsor"),
   // new Page("Hardware", "/hardware"),

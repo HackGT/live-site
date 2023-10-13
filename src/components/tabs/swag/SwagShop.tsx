@@ -18,6 +18,7 @@ import { Service, useAuth, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/
 import axios from "axios";
 import useAxios from "axios-hooks";
 import CreateSwagModal from "./CreateSwagModal";
+import BlockCollection from "../../common/BlockCollection";
 
 const SwagShop: React.FC = props => {
   const { user } = useAuth();
@@ -83,6 +84,21 @@ const SwagShop: React.FC = props => {
     { useCache: false }
   );
 
+  const [swagShop, setSwagShop] = useState<any[]>([]);
+
+  useEffect(() => {
+    const getBlocks = async () => {
+      const data = await axios.get(
+        apiUrl(
+          Service.HEXATHONS,
+          `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=swag`
+        )
+      );
+      setSwagShop(data.data);
+    };
+    getBlocks();
+  }, []);
+
   //more site loading procedures
   if (loading) {
     return <LoadingScreen />;
@@ -141,6 +157,7 @@ const SwagShop: React.FC = props => {
 
   return (
     <div id="swag-shop">
+      <BlockCollection title="Swag Shop" blocks={swagShop} />
       <Text id="pointIndicator">You have {points} points.</Text>
       {showAdmin && (
         <Center h="10vh">
