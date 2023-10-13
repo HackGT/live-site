@@ -4,20 +4,20 @@
   margin: auto;
   margin-top: 10px;
   padding: 10px;
-  vertical-align: text-top;
+  /* vertical-align: text-top; */
 }
 
 .itemInfo {
   display: inline-block;
-  width: 15rem;
+  width: 10rem;
 
   /* margin: auto; */
 
   /* padding: 10px; */
-  margin-top: 10px;
+  margin-top: 5px;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  vertical-align: text-top;
+  /* vertical-align: text-top; */
 }
 
 .itemInfo > .button {
@@ -27,20 +27,31 @@
 
 .glowingItem {
   width: inherit;
-  margin: 1rem;
+  /* margin: 1rem; */
   padding: 1rem;
   overflow-y: visible;
-  color: rgb(23 18 161);
+  color: white;
   font-size: 1.1rem;
-  background: #bcbaf7 no-repeat center fixed; /* itemContainer color */
+  background: #7FC2AE no-repeat center fixed; 
   border-radius: 30px;
-  box-shadow: 0 0 8px 2px rgb(124 120 237);
+  box-shadow: 0 0 8px 2px #B2E2D8;
 }
 
 .itemButton {
   width: 70% !important;
+  align-items: center;
+  vertical-align: text-top;
 }
 
 .itemDescription {
   text-align: left;
+}
+
+.itemName {
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+  /* vertical-align: text-top; */
+  /* width: 20rem; */
 }
