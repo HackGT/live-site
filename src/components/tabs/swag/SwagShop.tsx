@@ -167,13 +167,12 @@ const SwagShop: React.FC = props => {
         <Divider />
       </Box>
 
-      <Text id="pointCategory" alignItems="center">
-        {" "}
-        Admin Section (All Swag){" "}
-      </Text>
+      {showAdmin &&
       <Flex flexDirection="column" alignItems="center">
-        {showAdmin && itemGridAll()}
+        <Text id="pointCategory" alignItems="center">{" "}Admin Section (All Swag){" "}</Text>
+        {itemGridAll()}
       </Flex>
+      }
     </div>
   );
 };
