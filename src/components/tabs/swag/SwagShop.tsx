@@ -4,20 +4,38 @@ import ItemContainer from "./ItemContainer";
 import { Item } from "./Item";
 // import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./SwagShop.css";
-import { Button, Center, Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, Flex, Text, useBreakpointValue, Wrap } from "@chakra-ui/react";
 import { Service, useAuth, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/core";
 import axios from "axios";
 import useAxios from "axios-hooks";
 import CreateSwagModal from "./CreateSwagModal";
 
 const SwagShop: React.FC = props => {
+  const { user } = useAuth();
+  const [role, setRoles] = useState<any>({
+    member: false,
+    exec: false,
+    admin: false,
+  });
+
+  React.useEffect(() => {
+    const getRoles = async () => {
+      if (user?.uid) {
+        const response = await axios.get(apiUrl(Service.USERS, `/users/${user?.uid}`));
+        setRoles({ ...response.data.roles });
+      }
+    };
+    getRoles();
+  }, [user?.uid]);
+
+  const showAdmin = role.member || role.admin || role.exec;
+
   //defining variables
   const [points, setPoints] = useState(0);
   const [createSwagModalIsOpen, setCreateSwagModalIsOpen] = useState(false);
   const MAX_POINTS_ATTAINABLE = 1000;
   const breakPt = useBreakpointValue({ base: "base", md: "md" });
 
-  const { user } = useAuth();
   const hexathonID = String(process.env.REACT_APP_HEXATHON_ID);
 
   const openCreateSwagModal = () => {
@@ -74,13 +92,22 @@ const SwagShop: React.FC = props => {
   //   itemGroup[itemGroup.length - 1].push(items[i]);
   // }
 
-  // console.log(items.filter((item: Item) => item.points === 150));
   //more loading item grid
-  const itemGrid = (numPoints:number) => {
+  const itemGrid = (lowerPoints:number, higherPoints:number) => {
     return (
       <Wrap spacing="30px" justify="center">
-        {items.filter((item: Item) => item.points === numPoints).map((item: Item) => {
-          return <ItemContainer key={item.id} item={item} points={points} showBuyButton={true} />;
+        {items.filter((item: Item) => (item.points > lowerPoints && item.points <= higherPoints)).map((item: Item) => {
+          return <ItemContainer key={item.id} item={item} points={points} showBuyButton={true} showAdmin={showAdmin}/>;
+        })}
+      </Wrap>
+    );
+  };
+
+  const itemGridAll = () => {
+    return (
+      <Wrap spacing="30px" justify="center">
+        {items.map((item: Item) => {
+          return <ItemContainer key={item.id} item={item} points={points} showBuyButton={true} showAdmin={showAdmin}/>;
         })}
       </Wrap>
     );
@@ -94,14 +121,23 @@ const SwagShop: React.FC = props => {
       </Center>
       {createSwagModalIsOpen && <CreateSwagModal isOpen={createSwagModalIsOpen} onClose={closeCreateSwagModal} />}
       <Flex flexDirection="column" alignItems="center">
-        <Text id="pointCategory">Tier 1 (150 Points)</Text>
-        {itemGrid(150)}
-        <Text id="pointCategory">Tier 2 (100 Points)</Text>
-        {itemGrid(100)}
-        <Text id="pointCategory">Tier 3 (50 Points)</Text>
-        {itemGrid(50)}
-        <Text id="pointCategory">Tier 4 (10 Points)</Text>
-        {itemGrid(10)}
+        <Text id="pointCategory">Tier 1 (&lt;150 Points)</Text>
+        {itemGrid(100, 150)}
+        <Text id="pointCategory">Tier 2 (&lt;100 Points)</Text>
+        {itemGrid(50, 100)}
+        <Text id="pointCategory">Tier 3 (&lt;50 Points)</Text>
+        {itemGrid(10, 50)}
+        <Text id="pointCategory">Tier 4 (&lt;10 Points)</Text>
+        {itemGrid(0, 10)}
+      </Flex>
+
+      <Box position='relative' padding='10'>
+        <Divider />
+      </Box>
+
+      <Text id="pointCategory" alignItems="center"> Admin Section (All Swag) </Text>
+      <Flex flexDirection="column" alignItems="center">
+        {showAdmin && itemGridAll()}
       </Flex>
     </div>
   );

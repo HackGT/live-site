@@ -24,7 +24,6 @@ interface DeleteSwagModalProps {
 }
 
 const DeleteSwagModal: React.FC<DeleteSwagModalProps> = props => {
-  console.log(props.item.id);
   const toast = useToast();
   const {
     formState: { isSubmitting },
@@ -42,8 +41,10 @@ const DeleteSwagModal: React.FC<DeleteSwagModalProps> = props => {
         duration: 3000,
         isClosable: true,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       props.onClose();
-      window.location.reload();
     } catch (e: any) {
       handleAxiosError(e);
     }
@@ -60,7 +61,7 @@ const DeleteSwagModal: React.FC<DeleteSwagModalProps> = props => {
         </ModalBody>
         <ModalFooter>
           <Flex justify="space-between">
-            <Button colorScheme="pink" onClick={handleFormSubmit} mr={20}>
+            <Button colorScheme="pink" isLoading={isSubmitting} onClick={handleFormSubmit} mr={20}>
               Yes, Delete
             </Button>
             <Button variant="outline" onClick={props.onClose} ml={20}>

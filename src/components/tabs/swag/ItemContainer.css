@@ -4,7 +4,7 @@
   margin: auto;
   margin-top: 10px;
   padding: 10px;
-  vertical-align: text-top;
+  /* vertical-align: text-top; */
 }
 
 .itemInfo {
@@ -17,7 +17,7 @@
   margin-top: 5px;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  vertical-align: text-top;
+  /* vertical-align: text-top; */
 }
 
 .itemInfo > .button {
@@ -27,11 +27,10 @@
 
 .glowingItem {
   width: inherit;
-  margin: 1rem;
+  /* margin: 1rem; */
   padding: 1rem;
   overflow-y: visible;
   color: white;
-  /* color: #295749; */
   font-size: 1.1rem;
   background: #7FC2AE no-repeat center fixed; 
   border-radius: 30px;
@@ -40,8 +39,19 @@
 
 .itemButton {
   width: 70% !important;
+  align-items: center;
+  vertical-align: text-top;
 }
 
 .itemDescription {
   text-align: left;
+}
+
+.itemName {
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+  /* vertical-align: text-top; */
+  /* width: 20rem; */
 }
