@@ -55,16 +55,16 @@ const RedeemSwag: React.FC = () => {
   useEffect(() => {
     if (!usersLoading) {
       if (searchText === "") {
-        setUserData(userData);
+        setUserData(data?.hexathonUsers);
       } else {
         setUserData(
-          userData?.filter((user: any) =>
+          data.hexathonUsers.filter((user: any) =>
             user.name.toLowerCase().includes(searchText.toLowerCase())
           )
         );
       }
     }
-  }, [searchText, userData])
+  }, [searchText])
 
   const openCheckoutModal = (row: any) => {
     setModalUserId(row.userId);
