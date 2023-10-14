@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useDisclosure,
   Alert,
@@ -39,7 +39,6 @@ const RedeemSwag: React.FC = () => {
     method: "GET",
     url: apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users`),
     params: {
-      search: searchText,
       offset,
     },
   });
@@ -51,6 +50,21 @@ const RedeemSwag: React.FC = () => {
       hexathon: HEXATHON_ID,
     },
   });
+
+  const [userData, setUserData] = useState(data?.hexathonUsers);
+  useEffect(() => {
+    if (!usersLoading) {
+      if (searchText === "") {
+        setUserData(userData);
+      } else {
+        setUserData(
+          userData?.filter((user: any) =>
+            user.name.toLowerCase().includes(searchText.toLowerCase())
+          )
+        );
+      }
+    }
+  }, [searchText, userData])
 
   const openCheckoutModal = (row: any) => {
     setModalUserId(row.userId);
@@ -147,7 +161,7 @@ const RedeemSwag: React.FC = () => {
       </Alert>
       <SearchableTable
         title="Registered Users"
-        data={data?.hexathonUsers}
+        data={userData}
         columns={columns}
         searchText={searchText}
         onSearchTextChange={onSearchTextChange}
