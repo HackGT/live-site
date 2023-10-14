@@ -35,10 +35,11 @@ const RedeemSwag: React.FC = () => {
 
   const [modalUserId, setModalUserId] = useState(null);
 
-  const [{ data, loading: usersLoading, error }] = useAxios({
+  const [{ data, error }] = useAxios({
     method: "GET",
     url: apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users`),
     params: {
+      search: searchText,
       offset,
     },
   });
@@ -51,20 +52,20 @@ const RedeemSwag: React.FC = () => {
     },
   });
 
-  const [userData, setUserData] = useState(data?.hexathonUsers);
-  useEffect(() => {
-    if (!usersLoading) {
-      if (searchText === "") {
-        setUserData(data?.hexathonUsers);
-      } else {
-        setUserData(
-          data.hexathonUsers.filter((user: any) =>
-            user.name.toLowerCase().includes(searchText.toLowerCase())
-          )
-        );
-      }
-    }
-  }, [searchText])
+  // const [userData, setUserData] = useState(data?.hexathonUsers);
+  // useEffect(() => {
+  //   if (!usersLoading) {
+  //     if (searchText === "") {
+  //       setUserData(data?.hexathonUsers);
+  //     } else {
+  //       setUserData(
+  //         data.hexathonUsers.filter((user: any) =>
+  //           user.name.toLowerCase().includes(searchText.toLowerCase())
+  //         )
+  //       );
+  //     }
+  //   }
+  // }, [searchText])
 
   const openCheckoutModal = (row: any) => {
     setModalUserId(row.userId);
@@ -133,7 +134,7 @@ const RedeemSwag: React.FC = () => {
     setOffset(0);
   };
 
-  if (usersLoading || swagLoading) {
+  if (swagLoading) {
     return <LoadingScreen />;
   }
 
@@ -161,7 +162,7 @@ const RedeemSwag: React.FC = () => {
       </Alert>
       <SearchableTable
         title="Registered Users"
-        data={userData}
+        data={data?.hexathonUsers}
         columns={columns}
         searchText={searchText}
         onSearchTextChange={onSearchTextChange}
