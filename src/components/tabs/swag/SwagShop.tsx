@@ -43,7 +43,6 @@ const SwagShop: React.FC = props => {
   //defining variables
   const [points, setPoints] = useState(0);
   const [createSwagModalIsOpen, setCreateSwagModalIsOpen] = useState(false);
-  const MAX_POINTS_ATTAINABLE = 1000;
   const breakPt = useBreakpointValue({ base: "base", md: "md" });
 
   const hexathonID = String(process.env.REACT_APP_HEXATHON_ID);
