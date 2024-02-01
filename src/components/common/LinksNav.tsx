@@ -14,7 +14,7 @@ const LinksNav: React.FC<Props> = (props: Props) => {
 
   return width > 768 ? (
     <Box
-      boxShadow="0 3px 3px rgb(0 0 0 / 0.1)"
+      boxShadow="0 1px 1px rgb(0 0 0 / 0.1)"
       padding={2}
       borderRadius={4}
       marginTop={2}
