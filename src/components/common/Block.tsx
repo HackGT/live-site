@@ -14,8 +14,6 @@ type Props = {
   block: any;
 };
 
-const links = Object.entries(quickLinks)
-
 
 const Block: React.FC<Props> = (props: Props) => {
   const { user } = useAuth();
@@ -55,7 +53,7 @@ const Block: React.FC<Props> = (props: Props) => {
         )}
       </Stack>
       {props.block.title === "Quick Links" ? (
-        <LinksNav links={links} />
+        <LinksNav links={Object.entries(JSON.parse(props.block.content))} />
       ) : (
         <ReactMarkdown className={styles.reactMarkDown} remarkPlugins={[remarkGfm]}>
           {props.block.content}

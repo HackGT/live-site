@@ -10,6 +10,7 @@ const HexathonHomeTab: React.FC = () => {
   const [home, setHome] = useState<any[]>([]);
   const [mapLinks, setMapLinks] = useState<string[]>([]);
 
+
   useEffect(() => {
     const getBlocks = async () => {
       const data = await axios.get(
@@ -31,7 +32,7 @@ const HexathonHomeTab: React.FC = () => {
   return (
     <div>
       <Map links={mapLinks}/>
-      <BlockCollection title="" blocks={home} />
+      <BlockCollection title="" blocks={home}/>
       <Schedule />
     </div>
   );
