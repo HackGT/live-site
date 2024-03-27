@@ -18,7 +18,8 @@ import { Service, useAuth, apiUrl, LoadingScreen, ErrorScreen } from "@hex-labs/
 import axios from "axios";
 import useAxios from "axios-hooks";
 import CreateSwagModal from "./CreateSwagModal";
-import BlockCollection from "../../common/BlockCollection";
+import LeaderboardModal from "./LeaderboardModal";
+import PointsBreakdownModal from "./PointsBreakdownModal";
 
 const SwagShop: React.FC = props => {
   const { user } = useAuth();
@@ -43,6 +44,9 @@ const SwagShop: React.FC = props => {
   //defining variables
   const [points, setPoints] = useState(0);
   const [createSwagModalIsOpen, setCreateSwagModalIsOpen] = useState(false);
+  const [pointsBreakdownModalIsOpen, setPointsBreakdownModalIsOpen] = useState(false);
+  const [leaderboardIsOpen, setLeaderboardIsOpen] = useState(false);
+  const MAX_POINTS_ATTAINABLE = 1000;
   const breakPt = useBreakpointValue({ base: "base", md: "md" });
 
   const hexathonID = String(process.env.REACT_APP_HEXATHON_ID);
@@ -53,6 +57,18 @@ const SwagShop: React.FC = props => {
   const closeCreateSwagModal = () => {
     setCreateSwagModalIsOpen(false);
   };
+  const openPointsBreakdownModal = () => {
+    setPointsBreakdownModalIsOpen(true);
+  }
+  const closePointsBreakdownModal = () => {
+    setPointsBreakdownModalIsOpen(false);
+  }
+  const openLeaderboardModal = () => {
+    setLeaderboardIsOpen(true);
+  }
+  const closeLeaderboardModal = () => {
+    setLeaderboardIsOpen(false);
+  }
 
   //doing the post request to create the user
   useEffect(() => {
@@ -82,21 +98,6 @@ const SwagShop: React.FC = props => {
     },
     { useCache: false }
   );
-
-  const [swagShop, setSwagShop] = useState<any[]>([]);
-
-  useEffect(() => {
-    const getBlocks = async () => {
-      const data = await axios.get(
-        apiUrl(
-          Service.HEXATHONS,
-          `/blocks?hexathon=${String(process.env.REACT_APP_HEXATHON_ID)}&slug=swag`
-        )
-      );
-      setSwagShop(data.data);
-    };
-    getBlocks();
-  }, []);
 
   //more site loading procedures
   if (loading) {
@@ -156,14 +157,31 @@ const SwagShop: React.FC = props => {
 
   return (
     <div id="swag-shop">
-      <BlockCollection title="Swag Shop" blocks={swagShop} />
       <Text id="pointIndicator">You have {points} points.</Text>
-      {showAdmin && (
-        <Center h="10vh">
+      <Center>
+        {/* <Button onClick={() => setShowInstructionsModal(true)} colorScheme="teal" mr={2}>
+          Instructions
+        </Button>
+        <Button onClick={() => setShowLeaderboardModal(true)} colorScheme="teal" mr={2}>
+          Leaderboard
+        </Button> */}
+        <Button onClick={openPointsBreakdownModal} colorScheme="teal" mr={2}>
+            Points Breakdown
+        </Button>
+        <Button onClick={openLeaderboardModal} colorScheme="teal" mr={2}>
+            Leaderboard
+        </Button>
+        {showAdmin && (
           <Button onClick={openCreateSwagModal} colorScheme="teal">
             Add New Swag
           </Button>
-        </Center>
+      )}
+      </Center>
+      {pointsBreakdownModalIsOpen && (
+        <PointsBreakdownModal isOpen={pointsBreakdownModalIsOpen} onClose={closePointsBreakdownModal} />
+      )}
+      {leaderboardIsOpen && (
+        <LeaderboardModal isOpen={leaderboardIsOpen} onClose={closeLeaderboardModal} />
       )}
       {createSwagModalIsOpen && (
         <CreateSwagModal isOpen={createSwagModalIsOpen} onClose={closeCreateSwagModal} />
