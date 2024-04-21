@@ -5,6 +5,8 @@ import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
 import OneSignal from "react-onesignal";
 import * as OneSignalAPI from "@onesignal/node-onesignal";
 import { time } from "console";
+import 'add-to-calendar-button'
+import moment from 'moment';
 
 import UpcomingEventsView from "./UpcomingEventsView";
 import OngoingEventsView from "./OngoingEventsView";
@@ -37,6 +39,7 @@ const Schedule: React.FC = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
+  const [eventsCalendar, setEventsCalendar] = useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -106,8 +109,19 @@ const Schedule: React.FC = () => {
           createNotifOneSignal(ev.name);
         }
       });
-    }, 1000);
+      const eventsForCalendarOngoing = ongoingEvents.map((event)=>({"name":event.name, "description":event.description,  "endDate":moment(event.endDate).format('YYYY-MM-DD'), "startDate": moment(event.startDate).format('YYYY-MM-DD'), "startTime": moment(event.startDate).format('HH:mm'), 
+       "endTime":moment(event.endDate).format('HH:mm')}));
 
+      const eventsForCalendarUpcoming = upcomingEvents.map((event)=>({"name":event.name, "description":event.description,  "endDate":moment(event.endDate).format('YYYY-MM-DD'), "startDate": moment(event.startDate).format('YYYY-MM-DD'), "startTime": moment(event.startDate).format('HH:mm'), 
+      "endTime":moment(event.endDate).format('HH:mm')}));
+
+      const eventsForCalendar = [...eventsForCalendarOngoing, ...eventsForCalendarUpcoming];
+
+      setEventsCalendar(JSON.stringify(eventsForCalendar));
+      console.log(JSON.stringify(eventsForCalendar));
+
+    }, 1000);
+    
     return () => clearInterval(refreshData);
   }, [ongoingEvents, upcomingEvents]);
 
@@ -117,6 +131,21 @@ const Schedule: React.FC = () => {
 
   return (
     <>
+
+     <Stack margin="auto"
+        spacing="10px"
+        width={{
+          base: "95%",
+          md: "85%",
+        }}>
+       <add-to-calendar-button
+        name={process.env.REACT_APP_EVENT_NAME}
+        dates={eventsCalendar}
+        timeZone="America/New_York"
+        options="'Apple','Google','iCal','Outlook.com','Yahoo'"
+        lightMode="bodyScheme"
+      />
+      </Stack>
       <HStack
         margin="auto"
         marginTop="20px"

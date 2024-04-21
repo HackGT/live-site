@@ -5,6 +5,7 @@ import axios from "axios";
 import { apiUrl, Service } from "@hex-labs/core";
 
 import { EventRow } from "./EventRow";
+import 'add-to-calendar-button';
 
 type Props = {
   tableLength: number;
