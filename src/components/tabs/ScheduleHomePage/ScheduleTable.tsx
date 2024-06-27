@@ -144,6 +144,17 @@ const Schedule: React.FC = () => {
 
   return (
     <>
+      <HStack
+        margin="auto"
+        marginTop="20px"
+        marginBottom="20px"
+        width={{
+          base: "90%",
+          md: "80%",
+        }}
+      >
+        <Spacer />
+      </HStack>
       <Stack margin="auto" alignItems="end"
         width={{
           base: "95%",
@@ -159,17 +170,6 @@ const Schedule: React.FC = () => {
           buttonStyle="text"
         />
       </Stack>
-      {/* <HStack
-        margin="auto"
-        marginTop="20px"
-        marginBottom="20px"
-        width={{
-          base: "90%",
-          md: "80%",
-        }}
-      >
-        <Spacer />
-      </HStack> */}
       <Stack
         margin="auto"
         spacing="10px"
