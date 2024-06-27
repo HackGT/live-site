@@ -38,9 +38,7 @@ const OngoingEvent: React.FC<Props> = ({ event }) => (
       {event.name}
     </Text>
     <Text fontSize="14px">
-      {event.location.map((location: any, index: number) =>
-        index === event.location.length ? location.name.concat(", ") : location.name
-      )}
+      {event.location.map((location: any) => location.name).join(" | ")}
     </Text>
     <Text fontSize="12px" color="gray" maxHeight="92px" noOfLines={3}>
       {event.description}
