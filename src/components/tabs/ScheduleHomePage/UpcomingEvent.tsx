@@ -36,15 +36,11 @@ const UpcomingEventsForDate: React.FC<Props> = ({ events, date }) => (
         >
           <Text fontSize="16px">{event.name}</Text>
           <Text color="#9A9FB2" fontSize="14px">
-            {event.location.map((location: any, index: number) =>
-              index === event.location.length
-                ? location.name.concat(", ")
-                : location.name.concat(
-                    " • ",
-                    dateFormat(event.startDate, "h:MM TT"),
-                    " - ",
-                    dateFormat(event.endDate, "h:MM TT")
-                  )
+            {event.location.map((location: any) => location.name).join(" | ").concat(
+              " • ",
+              dateFormat(event.startDate, "h:MM TT"),
+              " - ",
+              dateFormat(event.endDate, "h:MM TT"),
             )}
           </Text>
 

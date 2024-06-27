@@ -27,7 +27,7 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading }) => {
       }}
     >
       <Text fontSize="18px" marginBottom="5px">
-        What’s Happening Now
+        What's Happening Now
       </Text>
       <HStack spacing="10px" overflow="scroll">
         {events.length === 0 ? (
