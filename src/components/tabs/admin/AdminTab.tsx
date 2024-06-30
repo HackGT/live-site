@@ -74,6 +74,11 @@ const AdminControlsHome: React.FC = () => {
           description="Checkout swag items for participants!"
           href="item-checkout"
         />
+        <AdminWidget
+          title="Locations"
+          description="Add locations for events"
+          href="locations"
+        />
       </Stack>
     </Flex>
   );
