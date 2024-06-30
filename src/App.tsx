@@ -28,6 +28,7 @@ import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry";
 import HardwareCheckout from "./components/tabs/hardware/HardwareCheckout";
 import CreateItem from "./components/tabs/hardware/CreateItem";
+import CreateLocation from "./components/tabs/admin/events/FormInputs/CreateLocation";
 
 // a little bee ascii art
 // const art =
@@ -100,6 +101,7 @@ export const App = () => {
           <Route path="/admin/events" element={<EventsTab />} />
           <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
           <Route path="/admin/item-checkout" element={<RedeemSwag />} />
+          <Route path="/admin/locations" element={<CreateLocation />} />
         </Routes>
         <Footer />
       </AuthProvider>
