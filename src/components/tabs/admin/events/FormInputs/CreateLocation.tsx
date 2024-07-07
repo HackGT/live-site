@@ -23,14 +23,17 @@ import {
   useToast,
   FormControl,
   FormLabel,
-  useDisclosure
+  useDisclosure,
+  IconButton,
+  Tooltip
 } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
 import { useForm } from "react-hook-form";
 
 const CreateLocation: React.FC = () => {
   const [locations, setLocations] = useState<any[]>([]);
   const [error, setError] = useState();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose: originalOnClose } = useDisclosure();
   const toast = useToast();
   const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm();
 
@@ -44,7 +47,7 @@ const CreateLocation: React.FC = () => {
 
   const handleFormSubmit = async (values: any) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         apiUrl(Service.HEXATHONS, `/locations`),
         {
           name: values.name,
@@ -57,10 +60,32 @@ const CreateLocation: React.FC = () => {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-      onClose();
+      setLocations([...locations, response.data]);
+      reset();
+      originalOnClose();
+      window.location.reload();
+    } catch (e: any) {
+      toast({
+        title: "Error",
+        description: e.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await axios.delete(apiUrl(Service.HEXATHONS, `/locations/${id}`));
+      toast({
+        title: "Success!",
+        description: "Location deleted",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setLocations(locations.filter(location => location.id !== id));
     } catch (e: any) {
       toast({
         title: "Error",
@@ -85,6 +110,11 @@ const CreateLocation: React.FC = () => {
     getData();
   }, []);
 
+  const onClose = () => {
+    originalOnClose();
+    window.location.reload();
+  };
+
   if (error) {
     return <ErrorScreen error={error} />;
   }
@@ -102,12 +132,23 @@ const CreateLocation: React.FC = () => {
               {columns.map(column => (
                 <Th key={column.key}>{column.header}</Th>
               ))}
+              <Th textAlign="right">Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
             {locations.map(location => (
               <Tr key={location.id}>
                 <Td>{location.name}</Td>
+                <Td textAlign="right">
+                  <Tooltip label="Delete location">
+                    <IconButton
+                      aria-label="delete"
+                      icon={<DeleteIcon />}
+                      colorScheme="red"
+                      onClick={() => handleDelete(location.id)}
+                    />
+                  </Tooltip>
+                </Td>
               </Tr>
             ))}
           </Tbody>
