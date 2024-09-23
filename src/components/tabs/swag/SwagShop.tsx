@@ -187,10 +187,10 @@ const SwagShop: React.FC = props => {
         <CreateSwagModal isOpen={createSwagModalIsOpen} onClose={closeCreateSwagModal} />
       )}
       <Flex flexDirection="column" alignItems="center">
-        <Text id="pointCategory">Tier 1 (150 Points Each)</Text>
-        {itemGrid(100, 150)}
-        <Text id="pointCategory">Tier 2 (100 Points Each)</Text>
-        {itemGrid(50, 100)}
+        <Text id="pointCategory">Tier 1 (200 Points Each)</Text>
+        {itemGrid(150, 200)}
+        <Text id="pointCategory">Tier 2 (150 Points Each)</Text>
+        {itemGrid(50, 150)}
         <Text id="pointCategory">Tier 3 (50 Points Each)</Text>
         {itemGrid(10, 50)}
         <Text id="pointCategory">Tier 4 (10 Points Each)</Text>
