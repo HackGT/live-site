@@ -27,7 +27,7 @@ interface Props {
 
 const ItemContainer: React.FC<Props> = (props: Props) => {
   // console.log(props.item.image, props.item.image_url.split("/")[5])
-  const imageID = props.item.image_url.split("/")[5] ?? "14MqC1uqI4Vzzvc1dJmpOwiclWwlsHn6s";
+  const imageID = props.item.image_url.split("/")[5] ?? "1Kt72HO3RPHxCMOUZNTDc7wN93nujIow2";
 
   const [updateSwagModalIsOpen, setUpdateSwagModalIsOpen] = useState(false);
   const [deleteSwagModalIsOpen, setDeleteSwagModalIsOpen] = useState(false);
@@ -58,7 +58,7 @@ const ItemContainer: React.FC<Props> = (props: Props) => {
           <HStack>
             <Box>
               <div className="prizePics">
-                <Image alt="prizes" src={"https://drive.google.com/uc?export=view&id=" + imageID} />
+                <Image alt="prizes" src={`https://drive.google.com/thumbnail?id=${imageID}&sz=w1000`} />
               </div>
             </Box>
 
