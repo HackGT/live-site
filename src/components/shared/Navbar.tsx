@@ -158,9 +158,9 @@ const Navbar: React.FC = () => {
           <HeaderItem>{route.name}</HeaderItem>
         </Link>
       ))}
-      {/* <ChakraLink href="https://expo.hexlabs.org/" isExternal> */}
-        <HeaderItem color="#A0AEC0">Expo</HeaderItem>
-      {/* </ChakraLink> */}
+      <ChakraLink href="https://expo.hexlabs.org/" isExternal>
+        <HeaderItem>Expo</HeaderItem>
+      </ChakraLink>
       <ChakraLink href={`https://registration.hexlabs.org/${HEXATHON_ID}`} isExternal>
         <HeaderItem>Registration</HeaderItem>
       </ChakraLink>
