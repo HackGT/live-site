@@ -107,20 +107,6 @@ const EventFormInput: React.FC<Props> = ({ id, onClose }) => {
               message: "Start time is required.",
             }
           : undefined,
-      endDate:
-        !data.endDate || data.endDate.length === 0
-          ? {
-              type: "required",
-              message: "End date is required.",
-            }
-          : undefined,
-      endTime:
-        !data.endTime || data.endTime.length === 0
-          ? {
-              type: "required",
-              message: "End time is required.",
-            }
-          : undefined,
       location:
         !data.location || data.location.length === 0
           ? {
@@ -141,10 +127,6 @@ const EventFormInput: React.FC<Props> = ({ id, onClose }) => {
       data.startDate.length === 0 ||
       !data.startTime ||
       data.startTime.length === 0 ||
-      !data.endDate ||
-      data.endDate.length === 0 ||
-      !data.endTime ||
-      data.endTime.length === 0 ||
       !data.location ||
       data.location.length === 0;
 
@@ -161,14 +143,18 @@ const EventFormInput: React.FC<Props> = ({ id, onClose }) => {
       hexathon: String(process.env.REACT_APP_HEXATHON_ID),
       location: data.location.map((location: any) => location.id),
       startDate: new Date(data.startDate.concat(" ", data.startTime, " ", data.startTimeMarker)),
-      endDate: new Date(data.endDate.concat(" ", data.endTime, " ", data.endTimeMarker)),
     };
+
+    if (data.endDate && data.endTime) {
+      payload.endDate = new Date(data.endDate.concat(" ", data.endTime, " ", data.endTimeMarker));
+    }
+
     delete payload.startTime;
     delete payload.endTime;
     delete payload.startTimeMarker;
     delete payload.endTimeMarker;
 
-    if (payload.startDate > payload.endDate) {
+    if (payload.endDate && payload.startDate > payload.endDate) {
       if (payload.startDate.toDateString() === payload.endDate.toDateString()) {
         setErrors({
           endTime: {
@@ -331,14 +317,14 @@ const EventFormInput: React.FC<Props> = ({ id, onClose }) => {
         </Box>
       </FormControl>
       <FormControl isInvalid={errors.endDate} marginBottom={errors.endDate ? "12px" : "42px"}>
-        <FormLabel>End Date</FormLabel>
+        <FormLabel>End Date (Optional)</FormLabel>
         <Input id="endDate" placeholder="MM/DD/YYYY" {...register("endDate")} />
         <Box marginTop="6px" color="red">
           {errors.endDate && errors.endDate.message}
         </Box>
       </FormControl>
       <FormControl isInvalid={errors.endTime} marginBottom={errors.endTime ? "12px" : "42px"}>
-        <FormLabel>End Time</FormLabel>
+        <FormLabel>End Time (Optional)</FormLabel>
         <HStack>
           <Input id="endTime" width="80%" placeholder="HH:MM" {...register("endTime")} />
           <Select

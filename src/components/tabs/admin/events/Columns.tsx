@@ -52,7 +52,7 @@ const eventColumns = [
     enabled: true,
     header: "End Time",
     field: "endTime",
-    accessor: (row: any) => dateFormat(row.endDate, "hh:MM TT"),
+    accessor: (row: any) => row.endDate ? dateFormat(row.endDate, "hh:MM TT"): "N/A",
   },
   {
     key: 5,

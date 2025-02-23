@@ -46,30 +46,39 @@ const OngoingEvent: React.FC<Props> = ({ event }) => (
     <Spacer />
     <Stack paddingTop="12px">
       <Text fontSize="14px">
-        {dateFormat(event.startDate, "h:MM TT")} - {dateFormat(event.endDate, "h:MM TT")}
+        {dateFormat(event.startDate, "h:MM TT")}
+        {event.endDate && ` - ${dateFormat(event.endDate, "h:MM TT")}`}
       </Text>
-      <Text fontSize="12px">{getTimeRemainingString(new Date(), new Date(event.endDate))}</Text>
 
-      <HStack spacing="0">
-        <Box
-          width={`${getPercentComplete(
-            new Date(),
-            new Date(event.startDate),
-            new Date(event.endDate)
-          )}%`}
-          height="3px"
-          bg="#7B69EC"
-        />
-        <Box
-          width={`${
-            100 - getPercentComplete(new Date(), new Date(event.startDate), new Date(event.endDate))
-          }%`}
-          height="3px"
-          bg="#E6E6E6"
-        />
-      </HStack>
+      {event.endDate && (
+        <>
+          <Text fontSize="12px">
+            {getTimeRemainingString(new Date(), new Date(event.endDate))}
+          </Text>
+
+          <HStack spacing="0">
+            <Box
+              width={`${getPercentComplete(
+                new Date(),
+                new Date(event.startDate),
+                new Date(event.endDate)
+              )}%`}
+              height="3px"
+              bg="#7B69EC"
+            />
+            <Box
+              width={`${
+                100 - getPercentComplete(new Date(), new Date(event.startDate), new Date(event.endDate))
+              }%`}
+              height="3px"
+              bg="#E6E6E6"
+            />
+          </HStack>
+        </>
+      )}
     </Stack>
   </Stack>
 );
+
 
 export default OngoingEvent;

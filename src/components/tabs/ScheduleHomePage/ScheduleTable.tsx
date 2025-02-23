@@ -52,8 +52,8 @@ const Schedule: React.FC = () => {
           const sortedData = res.data.sort((a: any, b: any) => {
             const startDateA = new Date(a.startDate);
             const startDateB = new Date(b.startDate);
-            const endDateA = new Date(a.endDate);
-            const endDateB = new Date(b.endDate);
+            const endDateA = a.endDate ? new Date(a.endDate) : new Date(9999, 11, 31);
+            const endDateB = b.endDate ? new Date(b.endDate) : new Date(9999, 11, 31);
             if (startDateA > startDateB) {
               return 1;
             }
@@ -72,11 +72,10 @@ const Schedule: React.FC = () => {
             return -1;
           });
           const filteredData = sortedData.filter(
-            (event: any) => new Date(event.endDate) >= curDate
+            (event: any) => !event.endDate || new Date(event.endDate) >= curDate
           );
           const ongoing = filteredData.filter((event: any) => new Date(event.startDate) <= curDate);
           const upcoming = filteredData.filter((event: any) => new Date(event.startDate) > curDate);
-
           setOngoingEvents(ongoing);
           setUpcomingEvents(upcoming);
         }
@@ -98,7 +97,7 @@ const Schedule: React.FC = () => {
       setUpcomingEvents(data => data.filter((event: any) => new Date(event.startDate) > curDate));
       setOngoingEvents(data =>
         data
-          .filter((event: any) => new Date(event.endDate) >= curDate)
+          .filter((event: any) => !event.endDate || new Date(event.endDate) >= curDate) 
           .concat(temp.filter((event: any) => new Date(event.startDate) <= curDate))
       );
 
@@ -111,20 +110,22 @@ const Schedule: React.FC = () => {
       const eventsForCalendarOngoing = ongoingEvents.map((event)=>({
         "name": event.name,
         "description": event.description,
-        "endDate": dateFormat(event.endDate, 'yyyy-mm-dd'),
+        "endDate": event.endDate ? dateFormat(event.endDate, 'yyyy-mm-dd') : "",
         "startDate": dateFormat(event.startDate, 'yyyy-mm-dd'),
         "startTime": dateFormat(event.startDate, 'HH:MM'), 
-        "endTime": dateFormat(event.endDate, 'HH:MM'),
+        "endTime": event.endDate ? dateFormat(event.endDate, 'HH:MM') : "",
         "location": event.location.map((location: any) => location.name).join(" | "),
       }));
+
+      console.log("ongoing", eventsForCalendarOngoing);
 
       const eventsForCalendarUpcoming = upcomingEvents.map((event)=>({
         "name":event.name,
         "description":event.description,
-        "endDate": dateFormat(event.endDate, 'yyyy-mm-dd'),
+        "endDate": event.endDate ? dateFormat(event.endDate, 'yyyy-mm-dd') : "",
         "startDate": dateFormat(event.startDate, 'yyyy-mm-dd'),
         "startTime": dateFormat(event.startDate, 'HH:MM'), 
-        "endTime": dateFormat(event.endDate, 'HH:MM'),
+        "endTime": event.endDate ? dateFormat(event.endDate, 'HH:MM') : "",
         "location": event.location.map((location: any) => location.name).join(" | "),
       }));
 
