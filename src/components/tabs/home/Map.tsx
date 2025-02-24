@@ -8,7 +8,7 @@ const Map = (props: { links: any }) => {
     setActiveTab(index);
   };
 
-  if (!props.links) return null;
+  if (!props.links || props.links.length == 0) return null;
 
   // map each link to the image ID
   props.links.map((obj: any) => {
@@ -19,11 +19,7 @@ const Map = (props: { links: any }) => {
   });
 
   return (
-    <Box
-      width={{ base: "90%", md: "75%", lg: "65%"}}
-      margin="auto"
-      marginTop="20px"
-    >
+    <Box width={{ base: "90%", md: "75%", lg: "65%" }} margin="auto" marginTop="20px">
       <HStack marginBottom="5px">
         <ButtonGroup>
           {props.links.map((link: any, index: number) => (
