@@ -110,9 +110,14 @@ const RedeemSwag: React.FC = () => {
     },
     {
       key: 2,
+      header: "Points",
+      accessor: (row: any) => row.points.currentTotal,
+    },
+    {
+      key: 3,
       header: "Actions",
       accessor: (row: any) => (
-        <ButtonGroup>
+        <ButtonGroup size="sm">
           <Button onClick={() => openCheckoutModal(row)}>Buy Item</Button>
           <Button onClick={() => openEditUserModal(row)}>Edit Points</Button>
           <Button onClick={() => openPointDataModal(row)}>View Interaction Data</Button>

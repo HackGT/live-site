@@ -45,7 +45,7 @@ const columns = [
     accessor: (row: any) => row.slug,
   },
 ];
-const name = "Blocks";
+
 const BlocksTable: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [offset, setOffset] = useState(0);
@@ -100,7 +100,10 @@ const BlocksTable: React.FC = () => {
         }}
       >
         <HStack>
-          <Heading>{name}</Heading>
+          <Box>
+            <Heading>Blocks</Heading>
+            <Text>Click on the &apos;title&apos; of a block to edit it.</Text>
+          </Box>
           <Spacer />
           <Checkbox checked={checked} onChange={() => setChecked(!checked)} pr="3">
             Mobile?
@@ -131,7 +134,7 @@ const BlocksTable: React.FC = () => {
                     md: "block",
                   }}
                 >
-                  Create {name.substring(0, name.length - 1)}
+                  Create block
                 </Text>
               </HStack>
             </Button>
@@ -164,7 +167,7 @@ const BlocksTable: React.FC = () => {
           <DrawerHeader borderBottom="2px" borderColor="rgba(23, 43, 77, 0.12)">
             <HStack>
               <Heading marginTop="10px" fontSize="24px">
-                Create {name.substring(0, name.length - 1)}
+                Create block
               </Heading>
               <Spacer />
               <IconButton

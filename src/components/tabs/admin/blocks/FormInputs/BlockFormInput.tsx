@@ -146,7 +146,7 @@ const BlockFormInput: React.FC<Props> = ({ id, onClose }) => {
 
   const cancel = () => {
     if (onClose) onClose();
-    else navigate(-1);
+    else navigate("/admin/blocks");
   };
 
   const del = async () => {
@@ -166,6 +166,17 @@ const BlockFormInput: React.FC<Props> = ({ id, onClose }) => {
 
   if (error) {
     return <ErrorScreen error={error} />;
+  }
+
+  const isJSON = content && (content.charAt(0) === "{" || content.charAt(0) === "[");
+  let validJson = true;
+  if (isJSON) {
+    try {
+      JSON.parse(content || "{}");
+      validJson = true;
+    } catch (e) {
+      validJson = false;
+    }
   }
 
   return (
@@ -233,10 +244,21 @@ const BlockFormInput: React.FC<Props> = ({ id, onClose }) => {
             </Box>
           </FormControl>
         </Box>
-        <Stack direction="row" width="full">
-          <VStack width="full">
-            <FormControl isInvalid={errors.content} marginBottom={errors.content ? "4px" : "0px"}>
+        // Main container stack
+        <VStack width="full" spacing={2} align="stretch">
+          {/* Row for Labels */}
+          <Stack direction="row" width="full">
+            <Box width="full">
               <FormLabel>Content</FormLabel>
+            </Box>
+            <Box width="full">
+              <FormLabel>Preview</FormLabel>
+            </Box>
+          </Stack>
+
+          {/* Row for Textarea and Preview Box */}
+          <Stack direction="row" width="full">
+            <FormControl isInvalid={errors.content} width="full">
               <Textarea
                 id="content"
                 placeholder="Write content for the block..."
@@ -247,28 +269,53 @@ const BlockFormInput: React.FC<Props> = ({ id, onClose }) => {
                 value={content}
                 height={editBoxHeight}
               />
-              <Box color="red">{errors.content && errors.content.message}</Box>
             </FormControl>
 
-            <Box height="48px" paddingY="12px" color="red">
-              {errors.request && errors.request.message}
+            <Box
+              width="full"
+              height={editBoxHeight}
+              overflow="scroll"
+              backgroundColor="#f5f5f5"
+              borderWidth="1px"
+              borderRadius="md"
+            >
+              {isJSON && !validJson && (
+                <Box color="red" padding="8px">
+                  Invalid JSON
+                </Box>
+              )}
+              {isJSON && validJson && (
+                <pre>{JSON.stringify(JSON.parse(content || "{}"), null, 2)}</pre>
+              )}
+              {!isJSON && (
+                <ReactMarkdown className={styles.reactMarkDown} remarkPlugins={[remarkGfm]}>
+                  {content}
+                </ReactMarkdown>
+              )}
             </Box>
-          </VStack>
-          <Box width="full">
-            <FormLabel>Preview</FormLabel>
-            <Box height={editBoxHeight} overflow="scroll" backgroundColor="#f5f5f5">
-              <ReactMarkdown className={styles.reactMarkDown} remarkPlugins={[remarkGfm]}>
-                {content}
-              </ReactMarkdown>
+          </Stack>
+
+          {/* Row for Error Messages */}
+          <Stack direction="row" width="full">
+            <Box width="full" color="red" minHeight="24px">
+              {errors.content && errors.content.message}
             </Box>
+            {/* Optional: Add a placeholder in the right column to balance the height if needed */}
+            <Box width="full" minHeight="24px" />
+          </Stack>
+
+          {/* Centered Request Error Message */}
+          <Box height="48px" paddingY="12px" color="red" textAlign="center">
+            {errors.request && errors.request.message}
           </Box>
-        </Stack>
+        </VStack>
       </Stack>
       <HStack width="100%" bg="white">
         <Button
           onClick={() => {
             if (findMissingField(getValues())) submit(getValues());
           }}
+          disabled={!validJson}
         >
           {id ? "Update" : "Submit"}
         </Button>
