@@ -8,12 +8,11 @@ import axios from "axios";
 
 import styles from "./markdown_styles.module.css";
 import LinksNav from "./LinksNav";
-import quickLinks from "./quicklinks.json"
+import quickLinks from "./quicklinks.json";
 
 type Props = {
   block: any;
 };
-
 
 const Block: React.FC<Props> = (props: Props) => {
   const { user } = useAuth();
