@@ -27,6 +27,7 @@ const Map = (props: { links: any }) => {
               size={{ base: "xs", lg: "md" }}
               onClick={() => handleTabClick(index)}
               colorScheme={activeTab === index ? "blue" : "gray"}
+              key={link.title}
             >
               {link.title}
             </Button>

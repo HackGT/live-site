@@ -4,7 +4,7 @@ import { HStack, Spacer, Stack } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
 import OneSignal from "react-onesignal";
 import * as OneSignalAPI from "@onesignal/node-onesignal";
-import 'add-to-calendar-button'
+import "add-to-calendar-button";
 import dateFormat from "dateformat";
 
 import UpcomingEventsView from "./UpcomingEventsView";
@@ -108,33 +108,31 @@ const Schedule: React.FC = () => {
           createNotifOneSignal(ev.name);
         }
       });
-      const eventsForCalendarOngoing = ongoingEvents.map((event)=>({
-        "name": event.name,
-        "description": event.description,
-        "endDate": dateFormat(event.endDate, 'yyyy-mm-dd'),
-        "startDate": dateFormat(event.startDate, 'yyyy-mm-dd'),
-        "startTime": dateFormat(event.startDate, 'HH:MM'), 
-        "endTime": dateFormat(event.endDate, 'HH:MM'),
-        "location": event.location.map((location: any) => location.name).join(" | "),
+      const eventsForCalendarOngoing = ongoingEvents.map(event => ({
+        name: event.name,
+        description: event.description,
+        endDate: dateFormat(event.endDate, "yyyy-mm-dd"),
+        startDate: dateFormat(event.startDate, "yyyy-mm-dd"),
+        startTime: dateFormat(event.startDate, "HH:MM"),
+        endTime: dateFormat(event.endDate, "HH:MM"),
+        location: event.location.map((location: any) => location.name).join(" | "),
       }));
 
-      const eventsForCalendarUpcoming = upcomingEvents.map((event)=>({
-        "name":event.name,
-        "description":event.description,
-        "endDate": dateFormat(event.endDate, 'yyyy-mm-dd'),
-        "startDate": dateFormat(event.startDate, 'yyyy-mm-dd'),
-        "startTime": dateFormat(event.startDate, 'HH:MM'), 
-        "endTime": dateFormat(event.endDate, 'HH:MM'),
-        "location": event.location.map((location: any) => location.name).join(" | "),
+      const eventsForCalendarUpcoming = upcomingEvents.map(event => ({
+        name: event.name,
+        description: event.description,
+        endDate: dateFormat(event.endDate, "yyyy-mm-dd"),
+        startDate: dateFormat(event.startDate, "yyyy-mm-dd"),
+        startTime: dateFormat(event.startDate, "HH:MM"),
+        endTime: dateFormat(event.endDate, "HH:MM"),
+        location: event.location.map((location: any) => location.name).join(" | "),
       }));
 
       const eventsForCalendar = [...eventsForCalendarOngoing, ...eventsForCalendarUpcoming];
 
       setEventsCalendar(JSON.stringify(eventsForCalendar));
-      console.log(JSON.stringify(eventsForCalendar));
-
     }, 1000);
-    
+
     return () => clearInterval(refreshData);
   }, [ongoingEvents, upcomingEvents]);
 
@@ -155,11 +153,14 @@ const Schedule: React.FC = () => {
       >
         <Spacer />
       </HStack>
-      <Stack margin="auto" alignItems="end"
+      <Stack
+        margin="auto"
+        alignItems="end"
         width={{
           base: "95%",
           md: "85%",
-        }}>
+        }}
+      >
         <add-to-calendar-button
           name={process.env.REACT_APP_EVENT_NAME}
           dates={eventsCalendar}
