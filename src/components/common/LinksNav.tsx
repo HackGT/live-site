@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Center, Flex, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Center,
+  Flex,
+  HStack,
+} from "@chakra-ui/react";
 
 type Props = {
   links: string[][];
@@ -23,7 +31,7 @@ const LinksNav: React.FC<Props> = (props: Props) => {
     >
       <Breadcrumb separator="|">
         {props.links.map(link => (
-          <BreadcrumbItem>
+          <BreadcrumbItem key={link[1]}>
             <BreadcrumbLink href={link[1]}>{link[0]}</BreadcrumbLink>
           </BreadcrumbItem>
         ))}
@@ -34,7 +42,7 @@ const LinksNav: React.FC<Props> = (props: Props) => {
       <Box boxShadow="0 3px 3px rgb(0 0 0 / 0.1)" padding={2} borderRadius={4} marginTop={2}>
         <Breadcrumb separator="">
           {props.links.map(link => (
-            <BreadcrumbItem>
+            <BreadcrumbItem key={link[1]}>
               <BreadcrumbLink href={link[1]}>{link[0]}</BreadcrumbLink>
             </BreadcrumbItem>
           ))}

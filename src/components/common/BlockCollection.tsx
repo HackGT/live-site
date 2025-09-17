@@ -17,7 +17,7 @@ const BlockCollection: React.FC<Props> = (props: Props) => (
     </Box>
     <Box display="flex" flexDir="column" gap="20px">
       {props.blocks.map((block: any) => (
-        <Block block={block} />
+        <Block block={block} key={block.id} />
       ))}
     </Box>
   </Box>
