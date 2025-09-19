@@ -315,7 +315,6 @@ const BlockFormInput: React.FC<Props> = ({ id, onClose }) => {
           onClick={() => {
             if (findMissingField(getValues())) submit(getValues());
           }}
-          disabled={!validJson}
         >
           {id ? "Update" : "Submit"}
         </Button>
