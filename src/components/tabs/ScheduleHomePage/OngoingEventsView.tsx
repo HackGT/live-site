@@ -2,14 +2,15 @@ import React from "react";
 import { Box, Flex, HStack, Text } from "@chakra-ui/react";
 import { LoadingScreen } from "@hex-labs/core";
 
-import OngoingEvent from "./OngoingEvent";
+import { EventCard } from "./EventCard";
 
 interface Props {
   events: any[];
   loading: boolean;
+  eventTypePoints: { [key: string]: number };
 }
 
-const OngoingEventsView: React.FC<Props> = ({ events, loading }) => {
+const OngoingEventsView: React.FC<Props> = ({ events, loading, eventTypePoints }) => {
   if (loading) {
     return (
       <Box marginTop="-110px" marginBottom="-90px">
@@ -29,7 +30,7 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading }) => {
       <Text fontSize="18px" marginBottom="5px">
         What's Happening Now
       </Text>
-      <HStack spacing="10px" overflow="scroll">
+      <HStack spacing="10px" overflow="auto">
         {events.length === 0 ? (
           <Flex
             margin="auto"
@@ -45,7 +46,14 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading }) => {
             Please come back later or see below for upcoming events!
           </Flex>
         ) : (
-          events.map((event: any) => <OngoingEvent key={event.id} event={event} />)
+          events.map((event: any) => (
+            <EventCard
+              key={event.id}
+              event={event}
+              points={eventTypePoints[event.type] ?? 0}
+              isOngoing
+            />
+          ))
         )}
       </HStack>
     </Box>

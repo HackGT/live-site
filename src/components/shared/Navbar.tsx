@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from "react";
-import { Link as chakraLink, chakra, Text, Box, HStack } from "@chakra-ui/react";
+import { Link as chakraLink, chakra, Text, Box, HStack, Image, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import {
   Header,
@@ -64,7 +64,7 @@ interface timerProps {
 const Timer = (props: timerProps) => {
   const countdownTimerStyle = {
     fontFamily: "monospace",
-    padding: "5px",
+    padding: "2px",
     border: "2px solid #333",
     borderRadius: "5px",
     backgroundColor: "#f0f0f0",
@@ -72,7 +72,6 @@ const Timer = (props: timerProps) => {
   const hexathonNameStyle = {
     fontSize: "20px",
     fontWeight: "bold",
-    color: "#8a2be2",
   };
   const [remainingTime, setRemainingTime] = React.useState(
     calculateTimeRemaining(props.activeHexathon.startDate, props.activeHexathon.endDate)
@@ -95,20 +94,20 @@ const Timer = (props: timerProps) => {
       clearInterval(updateInterval);
     };
   }, [props.activeHexathon.endDate]);
-
   return (
-    <>
-      <HeaderItem key={props.activeHexathon.id}>
-        <Box display="block">
+    <HeaderItem key={props.activeHexathon.id}>
+      <Flex flexDir="column" alignItems="flex-end" mb={1}>
+        <Flex alignItems="center">
+          <Image src={props.activeHexathon.coverImage} height={6} />
           <Text style={hexathonNameStyle}>{props.activeHexathon.name}</Text>
-          <Text textAlign="right">
-            <span id="remaining-time" style={countdownTimerStyle}>
-              {remainingTime}
-            </span>
-          </Text>
-        </Box>
-      </HeaderItem>
-    </>
+        </Flex>
+        <Text>
+          <span id="remaining-time" style={countdownTimerStyle}>
+            {remainingTime}
+          </span>
+        </Text>
+      </Flex>
+    </HeaderItem>
   );
 };
 

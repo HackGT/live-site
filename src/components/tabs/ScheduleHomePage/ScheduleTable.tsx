@@ -39,6 +39,15 @@ const Schedule: React.FC = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [eventsCalendar, setEventsCalendar] = useState("");
+  const [eventTypePoints, setEventTypePoints] = useState({});
+
+  useEffect(() => {
+    const getTypePoints = async () => {
+      const data = await axios.get(apiUrl(Service.HEXATHONS, `/interactions/event-type-points`));
+      setEventTypePoints(data.data);
+    };
+    getTypePoints();
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -181,8 +190,16 @@ const Schedule: React.FC = () => {
         }}
         bg="#F5F6FA"
       >
-        <OngoingEventsView events={ongoingEvents} loading={loading} />
-        <UpcomingEventsView events={upcomingEvents} loading={loading} />
+        <OngoingEventsView
+          events={ongoingEvents}
+          eventTypePoints={eventTypePoints}
+          loading={loading}
+        />
+        <UpcomingEventsView
+          events={upcomingEvents}
+          eventTypePoints={eventTypePoints}
+          loading={loading}
+        />
       </Stack>
     </>
   );

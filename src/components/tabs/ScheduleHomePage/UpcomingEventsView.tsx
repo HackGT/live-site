@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import axios from "axios";
+import { apiUrl, Service } from "@hex-labs/core";
 
-import UpcomingEvents from "./UpcomingEvent";
+import UpcomingEvents from "./UpcomingEventsForDate";
 
 interface Props {
   events: any[];
   loading: boolean;
+  eventTypePoints: { [eventType: string]: number };
 }
 
-const UpcomingEventsView: React.FC<Props> = ({ events, loading }) => {
+const UpcomingEventsView: React.FC<Props> = ({ events, loading, eventTypePoints }) => {
   const partition = (arr: any[], property: string) => {
     const partitionedArray: { [date: string]: any[] } = {};
     arr.forEach((element: any) => {
@@ -55,6 +58,7 @@ const UpcomingEventsView: React.FC<Props> = ({ events, loading }) => {
             key={date.valueOf()}
             events={partition(events, "startDate")[date]}
             date={new Date(date)}
+            eventTypePoints={eventTypePoints}
           />
         ))
       )}
