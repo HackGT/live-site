@@ -36,6 +36,7 @@ const Map = (props: { links: any }) => {
       </HStack>
       <Box>
         <Image
+          rounded="md"
           src={`https://drive.google.com/thumbnail?id=${props.links[activeTab]?.url}&sz=w1000`}
           alt={props.links[activeTab].title}
         />
