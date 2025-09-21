@@ -17,18 +17,22 @@
 }
 
 .reactMarkDown h1 {
+  margin-top: 25px;
   font-size: 32px;
 }
 
 .reactMarkDown h2 {
+  margin-top: 20px;
   font-size: 26px;
 }
 
 .reactMarkDown h3 {
+  margin-top: 15px;
   font-size: 22px;
 }
 
 .reactMarkDown h4 {
+  margin-top: 10px;
   font-size: 20px;
 }
 

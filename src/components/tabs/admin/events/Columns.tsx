@@ -12,6 +12,9 @@ export const Types: { [key: string]: string } = {
   "important": "Important",
   "speaker": "Speaker",
   "mini-challenge": "Mini Challenge",
+  "important-workshop": "Important Workshop",
+  "main-event": "Main Event",
+  "performance": "Performance",
 };
 
 const eventColumns = [

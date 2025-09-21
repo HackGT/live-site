@@ -1,14 +1,6 @@
 /* eslint-disable */
-import {
-  Box,
-  Flex,
-  HStack,
-  IconButton,
-  Image,
-  Text,
-  VStack
-} from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons'; 
+import { Box, Flex, HStack, IconButton, Image, Text, VStack } from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -33,32 +25,33 @@ const ItemContainer: React.FC<Props> = (props: Props) => {
   const [deleteSwagModalIsOpen, setDeleteSwagModalIsOpen] = useState(false);
   const openUpdateSwagModal = () => {
     setUpdateSwagModalIsOpen(true);
-  }
+  };
   const closeUpdateSwagModal = () => {
     setUpdateSwagModalIsOpen(false);
-  }
+  };
   const openDeleteSwagModal = () => {
     setDeleteSwagModalIsOpen(true);
-  }
+  };
   const closeDeleteSwagModal = () => {
     setDeleteSwagModalIsOpen(false);
-  }
+  };
 
   return (
     <div className="glowingItem">
       <VStack>
         {props.item._id}
         <Box>
-          <div className="itemName">
-            {props.item.name}
-          </div>
+          <div className="itemName">{props.item.name}</div>
         </Box>
 
         <Box>
           <HStack>
             <Box>
               <div className="prizePics">
-                <Image alt="prizes" src={`https://drive.google.com/thumbnail?id=${imageID}&sz=w1000`} />
+                <Image
+                  alt="prizes"
+                  src={`https://drive.google.com/thumbnail?id=${imageID}&sz=w1000`}
+                />
               </div>
             </Box>
 
@@ -69,54 +62,56 @@ const ItemContainer: React.FC<Props> = (props: Props) => {
                 {props.item.capacity > 0 && (
                   <span>
                     <b>Status: </b>
-                    {
-                      (!props.item.purchased) || (props.item.purchased < props.item.capacity) ? "In stock" : "Out of stock"
-                    }
+                    {!props.item.purchased || props.item.purchased < props.item.capacity
+                      ? "In stock"
+                      : "Out of stock"}
                   </span>
                 )}
                 <br />
                 <span>
                   <b>Points Required: </b>
-                  {props.item.points}
+                  {props.item.points > 0 ? props.item.points : "Free"}
                 </span>
               </div>
             </Box>
           </HStack>
         </Box>
         <Box>
-          {props.showAdmin && 
+          {props.showAdmin && (
             <HStack>
               <div className="itemButton">
-              <IconButton
-                icon={<EditIcon />}
-                onClick={openUpdateSwagModal}
-                aria-label="Edit"
-                colorScheme="teal"
-              />
+                <IconButton
+                  icon={<EditIcon />}
+                  onClick={openUpdateSwagModal}
+                  aria-label="Edit"
+                  colorScheme="teal"
+                />
               </div>
-              {updateSwagModalIsOpen && 
-                <UpdateSwagModal 
-                  isOpen={updateSwagModalIsOpen} 
-                  onClose={closeUpdateSwagModal} 
+              {updateSwagModalIsOpen && (
+                <UpdateSwagModal
+                  isOpen={updateSwagModalIsOpen}
+                  onClose={closeUpdateSwagModal}
                   item={props.item}
-                />}
+                />
+              )}
 
               <div className="itemButton">
-              <IconButton
-                icon={<DeleteIcon />}
-                onClick={openDeleteSwagModal}
-                aria-label="Delete"
-                colorScheme="pink"
-              />
+                <IconButton
+                  icon={<DeleteIcon />}
+                  onClick={openDeleteSwagModal}
+                  aria-label="Delete"
+                  colorScheme="pink"
+                />
               </div>
-              {deleteSwagModalIsOpen && 
-                <DeleteSwagModal 
-                  isOpen={deleteSwagModalIsOpen} 
-                  onClose={closeDeleteSwagModal} 
+              {deleteSwagModalIsOpen && (
+                <DeleteSwagModal
+                  isOpen={deleteSwagModalIsOpen}
+                  onClose={closeDeleteSwagModal}
                   item={props.item}
-                />}
+                />
+              )}
             </HStack>
-          }
+          )}
         </Box>
       </VStack>
     </div>

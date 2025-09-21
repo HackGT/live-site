@@ -59,16 +59,16 @@ const SwagShop: React.FC = props => {
   };
   const openPointsBreakdownModal = () => {
     setPointsBreakdownModalIsOpen(true);
-  }
+  };
   const closePointsBreakdownModal = () => {
     setPointsBreakdownModalIsOpen(false);
-  }
+  };
   const openLeaderboardModal = () => {
     setLeaderboardIsOpen(true);
-  }
+  };
   const closeLeaderboardModal = () => {
     setLeaderboardIsOpen(false);
-  }
+  };
 
   //doing the post request to create the user
   useEffect(() => {
@@ -121,7 +121,7 @@ const SwagShop: React.FC = props => {
     return (
       <Wrap spacing="30px" justify="center">
         {items
-          .filter((item: Item) => item.points > lowerPoints && item.points <= higherPoints)
+          .filter((item: Item) => item.points >= lowerPoints && item.points <= higherPoints)
           .map((item: Item) => {
             return (
               <ItemContainer
@@ -165,20 +165,23 @@ const SwagShop: React.FC = props => {
         <Button onClick={() => setShowLeaderboardModal(true)} colorScheme="teal" mr={2}>
           Leaderboard
         </Button> */}
-        <Button onClick={openPointsBreakdownModal} colorScheme="teal" mr={2}>
-            Points Breakdown
-        </Button>
+        {/* <Button onClick={openPointsBreakdownModal} colorScheme="teal" mr={2}>
+          Points Breakdown
+        </Button> */}
         <Button onClick={openLeaderboardModal} colorScheme="teal" mr={2}>
-            Leaderboard
+          Leaderboard
         </Button>
         {showAdmin && (
           <Button onClick={openCreateSwagModal} colorScheme="teal">
             Add New Swag
           </Button>
-      )}
+        )}
       </Center>
       {pointsBreakdownModalIsOpen && (
-        <PointsBreakdownModal isOpen={pointsBreakdownModalIsOpen} onClose={closePointsBreakdownModal} />
+        <PointsBreakdownModal
+          isOpen={pointsBreakdownModalIsOpen}
+          onClose={closePointsBreakdownModal}
+        />
       )}
       {leaderboardIsOpen && (
         <LeaderboardModal isOpen={leaderboardIsOpen} onClose={closeLeaderboardModal} />
@@ -188,27 +191,30 @@ const SwagShop: React.FC = props => {
       )}
       <Flex flexDirection="column" alignItems="center">
         <Text id="pointCategory">Tier 1 (300 Points Each)</Text>
-        {itemGrid(200, 300)}
-        <Text id="pointCategory">Tier 2 (150 Points Each)</Text>
-        {itemGrid(100, 150)}
-        <Text id="pointCategory">Tier 3 (50 Points Each)</Text>
-        {itemGrid(15, 50)}
-        <Text id="pointCategory">Tier 4 (10 Points Each)</Text>
-        {itemGrid(5, 10)}
-        <Text id="pointCategory">Tier 5 (5 Points Each)</Text>
-        {itemGrid(0, 5)}
+        {itemGrid(300, 300)}
+        <Text id="pointCategory">Tier 2 (200 Points Each)</Text>
+        {itemGrid(200, 200)}
+        <Text id="pointCategory">Tier 3 (100 Points Each)</Text>
+        {itemGrid(100, 100)}
+        <Text id="pointCategory">Tier 4 (5 Points Each)</Text>
+        {itemGrid(5, 5)}
+        <Text id="pointCategory">Free</Text>
+        {itemGrid(0, 0)}
       </Flex>
 
       <Box position="relative" padding="10">
         <Divider />
       </Box>
 
-      {showAdmin &&
-      <Flex flexDirection="column" alignItems="center">
-        <Text id="pointCategory" alignItems="center">{" "}Admin Section (All Swag){" "}</Text>
-        {itemGridAll()}
-      </Flex>
-      }
+      {showAdmin && (
+        <Flex flexDirection="column" alignItems="center">
+          <Text id="pointCategory" alignItems="center">
+            {" "}
+            Admin Section (All Swag){" "}
+          </Text>
+          {itemGridAll()}
+        </Flex>
+      )}
     </div>
   );
 };
