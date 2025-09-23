@@ -192,11 +192,9 @@ const SwagShop: React.FC = props => {
       <Flex flexDirection="column" alignItems="center">
         <Text id="pointCategory">Tier 1 (300 Points Each)</Text>
         {itemGrid(300, 300)}
-        <Text id="pointCategory">Tier 2 (200 Points Each)</Text>
-        {itemGrid(200, 200)}
-        <Text id="pointCategory">Tier 3 (100 Points Each)</Text>
-        {itemGrid(100, 100)}
-        <Text id="pointCategory">Tier 4 (5 Points Each)</Text>
+        <Text id="pointCategory">Tier 2 (200-300 Points Each)</Text>
+        {itemGrid(100, 200)}
+        <Text id="pointCategory">Tier 3 (5 Points Each)</Text>
         {itemGrid(5, 5)}
         <Text id="pointCategory">Free</Text>
         {itemGrid(0, 0)}
