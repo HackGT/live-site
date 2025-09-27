@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { LoadingScreen } from "@hex-labs/core";
 
 import { EventCard } from "./EventCard";
@@ -27,10 +27,18 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading, eventTypePoints }
         md: "10px",
       }}
     >
-      <Text fontSize="18px" marginBottom="5px">
+      <Text fontSize="18px" marginBottom="10px">
         What's Happening Now
       </Text>
-      <HStack spacing="10px" overflow="auto">
+      <SimpleGrid
+      marginBottom="15px"
+      spacing="10px"
+      columns={{
+        base: 1,
+        md: 2,
+        lg: 3,
+        xl: 4,
+      }}>
         {events.length === 0 ? (
           <Flex
             margin="auto"
@@ -55,7 +63,7 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading, eventTypePoints }
             />
           ))
         )}
-      </HStack>
+      </SimpleGrid>
     </Box>
   );
 };

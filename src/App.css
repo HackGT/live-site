@@ -187,6 +187,21 @@ iframe {
   }
 }
 
+@keyframes ongoing-event-border-pulse {
+  0% {
+    border: 1px solid #7B69EC;
+    box-shadow: 0 0 0 2px #7B69EC20;
+  }
+  50% {
+    border: 1px solid #7B69EC20;
+    box-shadow: 0 0 0 2px transparent;
+  }
+  100% {
+    border: 1px solid #7B69EC;
+    box-shadow: 0 0 0 2px #7B69EC20;
+  }
+}
+
 .live_events {
   margin-top: 60px;
   margin-right: 10%;
