@@ -76,6 +76,8 @@ const InteractionDataModal: React.FC<Props> = props => {
             return <ListItem>Scavenger Hunt</ListItem>;
           } else if (interaction.type === "expo-submission") {
             return <ListItem>Expo Submission</ListItem>;
+          } else if (interaction.type === "check-in") {
+            return <ListItem>Check-In</ListItem>;
           }
         })}
       </UnorderedList>
