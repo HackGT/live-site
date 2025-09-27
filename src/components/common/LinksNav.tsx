@@ -4,9 +4,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Center,
   Flex,
-  HStack,
+  Link,
   VStack
 } from "@chakra-ui/react";
 
@@ -41,16 +40,17 @@ const LinksNav: React.FC<Props> = (props: Props) => {
   ) : (
     <VStack marginTop={2}>
       {props.links.map(link => (
-        <Box 
-        border="1px solid #0001" 
-        w="full" 
-        textAlign="center" 
-        boxShadow="0 3px 3px rgb(0 0 0 / 0.1)" 
-        padding={2} 
-        borderRadius={4}
-        key={link[1]}>
-          <a href={link[1]}>{link[0]}</a>
-        </Box>
+        <Link w="full" key={link[1]} href={link[1]}>
+          <Box 
+          border="1px solid #0001" 
+          w="full" 
+          textAlign="center" 
+          boxShadow="0 3px 3px rgb(0 0 0 / 0.1)" 
+          padding={2} 
+          borderRadius={4}>
+            {link[0]}
+          </Box>
+        </Link>
       ))}
     </VStack>
   );
