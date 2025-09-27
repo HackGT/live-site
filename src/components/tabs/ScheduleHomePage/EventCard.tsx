@@ -61,7 +61,7 @@ export const EventCard: React.FC<{ event: any; points: number; isOngoing: boolea
       </Text>
 
       {isOngoing && (
-        <Stack paddingTop="12px">
+        <Stack paddingTop="12px" marginTop="auto !important">
           <Text fontSize="12px">{getTimeRemainingString(new Date(), new Date(event.endDate))}</Text>
 
           <HStack spacing="0">
