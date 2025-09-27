@@ -7,6 +7,7 @@ import {
   Center,
   Flex,
   HStack,
+  VStack
 } from "@chakra-ui/react";
 
 type Props = {
@@ -38,17 +39,20 @@ const LinksNav: React.FC<Props> = (props: Props) => {
       </Breadcrumb>
     </Flex>
   ) : (
-    <HStack spacing="10px" overflow="scroll">
-      <Box boxShadow="0 3px 3px rgb(0 0 0 / 0.1)" padding={2} borderRadius={4} marginTop={2}>
-        <Breadcrumb separator="">
-          {props.links.map(link => (
-            <BreadcrumbItem key={link[1]}>
-              <BreadcrumbLink href={link[1]}>{link[0]}</BreadcrumbLink>
-            </BreadcrumbItem>
-          ))}
-        </Breadcrumb>
-      </Box>
-    </HStack>
+    <VStack marginTop={2}>
+      {props.links.map(link => (
+        <Box 
+        border="1px solid #0001" 
+        w="full" 
+        textAlign="center" 
+        boxShadow="0 3px 3px rgb(0 0 0 / 0.1)" 
+        padding={2} 
+        borderRadius={4}
+        key={link[1]}>
+          <a href={link[1]}>{link[0]}</a>
+        </Box>
+      ))}
+    </VStack>
   );
 };
 
