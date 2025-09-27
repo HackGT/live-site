@@ -35,6 +35,7 @@ export const EventCard: React.FC<{ event: any; points: number; isOngoing: boolea
       id={event.id}
       minHeight="120px"
       bg="white"
+      animation={isOngoing? "ongoing-event-border-pulse 2s infinite" : "none"}
       borderRadius="5px"
       paddingX="15px"
       paddingY="10px"
