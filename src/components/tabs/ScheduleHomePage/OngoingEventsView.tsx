@@ -27,7 +27,7 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading, eventTypePoints }
         md: "10px",
       }}
     >
-      <Text fontSize="18px" marginBottom="5px">
+      <Text fontSize="18px" marginBottom="10px">
         What's Happening Now
       </Text>
       <SimpleGrid
