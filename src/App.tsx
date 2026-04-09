@@ -72,7 +72,7 @@ export const App = () => {
   // If the user is not logged in, redirect to the login frontend with a redirect
   // param so that the user can login and come back to the page they were on.
   if (!loggedIn) {
-    window.location.href = `https://login.hexlabs.org?redirect=${window.location.href}`;
+    window.location.href = `https://login.hexlabs.org/login?redirect=${window.location.href}`;
     return <LoadingScreen />;
   }
 
