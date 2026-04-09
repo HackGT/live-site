@@ -7,4 +7,4 @@ The HexLabs platform for hosting Hexlabs events! This app is a frontend-only pro
 1. Run `yarn install`
 2. Run `yarn start` to start dev server
 
-To edit content displayed on the pages navigate to `/admin`
+To edit content displayed on the pages navigate to `/admin`.
