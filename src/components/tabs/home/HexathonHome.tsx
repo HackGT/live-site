@@ -20,9 +20,10 @@ const HexathonHomeTab: React.FC = () => {
       );
       setHome(data.data.filter((block: any) => block.title !== "Map Links"));
 
-      let links = data.data.filter((block: any) => block.title === "Map Links");
-      links = JSON.parse(links[0].content);
-      setMapLinks(links);
+      const linksBlock = data.data.find((block: any) => block.title === "Map Links");
+      if (linksBlock && linksBlock.content) {
+        setMapLinks(JSON.parse(linksBlock.content));
+      }
     };
     document.title = "HexLabs Live";
     getBlocks();

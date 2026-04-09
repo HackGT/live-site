@@ -48,9 +48,17 @@ setPersistence(getAuth(app), inMemoryPersistence);
 // can verify the user's identity.
 axios.defaults.withCredentials = true;
 
+let isOneSignalInitialized = false;
+
 export async function runOneSignal() {
-  await OneSignal.init({ appId: "cd086e3e-0229-49b9-9cde-bfc98fb3fccb" });
-  OneSignal.showSlidedownPrompt();
+  if (isOneSignalInitialized) return;
+  try {
+    isOneSignalInitialized = true;
+    await OneSignal.init({ appId: "cd086e3e-0229-49b9-9cde-bfc98fb3fccb" });
+    OneSignal.showSlidedownPrompt();
+  } catch (err) {
+    console.log("OneSignal initialization error or already initialized:", err);
+  }
 }
 
 export const App = () => {
@@ -62,7 +70,7 @@ export const App = () => {
 
   useEffect(() => {
     runOneSignal();
-  });
+  }, []);
 
   // If loading, show a loading screen
   if (loading) {
@@ -72,7 +80,9 @@ export const App = () => {
   // If the user is not logged in, redirect to the login frontend with a redirect
   // param so that the user can login and come back to the page they were on.
   if (!loggedIn) {
-    window.location.href = `https://login.hexlabs.org?redirect=${window.location.href}`;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete("idToken");
+    window.location.href = `https://login.hexlabs.org?redirect=${currentUrl.href}`;
     return <LoadingScreen />;
   }
 
