@@ -84,15 +84,15 @@ export const App = () => {
         <Navbar />
         <Routes>
           <Route index element={<HexathonHomeTab />} />
-          <Route path="/tracks-challenges" element={<TracksTab />} />
+          {/* <Route path="/tracks-challenges" element={<TracksTab />} /> */}
           {/* <Route path="/schedule" element={<ScheduleTab virtual={false} />} /> */}
           {/* <Route path="/mentors" element={<MentorTab />} /> */}
           <Route path="/swag" element={<SwagShop />} />
           {/* <Route path="/workshops" element={<WorkshopTab />} /> */}
-          // TODO: Change the Create Item route to be /admin/items/new after adding in an admin page
-          to view all items
-          <Route path="/hardware" element={<HardwareCheckout />} />
-          <Route path="/hardware/items/new" element={<CreateItem />} />
+          {/* // TODO: Change the Create Item route to be /admin/items/new after adding in an admin page
+          to view all items */}
+          {/*<Route path="/hardware" element={<HardwareCheckout />} /> */}
+          {/*<Route path="/hardware/items/new" element={<CreateItem />} /> */}
           <Route path="/sponsor" element={<SponsorTab />} />
           <Route path="/accomodations" element={<AccommodationsTab />} />
           <Route path="/judging" element={<JudgingTab />} />
