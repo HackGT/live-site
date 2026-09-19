@@ -16,7 +16,7 @@ import {
 import axios from "axios";
 import { apiUrl, Service, useAuth } from "@hex-labs/core";
 
-import { HEXATHON_ID } from "../../App";
+import { HEXATHON_ID } from "../../../App";
 
 type CheckoutType = "swag" | "hardware";
 
