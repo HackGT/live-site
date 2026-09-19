@@ -69,11 +69,25 @@ const AdminControlsHome: React.FC = () => {
       <Stack spacing={4} marginX={{ base: 4, md: 0 }}>
         <AdminWidget title="Events" description="View information about events" href="events" />
         <AdminWidget title="Blocks" description="View information about blocks" href="blocks" />
-        <AdminWidget
-          title="Item Checkout"
-          description="Checkout swag items for participants!"
-          href="item-checkout"
-        />
+        {role.admin && (
+          <>
+            <AdminWidget
+              title="Item Checkout"
+              description="Checkout swag items for participants!"
+              href="item-checkout"
+            />
+            <AdminWidget
+              title="Badge Checkout"
+              description="Scan a participant badge to issue swag or hardware"
+              href="badge-checkout"
+            />
+            <AdminWidget
+              title="Hardware Inventory"
+              description="Manage stock and active equipment checkouts"
+              href="inventory"
+            />
+          </>
+        )}
         <AdminWidget
           title="Locations"
           description="Add locations for events"
