@@ -31,6 +31,7 @@ import CreateItem from "./components/tabs/hardware/CreateItem";
 import CreateLocation from "./components/tabs/admin/events/FormInputs/CreateLocation";
 import BadgeCheckout from "./components/tabs/admin/BadgeCheckout";
 import InventoryAdmin from "./components/tabs/admin/InventoryAdmin";
+import ApiKeysTable from "./components/tabs/admin/apiKeys/ApiKeysTable";
 
 // a little bee ascii art
 // const art =
@@ -107,6 +108,7 @@ export const App = () => {
           <Route path="/admin/scan" element={<BadgeCheckout />} />
           <Route path="/admin/inventory" element={<InventoryAdmin />} />
           <Route path="/admin/locations" element={<CreateLocation />} />
+          <Route path="/admin/api-keys" element={<ApiKeysTable />} />
         </Routes>
         <Footer />
       </AuthProvider>

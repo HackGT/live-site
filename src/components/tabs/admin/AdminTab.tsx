@@ -70,6 +70,11 @@ const AdminControlsHome: React.FC = () => {
         <AdminWidget title="Events" description="View information about events" href="events" />
         <AdminWidget title="Blocks" description="View information about blocks" href="blocks" />
         <AdminWidget
+          title="API Keys"
+          description="View and add AI provider API keys"
+          href="api-keys"
+        />
+        <AdminWidget
           title="Locations"
           description="Add locations for events"
           href="locations"
