@@ -47,7 +47,7 @@ const emptyForm: InventoryForm = { name: "", event: "", size: "", quantity: 0, n
 const InventoryAdmin: React.FC = () => {
   const { user, loading } = useAuth();
   const toast = useToast();
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [hasAccess, setHasAccess] = useState(false);
   const [roleLoading, setRoleLoading] = useState(true);
   const [inventory, setInventory] = useState<InventoryRecord[]>([]);
   const [checkouts, setCheckouts] = useState<any[]>([]);
@@ -64,8 +64,11 @@ const InventoryAdmin: React.FC = () => {
     }
     axios
       .get(apiUrl(Service.USERS, `/users/${user.uid}`))
-      .then(response => setIsAdmin(Boolean(response.data.roles?.admin)))
-      .catch(() => setError("Unable to verify admin access."))
+      .then(response => {
+        const roles = response.data.roles || {};
+        setHasAccess(Boolean(roles.member || roles.admin || roles.exec));
+      })
+      .catch(() => setError("Unable to verify access."))
       .finally(() => setRoleLoading(false));
   }, [user?.uid]);
 
@@ -87,8 +90,8 @@ const InventoryAdmin: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isAdmin) loadData();
-  }, [isAdmin]);
+    if (hasAccess) loadData();
+  }, [hasAccess]);
 
   const updateForm = (field: keyof InventoryForm, value: string | number) => {
     setForm(current => ({ ...current, [field]: value }));
@@ -149,7 +152,7 @@ const InventoryAdmin: React.FC = () => {
   };
 
   if (loading || roleLoading) return <Spinner />;
-  if (!user || !isAdmin) return <Alert status="error">Admin access is required.</Alert>;
+  if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
   return (
     <VStack align="stretch" spacing={8} maxWidth="1100px" margin="32px auto" padding="0 20px">

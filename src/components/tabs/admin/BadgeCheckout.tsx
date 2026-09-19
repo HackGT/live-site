@@ -3,9 +3,11 @@ import {
   Alert,
   AlertIcon,
   Button,
+  ButtonGroup,
   FormControl,
   FormLabel,
   Heading,
+  HStack,
   Input,
   Select,
   Spinner,
@@ -14,6 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 import { apiUrl, Service, useAuth } from "@hex-labs/core";
 
 import { HEXATHON_ID } from "../../../App";
@@ -21,20 +24,22 @@ import { HEXATHON_ID } from "../../../App";
 type CheckoutType = "swag" | "hardware";
 
 const decodeNfcRecord = (record: any): string => {
-  const bytes = new Uint8Array(record.data.buffer, record.data.byteOffset, record.data.byteLength);
-  if (record.recordType === "text" && bytes.length > 0) {
-    return new TextDecoder().decode(bytes.slice(1 + (bytes[0] & 0x3f))).trim();
+  const text = new TextDecoder(record.encoding || "utf-8").decode(record.data);
+  const uid = JSON.parse(text)?.uid;
+  if (typeof uid !== "string" || !uid.trim()) {
+    throw new Error("missing uid");
   }
-  return new TextDecoder().decode(bytes).trim();
+  return uid.trim();
 };
 
 const BadgeCheckout: React.FC = () => {
   const { user, loading } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const toast = useToast();
   const badgeInput = useRef<HTMLInputElement>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [hasAccess, setHasAccess] = useState(false);
   const [roleLoading, setRoleLoading] = useState(true);
-  const [badgeValue, setBadgeValue] = useState("");
+  const [userId, setUserId] = useState("");
   const [participant, setParticipant] = useState<any>(null);
   const [swagItems, setSwagItems] = useState<any[]>([]);
   const [inventory, setInventory] = useState<any[]>([]);
@@ -47,23 +52,35 @@ const BadgeCheckout: React.FC = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!user?.uid) return;
-    axios.get(apiUrl(Service.USERS, `/users/${user.uid}`)).then(response => {
-      setIsAdmin(Boolean(response.data.roles?.admin));
-      setRoleLoading(false);
-    });
-  }, [user?.uid]);
+    if (!user?.uid) {
+      if (!loading) setRoleLoading(false);
+      return;
+    }
+    axios
+      .get(apiUrl(Service.USERS, `/users/${user.uid}`))
+      .then(response => {
+        const roles = response.data.roles || {};
+        setHasAccess(Boolean(roles.member || roles.admin || roles.exec));
+      })
+      .catch(() => {
+        setError("Unable to verify access.");
+      })
+      .finally(() => setRoleLoading(false));
+  }, [user?.uid, loading]);
 
-  useEffect(() => {
-    if (!isAdmin) return;
-    Promise.all([
+  const loadItems = async () => {
+    const [swagResponse, inventoryResponse] = await Promise.all([
       axios.get(apiUrl(Service.HEXATHONS, "/swag-items"), { params: { hexathon: HEXATHON_ID } }),
       axios.get(apiUrl(Service.HARDWARE, "/inventory")),
-    ]).then(([swagResponse, inventoryResponse]) => {
-      setSwagItems(swagResponse.data);
-      setInventory(inventoryResponse.data);
-    });
-  }, [isAdmin]);
+    ]);
+    setSwagItems(swagResponse.data);
+    setInventory(inventoryResponse.data);
+  };
+
+  useEffect(() => {
+    if (!hasAccess) return;
+    loadItems();
+  }, [hasAccess]);
 
   const loadParticipant = async (value: string) => {
     const participantId = value.trim();
@@ -75,7 +92,7 @@ const BadgeCheckout: React.FC = () => {
         apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${participantId}`)
       );
       setParticipant(response.data);
-      setBadgeValue(participantId);
+      setUserId(participantId);
     } catch (requestError: any) {
       setParticipant(null);
       setError(requestError.response?.data?.message || "Participant was not found.");
@@ -83,6 +100,32 @@ const BadgeCheckout: React.FC = () => {
       setLoadingParticipant(false);
     }
   };
+
+  useEffect(() => {
+    const hasUid = searchParams.has("uid");
+    const hasType = searchParams.has("type");
+    if (!hasUid && !hasType) return;
+
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (hasUid) {
+      const nextUid = (searchParams.get("uid") ?? "").trim();
+      nextParams.delete("uid");
+      setUserId(nextUid);
+      if (nextUid) loadParticipant(nextUid);
+    }
+
+    if (hasType) {
+      const nextType = (searchParams.get("type") ?? "").trim().toLowerCase();
+      nextParams.delete("type");
+      if (nextType === "swag" || nextType === "hardware") {
+        setCheckoutType(nextType);
+        setItemId("");
+      }
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  }, [searchParams, setSearchParams]);
 
   const startNfcScan = async () => {
     const Reader = (window as any).NDEFReader;
@@ -97,11 +140,15 @@ const BadgeCheckout: React.FC = () => {
       const reader = new Reader();
       await reader.scan();
       reader.onreading = (event: any) => {
-        const record = event.message.records[0];
-        const value = decodeNfcRecord(record);
         setScanning(false);
-        setBadgeValue(value);
-        loadParticipant(value);
+        try {
+          const value = decodeNfcRecord(event.message.records[0]);
+          setError("");
+          setUserId(value);
+          loadParticipant(value);
+        } catch {
+          setError('The badge payload must be JSON like {"uid":"..."}.');
+        }
       };
       reader.onreadingerror = () => {
         setScanning(false);
@@ -136,7 +183,7 @@ const BadgeCheckout: React.FC = () => {
         });
       }
       toast({ title: "Checkout complete", status: "success", duration: 3000, isClosable: true });
-      await loadParticipant(participant.userId);
+      await Promise.all([loadParticipant(participant.userId), loadItems()]);
       setItemId("");
       setQuantity(1);
     } catch (requestError: any) {
@@ -147,13 +194,13 @@ const BadgeCheckout: React.FC = () => {
   };
 
   if (loading || roleLoading) return <Spinner />;
-  if (!user || !isAdmin) return <Alert status="error">Admin access is required.</Alert>;
+  if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
   const items = checkoutType === "swag" ? swagItems : inventory;
 
   return (
     <VStack align="stretch" spacing={5} maxWidth="640px" margin="32px auto" padding="0 20px">
-      <Heading size="lg">Badge Checkout</Heading>
+      <Heading size="lg">Checkout By ID</Heading>
       <Text>Scan a participant badge, then select the swag or hardware being issued.</Text>
       {error && (
         <Alert status="error">
@@ -163,15 +210,20 @@ const BadgeCheckout: React.FC = () => {
       )}
       <FormControl>
         <FormLabel>Participant badge</FormLabel>
-        <Input
-          ref={badgeInput}
-          value={badgeValue}
-          placeholder="Scan badge or enter participant user ID"
-          onChange={event => setBadgeValue(event.target.value)}
-          onKeyDown={event => {
-            if (event.key === "Enter") loadParticipant(badgeValue);
-          }}
-        />
+        <HStack>
+          <Input
+            ref={badgeInput}
+            value={userId}
+            placeholder="Scan badge or enter participant user ID"
+            onChange={event => setUserId(event.target.value)}
+            onKeyDown={event => {
+              if (event.key === "Enter") loadParticipant(userId);
+            }}
+          />
+          <Button type="button" onClick={() => loadParticipant(userId)} isLoading={loadingParticipant}>
+            Go
+          </Button>
+        </HStack>
         <Button marginTop={2} onClick={startNfcScan} isLoading={scanning}>
           Scan NFC badge
         </Button>
@@ -185,19 +237,30 @@ const BadgeCheckout: React.FC = () => {
       )}
       <form onSubmit={submitCheckout}>
         <VStack align="stretch" spacing={4}>
-          <FormControl>
-            <FormLabel>Checkout type</FormLabel>
-            <Select
-              value={checkoutType}
-              onChange={event => {
-                setCheckoutType(event.target.value as CheckoutType);
+          <ButtonGroup isAttached>
+            <Button
+              type="button"
+              variant={checkoutType === "swag" ? "solid" : "outline"}
+              colorScheme="teal"
+              onClick={() => {
+                setCheckoutType("swag");
                 setItemId("");
               }}
             >
-              <option value="swag">Swag</option>
-              <option value="hardware">Hardware</option>
-            </Select>
-          </FormControl>
+              Swag
+            </Button>
+            <Button
+              type="button"
+              variant={checkoutType === "hardware" ? "solid" : "outline"}
+              colorScheme="teal"
+              onClick={() => {
+                setCheckoutType("hardware");
+                setItemId("");
+              }}
+            >
+              Hardware
+            </Button>
+          </ButtonGroup>
           <FormControl isRequired>
             <FormLabel>{checkoutType === "swag" ? "Swag item" : "Hardware inventory"}</FormLabel>
             <Select value={itemId} onChange={event => setItemId(event.target.value)}>

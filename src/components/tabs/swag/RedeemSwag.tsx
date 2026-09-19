@@ -35,6 +35,15 @@ const RedeemSwag: React.FC = () => {
 
   const [modalUserId, setModalUserId] = useState(null);
 
+  const releaseModalLock = () => {
+    document.body.style.pointerEvents = "";
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+    document.body.removeAttribute("data-scroll-locked");
+    document.documentElement.style.overflow = "";
+    document.documentElement.style.paddingRight = "";
+  };
+
   const [{ data, error }] = useAxios({
     method: "GET",
     url: apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users`),
@@ -75,6 +84,7 @@ const RedeemSwag: React.FC = () => {
   const closeCheckoutModal = () => {
     setModalUserId(null);
     onClose();
+    releaseModalLock();
   };
 
   const openEditUserModal = (row: any) => {
@@ -85,6 +95,7 @@ const RedeemSwag: React.FC = () => {
   const closeEditUserModal = () => {
     setModalUserId(null);
     editUserOnClose();
+    releaseModalLock();
   };
 
   const openPointDataModal = (row: any) => {
@@ -95,6 +106,7 @@ const RedeemSwag: React.FC = () => {
   const closePointDataModal = () => {
     setModalUserId(null);
     pointDataOnClose();
+    releaseModalLock();
   };
 
   const columns = [
@@ -149,14 +161,20 @@ const RedeemSwag: React.FC = () => {
 
   return (
     <>
-      <ItemCheckoutModal
-        userId={modalUserId}
-        isOpen={isOpen}
-        onClose={closeCheckoutModal}
-        swagItems={swagItems}
-      />
-      <EditUserModal userId={modalUserId} isOpen={editUserIsOpen} onClose={closeEditUserModal} />
-      <PointDataModal userId={modalUserId} isOpen={pointDataIsOpen} onClose={closePointDataModal} />
+      {isOpen && (
+        <ItemCheckoutModal
+          userId={modalUserId}
+          isOpen={isOpen}
+          onClose={closeCheckoutModal}
+          swagItems={swagItems}
+        />
+      )}
+      {editUserIsOpen && (
+        <EditUserModal userId={modalUserId} isOpen={editUserIsOpen} onClose={closeEditUserModal} />
+      )}
+      {pointDataIsOpen && (
+        <PointDataModal userId={modalUserId} isOpen={pointDataIsOpen} onClose={closePointDataModal} />
+      )}
       <Alert status="info">
         <AlertIcon />
         <AlertTitle>How to Use</AlertTitle>

@@ -66,32 +66,52 @@ const AdminControlsHome: React.FC = () => {
           </Heading>
         </Box>
       </Flex>
-      <Stack spacing={4} marginX={{ base: 4, md: 0 }}>
+      <Stack spacing={4} marginX={{ base: 4, md: 0 }} marginBottom="13px">
         <AdminWidget title="Events" description="View information about events" href="events" />
         <AdminWidget title="Blocks" description="View information about blocks" href="blocks" />
-        {role.admin && (
-          <>
-            <AdminWidget
-              title="Item Checkout"
-              description="Checkout swag items for participants!"
-              href="item-checkout"
-            />
-            <AdminWidget
-              title="Badge Checkout"
-              description="Scan a participant badge to issue swag or hardware"
-              href="badge-checkout"
-            />
-            <AdminWidget
-              title="Hardware Inventory"
-              description="Manage stock and active equipment checkouts"
-              href="inventory"
-            />
-          </>
-        )}
         <AdminWidget
           title="Locations"
           description="Add locations for events"
           href="locations"
+        />
+      </Stack>
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        bgGradient={{
+          base: "linear(to-b, #33c2ff, #7b69ec)",
+          md: "linear(to-r, #33c2ff, #7b69ec)",
+        }}
+        boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+        alignItems="center"
+        justifyContent="space-around"
+        marginBottom={{ base: "8px", md: "20px" }}
+      >
+        <Box
+          color="white"
+          paddingY={{ base: "24px", md: "24px" }}
+          paddingLeft={{ base: "16px", md: "64px" }}
+          paddingRight={{ base: "16px", md: "64px" }}
+        >
+          <Heading size="2xl" marginBottom="9px">
+            Checkouts
+          </Heading>
+        </Box>
+      </Flex>
+      <Stack spacing={4} marginX={{ base: 4, md: 0 }}>
+        <AdminWidget
+          title="Checkout by Name"
+          description="Checkout swag items by participant name"
+          href="item-checkout"
+        />
+        <AdminWidget
+          title="Checkout by ID"
+          description="Scan a participant badge or enter UID to issue swag or hardware"
+          href="scan"
+        />
+        <AdminWidget
+          title="Hardware Inventory"
+          description="Manage stock and active equipment checkouts"
+          href="inventory"
         />
       </Stack>
     </Flex>

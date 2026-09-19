@@ -104,7 +104,7 @@ export const App = () => {
           <Route path="/admin/events" element={<EventsTab />} />
           <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
           <Route path="/admin/item-checkout" element={<RedeemSwag />} />
-          <Route path="/admin/badge-checkout" element={<BadgeCheckout />} />
+          <Route path="/admin/scan" element={<BadgeCheckout />} />
           <Route path="/admin/inventory" element={<InventoryAdmin />} />
           <Route path="/admin/locations" element={<CreateLocation />} />
         </Routes>
