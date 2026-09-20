@@ -12,7 +12,7 @@ const NoItemsFound = ({ searchQuery, user }: any) => {
           This location doesn't have any items you can see. Try again later, or contact a HackGT
           staff member for further assistance.
         </p>
-        {user && user.admin && (
+        {user && (user.member || user.admin || user.exec) && (
           <>
             <Button as={Link} to="/admin/items/new">
               Create item

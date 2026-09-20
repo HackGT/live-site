@@ -46,7 +46,7 @@ const ItemCheckoutModal: React.FC<Props> = props => {
 
   useEffect(() => {
     const getUserDetailInfo = async () => {
-      if (!props.userId) {
+      if (!props.isOpen || !props.userId) {
         return;
       }
 
@@ -60,24 +60,16 @@ const ItemCheckoutModal: React.FC<Props> = props => {
           },
         });
         setUser(response.data);
-        setLoadingUser(false);
       } catch (error: any) {
         handleAxiosError(error);
+      } finally {
+        setLoadingUser(false);
       }
     };
 
     getUserDetailInfo();
     reset();
-  }, [props.userId]);
-
-  if (loadingUser) {
-    return (
-      <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
-        <ModalOverlay />
-        <Spinner />
-      </Modal>
-    );
-  }
+  }, [props.userId, props.isOpen]);
 
   const handleFormSubmit = async (values: any) => {
     try {
@@ -105,48 +97,62 @@ const ItemCheckoutModal: React.FC<Props> = props => {
   };
 
   return (
-    <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
+    <Modal
+      onClose={props.onClose}
+      isOpen={props.isOpen}
+      isCentered
+      motionPreset="none"
+      blockScrollOnMount={false}
+      useInert={false}
+      onCloseComplete={() => {
+        document.body.style.pointerEvents = "";
+      }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Swag Item Checkout</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <form onSubmit={handleSubmit(handleFormSubmit)}>
-            <VStack spacing={4} alignItems="normal">
-              <Text>User: {user?.name}</Text>
-              <Text>Points: {user?.points?.currentTotal}</Text>
-              <Controller
-                control={control}
-                name="swagItem"
-                rules={{ required: "Please select a swag item" }}
-                render={({
-                  field: { value, ref, ...field },
-                  fieldState: { error: fieldError },
-                }) => (
-                  <FormControl isInvalid={!!fieldError} isRequired>
-                    <FormLabel>Swag Item</FormLabel>
-                    <Select
-                      {...field}
-                      ref={ref}
-                      value={value}
-                      options={props.swagItems.map((swagItem: any) => ({
-                        label: `${swagItem.name} [${swagItem.points} points]`,
-                        value: swagItem.id,
-                      }))}
-                    />
-                    <FormErrorMessage>{fieldError && fieldError.message}</FormErrorMessage>
-                  </FormControl>
-                )}
-              />
-              <FormControl isRequired>
-                <FormLabel>Quantity</FormLabel>
-                <Input {...register("quantity")} type="number" />
-              </FormControl>
-              <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
-                Checkout
-              </Button>
-            </VStack>
-          </form>
+          {loadingUser ? (
+            <Spinner />
+          ) : (
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
+              <VStack spacing={4} alignItems="normal">
+                <Text>User: {user?.name}</Text>
+                <Text>Points: {user?.points?.currentTotal}</Text>
+                <Controller
+                  control={control}
+                  name="swagItem"
+                  rules={{ required: "Please select a swag item" }}
+                  render={({
+                    field: { value, ref, ...field },
+                    fieldState: { error: fieldError },
+                  }) => (
+                    <FormControl isInvalid={!!fieldError} isRequired>
+                      <FormLabel>Swag Item</FormLabel>
+                      <Select
+                        {...field}
+                        ref={ref}
+                        value={value}
+                        options={props.swagItems.map((swagItem: any) => ({
+                          label: `${swagItem.name} [${swagItem.points} points]`,
+                          value: swagItem.id,
+                        }))}
+                      />
+                      <FormErrorMessage>{fieldError && fieldError.message}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                />
+                <FormControl isRequired>
+                  <FormLabel>Quantity</FormLabel>
+                  <Input {...register("quantity")} type="number" />
+                </FormControl>
+                <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
+                  Checkout
+                </Button>
+              </VStack>
+            </form>
+          )}
         </ModalBody>
       </ModalContent>
     </Modal>

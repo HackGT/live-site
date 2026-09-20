@@ -54,7 +54,7 @@ const NewHardwareList = () => {
       <Heading mb={4}>Inventory</Heading>
       <Flex gap="10px" flexDir="column">
         <Flex flexDir="row" gap={2}>
-          {profile.roles.admin && (
+          {(profile.roles.member || profile.roles.admin || profile.roles.exec) && (
             <Link to="/hardware/items/new">
               <Button px={6} colorScheme="twitter" color="white">
                 Create item

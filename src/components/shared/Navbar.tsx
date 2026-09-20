@@ -9,7 +9,6 @@ import {
   Service,
   apiUrl,
   LoadingScreen,
-  ErrorScreen,
 } from "@hex-labs/core";
 import axios from "axios";
 import useAxios from "axios-hooks";
@@ -130,13 +129,10 @@ const Navbar: React.FC = () => {
     getRoles();
   }, [user?.uid]);
 
-  const [{ data: activeHexathon, loading: hexathonLoading, error: hexathonError }] = useAxios(
+  const [{ data: activeHexathon, loading: hexathonLoading }] = useAxios(
     {
       url: apiUrl(Service.HEXATHONS, `/hexathons/${HEXATHON_ID}`),
       method: "GET",
-      params: {
-        hexathon: HEXATHON_ID,
-      },
     },
     { useCache: false }
   );
@@ -144,14 +140,11 @@ const Navbar: React.FC = () => {
   if (hexathonLoading) {
     return <LoadingScreen />;
   }
-  if (hexathonError) {
-    return <ErrorScreen error={hexathonError} />;
-  }
 
   const showAdmin = role.member || role.admin || role.exec;
 
   return (
-    <Header rightItem={<Timer activeHexathon={activeHexathon} />}>
+    <Header rightItem={activeHexathon ? <Timer activeHexathon={activeHexathon} /> : undefined}>
       {routes.map((route: any) => (
         <Link key={route.name} to={`${route.link}`}>
           <HeaderItem>{route.name}</HeaderItem>

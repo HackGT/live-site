@@ -47,7 +47,7 @@ const EditUserModal: React.FC<Props> = props => {
 
   useEffect(() => {
     const getUserDetailInfo = async () => {
-      if (!props.userId) {
+      if (!props.isOpen || !props.userId) {
         return;
       }
 
@@ -61,7 +61,6 @@ const EditUserModal: React.FC<Props> = props => {
           },
         });
         setUser(response.data);
-        setLoadingUser(false);
         setUserAdditionalPoints(response.data.points.numAdditional);
 
         reset({
@@ -70,20 +69,13 @@ const EditUserModal: React.FC<Props> = props => {
         });
       } catch (error: any) {
         handleAxiosError(error);
+      } finally {
+        setLoadingUser(false);
       }
     };
 
     getUserDetailInfo();
-  }, [props.userId]);
-
-  if (loadingUser) {
-    return (
-      <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
-        <ModalOverlay />
-        <Spinner />
-      </Modal>
-    );
-  }
+  }, [props.userId, props.isOpen]);
 
   const handleFormSubmit = async (values: any) => {
     try {
@@ -111,39 +103,56 @@ const EditUserModal: React.FC<Props> = props => {
   };
 
   return (
-    <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
+    <Modal
+      onClose={props.onClose}
+      isOpen={props.isOpen}
+      isCentered
+      motionPreset="none"
+      blockScrollOnMount={false}
+      useInert={false}
+      onCloseComplete={() => {
+        document.body.style.pointerEvents = "";
+      }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit User Points</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Alert status="warning" mb="5">
-            <AlertIcon />
-            <Box>
-              <AlertTitle>Warning</AlertTitle>
-              <AlertDescription>
-                Only use this to manually update points if really needed. Usually, you can reconcile
-                people's points by scanning their badge for an event they said they went to.
-              </AlertDescription>
-            </Box>
-          </Alert>
-          <form onSubmit={handleSubmit(handleFormSubmit)}>
-            <VStack spacing={4} alignItems="normal">
-              <Text>User: {user?.name}</Text>
-              <Text>Current # of Points: {user?.points?.currentTotal}</Text>
-              <FormControl isRequired>
-                <FormLabel>Points Spent</FormLabel>
-                <Input {...register("numSpent")} type="number" />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel>Add/Remove Points</FormLabel>
-                <Input {...register("numAdditional")} type="number" />
-              </FormControl>
-              <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
-                Checkout
-              </Button>
-            </VStack>
-          </form>
+          {loadingUser ? (
+            <Spinner />
+          ) : (
+            <>
+              <Alert status="warning" mb="5">
+                <AlertIcon />
+                <Box>
+                  <AlertTitle>Warning</AlertTitle>
+                  <AlertDescription>
+                    Only use this to manually update points if really needed. Usually, you can
+                    reconcile people's points by scanning their badge for an event they said they
+                    went to.
+                  </AlertDescription>
+                </Box>
+              </Alert>
+              <form onSubmit={handleSubmit(handleFormSubmit)}>
+                <VStack spacing={4} alignItems="normal">
+                  <Text>User: {user?.name}</Text>
+                  <Text>Current # of Points: {user?.points?.currentTotal}</Text>
+                  <FormControl isRequired>
+                    <FormLabel>Points Spent</FormLabel>
+                    <Input {...register("numSpent")} type="number" />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Add/Remove Points</FormLabel>
+                    <Input {...register("numAdditional")} type="number" />
+                  </FormControl>
+                  <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
+                    Checkout
+                  </Button>
+                </VStack>
+              </form>
+            </>
+          )}
         </ModalBody>
       </ModalContent>
     </Modal>

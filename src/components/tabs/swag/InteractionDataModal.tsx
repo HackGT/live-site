@@ -27,7 +27,7 @@ const InteractionDataModal: React.FC<Props> = props => {
 
   useEffect(() => {
     const getUserDetailInfo = async () => {
-      if (!props.userId) {
+      if (!props.isOpen || !props.userId) {
         return;
       }
 
@@ -42,30 +42,18 @@ const InteractionDataModal: React.FC<Props> = props => {
           },
         });
         setInteractions(response.data);
-        setLoadingInteractions(false);
       } catch (error: any) {
         handleAxiosError(error);
+      } finally {
+        setLoadingInteractions(false);
       }
     };
 
     getUserDetailInfo();
-  }, [props.userId]);
-
-  if (loadingInteractions) {
-    return (
-      <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
-        <ModalOverlay />
-        <Spinner />
-      </Modal>
-    );
-  }
-
-  if (!interactions) {
-    return null;
-  }
+  }, [props.userId, props.isOpen]);
 
   const interactionList =
-    interactions.length === 0 ? (
+    !interactions || interactions.length === 0 ? (
       "No Interactions"
     ) : (
       <UnorderedList>
@@ -84,12 +72,25 @@ const InteractionDataModal: React.FC<Props> = props => {
     );
 
   return (
-    <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered size="lg">
+    <Modal
+      onClose={props.onClose}
+      isOpen={props.isOpen}
+      isCentered
+      size="lg"
+      motionPreset="none"
+      blockScrollOnMount={false}
+      useInert={false}
+      onCloseComplete={() => {
+        document.body.style.pointerEvents = "";
+      }}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Interaction Data</ModalHeader>
         <ModalCloseButton />
-        <ModalBody paddingBottom="5">{interactionList}</ModalBody>
+        <ModalBody paddingBottom="5">
+          {loadingInteractions ? <Spinner /> : interactionList}
+        </ModalBody>
       </ModalContent>
     </Modal>
   );
