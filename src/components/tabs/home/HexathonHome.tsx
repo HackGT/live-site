@@ -4,6 +4,7 @@ import axios from "axios";
 
 import BlockCollection from "../../common/BlockCollection";
 import Map from "./Map";
+import OpenAIKeyButton from "./OpenAIKeyButton";
 import Schedule from "../ScheduleHomePage/ScheduleTable";
 
 const HexathonHomeTab: React.FC = () => {
@@ -31,6 +32,7 @@ const HexathonHomeTab: React.FC = () => {
   return (
     <div>
       <Map links={mapLinks} />
+      <OpenAIKeyButton />
       <BlockCollection title="" blocks={home} />
       <Schedule />
     </div>
