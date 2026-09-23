@@ -1,35 +1,53 @@
 import React, { useState } from "react";
-import { Button, Box, Image, HStack, ButtonGroup } from "@chakra-ui/react";
+import { Button, Box, Image, HStack, ButtonGroup, Text } from "@chakra-ui/react";
 
-const Map = (props: { links: any }) => {
-  const [activeTab, setActiveTab] = useState(0);
+const maps = [
+  { location: "Hive", floor: 1, url: "/maps/hive.png" },
+  { location: "Courtyard", floor: 1, url: "/maps/courtyard.png" },
+  { location: "Klaus", floor: 1, url: "/maps/klaus1.png" },
+  { location: "Klaus", floor: 2, url: "/maps/klaus2.png" },
+  { location: "Klaus", floor: 3, url: "/maps/klaus3.png" },
+];
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
-
-  if (!props.links || props.links.length == 0) return null;
-
-  // map each link to the image ID
-  props.links.map((obj: any) => {
-    if (obj.url.includes("/")) {
-      const imageID = obj.url.split("/")[5];
-      obj.url = imageID;
-    }
-  });
+const Map = () => {
+  const [activeLocation, setActiveLocation] = useState("Hive");
+  const [activeFloor, setActiveFloor] = useState(1);
+  const locations = Array.from(new Set(maps.map((map) => map.location)));
+  const floorMaps = maps.filter((map) => map.location === activeLocation);
+  const selectedMap = floorMaps.find((map) => map.floor === activeFloor) || floorMaps[0];
 
   return (
     <Box width={{ base: "90%", md: "75%", lg: "65%" }} margin="auto" marginTop="20px">
-      <HStack marginBottom="5px">
+      <Text fontSize="18px" fontWeight="bold" marginBottom="10px">
+        Maps
+      </Text>
+      <HStack marginBottom="10px" flexWrap="wrap">
         <ButtonGroup>
-          {props.links.map((link: any, index: number) => (
+          {locations.map((location) => (
             <Button
               size={{ base: "xs", lg: "md" }}
-              onClick={() => handleTabClick(index)}
-              colorScheme={activeTab === index ? "blue" : "gray"}
-              key={link.title}
+              onClick={() => {
+                setActiveLocation(location);
+                setActiveFloor(1);
+              }}
+              colorScheme={activeLocation === location ? "blue" : "gray"}
+              key={location}
             >
-              {link.title}
+              {location}
+            </Button>
+          ))}
+        </ButtonGroup>
+      </HStack>
+      <HStack marginBottom="10px" flexWrap="wrap">
+        <ButtonGroup>
+          {floorMaps.map(({ floor }) => (
+            <Button
+              size={{ base: "xs", lg: "md" }}
+              onClick={() => setActiveFloor(floor)}
+              colorScheme={selectedMap.floor === floor ? "blue" : "gray"}
+              key={floor}
+            >
+              Floor {floor}
             </Button>
           ))}
         </ButtonGroup>
@@ -37,8 +55,8 @@ const Map = (props: { links: any }) => {
       <Box>
         <Image
           rounded="md"
-          src={`https://drive.google.com/thumbnail?id=${props.links[activeTab]?.url}&sz=w1000`}
-          alt={props.links[activeTab].title}
+          src={selectedMap.url}
+          alt={`${selectedMap.location} floor ${selectedMap.floor}`}
         />
       </Box>
     </Box>

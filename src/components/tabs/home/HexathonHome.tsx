@@ -3,14 +3,11 @@ import { apiUrl, Service } from "@hex-labs/core";
 import axios from "axios";
 
 import BlockCollection from "../../common/BlockCollection";
-import Map from "./Map";
 import OpenAIKeyButton from "./OpenAIKeyButton";
 import Schedule from "../ScheduleHomePage/ScheduleTable";
 
 const HexathonHomeTab: React.FC = () => {
   const [home, setHome] = useState<any[]>([]);
-  const [mapLinks, setMapLinks] = useState<string[]>([]);
-
   useEffect(() => {
     const getBlocks = async () => {
       const data = await axios.get(
@@ -20,10 +17,6 @@ const HexathonHomeTab: React.FC = () => {
         )
       );
       setHome(data.data.filter((block: any) => block.title !== "Map Links"));
-
-      let links = data.data.filter((block: any) => block.title === "Map Links");
-      links = JSON.parse(links[0].content);
-      setMapLinks(links);
     };
     document.title = "HexLabs Live";
     getBlocks();
@@ -31,7 +24,6 @@ const HexathonHomeTab: React.FC = () => {
 
   return (
     <div>
-      <Map links={mapLinks} />
       <OpenAIKeyButton />
       <BlockCollection title="" blocks={home} />
       <Schedule />
