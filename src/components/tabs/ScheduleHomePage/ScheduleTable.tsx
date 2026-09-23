@@ -9,6 +9,7 @@ import dateFormat from "dateformat";
 
 import UpcomingEventsView from "./UpcomingEventsView";
 import OngoingEventsView from "./OngoingEventsView";
+import Map from "../home/Map";
 
 const configuration = OneSignalAPI.createConfiguration({
   userKey: "NjYyMDlmYWQtOTMwMy00NTA3LTk4MjItOTQ5OGYzODA3MDc2",
@@ -190,6 +191,7 @@ const Schedule: React.FC = () => {
         }}
         bg="#F5F6FA"
       >
+        <Map />
         <OngoingEventsView
           events={ongoingEvents}
           eventTypePoints={eventTypePoints}
