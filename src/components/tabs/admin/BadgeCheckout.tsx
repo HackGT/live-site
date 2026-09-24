@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   AlertIcon,
+  Box,
   Button,
   ButtonGroup,
   FormControl,
@@ -41,6 +42,7 @@ const BadgeCheckout: React.FC = () => {
   const [roleLoading, setRoleLoading] = useState(true);
   const [userId, setUserId] = useState("");
   const [participant, setParticipant] = useState<any>(null);
+  const [hardwareCheckouts, setHardwareCheckouts] = useState<any[]>([]);
   const [swagItems, setSwagItems] = useState<any[]>([]);
   const [inventory, setInventory] = useState<any[]>([]);
   const [checkoutType, setCheckoutType] = useState<CheckoutType>("swag");
@@ -88,14 +90,26 @@ const BadgeCheckout: React.FC = () => {
     setLoadingParticipant(true);
     setError("");
     try {
-      const response = await axios.get(
-        apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${participantId}`)
-      );
-      setParticipant(response.data);
+      const [participantResponse, checkoutResponse] = await Promise.allSettled([
+        axios.get(apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${participantId}`)),
+        axios.get(apiUrl(Service.HARDWARE, "/checkouts"), { params: { userId: participantId } }),
+      ]);
+
+      if (participantResponse.status === "rejected") {
+        setParticipant(null);
+        setHardwareCheckouts([]);
+        const requestError = participantResponse.reason;
+        setError(requestError.response?.data?.message || "Participant was not found.");
+        return;
+      }
+
+      setParticipant(participantResponse.value.data);
       setUserId(participantId);
-    } catch (requestError: any) {
-      setParticipant(null);
-      setError(requestError.response?.data?.message || "Participant was not found.");
+      setHardwareCheckouts(
+        checkoutResponse.status === "fulfilled" && Array.isArray(checkoutResponse.value.data)
+          ? checkoutResponse.value.data
+          : []
+      );
     } finally {
       setLoadingParticipant(false);
     }
@@ -197,6 +211,16 @@ const BadgeCheckout: React.FC = () => {
   if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
   const items = checkoutType === "swag" ? swagItems : inventory;
+  const swagHistory = [...(participant?.purchasedSwagItems || [])].sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
+  const hardwareHistory = [...hardwareCheckouts].sort(
+    (a, b) => new Date(b.checkedOutAt).getTime() - new Date(a.checkedOutAt).getTime()
+  );
+  const swagName = (swagItemId: any) => {
+    const id = String(swagItemId?._id || swagItemId || "");
+    return swagItems.find(item => String(item.id || item._id) === id)?.name || "Unknown item";
+  };
 
   return (
     <VStack align="stretch" spacing={5} maxWidth="640px" margin="32px auto" padding="0 20px">
@@ -230,9 +254,40 @@ const BadgeCheckout: React.FC = () => {
       </FormControl>
       {loadingParticipant && <Spinner alignSelf="center" />}
       {participant && (
-        <Alert status="info">
+        <Alert status="info" alignItems="flex-start" borderRadius="md">
           <AlertIcon />
-          {participant.name} has {participant.points?.currentTotal ?? 0} points.
+          <Box>
+            <Text fontWeight="semibold">
+              {participant.name} has {participant.points?.currentTotal ?? 0} points.
+            </Text>
+            <HStack align="start" spacing={10} marginTop={2} flexWrap="wrap">
+              <Box minWidth="160px">
+                <Text fontSize="sm" fontWeight="medium">Previous swag</Text>
+                {swagHistory.length === 0 ? (
+                  <Text fontSize="sm" opacity={0.75}>None</Text>
+                ) : (
+                  swagHistory.map(item => (
+                    <Text key={String(item._id || `${item.swagItemId}-${item.timestamp}`)} fontSize="sm">
+                      {swagName(item.swagItemId)} ×{item.quantity}
+                    </Text>
+                  ))
+                )}
+              </Box>
+              <Box minWidth="160px">
+                <Text fontSize="sm" fontWeight="medium">Previous hardware</Text>
+                {hardwareHistory.length === 0 ? (
+                  <Text fontSize="sm" opacity={0.75}>None</Text>
+                ) : (
+                  hardwareHistory.map(checkout => (
+                    <Text key={checkout.id} fontSize="sm">
+                      {checkout.inventory?.name || "Unknown item"} ×{checkout.quantity}
+                      {checkout.returnedAt ? " (returned)" : ""}
+                    </Text>
+                  ))
+                )}
+              </Box>
+            </HStack>
+          </Box>
         </Alert>
       )}
       <form onSubmit={submitCheckout}>
