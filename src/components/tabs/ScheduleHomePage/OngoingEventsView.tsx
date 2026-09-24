@@ -27,43 +27,45 @@ const OngoingEventsView: React.FC<Props> = ({ events, loading, eventTypePoints }
         md: "10px",
       }}
     >
-      <Text fontSize="18px" marginBottom="10px">
+      <Text fontSize="18px" marginBottom="10px" textAlign="center">
         What's Happening Now
       </Text>
-      <SimpleGrid
-      marginBottom="15px"
-      spacing="10px"
-      columns={{
-        base: 1,
-        md: 2,
-        lg: 3,
-        xl: 4,
-      }}>
-        {events.length === 0 ? (
-          <Flex
-            margin="auto"
-            width="90%"
-            height="120px"
-            justifyContent="center"
-            alignItems="center"
-            textAlign="center"
-            fontStyle="italic"
-          >
-            There are currently no ongoing events for this hackathon!
-            <br />
-            Please come back later or see below for upcoming events!
-          </Flex>
-        ) : (
-          events.map((event: any) => (
+      {events.length === 0 ? (
+        <Flex
+          margin="auto"
+          marginBottom="15px"
+          width="100%"
+          height="120px"
+          justifyContent="center"
+          alignItems="center"
+          textAlign="center"
+          fontStyle="italic"
+        >
+          There are currently no ongoing events for this hackathon!
+          <br />
+          Please come back later or see below for upcoming events!
+        </Flex>
+      ) : (
+        <SimpleGrid
+          marginBottom="15px"
+          spacing="10px"
+          columns={{
+            base: 1,
+            md: 2,
+            lg: 3,
+            xl: 4,
+          }}
+        >
+          {events.map((event: any) => (
             <EventCard
               key={event.id}
               event={event}
               points={eventTypePoints[event.type] ?? 0}
               isOngoing
             />
-          ))
-        )}
-      </SimpleGrid>
+          ))}
+        </SimpleGrid>
+      )}
     </Box>
   );
 };

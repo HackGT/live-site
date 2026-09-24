@@ -179,7 +179,7 @@ const Schedule: React.FC = () => {
           base: "95%",
           md: "85%",
         }}
-        bg="#F5F6FA"
+        bg="rgba(66, 153, 225, 0.08)"
       >
         <Map />
         <OngoingEventsView
