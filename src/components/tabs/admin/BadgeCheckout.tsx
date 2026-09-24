@@ -11,6 +11,7 @@ import {
   HStack,
   Input,
   Select,
+  SimpleGrid,
   Spinner,
   Text,
   VStack,
@@ -256,12 +257,12 @@ const BadgeCheckout: React.FC = () => {
       {participant && (
         <Alert status="info" alignItems="flex-start" borderRadius="md">
           <AlertIcon />
-          <Box>
+          <Box flex="1" minWidth="0">
             <Text fontWeight="semibold">
               {participant.name} has {participant.points?.currentTotal ?? 0} points.
             </Text>
-            <HStack align="start" spacing={10} marginTop={2} flexWrap="wrap">
-              <Box minWidth="160px">
+            <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={3} marginTop={2}>
+              <Box>
                 <Text fontSize="sm" fontWeight="medium">Previous swag</Text>
                 {swagHistory.length === 0 ? (
                   <Text fontSize="sm" opacity={0.75}>None</Text>
@@ -273,7 +274,7 @@ const BadgeCheckout: React.FC = () => {
                   ))
                 )}
               </Box>
-              <Box minWidth="160px">
+              <Box>
                 <Text fontSize="sm" fontWeight="medium">Previous hardware</Text>
                 {hardwareHistory.length === 0 ? (
                   <Text fontSize="sm" opacity={0.75}>None</Text>
@@ -286,7 +287,7 @@ const BadgeCheckout: React.FC = () => {
                   ))
                 )}
               </Box>
-            </HStack>
+            </SimpleGrid>
           </Box>
         </Alert>
       )}
