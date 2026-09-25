@@ -4,6 +4,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 
 import EventFormInput from "./FormInputs/EventFormInput";
+import VolunteerEventFormInput from "../volunteerEvents/VolunteerEventFormInput";
 
 interface Props {
   name: string;
@@ -27,7 +28,11 @@ const EditEntry: React.FC<Props> = props => {
       maxWidth="1200px"
     >
       <Heading marginBottom="20px">Update {props.name.substring(0, props.name.length - 1)}</Heading>
-      {props.name === "Events" ? <EventFormInput id={id} /> : null}
+      {props.name === "Events" ? (
+        <EventFormInput id={id} />
+      ) : props.name === "Volunteer Events" ? (
+        <VolunteerEventFormInput id={id} />
+      ) : null}
     </Box>
   );
 };

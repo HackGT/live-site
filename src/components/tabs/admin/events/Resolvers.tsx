@@ -1,6 +1,6 @@
-import { Resolver } from "react-hook-form";
+import { Resolver, ResolverResult } from "react-hook-form";
 
-import { EventFormValues } from "./FormValues";
+import { EventFormValues, VolunteerEventFormValues } from "./FormValues";
 
 export const eventResolver: Resolver<EventFormValues> = async values => {
   const missingRequired =
@@ -90,4 +90,14 @@ export const eventResolver: Resolver<EventFormValues> = async values => {
           : undefined,
     },
   };
+};
+
+export const volunteerEventResolver: Resolver<VolunteerEventFormValues> = async (
+  values,
+  context,
+  options
+) => {
+  const result = await eventResolver(values as unknown as EventFormValues, context, options as any);
+  const { type, location, ...errors } = result.errors as any;
+  return { ...result, errors } as ResolverResult<VolunteerEventFormValues>;
 };

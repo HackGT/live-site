@@ -68,6 +68,11 @@ const AdminControlsHome: React.FC = () => {
       </Flex>
       <Stack spacing={4} marginX={{ base: 4, md: 0 }} marginBottom="13px">
         <AdminWidget title="Events" description="View information about events" href="events" />
+        <AdminWidget
+          title="Volunteer Events"
+          description="View and assign volunteer shifts"
+          href="volunteer-events"
+        />
         <AdminWidget title="Blocks" description="View information about blocks" href="blocks" />
         <AdminWidget
           title="API Keys"

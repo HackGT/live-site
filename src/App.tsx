@@ -23,6 +23,7 @@ import AdminTab from "./components/tabs/admin/AdminTab";
 import JudgingTab from "./components/tabs/judging/JudgingTab";
 import EventsTab from "./components/tabs/admin/events/EventsTable";
 import EditEntry from "./components/tabs/admin/events/EditEntry";
+import VolunteerEventsTab from "./components/tabs/admin/volunteerEvents/VolunteerEventsTable";
 import RedeemSwag from "./components/tabs/swag/RedeemSwag";
 import BlocksTab from "./components/tabs/admin/blocks/BlockTable";
 import EditBlock from "./components/tabs/admin/blocks/EditEntry";
@@ -104,6 +105,11 @@ export const App = () => {
           <Route path="/admin/blocks/:id" element={<EditBlock name="Blocks" />} />
           <Route path="/admin/events" element={<EventsTab />} />
           <Route path="/admin/events/:id" element={<EditEntry name="Events" />} />
+          <Route path="/admin/volunteer-events" element={<VolunteerEventsTab />} />
+          <Route
+            path="/admin/volunteer-events/:id"
+            element={<EditEntry name="Volunteer Events" />}
+          />
           <Route path="/admin/item-checkout" element={<RedeemSwag />} />
           <Route path="/admin/scan" element={<BadgeCheckout />} />
           <Route path="/admin/inventory" element={<InventoryAdmin />} />
