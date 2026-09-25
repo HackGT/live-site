@@ -5,6 +5,7 @@ import axios from "axios";
 import BlockCollection from "../../common/BlockCollection";
 import OpenAIKeyButton from "./OpenAIKeyButton";
 import Schedule from "../ScheduleHomePage/ScheduleTable";
+import VolunteerSchedule from "../ScheduleHomePage/VolunteerSchedule";
 
 const HexathonHomeTab: React.FC = () => {
   const [home, setHome] = useState<any[]>([]);
@@ -26,6 +27,7 @@ const HexathonHomeTab: React.FC = () => {
     <div>
       <OpenAIKeyButton />
       <BlockCollection title="" blocks={home} />
+      <VolunteerSchedule />
       <Schedule />
     </div>
   );
