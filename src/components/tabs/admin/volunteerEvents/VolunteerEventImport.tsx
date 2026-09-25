@@ -17,7 +17,6 @@ import axios from "axios";
 import ReactSelect from "react-select";
 
 import { fetchAllUsers, getUserLabel } from "./users";
-import { lookupNameMatch, updateNameMatches } from "./nameMatches";
 
 interface Props {
   onClose: () => void;
@@ -28,24 +27,11 @@ interface ImportResult {
   created: boolean;
   unmatched: string[];
   ambiguous: string[];
-  autoMatched: { name: string; userId: string }[];
   shift?: any;
   error?: string;
 }
 
 const toIds = (values: any[] = []) => values.map((value: any) => value?.id ?? value);
-
-// The PATCH endpoint $sets every field, so the full shift has to be sent back
-const patchShiftAssignees = (shift: any, assignees: string[]) =>
-  axios.patch(apiUrl(Service.HEXATHONS, `/volunteer-shifts/${shift.id}`), {
-    hexathon: shift.hexathon,
-    name: shift.name,
-    startDate: shift.startDate,
-    endDate: shift.endDate,
-    location: toIds(shift.location),
-    tags: toIds(shift.tags),
-    assignees,
-  });
 
 const EVENT_TIME_ZONE = "America/New_York";
 
@@ -109,67 +95,32 @@ const ImportResultCard: React.FC<{
   usersLoading: boolean;
   usersError?: string;
 }> = ({ result, users, usersLoading, usersError }) => {
-  const initialChoices = result.autoMatched.reduce(
-    (choices: { [name: string]: string | undefined }, match) => ({
-      ...choices,
-      [match.name]: match.userId,
-    }),
-    {}
-  );
   const [assignees, setAssignees] = useState<string[]>(result.shift?.assignees ?? []);
   const [savedAssignees, setSavedAssignees] = useState<string[]>(result.shift?.assignees ?? []);
-  const [nameChoices, setNameChoices] = useState(initialChoices);
-  const [savedNameChoices, setSavedNameChoices] = useState(initialChoices);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string>();
   const toast = useToast();
 
-  const namesToMatch = [
-    ...result.autoMatched.map(match => match.name),
-    ...result.unmatched,
-    ...result.ambiguous,
-  ];
-
   const isDirty =
     assignees.length !== savedAssignees.length ||
-    assignees.some(userId => !savedAssignees.includes(userId)) ||
-    namesToMatch.some(name => nameChoices[name] !== savedNameChoices[name]);
-
-  const userOptions = users.map((user: any) => ({ value: user.userId, label: getUserLabel(user) }));
-  const toOption = (userId: string) => {
-    const user = users.find((u: any) => u.userId === userId);
-    return { value: userId, label: user ? getUserLabel(user) : userId };
-  };
-
-  const chooseUserForName = (name: string, userId?: string) => {
-    const previous = nameChoices[name];
-    const nextChoices = { ...nameChoices, [name]: userId };
-    const stillChosen = (id?: string) =>
-      id !== undefined && Object.values(nextChoices).includes(id);
-
-    setNameChoices(nextChoices);
-    setAssignees(current => {
-      const withoutPrevious =
-        previous && !stillChosen(previous) ? current.filter(id => id !== previous) : current;
-      return userId && !withoutPrevious.includes(userId)
-        ? [...withoutPrevious, userId]
-        : withoutPrevious;
-    });
-  };
+    assignees.some(userId => !savedAssignees.includes(userId));
 
   const save = async () => {
     const { shift } = result;
     setSaving(true);
     setSaveError(undefined);
     try {
-      await patchShiftAssignees(shift, assignees);
-      updateNameMatches(
-        namesToMatch
-          .filter(name => nameChoices[name] !== savedNameChoices[name])
-          .reduce((updates, name) => ({ ...updates, [name]: nameChoices[name] }), {})
-      );
+      // The PATCH endpoint $sets every field, so the full shift has to be sent back
+      await axios.patch(apiUrl(Service.HEXATHONS, `/volunteer-shifts/${shift.id}`), {
+        hexathon: shift.hexathon,
+        name: shift.name,
+        startDate: shift.startDate,
+        endDate: shift.endDate,
+        location: toIds(shift.location),
+        tags: toIds(shift.tags),
+        assignees,
+      });
       setSavedAssignees(assignees);
-      setSavedNameChoices(nameChoices);
       toast({
         title: "Success",
         description: `Updated people for ${shift.name}.`,
@@ -195,38 +146,16 @@ const ImportResultCard: React.FC<{
         </Text>
       )}
       {result.error && <Text color="red">{result.error}</Text>}
+      {result.unmatched.length > 0 && (
+        <Text color="orange.500">No user found: {result.unmatched.join(", ")}</Text>
+      )}
+      {result.ambiguous.length > 0 && (
+        <Text color="orange.500">
+          Multiple users match (not assigned): {result.ambiguous.join(", ")}
+        </Text>
+      )}
       {result.created && result.shift && (
         <Stack marginTop="10px" spacing="8px">
-          {namesToMatch.length > 0 && (
-            <Stack spacing="6px">
-              <Text fontSize="13px" color="#858585">
-                Match names to users (remembered for future imports)
-              </Text>
-              {namesToMatch.map(name => {
-                let status = "Saved match";
-                if (result.unmatched.includes(name)) status = "No user found";
-                if (result.ambiguous.includes(name)) status = "Multiple users match";
-                return (
-                  <Stack key={name} spacing="2px">
-                    <Text
-                      fontSize="13px"
-                      color={status === "Saved match" ? "green.600" : "orange.500"}
-                    >
-                      {name} ({status})
-                    </Text>
-                    <ReactSelect
-                      isClearable
-                      isDisabled={usersLoading || users.length === 0}
-                      placeholder={usersLoading ? "Loading users..." : `Select user for ${name}...`}
-                      options={userOptions}
-                      onChange={(option: any) => chooseUserForName(name, option?.value)}
-                      value={nameChoices[name] ? toOption(nameChoices[name] as string) : null}
-                    />
-                  </Stack>
-                );
-              })}
-            </Stack>
-          )}
           <Text fontSize="13px" color="#858585">
             People
           </Text>
@@ -235,9 +164,12 @@ const ImportResultCard: React.FC<{
             closeMenuOnSelect={false}
             isDisabled={usersLoading || users.length === 0}
             placeholder={usersLoading ? "Loading users..." : "Select Users..."}
-            options={userOptions}
+            options={users.map((user: any) => ({ value: user.userId, label: getUserLabel(user) }))}
             onChange={e => setAssignees((e ?? []).map((option: any) => option.value))}
-            value={assignees.map(toOption)}
+            value={assignees.map(userId => {
+              const user = users.find((u: any) => u.userId === userId);
+              return { value: userId, label: user ? getUserLabel(user) : userId };
+            })}
           />
           {(saveError || usersError) && <Text color="red">{saveError ?? usersError}</Text>}
           <HStack>
@@ -371,40 +303,12 @@ const VolunteerEventImport: React.FC<Props> = ({ onClose }) => {
           apiUrl(Service.HEXATHONS, "/volunteer-shifts/import"),
           payload
         );
-        let { shift } = res.data;
-        let unmatched: string[] = res.data.unmatched ?? [];
-        let ambiguous: string[] = res.data.ambiguous ?? [];
-        let autoMatched = [...unmatched, ...ambiguous]
-          .map(name => ({ name, userId: lookupNameMatch(name) as string }))
-          .filter(match => match.userId);
-        let error: string | undefined;
-
-        if (autoMatched.length > 0) {
-          const assignees = Array.from(
-            new Set([...(shift.assignees ?? []), ...autoMatched.map(match => match.userId)])
-          );
-          try {
-            // eslint-disable-next-line no-await-in-loop
-            shift = (await patchShiftAssignees(shift, assignees)).data;
-            const matchedNames = autoMatched.map(match => match.name);
-            unmatched = unmatched.filter(name => !matchedNames.includes(name));
-            ambiguous = ambiguous.filter(name => !matchedNames.includes(name));
-          } catch (e: any) {
-            autoMatched = [];
-            error = `Created, but saved name matches couldn't be applied: ${
-              e.response?.data?.message ?? e.message
-            }`;
-          }
-        }
-
         importResults.push({
           name: payload.name,
           created: true,
-          unmatched,
-          ambiguous,
-          autoMatched,
-          shift,
-          error,
+          unmatched: res.data.unmatched ?? [],
+          ambiguous: res.data.ambiguous ?? [],
+          shift: res.data.shift,
         });
       } catch (e: any) {
         importResults.push({
@@ -412,7 +316,6 @@ const VolunteerEventImport: React.FC<Props> = ({ onClose }) => {
           created: false,
           unmatched: [],
           ambiguous: [],
-          autoMatched: [],
           error: e.response?.data?.message ?? e.message,
         });
       }
@@ -436,8 +339,7 @@ const VolunteerEventImport: React.FC<Props> = ({ onClose }) => {
         Paste a volunteer event object or an array of them. Assignees are full names matched against
         registered users for this hackathon. Locations can be names or IDs. Times are Eastern (e.g.
         "2026-10-10 09:00"), including ones ending in "Z" or "+00:00". Only a non-zero offset like
-        "-07:00" changes the timezone. Names you match to a user by hand are remembered in this
-        browser and filled in automatically next time.
+        "-07:00" changes the timezone.
       </Text>
       <Code whiteSpace="pre" fontSize="12px" padding="10px" overflowX="auto">
         {EXAMPLE}
