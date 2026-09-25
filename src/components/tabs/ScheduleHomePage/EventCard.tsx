@@ -42,9 +42,9 @@ export const EventCard: React.FC<{ event: any; points: number; isOngoing: boolea
       key={event.id}
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text fontSize="20px">{event.name}</Text>
+        <Text fontSize="24px" fontWeight={700} color="#000000">{event.name}</Text>
         {points > 0 && (
-          <Text fontSize="12px" color="#000000">
+          <Text fontSize="12px" color="#858585">
             {points} pts
           </Text>
         )}
