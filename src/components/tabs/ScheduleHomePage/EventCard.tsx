@@ -42,14 +42,14 @@ export const EventCard: React.FC<{ event: any; points: number; isOngoing: boolea
       key={event.id}
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text fontSize="16px">{event.name}</Text>
+        <Text fontSize="20px">{event.name}</Text>
         {points > 0 && (
-          <Text fontSize="12px" color="#858585">
+          <Text fontSize="12px" color="#000000">
             {points} pts
           </Text>
         )}
       </Flex>
-      <Text color="#9A9FB2" fontSize="14px">
+      <Text color="#000000" fontSize="14px" fontWeight={700}>
         {[(event.location ?? []).map((location: any) => location.name).join(" | "), timeLabel]
           .filter(Boolean)
           .join(" • ")}
