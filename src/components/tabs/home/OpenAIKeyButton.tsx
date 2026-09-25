@@ -9,6 +9,7 @@ import {
   Heading,
   HStack,
   Text,
+  Link,
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
@@ -52,11 +53,11 @@ const OpenAIKeyButton: React.FC = () => {
               commit it to your repo.
             </Text>
           </Box>
-          {!apiKey && (
-            <Button onClick={claimKey} isLoading={loading} colorScheme="blue" flexShrink={0}>
+          <Link href="http://platform.openai.com/p/7QLLBMM2V4AMU2VC" isExternal>
+            <Button isLoading={loading} colorScheme="blue" flexShrink={0}>
               Get my API key
             </Button>
-          )}
+          </Link>
         </Flex>
         {apiKey && (
           <HStack marginTop="10px">
