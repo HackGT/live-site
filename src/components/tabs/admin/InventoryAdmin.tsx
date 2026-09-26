@@ -51,6 +51,7 @@ const InventoryAdmin: React.FC = () => {
   const [roleLoading, setRoleLoading] = useState(true);
   const [inventory, setInventory] = useState<InventoryRecord[]>([]);
   const [checkouts, setCheckouts] = useState<any[]>([]);
+  const [checkoutSearch, setCheckoutSearch] = useState("");
   const [form, setForm] = useState<InventoryForm>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [loadingData, setLoadingData] = useState(false);
@@ -151,6 +152,22 @@ const InventoryAdmin: React.FC = () => {
     }
   };
 
+  const activeCheckouts = checkouts.filter(checkout => !checkout.returnedAt);
+  const matchingCheckouts = activeCheckouts.filter(checkout => {
+    const query = checkoutSearch.trim().toLowerCase();
+    if (!query) return false;
+
+    const searchableValues = [
+      checkout.user?.name,
+      checkout.user?.email,
+      checkout.user?.userId,
+      checkout.userId,
+      checkout.name,
+    ];
+
+    return searchableValues.some(value => String(value || "").toLowerCase().includes(query));
+  });
+
   if (loading || roleLoading) return <Spinner />;
   if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
@@ -168,6 +185,52 @@ const InventoryAdmin: React.FC = () => {
           {error}
         </Alert>
       )}
+      <Box borderWidth="1px" borderRadius="4px" padding={5}>
+        <Heading size="md" marginBottom={2}>
+          Quick remove checkout
+        </Heading>
+        <Text color="gray.600" marginBottom={4}>
+          Search by participant name, email, or user ID.
+        </Text>
+        <Input
+          value={checkoutSearch}
+          placeholder="Name, email, or user ID"
+          onChange={event => setCheckoutSearch(event.target.value)}
+        />
+        {checkoutSearch.trim() && (
+          <Stack spacing={3} marginTop={4}>
+            {matchingCheckouts.length === 0 ? (
+              <Text color="gray.500">No active checkouts found.</Text>
+            ) : (
+              matchingCheckouts.map(checkout => (
+                <Box key={checkout.id} borderWidth="1px" borderRadius="4px" padding={3}>
+                  <Text fontWeight="bold">{checkout.inventory?.name || "Unknown item"}</Text>
+                  <Text fontSize="sm">
+                    {checkout.user?.name || checkout.name || checkout.userId || "Unknown participant"}
+                  </Text>
+                  <Text fontSize="sm" color="gray.600">
+                    Quantity: {checkout.quantity} · Checked out: {new Date(checkout.checkedOutAt).toLocaleString()}
+                  </Text>
+                  <Button
+                    width="full"
+                    marginTop={3}
+                    colorScheme="red"
+                    onClick={() => {
+                      const itemName = checkout.inventory?.name || "this item";
+                      const participantName = checkout.user?.name || checkout.name || checkout.userId;
+                      if (window.confirm(`Mark ${itemName} checked out to ${participantName} as returned?`)) {
+                        returnCheckout(checkout.id);
+                      }
+                    }}
+                  >
+                    Remove checkout
+                  </Button>
+                </Box>
+              ))
+            )}
+          </Stack>
+        )}
+      </Box>
       <Box borderWidth="1px" borderRadius="4px" padding={5}>
         <Heading size="md" marginBottom={4}>
           {editingId === null ? "Add inventory" : "Edit inventory"}
