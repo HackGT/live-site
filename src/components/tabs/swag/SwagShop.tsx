@@ -193,11 +193,11 @@ const SwagShop: React.FC = props => {
         <Text id="pointCategory">Tier 1 (300+ Points)</Text>
         {itemGrid(300, MAX_POINTS_ATTAINABLE)}
         <Text id="pointCategory">Tier 2 (150-300 Points)</Text>
-        {itemGrid(150, 300)}
+        {itemGrid(150, 299)}
         <Text id="pointCategory">Tier 3 (30-150 Points)</Text>
-        {itemGrid(30, 150)}
+        {itemGrid(30, 149)}
         <Text id="pointCategory">Tier 4 (1-30 Points)</Text>
-        {itemGrid(1, 30)}
+        {itemGrid(1, 29)}
         <Text id="pointCategory">Free</Text>
         {itemGrid(0, 0)}
       </Flex>
