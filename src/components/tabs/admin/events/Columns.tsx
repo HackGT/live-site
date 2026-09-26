@@ -83,12 +83,32 @@ const eventColumns = [
   },
 ];
 
+const volunteerEventColumns = [
+  {
+    ...eventColumns[0],
+    accessor: (row: any) => (
+      <ChakraLink as={Link} to={`/admin/volunteer-events/${row.id}`}>
+        {row.name}
+      </ChakraLink>
+    ),
+  },
+  ...eventColumns.slice(1).filter(column => !["type", "description"].includes(column.field)),
+  {
+    key: 8,
+    enabled: true,
+    header: "Assignees",
+    field: "assignees",
+    accessor: (row: any) => row.assignees?.length ?? 0,
+  },
+];
+
 type StringToArray = {
   [name: string]: any[];
 };
 
 const Columns: StringToArray = {
-  Events: eventColumns,
+  "Events": eventColumns,
+  "Volunteer Events": volunteerEventColumns,
 };
 
 export default Columns;

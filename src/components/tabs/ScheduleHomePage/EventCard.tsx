@@ -35,25 +35,24 @@ export const EventCard: React.FC<{ event: any; points: number; isOngoing: boolea
       id={event.id}
       minHeight="120px"
       bg="white"
-      animation={isOngoing? "ongoing-event-border-pulse 2s infinite" : "none"}
+      animation={isOngoing ? "ongoing-event-border-pulse 2s infinite" : "none"}
       borderRadius="5px"
       paddingX="15px"
       paddingY="10px"
       key={event.id}
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text fontSize="16px">{event.name}</Text>
+        <Text fontSize="24px" fontWeight={700} color="#000000">{event.name}</Text>
         {points > 0 && (
           <Text fontSize="12px" color="#858585">
             {points} pts
           </Text>
         )}
       </Flex>
-      <Text color="#9A9FB2" fontSize="14px">
-        {event.location
-          .map((location: any) => location.name)
-          .join(" | ")
-          .concat(" • ", timeLabel)}
+      <Text color="#000000" fontSize="14px" fontWeight={700}>
+        {[(event.location ?? []).map((location: any) => location.name).join(" | "), timeLabel]
+          .filter(Boolean)
+          .join(" • ")}
       </Text>
 
       <Text fontSize="12px" color="#858585">

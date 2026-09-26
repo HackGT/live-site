@@ -17,11 +17,11 @@ const Map = () => {
   const selectedMap = floorMaps.find((map) => map.floor === activeFloor) || floorMaps[0];
 
   return (
-    <Box width={{ base: "90%", md: "75%", lg: "65%" }} margin="auto" marginTop="20px">
+    <Box width={{ base: "95%", md: "85%", lg: "75%" }} margin="auto" marginTop="20px">
       <Text fontSize="18px" fontWeight="bold" marginBottom="10px">
         Maps
       </Text>
-      <HStack marginBottom="10px" flexWrap="wrap">
+      <HStack marginBottom="10px" flexWrap="wrap" justifyContent="space-between">
         <ButtonGroup>
           {locations.map((location) => (
             <Button
@@ -37,8 +37,6 @@ const Map = () => {
             </Button>
           ))}
         </ButtonGroup>
-      </HStack>
-      <HStack marginBottom="10px" flexWrap="wrap">
         <ButtonGroup>
           {floorMaps.map(({ floor }) => (
             <Button

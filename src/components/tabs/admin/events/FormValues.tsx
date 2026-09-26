@@ -11,3 +11,7 @@ export type EventFormValues = {
   endTimeMarker: string;
   location: string[];
 };
+
+export type VolunteerEventFormValues = Omit<EventFormValues, "type" | "description"> & {
+  assignees: string[];
+};

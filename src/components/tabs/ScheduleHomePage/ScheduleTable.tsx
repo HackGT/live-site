@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { HStack, Spacer, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { apiUrl, ErrorScreen, Service } from "@hex-labs/core";
 import OneSignal from "react-onesignal";
 import * as OneSignalAPI from "@onesignal/node-onesignal";
@@ -152,19 +152,9 @@ const Schedule: React.FC = () => {
 
   return (
     <>
-      <HStack
-        margin="auto"
-        marginTop="20px"
-        marginBottom="20px"
-        width={{
-          base: "90%",
-          md: "80%",
-        }}
-      >
-        <Spacer />
-      </HStack>
       <Stack
         margin="auto"
+        marginTop="10px"
         alignItems="end"
         width={{
           base: "95%",
@@ -189,7 +179,7 @@ const Schedule: React.FC = () => {
           base: "95%",
           md: "85%",
         }}
-        bg="#F5F6FA"
+        bg="rgba(66, 153, 225, 0.08)"
       >
         <Map />
         <OngoingEventsView

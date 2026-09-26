@@ -5,9 +5,11 @@ import {
   Box,
   Button,
   Code,
+  Flex,
   Heading,
   HStack,
   Text,
+  Link,
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
@@ -39,35 +41,35 @@ const OpenAIKeyButton: React.FC = () => {
   };
 
   return (
-    <Box
-      width={{ base: "90%", md: "75%", lg: "65%" }}
-      margin="auto"
-      marginTop="20px"
-      padding="20px"
-      borderWidth="1px"
-      rounded="md"
-    >
-      <Heading size="md" marginBottom="5px">
-        OpenAI API Key
-      </Heading>
-      <Text marginBottom="10px">
-        Claim your personal OpenAI API key for the hackathon. Keep it secret and do not commit it to
-        your repo.
-      </Text>
-      {apiKey ? (
-        <HStack>
-          <Code padding="8px" rounded="md" wordBreak="break-all">
-            {apiKey}
-          </Code>
-          <Button onClick={onCopy} colorScheme="blue" size="sm" flexShrink={0}>
-            {hasCopied ? "Copied" : "Copy"}
-          </Button>
-        </HStack>
-      ) : (
-        <Button onClick={claimKey} isLoading={loading} colorScheme="blue">
-          Get my API key
-        </Button>
-      )}
+    <Box width="100%" bg="rgba(66, 153, 225, 0.08)" paddingY="20px">
+      <Box width={{ base: "90%", md: "75%", lg: "65%" }} margin="auto">
+        <Flex justifyContent="space-between" alignItems="flex-start" gap="20px">
+          <Box>
+            <Heading size="md" marginBottom="5px">
+              OpenAI API Key
+            </Heading>
+            <Text>
+              Claim your personal OpenAI API key for the hackathon. Keep it secret and do not
+              commit it to your repo.
+            </Text>
+          </Box>
+          <Link href="http://platform.openai.com/p/7QLLBMM2V4AMU2VC" isExternal>
+            <Button isLoading={loading} colorScheme="blue" flexShrink={0}>
+              Get my API key
+            </Button>
+          </Link>
+        </Flex>
+        {apiKey && (
+          <HStack marginTop="10px">
+            <Code padding="8px" rounded="md" wordBreak="break-all" bg="white">
+              {apiKey}
+            </Code>
+            <Button onClick={onCopy} colorScheme="blue" size="sm" flexShrink={0}>
+              {hasCopied ? "Copied" : "Copy"}
+            </Button>
+          </HStack>
+        )}
+      </Box>
     </Box>
   );
 };
