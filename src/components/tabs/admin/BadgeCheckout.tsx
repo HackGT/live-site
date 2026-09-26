@@ -45,6 +45,7 @@ const BadgeCheckout: React.FC = () => {
   const [inventory, setInventory] = useState<any[]>([]);
   const [checkoutType, setCheckoutType] = useState<CheckoutType>("swag");
   const [itemId, setItemId] = useState("");
+  const [itemSearch, setItemSearch] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loadingParticipant, setLoadingParticipant] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -197,6 +198,10 @@ const BadgeCheckout: React.FC = () => {
   if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
   const items = checkoutType === "swag" ? swagItems : inventory;
+  const query = itemSearch.trim().toLowerCase();
+  const filteredItems = items.filter(
+    item => !query || String(item.id || item._id) === itemId || item.name?.toLowerCase().includes(query)
+  );
 
   return (
     <VStack align="stretch" spacing={5} maxWidth="640px" margin="32px auto" padding="0 20px">
@@ -245,6 +250,7 @@ const BadgeCheckout: React.FC = () => {
               onClick={() => {
                 setCheckoutType("swag");
                 setItemId("");
+                setItemSearch("");
               }}
             >
               Swag
@@ -256,6 +262,7 @@ const BadgeCheckout: React.FC = () => {
               onClick={() => {
                 setCheckoutType("hardware");
                 setItemId("");
+                setItemSearch("");
               }}
             >
               Hardware
@@ -263,9 +270,16 @@ const BadgeCheckout: React.FC = () => {
           </ButtonGroup>
           <FormControl isRequired>
             <FormLabel>{checkoutType === "swag" ? "Swag item" : "Hardware inventory"}</FormLabel>
+            <Input
+              type="search"
+              marginBottom={2}
+              value={itemSearch}
+              placeholder="Search items"
+              onChange={event => setItemSearch(event.target.value)}
+            />
             <Select value={itemId} onChange={event => setItemId(event.target.value)}>
               <option value="">Select an item</option>
-              {items.map(item => (
+              {filteredItems.map(item => (
                 <option key={item.id || item._id} value={item.id || item._id}>
                   {item.name} {checkoutType === "swag" ? `(${item.points} points)` : `(${item.availableQuantity} available)`}
                 </option>
