@@ -229,6 +229,42 @@ const BadgeCheckout: React.FC = () => {
   if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
   const items = checkoutType === "swag" ? swagItems : inventory;
+  let checkoutContent: JSX.Element;
+  if (loadingCheckouts) {
+    checkoutContent = <Spinner />;
+  } else if (currentCheckouts.length === 0) {
+    checkoutContent = <Text color="gray.500">No hardware is currently checked out.</Text>;
+  } else {
+    checkoutContent = (
+      <VStack align="stretch" spacing={3}>
+        {currentCheckouts.map(checkout => (
+          <Box
+            key={checkout.id}
+            borderWidth="1px"
+            borderRadius="md"
+            padding={3}
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            gap={3}
+          >
+            <Box>
+              <Text fontWeight="semibold">{checkout.inventory?.name || "Hardware item"}</Text>
+              <Text color="gray.500">Quantity: {checkout.quantity}</Text>
+            </Box>
+            <Button
+              colorScheme="orange"
+              size="sm"
+              onClick={() => checkInCheckout(checkout)}
+              isLoading={checkingInId === checkout.id}
+            >
+              Check in
+            </Button>
+          </Box>
+        ))}
+      </VStack>
+    );
+  }
 
   return (
     <VStack align="stretch" spacing={5} maxWidth="640px" margin="32px auto" padding="0 20px">
@@ -272,39 +308,7 @@ const BadgeCheckout: React.FC = () => {
           <Heading size="md" marginBottom={3}>
             Current hardware checkouts
           </Heading>
-          {loadingCheckouts ? (
-            <Spinner />
-          ) : currentCheckouts.length === 0 ? (
-            <Text color="gray.500">No hardware is currently checked out.</Text>
-          ) : (
-            <VStack align="stretch" spacing={3}>
-              {currentCheckouts.map(checkout => (
-                <Box
-                  key={checkout.id}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  padding={3}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  gap={3}
-                >
-                  <Box>
-                    <Text fontWeight="semibold">{checkout.inventory?.name || "Hardware item"}</Text>
-                    <Text color="gray.500">Quantity: {checkout.quantity}</Text>
-                  </Box>
-                  <Button
-                    colorScheme="orange"
-                    size="sm"
-                    onClick={() => checkInCheckout(checkout)}
-                    isLoading={checkingInId === checkout.id}
-                  >
-                    Check in
-                  </Button>
-                </Box>
-              ))}
-            </VStack>
-          )}
+          {checkoutContent}
         </Box>
       )}
       <form onSubmit={submitCheckout}>
