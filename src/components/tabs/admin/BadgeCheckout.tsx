@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   AlertIcon,
+  Box,
   Button,
   ButtonGroup,
   FormControl,
@@ -50,6 +51,9 @@ const BadgeCheckout: React.FC = () => {
   const [loadingParticipant, setLoadingParticipant] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [scanning, setScanning] = useState(false);
+  const [currentCheckouts, setCurrentCheckouts] = useState<any[]>([]);
+  const [loadingCheckouts, setLoadingCheckouts] = useState(false);
+  const [checkingInId, setCheckingInId] = useState<number | null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -87,18 +91,46 @@ const BadgeCheckout: React.FC = () => {
     const participantId = value.trim();
     if (!participantId) return;
     setLoadingParticipant(true);
+    setLoadingCheckouts(true);
     setError("");
     try {
-      const response = await axios.get(
-        apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${participantId}`)
+      const [participantResponse, checkoutResponse] = await Promise.all([
+        axios.get(
+          apiUrl(Service.HEXATHONS, `/hexathon-users/${HEXATHON_ID}/users/${participantId}`)
+        ),
+        axios.get(apiUrl(Service.HARDWARE, "/checkouts"), {
+          params: { userId: participantId },
+        }),
+      ]);
+      setParticipant(participantResponse.data);
+      setCurrentCheckouts(
+        checkoutResponse.data.filter((checkout: any) => !checkout.returnedAt)
       );
-      setParticipant(response.data);
       setUserId(participantId);
     } catch (requestError: any) {
       setParticipant(null);
+      setCurrentCheckouts([]);
       setError(requestError.response?.data?.message || "Participant was not found.");
     } finally {
       setLoadingParticipant(false);
+      setLoadingCheckouts(false);
+    }
+  };
+
+  const checkInCheckout = async (checkout: any) => {
+    if (!window.confirm(`Check in ${checkout.inventory?.name || "this item"}?`)) return;
+
+    setCheckingInId(checkout.id);
+    setError("");
+    try {
+      await axios.post(apiUrl(Service.HARDWARE, `/checkouts/${checkout.id}/return`));
+      setCurrentCheckouts(checkouts => checkouts.filter(item => item.id !== checkout.id));
+      await loadItems();
+      toast({ title: "Item checked in", status: "success", duration: 3000, isClosable: true });
+    } catch (requestError: any) {
+      setError(requestError.response?.data?.message || "Unable to check in item.");
+    } finally {
+      setCheckingInId(null);
     }
   };
 
@@ -198,6 +230,42 @@ const BadgeCheckout: React.FC = () => {
   if (!user || !hasAccess) return <Alert status="error">HexLabs Team access is required.</Alert>;
 
   const items = checkoutType === "swag" ? swagItems : inventory;
+  let checkoutContent: JSX.Element;
+  if (loadingCheckouts) {
+    checkoutContent = <Spinner />;
+  } else if (currentCheckouts.length === 0) {
+    checkoutContent = <Text color="gray.500">No hardware is currently checked out.</Text>;
+  } else {
+    checkoutContent = (
+      <VStack align="stretch" spacing={3}>
+        {currentCheckouts.map(checkout => (
+          <Box
+            key={checkout.id}
+            borderWidth="1px"
+            borderRadius="md"
+            padding={3}
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            gap={3}
+          >
+            <Box>
+              <Text fontWeight="semibold">{checkout.inventory?.name || "Hardware item"}</Text>
+              <Text color="gray.500">Quantity: {checkout.quantity}</Text>
+            </Box>
+            <Button
+              colorScheme="orange"
+              size="sm"
+              onClick={() => checkInCheckout(checkout)}
+              isLoading={checkingInId === checkout.id}
+            >
+              Check in
+            </Button>
+          </Box>
+        ))}
+      </VStack>
+    );
+  }
   const query = itemSearch.trim().toLowerCase();
   const filteredItems = items.filter(
     item => !query || String(item.id || item._id) === itemId || item.name?.toLowerCase().includes(query)
@@ -239,6 +307,14 @@ const BadgeCheckout: React.FC = () => {
           <AlertIcon />
           {participant.name} has {participant.points?.currentTotal ?? 0} points.
         </Alert>
+      )}
+      {participant && (
+        <Box borderWidth="1px" borderRadius="md" padding={4}>
+          <Heading size="md" marginBottom={3}>
+            Current hardware checkouts
+          </Heading>
+          {checkoutContent}
+        </Box>
       )}
       <form onSubmit={submitCheckout}>
         <VStack align="stretch" spacing={4}>
