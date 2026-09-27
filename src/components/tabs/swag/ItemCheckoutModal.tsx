@@ -39,7 +39,7 @@ const ItemCheckoutModal: React.FC<Props> = props => {
     formState: { isSubmitting },
     reset,
     control,
-  } = useForm();
+  } = useForm<any>({ defaultValues: { quantity: 1 } });
 
   const [user, setUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(false);
@@ -145,7 +145,7 @@ const ItemCheckoutModal: React.FC<Props> = props => {
                 />
                 <FormControl isRequired>
                   <FormLabel>Quantity</FormLabel>
-                  <Input {...register("quantity")} type="number" />
+                  <Input {...register("quantity")} type="number" inputMode="numeric" pattern="[0-9]*" min={1} />
                 </FormControl>
                 <Button colorScheme="purple" isLoading={isSubmitting} type="submit">
                   Checkout
