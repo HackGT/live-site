@@ -297,9 +297,11 @@ const BadgeCheckout: React.FC = () => {
             Go
           </Button>
         </HStack>
-        <Button marginTop={2} onClick={startNfcScan} isLoading={scanning}>
-          Scan NFC badge
-        </Button>
+        {"NDEFReader" in window && (
+          <Button marginTop={2} onClick={startNfcScan} isLoading={scanning}>
+            Scan NFC badge
+          </Button>
+        )}
       </FormControl>
       {loadingParticipant && <Spinner alignSelf="center" />}
       {participant && (
