@@ -365,7 +365,7 @@ const BadgeCheckout: React.FC = () => {
           </FormControl>
           <FormControl isRequired>
             <FormLabel>Quantity</FormLabel>
-            <Input type="number" min={1} value={quantity} onChange={event => setQuantity(Number(event.target.value))} />
+            <Input type="number" inputMode="numeric" pattern="[0-9]*" min={1} value={quantity} onChange={event => setQuantity(Number(event.target.value))} />
           </FormControl>
           <Button type="submit" colorScheme="teal" isLoading={submitting} isDisabled={!participant || !itemId}>
             Complete checkout
