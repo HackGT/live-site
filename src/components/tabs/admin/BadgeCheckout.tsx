@@ -348,6 +348,7 @@ const BadgeCheckout: React.FC = () => {
             <FormLabel>{checkoutType === "swag" ? "Swag item" : "Hardware inventory"}</FormLabel>
             <Input
               type="search"
+              isRequired={false}
               marginBottom={2}
               value={itemSearch}
               placeholder="Search items"
